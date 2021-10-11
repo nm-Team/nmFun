@@ -1,0 +1,48 @@
+body{
+    color: #000;
+    background-color: #fff;
+    --button: rgb(220, 220, 220);
+}
+body[theme=dark]{
+    color: #fff;
+    background-color: #000;
+    --button: rgb(46, 46, 46);
+}
+
+.main{
+    padding: 30px 10%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    text-align: center;
+}
+.main svg.icon{
+    width: 50%;
+    max-width: 190px;
+    text-align: center;
+}
+.title{
+    margin: 8px;
+    padding: 0px;
+    font-size: 26px;
+}
+.tip{
+    margin: 12px;
+    padding: 0;
+    font-size: 16px;
+}
+.url{
+    overflow: auto;
+    word-break: break-all;
+    white-space: nowrap;
+}
+.jumpbutton{
+    margin: 5px 20px;
+    padding: 7px;
+    font-size: 17px;
+    border-radius: 5px;
+    border: none;
+    background: var(--button);
+    color: inherit;
+    cursor: pointer;
+}

@@ -1,0 +1,242 @@
+body{
+    --inputBox-shadow: #1414150f 0px 8px 16px;
+    --inputBox-fakeinput-bgcolor: #fcfcfc;
+    --inputBox-fakeinput: rgb(114, 114, 114);
+    --inputBox-bgcolor: rgb(245 246 249);
+    --inputBox-buttoncolor-hover: #3f3f3f23;
+    --textarea-bgcolor: #fff;
+    --textarea: #000;
+    --inputArea-select: #000;
+    --inputArea-select-bgcolor: #fff;
+}
+body[theme=dark]{
+    --inputBox-shadow: #00000066 0px 8px 14px;
+    --inputBox-fakeinput-bgcolor: #272727;
+    --inputBox-fakeinput: rgb(185, 185, 185);
+    --inputBox-bgcolor: rgb(1, 1, 1);
+    --inputBox-buttoncolor-hover: #a0a0a086;
+    --textarea-bgcolor: rgb(27, 27, 27);
+    --textarea: #fff;
+    --inputArea-select: rgb(230, 230, 230);
+    --inputArea-select-bgcolor: #040404;
+}
+.postBox{
+    padding-bottom: 60px;
+}
+.card.tagCard .content{
+    display: flex;
+    flex-direction: row;
+}
+.card.tagCard .content .ca{
+    flex-grow: 0;
+}
+.card.tagCard .content .tags{
+    flex-grow: 1;
+    font-size: 14px;
+    opacity: 0.67;
+    margin-left: 6px;
+}
+.card.tagCard .content .tags a{
+    padding: 0px 2px;
+}
+.card.interactionBar{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+.card.interactionBar button{
+    padding: 5px 10px;
+    margin: -5px -10px;
+    background: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+    font-size: 14px;
+    color: var(--card);
+}
+.card.interactionBar button[on]{
+    font-size: bold;
+}
+.card.comments{
+
+}
+.card.comments .comment{
+    
+}
+.card.comments .comment .content{
+    padding-left: 36px;
+}
+.inputBox{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--inputBox-bgcolor);
+    box-shadow: var(--inputBox-shadow);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+.inputBox .inputSurface{
+    display: flex;
+    padding: 4px 10px 5px 10px;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: flex-end;
+    color: var(--input-item);
+}
+.inputBox .inputSurface .more{
+    transition: transform 0.3s;
+}
+.inputBox .inputSurface .more[open]{
+    transform: rotate(45deg);
+}
+.inputBox .inputSurface .fakeInput{
+    border: none;
+    padding: 8px 16px;
+    color: var(--inputBox-fakeinput);
+    font-size: 15px;
+    max-height: max(40vh, 8em);
+    overflow: auto;
+    background-color: var(--inputBox-fakeinput-bgcolor);
+    flex-grow: 1;
+    flex-shrink: 1;
+    border-radius: 5px;
+    line-height: 1.3;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+.fakeInput:focus-visible{
+    outline: auto;
+}
+.inputBox .inputSurface button{
+    width: 35px;
+    height: 35px;
+    padding: 7px;
+    border: none;
+    background-color: rgba(0,0,0,0);
+    color: var(--header-buttoncolor);
+    border-radius: 99px;
+}
+.inputBox .inputSurface button input{
+    visibility: hidden;
+    position: absolute;
+}
+.inputBox .inputSurface button:hover, .inputBox button:focus-visible{
+    background-color: var(--inputBox-buttoncolor-hover);
+}
+.inputBox .inputSurface button i{
+    font-size: 21px;
+}
+.inputBox .inputSurface button.starButton:not(*[starred=true]) i.starred,
+.inputBox .inputSurface button.starButton[starred=true] i.star{
+    display: none;
+}
+.inputArea{
+    display: flex;
+    flex-direction: column;
+}
+.inputArea.comment *[hideincomment]{
+    display: none;
+}
+.inputArea select{
+    margin: 17px 15px 10px 15px;
+    font-size: 15px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    color: var(--inputArea-select);
+    background-color: #00000000;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+.inputArea select option{
+    padding: 11px ​15px;
+    font-size: 15px;
+    appearance: none;
+    color: var(--inputArea-select);
+    background-color: var(--inputArea-select-bgcolor);
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+.inputArea textarea{
+    width: calc(100% - 30px);
+    font-size: 15px;
+    line-height: 1.5;
+    resize: none;
+    background: var(--textarea-bgcolor);
+    color: var(--textarea);
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    border-radius: 0;
+    overflow-y: auto;
+    padding: 14px 15px;
+}
+.inputArea .inputBox{
+    position: relative;
+}
+.inputArea .mediasBox{
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    max-height: 150px;
+}
+.inputArea .mediasBox div.m{
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    margin: 6px 3px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    text-align: center;
+    background-color: var(--i-bgcolor);
+    background-position: 50% 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: center;
+    align-items: stretch;
+}
+.inputArea .mediasBox div.m .delButton{
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 999;
+    padding: 11px;
+    border: none;
+    width: 13px;
+    height: 13px;    
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.267);
+    background-image: url('../img/close.svg');
+    background-size: 15px;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.inputArea .mediasBox div.m div{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: none;
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    background-size: 80px 80px;
+    font-size: 14px;
+    font-weight: normal;
+    color: var(--card);
+    background-position: center center;
+    background-repeat: no-repeat;
+}

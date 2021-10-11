@@ -1,0 +1,340 @@
+body{
+    --header-text: #000;
+    --header-a: rgb(82, 82, 82);
+    --header-a-hover: rgb(49, 49, 49);
+    --footer-bgcolor: rgb(238, 238, 238);
+    --footer: rgb(107, 107, 107);
+    --footer-a: rgb(77, 77, 77);
+    --footer-table-title: rgb(58, 58, 58);
+    --footer-text: rgb(109, 109, 109);
+    --footer-hover: rgb(44, 44, 44);
+}
+body[theme=dark]{
+    --header-text: rgb(250, 250, 250);
+    --header-a: rgb(231, 231, 231);
+    --header-a-hover: rgb(241, 241, 241);
+    --footer-bgcolor: rgb(53, 53, 53);
+    --footer: rgb(141, 141, 141);
+    --footer-a: rgb(179, 179, 179);
+    --footer-table-title: rgb(212, 212, 212);
+    --footer-text: rgb(184, 184, 184);
+    --footer-hover: rgb(230, 230, 230);
+}
+/* header 部分 */
+#hcont .placeHolder{
+    height: 78px;
+}
+#hcont .header{
+    transition: background-color 0.3s, backdrop-filter 0.1s 0.1s, -webkit-backdrop-filter 0.1s 0.1s, height 0.7s, overflow-y 0s 0.7s;
+}
+#hcont .header .right .links button{
+    background: none;
+}
+@media (min-width: 800px) {
+    #hcont .header{
+        display: flex;
+        justify-content: space-between;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 40px;
+        padding: 5px 20px;
+        z-index: 100;
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        background-color: var(--jianbian-color);
+        color: var(--header-text);
+    }
+    #hcont .header.hidden{
+        background: none;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+    #hcont .header *{
+        margin: 0;
+        padding: 0;
+    }
+    #hcont .header .left{
+        flex-grow: 0;
+        flex-shrink: 0;
+        cursor: pointer;
+    }
+    #hcont .header .left .logo{
+        display: inline-block;
+        width: 36px;
+        height: 36px;
+        background-size: 36px;
+    }
+    #hcont .header .left .name{
+        display: inline;
+        position: relative;
+        top: -8px;
+        font-size: 25px;
+        font-weight: bold;
+        color: var(--header-name);
+    }
+    #hcont .header .right{
+        display: flex;
+        flex-direction: row;
+        justify-content: end;  
+        align-items: center;
+    }
+    #hcont .header .right *{
+        font-size: 15px;
+        font-weight: 300;
+        color: var(--header-a);
+        text-decoration: none;
+    }
+    #hcont .header .right .links{
+        display: flex;
+        flex-wrap: nowrap;
+        font-size: 15px;
+        font-weight: 300;
+        color: var(--header-a);
+    }
+    #hcont .header .right .links button{
+        padding: 10px 8px;
+        word-break: keep-all;
+    }
+    #hcont .header .right .links button:hover, #hcont .header .right .links button:focus-visible, #hcont .header .right .accountBox:hover p, #hcont .header .right .accountBox:focus-visible p{
+        color: var(--header-a-hover);
+        font-weight: 400;
+        cursor: pointer;
+    }
+    #hcont .header .right .accountBox{
+        display: flex;
+        flex-direction: row;
+        justify-content: end;  
+        align-items: center;
+        margin-left: 8px;
+    }
+    #hcont .header .right .accountBox i{
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        background-image: url(https://static.hdslb.com/images/akari.jpg);
+        background-size: 30px 30px;
+        border-radius: 20px;
+        margin-right: 4px;
+    }
+    #hcont .header .right .accountBox p{
+        display: inline-block;
+        max-width: 117px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-break: break-all;
+        transition: max-width 0.5s;
+    }
+    #hcont .header .right .accountBox p:hover{
+        max-width: 100vw;
+    }
+}
+@media (max-width: 800px) {
+    #hcont .header{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 24px;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        padding: 9px 10px;
+        z-index: 100;
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        background-color: var(--jianbian-color);
+        color: var(--header-text);
+    }
+    #hcont .header[open]{
+        height: 100vh;
+    }
+    #hcont .header[open] .right{
+        overflow-y: auto;
+    }
+    #hcont .header.hidden:not(*[open]){
+        background: none;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+    #hcont .header *{
+        margin: 0;
+        padding: 0;
+    }
+    #hcont .header .left{
+        flex-grow: 0;
+        flex-shrink: 0;
+        width: 80vw;
+        margin-bottom: 20px;
+        cursor: pointer;
+        text-align: center;
+    }
+    #hcont .header .left .logo{
+        display: inline-block;
+        width: 26px;
+        height: 26px;       
+        background-size: 26px;
+    }
+    #hcont .header .left .name{
+        display: inline;
+        position: relative;
+        top: -8px;
+        font-size: 18px;
+        font-weight: bold;
+        color: var(--header-name);
+    }
+    #hcont .header .right{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex-grow: 1;
+        flex-shrink: 1;
+    }
+    #hcont .header .right *{
+        font-size: 15px;
+        font-weight: 300;
+        color: var(--header-a);
+        text-decoration: none;
+        text-align: center;
+    }
+    #hcont .header .right .links{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        font-size: 15px;
+        width: 80%;
+        font-weight: 300;
+        color: var(--header-a);
+    }
+    #hcont .header .right .links button{
+        padding: 10px 8px;
+        word-break: keep-all;
+    }
+    #hcont .header .right .links button:hover, #hcont .header .right .links button:focus-visible, #hcont .header .right .accountBox:hover p, #hcont .header .right .accountBox:focus-visible p{
+        color: var(--header-a-hover);
+        font-weight: 400;
+        cursor: pointer;
+    }
+    #hcont .header .right .accountBox{
+        display: flex;
+        width: 80vw;
+        position: relative;
+        flex-direction: row;
+        justify-content: center;
+        margin: 14px 0;
+    }
+    #hcont .header .right .accountBox i{
+        position: absolute;
+        top: -6px;
+        left: 0;
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        background-image: url(https://static.hdslb.com/images/akari.jpg);
+        background-size: 30px 30px;
+        border-radius: 20px;
+        margin-right: 4px;
+        
+    }
+    #hcont .header .right .accountBox p{
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-break: break-all;
+        margin: 0 37px;
+    }
+}
+/* footer 部分 */
+#fcont{
+    position: relative;
+    display: block;
+    margin-top: 20px;
+    padding: 16px 10%;
+    color: var(--footer);
+    background-color: var(--footer-bgcolor);
+    font-size: 14px;
+}
+#fcont *{
+    margin: 0;
+    padding: 0;
+    line-height: 1.88;
+}
+#fcont a{
+    color: var(--footer-a);
+    text-decoration: none;
+    transition: color 0.5s;
+}
+#fcont a:hover, #fcont a:focus-visible{
+    color: var(--footer-hover);
+    font-weight: 500;
+}
+#fcont .footer-table{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    color: var(--footer-text);
+}
+#fcont .footer-table .row{
+    width: 22%;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+#fcont .footer-table .row *{
+    display: block;
+}
+#fcont .footer-table .row .rowName{
+    color: var(--footer-table-title);
+    font-weight: bold;
+}
+#fcont .footer-bottom{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+#fcont .footer-bottom .left{
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+#fcont .footer-bottom .right{
+    flex-grow: 0;
+    flex-shrink: 0;    
+    text-align: right;
+    padding-bottom: 16px;
+}
+#fcont .footer-bottom .right i{
+    display: block;
+    background-position: center;
+    background-size: 100%;
+    margin: 0 10px;
+    transition: all 0.4s;
+}
+#fcont .footer-bottom .right i:hover{
+    opacity: 1!important;
+    filter: none!important;
+}
+@media (max-width: 600px){
+    #fcont *{
+        line-height: 2.2;
+    }
+    #fcont .footer-table{
+        flex-direction: column;
+    }
+    #fcont .footer-table .row{
+        width: 100%;
+        margin-bottom: 10px;
+    } 
+    #fcont .footer-bottom{
+        flex-direction: column;
+        align-items: center;
+    }
+    #fcont .footer-bottom .right{
+        margin-top: 20px;
+        text-align: center;
+    }
+}

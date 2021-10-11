@@ -1,0 +1,525 @@
+body{
+    --page-bgcolor: #f6f6f6;
+    --header-bgcolor: #f9fbfb;
+    --selection-bgcolor: rgba(139, 139, 139, 0.63);
+    --visible-color: rgb(92, 92, 92);
+    --header-buttoncolor: #393939;
+    --header-buttoncolor-hover: #3f3f3f23;
+    --header-shadow: #96969654 0px -5px 15px;
+    --header-title: #3f3f3f;
+    --header-little: rgb(128, 128, 128);
+    --scroller-grey: #c8c8c854;
+    --contextmenu-bgcolor: #fefefe;
+    --contextmenu-hover-bgcolor: #f2f2f2;
+    --contextmenu: #000;
+    --contextmenu-line: rgb(224, 224, 224);
+    --contextmenu-shadow: #5151510f 1px 1px 8px;
+    --middle-line: #d1d1d1;
+    --cover: #00000050;
+    --alert-bgcolor: rgb(255, 255, 255);
+    --alert-button-hover-bgcolor: rgb(235, 235, 235);
+    --alert-button: rgb(247, 247, 247);
+    --alert-border: rgb(223, 223, 223);
+    --alert: #000;
+    --animation-box-shadow-0: #51515152 -2px 0px 11px;
+    --animation-box-shadow-1: #51515141 -2px 0px 11px;
+    --msgBox: #000;
+    --msgBox-bgcolor: rgb(255 255 255);
+    --msgBox-shadow: #e3e3e366 0px 0px 2px;
+}
+body[theme=dark]{
+    --page-bgcolor: rgb(1,1,1);
+    --header-bgcolor: #292929;
+    --selection-bgcolor: rgba(233, 233, 233, 0.795);
+    --header-buttoncolor: #dddddd;
+    --header-buttoncolor-hover: #7979799d;
+    --header-shadow: #252525 0rem -5rem 14rem;
+    --header-title: #fcfcfc;
+    --header-little: rgb(207, 207, 207);
+    --scroller-grey: #ffffffa1;
+    --contextmenu-bgcolor: #2d2d2d;
+    --contextmenu-hover-bgcolor: #3e3e3e;
+    --contextmenu: rgb(255, 255, 255);
+    --contextmenu-line: rgb(87, 87, 87);
+    --contextmenu-shadow: #0202021a 1rem 1rem 9rem;
+    --middle-line: #5c5c5c;
+    --cover: #00000050;
+    --alert-bgcolor: rgb(61, 61, 61);
+    --alert-button-hover-bgcolor: rgb(71, 71, 71);
+    --alert-button: rgb(65, 65, 65);
+    --alert-border: rgb(151, 151, 151);
+    --alert: rgb(255, 255, 255);
+    --animation-box-shadow-0: #51515152 -2rem 0rem 11rem;
+    --animation-box-shadow-1: #51515141 -2rem 0rem 11rem;
+    --msgBox: rgb(255, 255, 255);
+    --msgBox-bgcolor: rgb(56 56 56);
+    --msgBox-shadow: #0000002b 0rem 0rem 1rem;
+}
+*{
+    margin: 0;
+    padding: 0;
+    /* outline: none; */
+    border: none;
+    word-break: break-word;
+    -webkit-tap-highlight-color:rgba(0,0,0,0)
+}
+*[scroll=true], *[scroll=true] *{
+    scroll-behavior: smooth;
+}
+a {
+    color: inherit;
+    text-decoration: auto;
+}
+body[transitioncolor], body[transitioncolor] *{
+    transition: color 0.5s cubic-bezier(0, 1, 0.25, 1), background-color 0.5s, border 0.5s, box-shadow 0.5s!important;
+}
+*::selection{
+    background-color: var(--selection-bgcolor);
+}
+*:focus-visible{
+    /* border: 1.8px solid var(--visible-color)!important; */
+}
+button{
+    cursor: pointer;
+}
+html{
+    font-size: 1px;
+    width: 100%;
+    min-height: 100%;
+    height: 100%;
+    max-height: 100%;
+}
+body{
+    font-family: PingFangSC-Regular;
+    background-color: var(--page-bgcolor);
+    overflow: hidden;
+    width: 100%;
+    min-height: 100%;
+    height: 100%;
+    max-height: 100%;
+}
+body[select=false] *{
+    -webkit-user-select: none!important;
+    -moz-user-select: none!important;
+    user-select: none!important;
+}
+.commonCover{
+    display: block;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1500;
+}
+#bodyHover{
+    z-index: 0;
+}
+.coverWithColor{
+    display: block;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    visibility: hidden;
+    opacity: 0;
+    background-color: var(--cover);
+    transition: all 0.15s;
+}
+.coverWithColor[open]{
+    visibility: visible;
+    opacity: 1;
+}
+header{
+    position: absolute;
+    z-index: 20;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 45px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 7px;
+    background-color: var(--header-bgcolor);
+    box-shadow: var(--header-shadow);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+header[nobg]{
+    background: none;
+    box-shadow: none;
+}
+header .left{
+    flex-grow: 1;
+    flex-shrink: 1;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+}
+header .right{
+    display: flex;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-wrap: nowrap;
+    justify-content: right;
+    margin-left: 10px;
+}
+header button{
+    width: 35px;
+    height: 35px;
+    padding: 7px;
+    border: none;
+    background-color: rgba(0,0,0,0);
+    border-radius: 99px;
+}
+header button.loading{
+    background-image: url(/public/img/loading.gif);
+    background-size: 15px;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+header .right button{
+    margin-left: 0px;
+}
+header button:hover, header button:focus-visible{
+    background-color: var(--header-buttoncolor-hover);
+}
+header button i{
+    color: var(--header-buttoncolor);
+    font-size: 21px;
+}
+header .nameDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0px;
+    overflow: hidden;
+    width: calc(100% - 125px);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+header .nameDiv *{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    white-space: nowrap;
+    word-break: break-all;
+    flex-shrink: 1;
+}
+header .nameDiv .title{
+    font-size: 16px;
+    color: var(--header-title);
+}
+header .nameDiv .little{
+    font-size: 9px;
+    color: var(--header-little);
+}
+.contextMenu{
+    position: fixed;
+    z-index: 1600;
+    width: 200px;
+    max-height: 50vh;
+    padding: 4px 0;
+    background: var(--contextmenu-bgcolor);
+    box-shadow: var(--contextmenu-shadow);
+    border-radius: 4.4px;
+    overflow-y: auto;
+}
+.contextMenu button{
+    display: block;
+    width: 100%;
+    border: none;
+    outline: none;
+    color: var(--contextmenu);
+    background: none;
+    padding: 6px 12px;
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+.contextMenu .line{
+    display: block;
+    height: 0;
+    margin: 0 8px 0 8px;
+    border: 1px solid var(--contextmenu-line);
+    border-width: 1px 0 0 0;
+    border-radius: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+.contextMenu button i{
+    display: none;
+    visibility: hidden;
+}
+.contextMenu[icon=true] button i{
+    display: inline-block;
+    visibility: visible;
+    width: 18px;
+    height: 0;
+    font-size: 16px;
+    line-height: 0;
+    margin: 0 3px 0px -5px;
+    position: relative;
+    opacity: 0.8;
+    top: 3px;
+}
+.contextMenu[die=true]{
+    opacity: 0;
+    visibility: hidden;
+    animation: contextMenu-die 0.2s;
+}
+.contextMenu button:hover, .contextMenu button:focus-visible{
+    background-color: var(--contextmenu-hover-bgcolor);
+}
+.alertBox{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 999999999999;
+    width: min(60vw, 400px);
+    max-height: min(60vh, 300px);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    transform: translate(-50%, -50%);
+    background-color: var(--alert-bgcolor);
+    color: var(--alert);
+    text-align: center;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    animation: comeon 0.15s;
+    overflow: hidden;
+}
+.alertBox[die=true], .coverWithColor[die=true]{
+    animation: comeout 0.1s;
+    visibility: hidden;
+}
+.alertBox .title{
+    font-size: 16px;
+    font-weight: bold;
+    margin: 12px 20px 0 20px;
+}
+.alertBox .msg{
+    font-size: 13px;
+    overflow: auto;
+    padding: 5px 25px 12px 20px;
+}
+.alertBox .buttons{
+    height: 30px;
+    display: flex;
+    margin-top: 10px;
+    justify-content: space-between;
+    margin: 0 -0.4px;
+    background-color: var(--alert-border);
+}
+.alertBox .buttons button{
+    margin: 0.5px 0.4px 0 0.4px;
+    outline: none;
+    width: 50%;
+    flex-grow: 1;
+    border-radius: 0;
+    font-size: 12px;
+    color: var(--alert);
+    background-color: var(--alert-bgcolor);
+}
+.alertBox .buttons button:hover,.alertBox .buttons button:focus-visible{
+    background-color: var(--alert-button-hover-bgcolor);
+}
+.msgBox{
+    position: fixed;
+    z-index: 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
+    top: 45px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 70%;
+    max-width: 400px;
+    max-height: 70%;
+    padding: 10px 17px;
+    background-color: var(--msgBox-bgcolor);
+    color: var(--msgBox);
+    line-height: 1.6;
+    font-size: 14px;
+    visibility: hidden;
+    border-radius: 4px;
+    box-shadow: var(--msgBox-shadow);
+    animation: msgBox 7s;
+    overflow: auto;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+.qrCode .main{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #000000;
+    overflow: hidden;
+}
+.camera{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    height: 100vh;
+    transform: translate(-50%, 0);
+}
+.material-icons{
+    font-family: 'Material Icons';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-feature-settings: 'liga';
+    font-feature-settings: 'liga';
+    font-style: normal;
+}
+.material-icons svg{
+    width: 16px;
+    height: 22px;
+    fill: var(--header-buttoncolor);
+    transition: color 0.5s;
+}
+@font-face{
+    font-weight: 400;
+    font-family: 'Material Icons';
+    font-style: normal;
+    src: url(../fonts/MaterialIcons-Regular.woff2) format('woff2');
+}
+::-webkit-scrollbar{
+    width: 7px;
+    height: 7px; 
+}
+::-webkit-scrollbar:hover{
+    width: 7px;
+    height: 7px; 
+}
+::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    background: var(--scroller-grey);
+}
+body *[scroll=hidden]::-webkit-scrollbar-thumb{
+    background: none;
+}
+::-webkit-scrollbar-track{
+    border-radius: 10px;
+    width: 0;
+    opacity: 0;
+}
+.skeleton{
+    color: rgba(0,0,0,0)!important;
+    background-image: linear-gradient(270deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.1))!important;
+    background-size: 400% 100%!important;
+    animation: skeleton-loading 6s ease-in-out infinite!important;
+    transform: scaleY(0.76)!important;
+    user-select: none!important;
+    cursor: progress!important;
+}
+.skeleton.sentence{
+    margin-bottom: 4px;
+}
+.skeleton.noscale{
+    transform: none!important;
+}
+@keyframes skeleton-loading{
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+@keyframes contextMenu{
+    0%{
+        opacity: 0;
+        width: 0;
+        max-height: 0vh;
+        overflow: hidden;
+    }
+    46%{
+        opacity: 1;
+    }
+    99%{
+        overflow: hidden;
+    }
+    100%{
+        opacity: 1;
+        width: 200px;
+        max-height: 40vh;
+        overflow: auto;
+    }
+}
+
+@keyframes contextMenu-die{
+    0%{
+        opacity: 1;
+        visibility: visible;
+    }
+    99%{
+        visibility: visible;
+    }
+    100%{
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+@keyframes comeon {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+@keyframes comeout {
+    0%{
+        opacity: 1;
+        visibility: visible;
+    }
+    99%{
+        visibility: visible;
+    }
+    100%{
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+@keyframes msgBox {
+    0%{
+        top: calc(-100% + 50px);
+        visibility: visible;
+    }
+    10%{
+        top: 45px;
+    }
+    90%{
+        top: 45px;
+    }
+    100%{
+        top: calc(-100% + 50px);
+        visibility: hidden;
+    }
+}
