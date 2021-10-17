@@ -174,7 +174,7 @@ require("./api/functions.php");
     <script src="<?php echo siteURL; ?>/src/js/content.js"></script>
     <script src="<?php echo siteURL; ?>/src/js/index.js"></script>
     <script src="<?php echo siteURL; ?>/src/js/viewer.min.js"></script>
-    <script src="<?php echo accountClient; ?>/src/js/getinfo.js"></script>
+    <script src="<?php echo accountClient; ?>/src/js/getinfo.js" onerror="newMsgBox('账号服务器连接失败')"></script>
     <script src="<?php echo siteURL; ?>/src/js/accounts.js"></script>
     <script src="<?php echo siteURL; ?>/src/js/browser.js"></script>
 </body>

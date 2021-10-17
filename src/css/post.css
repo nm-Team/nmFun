@@ -192,6 +192,7 @@ body[theme=dark]{
     position: relative;
     width: 80px;
     height: 80px;
+    color: var(--textarea);
     border-radius: 8px;
     margin: 6px 3px;
     flex-grow: 0;

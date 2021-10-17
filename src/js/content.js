@@ -194,32 +194,33 @@ function sendPost(div, postType, onSuccess) {
         mediaToSend = "{";
         for (i = 0; i < div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m").length; i++) {
             try {
-                mediaInfo = cleanHTMLTag(div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m")[i].getAttribute("mconfig")) + ",";
+                mediaInfo = cleanHTMLTag(div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m")[i].getAttribute("m")) + ",";
                 // 转换解析mediaInfo
-                mInfoParsed = JSON.parse(switchMarks(mediaInfo));
-                // 对部分类型进行操作
-                if (mInfoParsed[0] == "img" || mInfoParsed[0] == "video") {
-                    // 以后可能会在这里做一些事情
-                }
+                // mInfoParsed = JSON.parse(switchMarks(mediaInfo));
+                // // 对部分类型进行操作
+                // if (mInfoParsed[0] == "img" || mInfoParsed[0] == "video") {
+                //     // 以后可能会在这里做一些事情
+                // }
                 mediaToSend += mediaInfo;
             }
             catch (err) { }
         }
         mediaToSend += "}";
-        tagsToSend = "";//开发中
+        // mediaToSend = JSON.stringify(mediaToSend);
+        tagsToSend = ""; // 开发中
         // 发送参数：帖子
         if (postType == "post") {
             categoryToSend = div.getElementsByClassName("categoryS")[0].selectedIndex;
-            sendData = { text: textToSend, media: mediaToSend, category: categoryToSend, tags: tagsToSend };
+            sendData = { type: "post", text: textToSend, media: mediaToSend, category: categoryToSend, tags: tagsToSend };
         }
         if (postType == "comment") {
             // 发送参数：评论
             if (!div.getAttribute("inpost")) return newMsgBox("啊哦，nmFun 内部出现错误");
             inpost = div.getAttribute("inpost");
             tocomment = div.getAttribute("tocomment");
-            sendData = { inpost: inpost, tocomment: tocomment, text: textToSend, media: mediaToSend, category: categoryToSend, tags: tagsToSend };
+            sendData = { type: "comment", inpost: inpost, tocomment: tocomment, text: textToSend, media: mediaToSend, category: categoryToSend, tags: tagsToSend };
         }
-        newAjax("POST", "/post_send.php", true, "", sendData, onSuccess, function () { "出现错误，发送失败" });
+        newAjax("POST", "/post_send.php", true, "", sendData, onSuccess, function (err) { newMsgBox("出现错误，发送失败。<br>服务器返回错误 " + err['info']) });
     }
 }
 
