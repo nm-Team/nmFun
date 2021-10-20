@@ -108,7 +108,7 @@ function setPostArea(div, data, config = { "slug": false, "click": false, "fullm
         else statusW = "";
         try {
             // 设置media
-            medias = JSON.parse(data['media'].replace(/\\/g, ""));
+            medias = JSON.parse(data['media'].replace(/\\/g, "")).medias;
             mediasHTML = "";
             specialMediasHTML = "";
             mNum = 0;
@@ -191,10 +191,10 @@ function sendPost(div, postType, onSuccess) {
         }
         // 通用：设置参数
         textToSend = cleanHTMLTag(div.getElementsByClassName("sendBoxInput")[0].value);
-        mediaToSend = "{";
+        mediaToSend = '{"medias": [';
         for (i = 0; i < div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m").length; i++) {
             try {
-                mediaInfo = cleanHTMLTag(div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m")[i].getAttribute("m")) + ",";
+                mediaInfo = cleanHTMLTag(div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m")[i].getAttribute("m")).replace(/\'/g, '"');
                 // 转换解析mediaInfo
                 // mInfoParsed = JSON.parse(switchMarks(mediaInfo));
                 // // 对部分类型进行操作
@@ -202,10 +202,13 @@ function sendPost(div, postType, onSuccess) {
                 //     // 以后可能会在这里做一些事情
                 // }
                 mediaToSend += mediaInfo;
+                if (i < div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m").length -1 ) {
+                    mediaToSend += ",";
+                }
             }
             catch (err) { }
         }
-        mediaToSend += "}";
+        mediaToSend += "]}";
         // mediaToSend = JSON.stringify(mediaToSend);
         tagsToSend = ""; // 开发中
         // 发送参数：帖子

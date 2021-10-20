@@ -1,4 +1,7 @@
 <?php
+
+use function PHPSTORM_META\type;
+
 require_once("./log.php");
 
 login();
@@ -6,7 +9,7 @@ login();
 $db = new CodyMySQL(sqlHost, sqlPort, sqlUser, sqlPass, sqlDaBa);
 $time = time();
 $text = mysqli_real_escape_string($db->mysql, addslashes($_POST['text']));
-$media = json_decode(mysqli_real_escape_string($db->mysql, addslashes($_POST['media'])));
+$media = json_decode(str_replace("\\'", '"', $_POST['media']), true);
 $category = intval(mysqli_real_escape_string($db->mysql, addslashes($_POST['category'])));
 $tags = mysqli_real_escape_string($db->mysql, addslashes($_POST['tags']));
 // 判断是否需要审核
@@ -21,16 +24,16 @@ if (is_null($text)) {
     else ret("error", -1);
 }
 // 保存base64的文件
-for ($i = 0; $i < count($media); $i++) {
-    if (strstr($media[$i][1], "base64")) {
-        fileSave($media[$i][1], "postmedia", "post");
+for ($i = 0; $i < count($media['medias']); $i++) {
+    if ($media['medias'][$i][0] == "img") {
+        $media['medias'][$i][1] = fileSave($media['medias'][$i][1], "postmedia", "post");
     }
 }
 if (!isset($category) || !is_int($category)) ret("error", -2);
 $postToSend = array(
     "uid" => UID,
     "text" => $text,
-    "media" => $media,
+    "media" => json_encode($media),
     "time" => $time,
     "category" => $category,
     "tags" => $tags,

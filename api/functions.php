@@ -55,13 +55,25 @@ function fileSave($base64, $pathRoot, $pathTag)
 {
     $base64_body = substr(strstr($base64, ','), 1);
     $file = base64_decode($base64_body);
-    $path = "/uploads/" . $pathRoot . (isset($pathRoot) ? "/" : "") . date("YY", time()) . "/" . date("mm", time());
-    if (!file_exists($path)) {
-        mkdir("../".$path, 0777, true);
+    $ftype = strtolower(explode(";", explode("/", $base64)[1])[0]);
+    // 验证格式
+    for ($i = 0; $i < count(mediaEnabled); $i++) {
+        for ($j = 0; $j < count(mediaEnabled[$i][0]); $j++) {
+            if (strtolower($ftype) == strtolower(mediaEnabled[$i][0][$j])) {
+                $path = "/uploads/" . $pathRoot . (isset($pathRoot) ? "/" : "") . date("Y", time()) . "/" . date("m", time());
+                if (!file_exists(".." . $path)) {
+                    mkdir(".." . $path, 0777, true);
+                }
+                // 计算文件大小
+                $fileSize = strlen(file_get_contents($base64)) / 1024;
+                if ($fileSize > mediaEnabled[$i][1]) ret("error", "文件大小过大，请压缩后上传");
+                $fname = date("Y-m-d-H-i-s", time()) . getRandomStr(16) . (isset($pathTag) ? "_" : "") . $pathTag . "." . $ftype;
+                file_put_contents(".." . $path . "/" . $fname, $file);
+                return siteURL . $path . "/" . $fname;
+            }
+        }
     }
-    $fname = date("YY-mm-dd-HH-ii-ss", time()) . getRandomStr(16) . $pathTag;
-    file_put_contents($path . "/" . $fname, $file);
-    return siteURL . $path . "/" . $fname;
+    ret("error", "提供的文件格式不正确。");
 }
 
 function ret($status = "success", $info = NULL, $other = array())

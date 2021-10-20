@@ -15,5 +15,5 @@ define("accountServer", "https://logapi.nmteam.ml/userinfo.php");
 define("accountClient", "https://accounts.nmteam.xyz");
 define("postCheck", true);
 define("commentCheck", true);
-define("mediaEnabled", [["image", 5000], ["video/mp4", 20000]]);
+define("mediaEnabled", [[["jpg","png","jpeg","gif",], 3000], [[["mp4","mov",]], 20000]]);
 define("zone", +8);
