@@ -8,10 +8,10 @@ login();
 
 $db = new CodyMySQL(sqlHost, sqlPort, sqlUser, sqlPass, sqlDaBa);
 $time = time();
-$text = mysqli_real_escape_string($db->mysql, addslashes($_POST['text']));
-$media = json_decode(str_replace("\\'", '"', $_POST['media']), true);
-$category = intval(mysqli_real_escape_string($db->mysql, addslashes($_POST['category'])));
-$tags = mysqli_real_escape_string($db->mysql, addslashes($_POST['tags']));
+$text = cleanHTMLTag(mysqli_real_escape_string($db->mysql, addslashes($_POST['text'])));
+$media = json_decode(str_replace("\\'", '"', cleanHTMLTag($_POST['media'])), true);
+$category =  intval(cleanHTMLTag(mysqli_real_escape_string($db->mysql, addslashes($_POST['category']))));
+$tags =  cleanHTMLTag(mysqli_real_escape_string($db->mysql, addslashes($_POST['tags'])));
 // 判断是否需要审核
 if (!postCheck || role['checkpost'] == 1) {
     $newPostSta = 0;

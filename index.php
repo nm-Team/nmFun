@@ -167,7 +167,12 @@ require("./api/functions.php");
         <div class="content" id="commentEditBox">
         </div>
     </div>
-
+    <div id="sendCover">
+        <div class="content">
+            <i></i>
+            <p>正在发送</p>
+        </div>
+    </div>
     <script src="<?php echo siteURL; ?>/src/js/jquery.min.js"></script>
     <script src="https://cdn.cncn3.cn/webstatic/d1e2b36ce909e/swiper-bundle.min.js"></script>
     <script src="<?php echo siteURL; ?>/src/js/main.js"></script>

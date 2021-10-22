@@ -51,6 +51,8 @@ function setPostArea(div, data, config = { "slug": false, "click": false, "fullm
     console.log(data);
     if (data['code'] == "200") {
         div.setAttribute("type", data['type']);
+        // 处理内容中的特殊项
+        contentHandled = data['text'].replace(/((((ht|f)tps?):\/\/)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&:/~+#-\(\)]*[\w@?^=%&/~+#-\(\)])?$)/g, `<a class="linkInPost" href="` + siteURL + `/jumpurl.php?$1" target="_blank" onclick="newBrowser('$1', 'postOutBrowser', true, true); return false;"><svg class="icon link" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M618.24 439.381333a152.746667 152.746667 0 0 1 0 216l-135.893333 135.893334a163.370667 163.370667 0 1 1-231.04-231.04l66.922666-66.944 45.269334 45.269333-66.944 66.944a99.370667 99.370667 0 1 0 140.522666 140.522667l135.893334-135.893334a88.746667 88.746667 0 0 0 0-125.482666z m182.528-197.589333a163.370667 163.370667 0 0 1 0 231.04L733.866667 539.776l-45.269334-45.248 66.944-66.944a99.370667 99.370667 0 1 0-140.522666-140.522667l-135.893334 135.893334a88.746667 88.746667 0 0 0 0 125.482666l-45.269333 45.269334a152.746667 152.746667 0 0 1 0-216l135.893333-135.893334a163.370667 163.370667 0 0 1 231.04 0z"</path></svg>$1</a>`)
         if (data['type'] == "post") {
             buttonsGiven = `<div class="buttons">
             <button class="likeButton">
@@ -130,7 +132,7 @@ function setPostArea(div, data, config = { "slug": false, "click": false, "fullm
             else if (mNum == 2 || mNum == 4) mediaType = 2;
             else mediaType = 3;
         }
-        div.innerHTML = postAreaTemplate.replace(/{{type}}/g, data['type']).replace(/{{id}}/g, data['id']).replace(/{{slug}}/g, (config.slug ? "slug" : "")).replace(/{{time}}/g, data['time']).replace(/{{status}}/g, statusW).replace(/{{view}}/g, data['view']).replace(/{{href}}/g, (config.click ? `href="/post/` + data['id'] + `"onclick="{event.preventDefault(); newPostDetailPage('` + data['id'] + `',true);return false;}"` : '')).replace(/{{content}}/g, data['text']).replace(/{{nick}}/g, data['author']['nick']).replace(/{{avatar}}/g, data['author']['avatar']).replace(/{{uid}}/g, data['author']['uid']).replace(/{{buttons}}/g, buttonsGiven).replace(/{{medias}}/g, mediasHTML).replace(/{{specialMedias}}/g, specialMediasHTML).replace(/{{mediatype}}/g, mediaType);
+        div.innerHTML = postAreaTemplate.replace(/{{type}}/g, data['type']).replace(/{{id}}/g, data['id']).replace(/{{slug}}/g, (config.slug ? "slug" : "")).replace(/{{time}}/g, data['time']).replace(/{{status}}/g, statusW).replace(/{{view}}/g, data['view']).replace(/{{href}}/g, (config.click ? `href="/post/` + data['id'] + `"onclick="{event.preventDefault(); newPostDetailPage('` + data['id'] + `',true);return false;}"` : '')).replace(/{{content}}/g, contentHandled).replace(/{{nick}}/g, data['author']['nick']).replace(/{{avatar}}/g, data['author']['avatar']).replace(/{{uid}}/g, data['author']['uid']).replace(/{{buttons}}/g, buttonsGiven).replace(/{{medias}}/g, mediasHTML).replace(/{{specialMedias}}/g, specialMediasHTML).replace(/{{mediatype}}/g, mediaType);
     }
     else {
         div.innerHTML = postAreaUnavaliableTemplate.replace(/{{w}}/g, errorCode[data['code']]);
@@ -202,7 +204,7 @@ function sendPost(div, postType, onSuccess) {
                 //     // 以后可能会在这里做一些事情
                 // }
                 mediaToSend += mediaInfo;
-                if (i < div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m").length -1 ) {
+                if (i < div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m").length - 1) {
                     mediaToSend += ",";
                 }
             }
@@ -223,7 +225,8 @@ function sendPost(div, postType, onSuccess) {
             tocomment = div.getAttribute("tocomment");
             sendData = { type: "comment", inpost: inpost, tocomment: tocomment, text: textToSend, media: mediaToSend, category: categoryToSend, tags: tagsToSend };
         }
-        newAjax("POST", "/post_send.php", true, "", sendData, onSuccess, function (err) { newMsgBox("出现错误，发送失败。<br>服务器返回错误 " + err['info']) });
+        sendCover.setAttribute("open", "true");
+        newAjax("POST", "/post_send.php", true, "", sendData, function () { sendCover.setAttribute("open", "false"); onSuccess(); }, function (err) { sendCover.setAttribute("open", "false"); newMsgBox("出现错误，发送失败。<br>服务器返回错误 " + err['info']) });
     }
 }
 

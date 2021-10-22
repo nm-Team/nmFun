@@ -101,10 +101,20 @@ function getRandomStr($len, $special = false)
     }
 
     $charsLen = count($chars) - 1;
-    shuffle($chars);                            //打乱数组顺序
+    shuffle($chars); //打乱数组顺序
     $str = '';
     for ($i = 0; $i < $len; $i++) {
-        $str .= $chars[mt_rand(0, $charsLen)];    //随机取出一位
+        $str .= $chars[mt_rand(0, $charsLen)]; //随机取出一位
     }
     return $str;
+}
+
+function cleanHTMLTag($text)
+{
+    $text = preg_replace("/<[\/\s]*(?:(?!div|br)[^>]*)>/", '', $text);
+    $text = preg_replace("/<\s*div[^>]*>/", '<div>', $text);
+    $text = preg_replace("/<\s*div[^>]*>/", '<div>', $text);
+    $text = preg_replace("/<[\/\s]*div[^>]*>/", '<br>', $text);
+    $text = preg_replace("/<br><br>/", '<br>', $text);
+    return $text;
 }

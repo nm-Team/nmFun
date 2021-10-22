@@ -554,10 +554,10 @@ function logRequire() {
 }
 
 function cleanHTMLTag(text) {
-    // text = text.replace(/<[\/\s]*(?:(?!div|br)[^>]*)>/g, '');
-    // text = text.replace(/<\s*div[^>]*>/g, '<div>');
-    // text = text.replace(/<\s*div[^>]*>/g, '<div>');
-    // text = text.replace(/<[\/\s]*div[^>]*>/g, '<br>');
-    // text = text.replace(/<br><br>/g, '<br>');
+    text = text.replace(/<[\/\s]*(?:(?!div|br)[^>]*)>/g, '');
+    text = text.replace(/<\s*div[^>]*>/g, '<div>');
+    text = text.replace(/<\s*div[^>]*>/g, '<div>');
+    text = text.replace(/<[\/\s]*div[^>]*>/g, '<br>');
+    text = text.replace(/<br><br>/g, '<br>');
     return text;
 }
