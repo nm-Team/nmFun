@@ -30,13 +30,13 @@ body{
 body[theme=dark]{
     --page-bgcolor: rgb(1,1,1);
     --header-bgcolor: #292929;
-    --selection-bgcolor: rgba(233, 233, 233, 0.795);
+    --selection-bgcolor: rgba(131, 131, 131, 0.795);
     --header-buttoncolor: #dddddd;
     --header-buttoncolor-hover: #7979799d;
     --header-shadow: #252525 0rem -5rem 14rem;
     --header-title: #fcfcfc;
-    --header-little: rgb(207, 207, 207);
-    --scroller-grey: #ffffffa1;
+    --header-little: rgb(131, 131, 131);
+    --scroller-grey: #616161a1;
     --contextmenu-bgcolor: #2d2d2d;
     --contextmenu-hover-bgcolor: #3e3e3e;
     --contextmenu: rgb(255, 255, 255);
@@ -77,7 +77,11 @@ body[transitioncolor], body[transitioncolor] *{
     background-color: var(--selection-bgcolor);
 }
 *:focus-visible{
-    /* border: 1.8px solid var(--visible-color)!important; */
+}
+*[noselect]{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
 }
 button{
     cursor: pointer;
@@ -159,7 +163,7 @@ header .left{
     flex-shrink: 1;
     display: flex;
     flex-direction: row;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 header .right{
     display: flex;

@@ -329,3 +329,13 @@ function closePop(ele, totally = false) {
         }, 1000);
     }
 }
+
+// 首页typeSelecter自动操作与记忆
+if (!localStorage.typeSelected) localStorage.typeSelected = "indexType_all";
+
+document.getElementById(localStorage.typeSelected).click();
+
+function indexSwitchType(typeName) {
+    newMsgBox("帖子展示功能开发中");
+    localStorage.typeSelected = "indexType_" + typeName;
+}

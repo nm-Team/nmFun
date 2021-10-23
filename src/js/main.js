@@ -530,6 +530,7 @@ function newAjax(type, file, session, getParam, postParam, succeedF = function (
         },
         error: function () {
             newMsgBox("服务器故障，请重试。");
+            faliureF("Something wrong with the server");
             return null;
         }
     });

@@ -48,7 +48,7 @@ require("./api/functions.php");
 </head>
 
 <body>
-    <div id="hcont">
+    <div id="hcont" noselect>
         <div class="placeHolder"></div>
         <div class="header" id="pageHeader">
             <div class="left" onclick="headerClick();" tabindex="">
@@ -96,7 +96,7 @@ require("./api/functions.php");
                     <div class="swiper-button-prev"></div>
                     <div class="swiper-button-next"></div>
                 </div>
-                <div class="typeContainer">
+                <div class="typeContainer" noselect>
                     <div class="typeSelecter" id="indexTypeSelecter">
                         <?php
                         for ($i = 0; $i < count(($types)); $i++) {
@@ -161,13 +161,13 @@ require("./api/functions.php");
                 </div>
             </div>
             <div class="right">
-            <button onclick="sendPost(commentEditBox,'comment',function(){showPostInput('comment',false);newMsgBox('回复发送成功！');setPostInputArea(commentEditBox, 'comment');})"><i class="material-icons">send</i></button>
+                <button onclick="sendPost(commentEditBox,'comment',function(){showPostInput('comment',false);newMsgBox('回复发送成功！');setPostInputArea(commentEditBox, 'comment');})"><i class="material-icons">send</i></button>
             </div>
         </header>
         <div class="content" id="commentEditBox">
         </div>
     </div>
-    <div id="sendCover">
+    <div id="sendCover" noselect>
         <div class="content">
             <i></i>
             <p>正在发送</p>
@@ -177,6 +177,7 @@ require("./api/functions.php");
     <script src="https://cdn.cncn3.cn/webstatic/d1e2b36ce909e/swiper-bundle.min.js"></script>
     <script src="<?php echo siteURL; ?>/src/js/main.js"></script>
     <script src="<?php echo siteURL; ?>/src/js/content.js"></script>
+    <script src="<?php echo siteURL; ?>/src/js/user.js"></script>
     <script src="<?php echo siteURL; ?>/src/js/index.js"></script>
     <script src="<?php echo siteURL; ?>/src/js/viewer.min.js"></script>
     <script src="<?php echo accountClient; ?>/src/js/getinfo.js" onerror="newMsgBox('账号服务器连接失败')"></script>

@@ -94,6 +94,9 @@ body[theme=dark]{
 .typeSelecter label input:checked + span{
     font-weight: bold;
 }
+.typeSelecter label input:focus-visible + span{
+    outline: auto;
+}
 .typeSelecter label input:hover + span{
     background: var(--type-selecter-hover-bgcolor);
 }
