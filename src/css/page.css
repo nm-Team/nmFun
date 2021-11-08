@@ -76,7 +76,9 @@ body[transitioncolor], body[transitioncolor] *{
 *::selection{
     background-color: var(--selection-bgcolor);
 }
-*:focus-visible{
+:focus-visible {
+    outline: 4px solid rgb(250 187 0 / 60%);
+    outline-offset: 1px;
 }
 *[noselect]{
     -webkit-user-select: none;

@@ -176,7 +176,7 @@ window.onresize = fixIndexAni();
 fixIndexAni();
 
 // 返回事件
-function quickBack(div) {
+function quickBack(div, ele) {
     var divList = getOpenBoxes(div);
     msgContextMenuItems = [];
     for (quickMenuNum = 0; quickMenuNum < divList.length + 1; quickMenuNum++) {
@@ -192,7 +192,7 @@ function quickBack(div) {
                 msgContextMenuItems[quickMenuNum][1] += "closeBox('" + div + "','" + divList[quickMenuClickToDoNum][1] + "');";
         }
     }
-    createContextMenu(msgContextMenuItems);
+    createContextMenu(msgContextMenuItems, undefined, undefined, ele);
 }
 // PWA-BETA
 if ('serviceWorker' in navigator) {
@@ -239,11 +239,20 @@ window.onkeydown = function (event) {
         if (document.getElementsByClassName("contextMenu").length > 0) {
             document.getElementsByClassName("contextMenu")[document.getElementsByClassName("contextMenu").length - 1].click();
         }
+        // 否则，删除顶栏的open参数
+        pageHeader.removeAttribute("open");
         return false;
     }
     // Enter 关闭 alert
     if (enter && document.getElementsByClassName("alertBox").length > 0 && document.activeElement.className.indexOf("negative") == -1) {
         document.getElementsByClassName("alertBox")[document.getElementsByClassName("alertBox").length - 1].getElementsByClassName("positive")[0].click();
+    }
+    // Ctrl+N打开发帖
+    if (ctrl && event.keyCode == 78) {
+        console.log(9)
+        showPostInput('send', true);
+        event.returnValue = false;
+        return false;
     }
     // Ctrl Enter 和 Ctrl Shift Enter 发送消息
     // sendKey = localStorage.getItem("sendKey");

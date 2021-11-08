@@ -16,36 +16,43 @@ function newPostDetailPage(pid, noOther = false, aheadTo = "") {
             new_element.innerHTML = postTemplate.replace(/{{pid}}/g, pid).replace(/{{postSke}}/g, postSke);
             pageRight.appendChild(new_element);
             focusBox("pageRight", "postFrame" + pid, noOther);
-            newAjax("POST", "post_get.php", true, "", { type: "post", id: pid }, function (data) {
-                document.getElementById('postFrame' + pid).getElementsByClassName("postMainSke")[0].style.display = "none";
-                setPostArea(document.getElementById('postFrame' + pid).getElementsByClassName("postMainReal")[0], data['info'], { slug: false, click: false, fullmedia: false });
-                // 计算tag
-                if (data['info']['code'] == 200) {
-                    tagsHTML = ``;
-                    tagsIn.forEach(function (currentValue, index, arr) {
-                        tagsHTML += `<a href="javascript:" onclick="newMsgBox('开发中')">` + currentValue + `</a>`;
-                    });
-                    document.getElementById('postFrame' + pid).getElementsByClassName("postRelated")[0].innerHTML = `
-                    <div class="card tagCard"><div class="content"><a class="ca" href="javascript:" onclick="newMsgBox('开发中')" >`+ data['info']['categoryName'] + `</a>
-                    <div class="tags">`+ tagsHTML + `</div> </div>
-                    </div><div class="card interactionBar"><button onclick="newMsgBox('开发中')">评论 <span class="commentNum">`+ data['info']['commentsNum'] + `</span></button><button onclick="newMsgBox('开发中')">赞 <span class="likeNum">` + data['info']['likeNum'] + `</span></button> </div>
-                    `;
-                    document.getElementById('postFrame' + pid).getElementsByClassName("inputBox")[0].style.display = "block";
-                }
-                else {
-                    document.getElementById('postFrame' + pid).getElementsByClassName("inputBox")[0].style.display = "none";
-                }
-            }, function () { newMsgBox("帖子加载失败") });
         }
         // 定位到某个位置
-        if (aheadTo) {
-
-        }
+        if (aheadTo) { }
+        refreshPostArea(pid);
     }
     catch (err) {
         console.error(err);
         newErrorBox("newChatBox", err);
     }
+}
+
+function refreshPostArea(pid) {
+    newAjax("POST", "post_get.php", true, "", { type: "post", id: pid }, function (data) {
+        document.getElementById('postFrame' + pid).getElementsByClassName("postMainSke")[0].style.display = "none";
+        setPostArea(document.getElementById('postFrame' + pid).getElementsByClassName("postMainReal")[0], data['info'], { slug: false, click: false, fullmedia: false });
+        // 计算tag
+        if (data['info']['code'] == 200) {
+            tagsHTML = ``;
+            tagsIn.forEach(function (currentValue, index, arr) {
+                tagsHTML += `<a href="javascript:" onclick="newMsgBox('开发中')">` + currentValue + `</a>`;
+            });
+            document.getElementById('postFrame' + pid).getElementsByClassName("postRelated")[0].innerHTML = `
+            <div class="card tagCard"><div class="content"><a class="ca" href="javascript:" onclick="newMsgBox('开发中')" >`+ data['info']['categoryName'] + `</a>
+            <div class="tags">`+ tagsHTML + `</div> </div>
+            </div><div class="card interactionBar"><button onclick="newMsgBox('开发中')">评论 <span class="commentNum">`+ data['info']['commentsNum'] + `</span></button><button onclick="newMsgBox('开发中')">赞 <span class="likeNum">` + data['info']['likeNum'] + `</span></button> </div>
+            `;
+            document.getElementById('postFrame' + pid).getElementsByClassName("inputBox")[0].style.display = "block";
+        }
+        else {
+            document.getElementById('postFrame' + pid).getElementsByClassName("inputBox")[0].style.display = "none";
+        }
+    }, function () {
+        newMsgBox("帖子加载失败");
+        document.getElementById('postFrame' + pid).getElementsByClassName("inputBox")[0].style.display = "none";
+        document.getElementById('postFrame' + pid).getElementsByClassName("postMainSke")[0].style.display = "none";
+        setPostArea(document.getElementById('postFrame' + pid).getElementsByClassName("postMainReal")[0], { "code": "NETWORK_ERROR" }, { slug: false, click: false, fullmedia: false });
+    });
 }
 
 // 设置新帖子区域
@@ -75,7 +82,7 @@ function setPostArea(div, data, config = { "slug": false, "click": false, "fullm
                 <svg class="yes" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
                     <path d="M710.549333 384.810667a12409.045333 12409.045333 0 0 0 47.466667-0.32l8.746667-0.085334c83.989333-0.618667 141.44 67.584 126.72 150.229334L847.296 794.026667c-10.026667 56.448-63.914667 101.546667-121.130667 101.589333L298.624 896a42.730667 42.730667 0 0 1-42.666667-42.410667l-0.810666-383.978666a42.666667 42.666667 0 0 1 42.026666-42.666667l3.157334-0.064c5.226667-0.042667 11.797333-0.042667 19.626666 0 91.946667 0.768 170.88-86.698667 170.709334-170.944-0.149333-86.741333 39.786667-126.762667 106.453333-127.573333 62.250667-0.746667 106.602667 59.605333 107.349333 149.12 0.213333 26.602667-6.293333 73.237333-14.506666 107.434666 6.186667 0 13.077333-0.042667 20.586666-0.085333z m-497.706666 63.232L213.333333 874.624A21.312 21.312 0 0 1 191.786667 896H149.525333A21.333333 21.333333 0 0 1 128 874.624l0.042667-426.581333A21.269333 21.269333 0 0 1 149.44 426.666667h41.984c11.669333 0 21.418667 9.578667 21.418667 21.376z" p-id="4969"></path>
                 </svg>
-                <span class="likeNum">`+ data['likeNum'] + `</span>
+                <span class="likeNum">` + data['likeNum'] + `</span>
             </button>
             <button onclick="" class="unlikeButton" title="不喜欢">
                 <svg class="no" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -85,7 +92,7 @@ function setPostArea(div, data, config = { "slug": false, "click": false, "fullm
                     <path d="M710.549333 384.810667a12409.045333 12409.045333 0 0 0 47.466667-0.32l8.746667-0.085334c83.989333-0.618667 141.44 67.584 126.72 150.229334L847.296 794.026667c-10.026667 56.448-63.914667 101.546667-121.130667 101.589333L298.624 896a42.730667 42.730667 0 0 1-42.666667-42.410667l-0.810666-383.978666a42.666667 42.666667 0 0 1 42.026666-42.666667l3.157334-0.064c5.226667-0.042667 11.797333-0.042667 19.626666 0 91.946667 0.768 170.88-86.698667 170.709334-170.944-0.149333-86.741333 39.786667-126.762667 106.453333-127.573333 62.250667-0.746667 106.602667 59.605333 107.349333 149.12 0.213333 26.602667-6.293333 73.237333-14.506666 107.434666 6.186667 0 13.077333-0.042667 20.586666-0.085333z m-497.706666 63.232L213.333333 874.624A21.312 21.312 0 0 1 191.786667 896H149.525333A21.333333 21.333333 0 0 1 128 874.624l0.042667-426.581333A21.269333 21.269333 0 0 1 149.44 426.666667h41.984c11.669333 0 21.418667 9.578667 21.418667 21.376z" p-id="4969"></path>
                 </svg>
             </button>
-            <button onclick="newPostDetailPage(`+ data['id'] + `, undefined, 'comments');" title="评论">
+            <button onclick="newPostDetailPage(` + data['id'] + `, undefined, 'comments');" title="评论">
                 <svg class="comment" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
                     <path d="M853.333333 768c35.413333 0 64-20.650667 64-55.978667V170.581333A63.978667 63.978667 0 0 0 853.333333 106.666667H170.666667C135.253333 106.666667 106.666667 135.253333 106.666667 170.581333v541.44C106.666667 747.285333 135.338667 768 170.666667 768h201.173333l110.016 117.44a42.752 42.752 0 0 0 60.586667 0.042667L651.904 768H853.333333z m-219.029333-42.666667h-6.250667l-115.797333 129.962667c-0.106667 0.106667-116.010667-129.962667-116.010667-129.962667H170.666667c-11.776 0-21.333333-1.621333-21.333334-13.312V170.581333A21.205333 21.205333 0 0 1 170.666667 149.333333h682.666666c11.776 0 21.333333 9.536 21.333334 21.248v541.44c0 11.754667-9.472 13.312-21.333334 13.312H634.304zM341.333333 490.666667a42.666667 42.666667 0 1 0 0-85.333334 42.666667 42.666667 0 0 0 0 85.333334z m170.666667 0a42.666667 42.666667 0 1 0 0-85.333334 42.666667 42.666667 0 0 0 0 85.333334z m170.666667 0a42.666667 42.666667 0 1 0 0-85.333334 42.666667 42.666667 0 0 0 0 85.333334z" p-id="5116"></path>
                 </svg>
@@ -102,7 +109,7 @@ function setPostArea(div, data, config = { "slug": false, "click": false, "fullm
                 <svg class="yes" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
                     <path d="M710.549333 384.810667a12409.045333 12409.045333 0 0 0 47.466667-0.32l8.746667-0.085334c83.989333-0.618667 141.44 67.584 126.72 150.229334L847.296 794.026667c-10.026667 56.448-63.914667 101.546667-121.130667 101.589333L298.624 896a42.730667 42.730667 0 0 1-42.666667-42.410667l-0.810666-383.978666a42.666667 42.666667 0 0 1 42.026666-42.666667l3.157334-0.064c5.226667-0.042667 11.797333-0.042667 19.626666 0 91.946667 0.768 170.88-86.698667 170.709334-170.944-0.149333-86.741333 39.786667-126.762667 106.453333-127.573333 62.250667-0.746667 106.602667 59.605333 107.349333 149.12 0.213333 26.602667-6.293333 73.237333-14.506666 107.434666 6.186667 0 13.077333-0.042667 20.586666-0.085333z m-497.706666 63.232L213.333333 874.624A21.312 21.312 0 0 1 191.786667 896H149.525333A21.333333 21.333333 0 0 1 128 874.624l0.042667-426.581333A21.269333 21.269333 0 0 1 149.44 426.666667h41.984c11.669333 0 21.418667 9.578667 21.418667 21.376z" p-id="4969"></path>
                 </svg>
-                <span class="likeNum">`+ data['likeNum'] + `</span>
+                <span class="likeNum">` + data['likeNum'] + `</span>
             </button>
             <button onclick="" class="unlikeButton" title="不喜欢">
                 <svg class="no" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -151,7 +158,7 @@ function setPostArea(div, data, config = { "slug": false, "click": false, "fullm
         div.innerHTML = postAreaTemplate.replace(/{{type}}/g, data['type']).replace(/{{id}}/g, data['id']).replace(/{{slug}}/g, (config.slug ? "slug" : "")).replace(/{{time}}/g, data['time']).replace(/{{status}}/g, statusW).replace(/{{view}}/g, data['view']).replace(/{{href}}/g, (config.click ? `href="/post/` + data['id'] + `"onclick="{event.preventDefault(); newPostDetailPage('` + data['id'] + `',true);return false;}"` : '')).replace(/{{content}}/g, contentHandled).replace(/{{nick}}/g, data['author']['nick']).replace(/{{avatar}}/g, data['author']['avatar']).replace(/{{uid}}/g, data['author']['uid']).replace(/{{buttons}}/g, buttonsGiven).replace(/{{medias}}/g, mediasHTML).replace(/{{specialMedias}}/g, specialMediasHTML).replace(/{{mediatype}}/g, mediaType);
     }
     else {
-        div.innerHTML = postAreaUnavaliableTemplate.replace(/{{w}}/g, errorCode[data['code']]);
+        div.innerHTML = postAreaUnavaliableTemplate.replace(/{{w}}/g, errorCode[data['code']]).replace(/{{pid}}/g, errorCode[data['id']]);
     }
 }
 
@@ -178,7 +185,7 @@ function changeInputBoxMoreStatus(id, className, toFalse = false) {
 
 // post 卡片菜单
 function postContextMenu(type, id, ele) {
-    createContextMenu([["开发中"]], undefined, undefined, ele);
+    createContextMenu([[""], (9 ? 0 : 0)], undefined, undefined, ele);
 }
 
 // 设置发帖回帖区域
@@ -248,7 +255,7 @@ function sendPost(div, postType, onSuccess) {
 postTemplate = `
 <header>
 <div class="left">
-    <button class="backButton" onclick="closeBox('pageRight','postFrame{{pid}}')" oncontextmenu="quickBack('pageRight')" ontouchstart="longPressToDo(function(){quickBack('pageRight')})" ontouchend="longPressStop()"><i class="material-icons">&#xe5c4;</i></button>
+    <button class="backButton" onclick="closeBox('pageRight','postFrame{{pid}}')" oncontextmenu="quickBack('pageRight',this)" ontouchstart="longPressToDo(function(){quickBack('pageRight',this)})" ontouchend="longPressStop()"><i class="material-icons">&#xe5c4;</i></button>
     <div class="nameDiv">
         <p class="title">详情</p>
         <p class="little"></p>
@@ -345,17 +352,18 @@ postAreaTemplate = `
 `;
 
 postAreaUnavaliableTemplate = `
-<div class="unavaliable" noselect><i></i><p>{{w}}</p></div>`;
+<div class="unavaliable" noselect><i></i><p>{{w}}</p><center onclick='refreshPostArea({{pid}})'>重试</center></div>`;
 
 errorCode = {
     "403": "内容已被封锁，您无权查看",
-    "404": "内容可能去了另一个星球"
+    "404": "内容可能去了另一个星球",
+    "NETWORK_ERROR": "无法连接到服务器"
 };
 
 biliVideoTemplate = `<iframe class="biliVideo" frameborder="no" scrolling="no" src="https://player.bilibili.com/player.html?bvid={{bvid}}&page={{page}}&as_wide=1&high_quality=1" allowfullscreen=""></iframe>`;
 
 sendBoxTemplate = `
-<select hideincomment class="categoryS" placeholder="请选择分区…">{{cg}}</select>
+<select hideincomment class="categoryS" placeholder="请选择分区…" title="请选择分区…">{{cg}}</select>
 <textarea class="sendBoxInput" placeholder="说点什么吧……"></textarea>
 <div class="mediasBox" noselect></div>
 <div class="inputBox">

@@ -59,7 +59,7 @@ require("./api/functions.php");
                 <div class="links">
                     <?php
                     for ($i = 0; $i < count($header); $i++) {
-                        echo '<button onclick="' . $header[$i][1] . '">' . $header[$i][0] . '</button>';
+                        echo '<button onclick="' . $header[$i][1] . '" title="' . $header[$i][0] . '">' . $header[$i][0] . '</button>';
                     }
                     ?>
                 </div>
