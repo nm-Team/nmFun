@@ -1,0 +1,17 @@
+{
+    "name": "nmTeam 乐子站",
+    "short_name": "nmTeam 乐子站",
+    "description": "nmTeam 乐子站，快乐每一天。",
+    "icons": [
+        {
+            "src": "/src/img/logo.svg",
+            "type": "image/svg",
+            "sizes": "150x150"
+        }
+    ],
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff"
+}

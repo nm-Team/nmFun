@@ -1,0 +1,381 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>{{Title}}</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='format-detection' content='telephone=no'>
+    <link rel="stylesheet" type="text/css" href="src/css/header.css">
+    <link rel="manifest" href="src/json/manifest.json">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="src/img/icon-files/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="src/img/icon-files/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="src/img/icon-files/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon-precomposed" href="src/img/icon-files/apple-touch-icon-57x57.png">
+    <link rel="stylesheet" type="text/css" href="src/css/page.css">
+    <link rel="stylesheet" type="text/css" href="src/css/card.css">
+    <link rel="stylesheet" type="text/css" href="src/css/left.css">
+    <link rel="stylesheet" type="text/css" href="src/css/post.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.cncn3.cn/webstatic/0b179cec2c0ed/swiper-bundle.min.css">
+    <link rel="stylesheet" type="text/css" href="src/css/viewer.min.css">
+    <link rel="stylesheet" type="text/css" href="src/css/index.css">
+    <script>
+        siteURL = "{{SiteURL}}";
+        accountClient = "{{AccountClient}}";
+        mySettings = {
+            "zone": '{{Zone}}'
+        };
+        categoryList = [];
+    </script>
+</head>
+
+<body>
+    <div id="hcont" noselect>
+        <div class="placeHolder"></div>
+        <div class="header" id="pageHeader">
+            <div class="left" onclick="headerClick();" tabindex="">
+                <i class="logo" style="background-image: url('{{SiteLogo}}');"></i>
+                <p class="name">{{Title}}</p>
+            </div>
+            <div class="right" onclick='pageHeader.removeAttribute("open");'>
+                <div class="links">
+                    <button onclick="window.location.href=''" title="首页">首页</button><button onclick=""
+                        title="搜索">搜索</button><button onclick="showPostInput('send',true)" title="投稿">投稿</button><button
+                        onclick="window.open('https://nmteam.xyz?from=nmfun')" title="nmTeam">nmTeam</button>
+                </div>
+                <div class="accountBox" id="accountBox" tabindex="0" title="点击来登录或管理您的账号" onmouseover="myMenu(true);"
+                    onkeydown="divClick(this, event)">
+                    <i id="avatarBox"></i>
+                    <p id="userName">正在加载</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="myMenuContainer">
+        <div id="myContextMenu" class="contextMenu" onclick="myMenu(false)" icon="true">
+            <button onclick="userInfo(myUid)"><i class="material-icons">account_circle</i>个人页面</button>
+            <div class="line"></div><button
+                onclick="window.open(accountClient+'/info.html?sessionid='+localStorage.sessionid);"><i
+                    class="material-icons"></i>nmTeam Account Center</button>
+            <button onclick="alert('确定要注销账号吗？','注销','是','localStorage.sessionid=``;window.location.href=``;','取消')"><i
+                    class="material-icons"></i>注销账号</button>
+        </div>
+    </div>
+    <div class="bodyMain" id="bodyMain" thin>
+        <!-- 此处thin控制右栏是否展示 agou 211113 -->
+        <div class="pageLeft" id="pageLeft" show noani="true">
+            <div class="indexFrame leftBox box" id="indexFrame" con="on" noani>
+                <div class="mobileHolder"></div>
+                <!-- Swiper，即轮播图 -->
+                <div class="swiper-container indexSwiper" style="">
+                    <!-- 此处若设置关闭滚动图display为none agou 211113 -->
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" onclick="alert('诶嘿，这个不可以点哦')"
+                            style="background-image: url(&quot;https://i.zerodream.net/652a55e4761d0422555a878c8b9a7c1d.png&quot;); background-position: 50% 50%; width: 780px;">
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+                <div class="typeContainer" noselect>
+                    <div class="typeSelecter" id="indexTypeSelecter">
+                        <label for="indexType_focused"><input id="indexType_focused"
+                                onclick="indexSwitchType(`focused`);" type="radio"
+                                name="indexType"><span>关注</span></label><label for="indexType_all"><input
+                                id="indexType_all" onclick="indexSwitchType(`all`);" type="radio"
+                                name="indexType"><span>全部</span></label><label for="indexType_selected"><input
+                                id="indexType_selected" onclick="indexSwitchType(`selected`);" type="radio"
+                                name="indexType"><span>精选</span></label><label for="indexType_special_hot"><input
+                                id="indexType_special_hot" onclick="indexSwitchType(`special_hot`);" type="radio"
+                                name="indexType"><span>热榜</span></label><label for="indexType_network"><input
+                                id="indexType_network" onclick="indexSwitchType(`network`);" type="radio"
+                                name="indexType"><span>网络</span></label><label for="indexType_live"><input
+                                id="indexType_live" onclick="indexSwitchType(`live`);" type="radio"
+                                name="indexType"><span>生活</span></label>
+                    </div>
+                </div>
+                <div id="indexMainCards" class="equalPages">
+                    <div class="postBox cardBox postCardBox">
+                        <div class="cardBox">
+                            <div class="postMainSke">
+                                <div class="card avatarBox ">
+                                    <div class="header" noselect>
+                                        <a class="name"><i class="skeleton noscale"></i>
+                                            <div>
+                                                <p class="unick skeleton" style="width: 4em">.</p>
+                                                <p class="time skeleton" style="width: 4em">.</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="content" noselect>
+                                        <p class="skeleton sentence">.</p>
+                                        <p class="skeleton sentence">.</p>
+                                        <p class="skeleton sentence">.</p>
+                                    </div>
+                                    <div class="bottom" noselect>
+                                        <div class="word">
+                                            <p class="skeleton" style="width: 6em">.</p>
+                                        </div>
+                                        <div class="buttons">
+                                            <button disabled class="skeleton" style="width: 3em">.</button><button
+                                                disabled class="skeleton" style="width: 3em">.</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="postMainReal card avatarBox">
+                                <div class="header">
+                                    <a class="name" tabindex="0" onclick="newUserInfoPage('{{uid}}');"
+                                        onkeydown="divClick(this, event)"><i
+                                            style="background-image:url('{{avatar}}')"></i>
+                                        <div>
+                                            <p class="unick">{{nick}}</p>
+                                            <p class="time" time="true" timestamp="{{time}}" timestyle="relative"
+                                                timesec="false" timefull="false" title="null-null-null null:null:null">
+                                                </p>
+                                        </div>
+                                    </a>
+                                    <div class="buttons">
+                                        <button onclick="postContextMenu('{{type}}', '{{id}}', this);"><i
+                                                class="material-icons">more_vert</i></button>
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    <p class="status">{{status}}</p>
+                                    <a href="" target="_blank" onclick="" class="text"><object class="{{slug}}">
+                                            <p>{{content}}</p>
+                                        </object></a>
+                                        <!-- 注：预览页（而不是详情页）此处的设定是点content进入详情页 -->
+                                        <!-- 同时设置onclick（优先）和a标签（新窗口打开，target=blank） -->
+                                    <div class="media">
+                                        <ui class="medias" id="tes" type="x{{mediatype}}">{{medias}}</ui>
+                                        {{specialMedias}}
+                                    </div>
+                                </div>
+                                <div class="bottom">
+                                    <div class="word">
+                                        <p>浏览<span class="viewNum">{{view}}</span>次</p>
+                                    </div>
+                                    <div class="buttons">{{buttons}} </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widthChanger" id="widthChanger" draggable="true"></div>
+        <div class="pageRight" id="pageRight" open noani="true">
+            <div id="postFrame{{pid}}" class="postFrame box rightBox" con="on" totallyclose="" pid="{{pid}}" name="详情"
+                noother="" from="" oprt="" top="true">
+                <header>
+                    <div class="left">
+                        <button class="backButton" onclick="closeBox('pageRight','postFrame{{pid}}')"
+                            oncontextmenu="quickBack('pageRight',this)"
+                            ontouchstart="longPressToDo(function(){quickBack('pageRight',this)})"
+                            ontouchend="longPressStop()"><i class="material-icons">&#xe5c4;</i></button>
+                        <div class="nameDiv">
+                            <p class="title">详情</p>
+                            <p class="little"></p>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <button style="display:none" onclick=""><i class="material-icons">&#xe5d3;</i></button>
+                    </div>
+                </header>
+                <div class="postBox cardBox postCardBox main">
+                    <div class="postMainSke">
+                        <div class="card avatarBox ">
+                            <div class="header" noselect>
+                                <a class="name"><i class="skeleton noscale"></i>
+                                    <div>
+                                        <p class="unick skeleton" style="width: 4em">.</p>
+                                        <p class="time skeleton" style="width: 4em">.</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="content" noselect>
+                                <p class="skeleton sentence">.</p>
+                                <p class="skeleton sentence">.</p>
+                                <p class="skeleton sentence">.</p>
+                            </div>
+                            <div class="bottom" noselect>
+                                <div class="word">
+                                    <p class="skeleton" style="width: 6em">.</p>
+                                </div>
+                                <div class="buttons">
+                                    <button disabled class="skeleton" style="width: 3em">.</button><button disabled
+                                        class="skeleton" style="width: 3em">.</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card tagCard">
+                            <div class="content"><a class="ca skeleton" style="width: 3em;margin-right: 5px">.</a>
+                                <a class="ca skeleton" style="width: 3em;margin-right: 5px">.</a> <a class="ca skeleton"
+                                    style="width: 3em;margin-right: 5px">.</a>
+                            </div>
+                        </div>
+                        <div class="card interactionBar">
+                            <button disabled class="skeleton" style="margin: -5px 0px;width: 3em">.</button> <button
+                                disabled class="skeleton" style="margin: -5px 0px;width: 3em">.</button>
+                        </div>
+                    </div>
+                    <div class="postMainReal card avatarBox">
+                        <div class="header">
+                            <a class="name" tabindex="0" onclick="newUserInfoPage('{{uid}}');"
+                                onkeydown="divClick(this, event)"><i style="background-image:url('{{avatar}}')"></i>
+                                <div>
+                                    <p class="unick">{{nick}}</p>
+                                    <p class="time" time="true" timestamp="{{time}}" timestyle="relative"
+                                        timesec="false" timefull="false"></p>
+                                </div>
+                            </a>
+                            <div class="buttons">
+                                <button onclick="postContextMenu('{{type}}', '{{id}}', this);"><i
+                                        class="material-icons">more_vert</i></button>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <p class="status">{{status}}</p>
+                            <a {{href}} class="text"><object class="{{slug}}">
+                                    <p>{{content}}</p>
+                                </object></a>
+                            <div class="media">
+                                <ui class="medias" id="tes" type="x{{mediatype}}">{{medias}}</ui>
+                                {{specialMedias}}
+                            </div>
+                        </div>
+                        <div class="bottom">
+                            <div class="word">
+                                <p>浏览<span class="viewNum">{{view}}</span>次</p>
+                            </div>
+                            <div class="buttons">{{buttons}} </div>
+                        </div>
+                    </div>
+                    <div class="postRelated" noselect></div>
+                    <div class="card comments avatarBox" style="">
+                        <div class="header">
+                            <h2 noselect>评论</h2>
+                            <div class="buttons"><button onclick="showCommentTypeSwitch('{{pid}}')"><i
+                                        class="material-icons">swap_horiz</i></button></div>
+                        </div>
+                        <div class="commentsReal"></div>
+                        <div class="comment skeBox">
+                            <div class="header" noselect>
+                                <a class="name"><i class="skeleton noscale"></i>
+                                    <div>
+                                        <p class="unick skeleton" style="width: 4em">.</p>
+                                        <p class="time skeleton" style="width: 4em">.</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="content" noselect>
+                                <p class="skeleton sentence">.</p>
+                                <p class="skeleton sentence">.</p>
+                                <p class="skeleton sentence">.</p>
+                            </div>
+                            <div class="bottom" noselect>
+                                <div class="word">
+                                    <p class="skeleton" style="width: 6em">.</p>
+                                </div>
+                                <div class="buttons">
+                                    <button disabled class="skeleton" style="width: 3em">.</button><button disabled
+                                        class="skeleton" style="width: 3em">.</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="inputBox">
+                    <div class="inputSurface">
+                        <div onclick="newMsgBox('开发中')" class="fakeInput" tabindex="0" onkeydown="divClick(this, event)"
+                            title="点击来发表评论">精彩的评论也是乐子的一部分</div>
+                        <button onclick="newMsgBox('开发中')" class="starButton"><i
+                                class="material-icons star">star_border</i><i
+                                class="material-icons starred">star</i></button>
+                        <button onclick="newMsgBox('开发中')" class="share"><i class="material-icons">share</i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="coverWithColor" id="logCover" hidden></div>
+    <div id="logPop" style="z-index: 1004;" class="popFrame browserFrame specialBrowserFrame" open="false">
+        <header>
+            <div class="left">
+                <div class="nameDiv">
+                    <p class="title">登录</p>
+                    <p class="little">通过 nmTeam Account Center</p>
+                </div>
+            </div>
+            <div class="right">
+                <button onclick="closeLogFrame()"><i class="material-icons">keyboard_arrow_down</i></button>
+            </div>
+        </header>
+        <div class="content">
+            <iframe id="logIframe"></iframe>
+        </div>
+    </div>
+    <div class="coverWithColor" id="sendEditBoxCover" hidden></div>
+    <div id="sendEdit" class="popFrame" open="false">
+        <header>
+            <div class="left">
+                <button onclick="showPostInput('send',false)"><i class="material-icons">keyboard_arrow_down</i></button>
+                <div class="nameDiv">
+                    <p class="title">发帖</p>
+                    <p class="little"></p>
+                </div>
+            </div>
+            <div class="right">
+                <button
+                    onclick="sendPost(sendEditBox,'post',function(){showPostInput('send',false);newMsgBox('帖子发送成功！');setPostInputArea(sendEditBox, 'post');})"><i
+                        class="material-icons">send</i></button>
+            </div>
+        </header>
+        <div class="content" id="sendEditBox">
+        </div>
+    </div>
+    <div class="coverWithColor" id="commentEditBoxCover" hidden></div>
+    <div id="commentEdit" class="popFrame" open="false">
+        <header>
+            <div class="left">
+                <button onclick="showPostInput('comment',false)"><i
+                        class="material-icons">keyboard_arrow_down</i></button>
+                <div class="nameDiv">
+                    <p class="title">回复</p>
+                    <p class="little"></p>
+                </div>
+            </div>
+            <div class="right">
+                <button
+                    onclick="sendPost(commentEditBox,'comment',function(){showPostInput('comment',false);newMsgBox('回复发送成功！');setPostInputArea(commentEditBox, 'comment');})"><i
+                        class="material-icons">send</i></button>
+            </div>
+        </header>
+        <div class="content" id="commentEditBox">
+        </div>
+    </div>
+    <div id="sendCover" noselect>
+        <div class="content">
+            <i></i>
+            <p>正在发送</p>
+        </div>
+    </div>
+    <script src="src/js/jquery.min.js"></script>
+    <script src="https://cdn.cncn3.cn/webstatic/d1e2b36ce909e/swiper-bundle.min.js"></script>
+    <script src="src/js/main.js"></script>
+    <script src="src/js/content.js"></script>
+    <script src="src/js/user.js"></script>
+    <script src="src/js/index.js"></script>
+    <script src="src/js/viewer.min.js"></script>
+    <script src="{{AccountClient}}/src/js/getinfo.js" onerror="newMsgBox('账号服务器连接失败')"></script>
+    <script src="src/js/accounts.js"></script>
+    <script src="src/js/browser.js"></script>
+</body>
+
+</html>

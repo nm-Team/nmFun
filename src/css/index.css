@@ -1,0 +1,464 @@
+body{
+    --i-bgcolor: #9191911c;
+    --red: rgb(194, 0, 0);
+}
+body[theme=dark]{
+    --i-bgcolor: #9191911c;
+    --red: rgb(255, 89, 89);
+}
+.bodyMain{
+    position: relative;
+}
+.pageLeft, .pageRight{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.pageLeft{
+    z-index: 1;
+}
+.pageRight{
+    z-index: 999;
+}
+.pageRight, .pageLeft{
+    visibility: hidden;
+    transition: visibility 0.5s;
+}
+.pageRight[show], .pageLeft[show]{
+    visibility: visible;
+    transition: visibility 0s 0.5s;
+}
+.widthChanger{
+    width: 6px;
+    margin: 0 -3px;
+    position: relative;
+    z-index: 22;
+    cursor: e-resize;
+}
+.leftBox, .rightBox{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    visibility: hidden;
+    transform: translate(calc(100% + 20px), 0);
+}
+.rightBox[con=on], .leftBox[con=on]{
+    visibility: visible;
+    transform: none;
+    animation: rightCome 0.5s cubic-bezier(0.28, 0.97, 0.54, 0.99) 1 forwards;
+}
+.rightBox[con=gone], .leftBox[con=gone]{
+    visibility: hidden;
+    animation: rightGo 0.5s cubic-bezier(0.28, 0.97, 0.54, 0.99) 1 forwards;
+    transform: translate(calc(100% + 20px),0);
+}
+.rightBox[con=none], .leftBox[con=none]{
+    visibility: visible;
+    animation: toLeft 0.4s!important;
+    transform: translate(0,0);
+}
+.rightBox[con=on][from=none]:not(*[noani]), .leftBox[con=on][from=none]:not(*[noani]){
+    visibility: visible;
+    animation: returnRight 0.4s!important;    transform: translate(0,0);
+    transform: translate(0,0);
+}
+.box .main{
+    position: absolute;
+    top: 45px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--page-bgcolor);
+    overflow-y: auto;
+}
+*[noani], *[nownoani]{
+    animation: none!important;
+    transition: none!important;
+}
+.developing{
+    color: grey;
+    font-size: 21px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-weight: 600;
+    transform: translate(-50%,-50%);
+}
+.searchFrame header input{
+    display: block;
+    flex-grow: 1;
+    border-radius: 7px;
+    padding: 8px 7px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--header-title);
+    background-color: var(--header-bgcolor);
+}
+.searchFrame .main{
+    position: absolute;
+    top: 45px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0;
+    background-color: var(--page-bgcolor);
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+.popFrame{
+    background-color: var(--page-bgcolor);
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    width: min(100%, 600px);
+    height: min(95%, 870px);
+    z-index: 1002;
+    transform: translate(-50%, 100vh);
+    overflow: hidden;
+    border-radius: 10px 10px 0 0;
+    transition: all 0.5s cubic-bezier(0.28, 0.97, 0.54, 0.99);
+}
+.popFrame[open=true]{
+    transform: translate(-50%, 0);
+    animation: popCome 0.5s cubic-bezier(0.28, 0.97, 0.54, 0.99);
+}
+@keyframes popCome {
+    0%{
+        transform: translate(-50%, 100vh);        
+    }
+    100%{
+        transform: translate(-50%, 0);
+    }
+}
+.popFrame .content{
+    position: absolute;
+    top: 45px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
+    background-color: var(--page-bgcolor);
+}
+@media (min-width: 800px) {
+    .bodyMain{
+        position: fixed;
+        display: flex;
+        top: 50px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        transition: all 0.4s;
+    }
+    .pageLeft, .pageRight{
+        position: relative;
+        height: 100%;
+        overflow: hidden;
+    }
+    .pageLeft{
+        min-width: 400px;
+        width: calc(26vw + 106px);
+        visibility: visible;
+        /* border-right: 1px solid var(--middle-line); */
+    }
+    .pageRight{
+        flex-grow: 1;
+        visibility: visible;
+    }
+    .leftBox[pcnoani][con=on]:not([from=none]), .rightBox[pcnoani][con=on]:not([from=none]){
+        animation: none!important;
+    }
+    .pageRight .box[back=no] .backButton,.pageRight .rightBox[noother=true] .backButton{
+        display: none;
+    }
+}
+@keyframes startHover {
+    0%{
+        opacity: 1;
+        visibility: visible;
+    }
+    100%{
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+@keyframes rightCome {
+    0%{
+        transform: translate(calc(100% + 20px),0);
+        box-shadow: var(--animation-box-shadow-0);
+    }
+    80%{
+        box-shadow: var(--animation-box-shadow-1);
+    }
+    100%{
+        transform: translate(0,0);
+    }
+}
+@keyframes rightGo {
+    100%{
+        transform: translate(calc(100% + 20px),0);
+        box-shadow: var(--animation-box-shadow-0);
+        visibility: hidden;
+    }
+    20%{
+        box-shadow: var(--animation-box-shadow-1);
+        visibility: visible;
+    }
+    0%{
+        transform: translate(0,0);
+        visibility: visible;
+    }
+}
+@keyframes simpleGo {
+    100%{
+        transform: translate(calc(100% + 20px),0);
+        visibility: hidden;
+    }
+    99%{
+        visibility: initial;
+        transform: initial;
+    }
+    0%{
+        visibility: initial;
+        transform: initial;
+    }
+}
+@keyframes myContextMenu{
+    0%{
+        opacity: 0;
+        width: 0;
+        max-height: 0vh;
+        overflow: hidden;
+    }
+    46%{
+        opacity: 1;
+    }
+    99%{
+        overflow: hidden;
+    }
+    100%{
+        opacity: 1;
+        width: 200px;
+        max-height: 40vh;
+        overflow: auto;
+    }
+}
+@keyframes toLeft {
+    0%{
+        transform: unset;
+    }
+    100%{
+        transform: translate(-25%, 0);
+        filter: brightness(0.8);
+    }
+}
+@keyframes returnRight {
+    100%{
+        transform: translate(0,0);
+    }
+    0%{
+        transform: translate(-25%, 0);
+        filter: brightness(0.8);
+    }
+}
+/* 对于窄栏模式 */
+@media (min-width: 800px) {
+    .bodyMain{
+        justify-content: center;
+        max-width: 100vw;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .bodyMain[trans=true]{
+        transition: all 0.5s;
+    }
+    .bodyMain[thin] #pageRight{
+        width: 0;
+        flex-grow: 0;
+    }
+    .bodyMain[thin] #pageLeft{
+        flex-grow: 1;
+        max-width: 800px;
+        border-right: none;
+    }
+    .bodyMain[thin] #widthChanger{
+        visibility: hidden;
+    }
+    .bodyMain[thin]{
+        max-width: 800px;
+    }
+    .bodyMain[trans=true] #pageLeft , #pageLeft #listFrame, .bodyMain[trans=true] #pageRight{
+        transition: all 0.3s, border-right 0s 0s;
+    }
+}
+
+.avatarBox .name{
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    padding-right: 3px;
+}
+.avatarBox .name i{
+    display: block;
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: var(--i-bgcolor);
+    background-size: 30px 30px;
+    margin-right: 6px;
+    margin-top: 5px;
+}
+.avatarBox .name div{
+    display: flex;
+    flex-direction: column;
+}
+.avatarBox .name div .time{
+    font-weight: normal;
+    font-size: 12px;
+    opacity: 0.6;
+}
+.cardBox.postCardBox .content .status{
+    color: var(--red);
+}
+.cardBox.postCardBox .content object.slug{
+    line-height: 1.6;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+.cardBox.postCardBox .content .a{
+    font-size: 12px;
+    text-decoration: none!important;
+}
+.cardBox.postCardBox .content .media .medias{
+    width: 100%;
+    /* border-radius: 6px; */
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    overflow: hidden;
+}
+.cardBox.postCardBox .content .media .medias li, .cardBox.postCardBox .content .media .medias:after{
+    height: 0;
+    color: #00000000;
+    overflow: hidden;
+    margin-top: 5px;
+    position: relative;
+    content: '';
+}
+.cardBox.postCardBox .content .media .medias:after{
+    padding-bottom: 0!important;
+}
+.cardBox.postCardBox .content .media .medias li{
+    background-color: var(--i-bgcolor);
+    background-position: 50% 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    cursor: zoom-in;
+    border-radius: 2px;
+}
+.cardBox.postCardBox .content .media .medias li::marker{
+    content: '';
+    opacity: 0;
+    -webkit-box-sizing: initial;
+}
+.cardBox.postCardBox .content .media .medias li img{
+    width: 100%;
+    padding-bottom: 100vh;
+    opacity: 0;
+    outline: none;
+}
+.cardBox.postCardBox .content .media .medias li video{
+    position: absolute;
+    max-width: 100%;
+    max-height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+.cardBox.postCardBox .content .media .medias li *:focus-visible + outline{
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    left: 2px;
+    right: 2px;
+    outline: auto;
+}
+.cardBox.postCardBox .content .media .medias[type=x1] li{
+    width: 100%;
+    padding-bottom: 100%;
+}
+.cardBox.postCardBox .content .media .medias[type=x2] li{
+    width: calc(50% - 3px);
+    padding-bottom: calc(50% - 3px);
+}
+.cardBox.postCardBox .content .media .medias[type=x3] li, .cardBox.postCardBox .content .media .medias[type=x3]:after{
+    width: calc(33.3333333% - 3px);
+    padding-bottom: calc(33.3333333% - 3px);
+}
+.cardBox.postCardBox .bottom{
+    align-items: center;
+}
+.cardBox.postCardBox .bottom .buttons button{
+    display: inline-flex;
+    margin: 0 0px 0px 4px;
+    padding: 6px 5px;
+    border-radius: 0px;
+    align-items: center;
+}
+.cardBox.postCardBox .bottom .buttons .unlikeButton{
+    transform: rotate(180deg);
+}
+.cardBox.postCardBox .bottom .buttons button svg{
+    fill: var(--card-bottom);
+    width: 19px;
+    height: 19px;
+}
+.cardBox.postCardBox .bottom .buttons button:not(*[yes]) .yes, .cardBox.postCardBox .bottom .buttons button[yes] no{
+    display: none;
+}
+.cardBox.postCardBox .bottom .buttons button span{
+    position: relative;
+    left: 2px;
+}
+.browserFrame iframe{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    animation: iframe 3s;
+}
+.browserFrame iframe[loaded]{
+    opacity: 1;
+    animation: none;
+}
+@keyframes iframe {
+    0%{
+        opacity: 0;
+    }
+    99.9%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+.viewer-container{
+    z-index: 99999;
+}
