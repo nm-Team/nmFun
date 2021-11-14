@@ -22,7 +22,6 @@ window.onkeydown = function (event) {
     }
 }
 
-
 // 首页的滚动屏
 var mySwiper = new Swiper('.swiper-container', {
     direction: 'horizontal', // 垂直切换选项

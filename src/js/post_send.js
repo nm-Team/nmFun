@@ -17,9 +17,6 @@ function showPostInput(which, toS) {
     else document.getElementById("" + which + "EditBoxCover").removeAttribute("open");
 }
 
-postAreaUnavaliableTemplate = `
-<div class="unavaliable" noselect><i></i><p>{{w}}</p><center onclick='refreshPostArea({{pid}})'>重试</center></div>`;
-
 errorCode = {
     "403": "内容已被封锁，您无权查看",
     "404": "内容可能去了另一个星球",

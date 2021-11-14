@@ -1,7 +1,8 @@
 
 .viewer-container{
     z-index: 99999;
-}.indexFrame{
+}
+.indexFrame{
     overflow: auto;
 }
 .indexSwiper{
