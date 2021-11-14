@@ -55,6 +55,9 @@ body[theme=dark]{
     --msgBox-bgcolor: rgb(56 56 56);
     --msgBox-shadow: #0000002b 0rem 0rem 1rem;
 }
+body{
+    --outline: 3px solid rgb(250 187 0 / 60%);
+}
 *{
     margin: 0;
     padding: 0;
@@ -76,7 +79,7 @@ body[transitioncolor], body[transitioncolor] *{
     background-color: var(--selection-bgcolor);
 }
 :focus-visible {
-    outline: 4px solid rgb(250 187 0 / 60%);
+    outline: var(--outline);
     outline-offset: 1px;
 }
 *[noselect]{

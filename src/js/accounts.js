@@ -3,24 +3,31 @@ myUid = NaN;
 function setHeaderLog() {
     returnWord = "";
     document.cookie = "PHPSESSID=" + localStorage.sessionid;
-    getInfo(function () {
-        accountInfo = returnWord;
-        accountBox.setAttribute("onclick", "showLogFrame()");
-        if (accountInfo == -1) {
-            userName.innerHTML = "登录";
+    try {
+        getInfo(function () {
+            accountInfo = returnWord;
             accountBox.setAttribute("onclick", "showLogFrame()");
-        }
-        else if (accountInfo == -2) {
-            userName.innerHTML = "登录";
-            accountBox.setAttribute("onclick", "showLogFrame()");
-        }
-        else {
-            avatarBox.setAttribute("style", "background-image:url(" + accountInfo['avatar'] + ")");
-            userName.innerHTML = accountInfo['nick'];
-            accountBox.setAttribute("onclick", "myMenu(true);");
-            myUid = accountInfo['uid'];
-        }
-    });
+            if (accountInfo == -1) {
+                userName.innerHTML = "登录";
+                accountBox.setAttribute("onclick", "showLogFrame()");
+            }
+            else if (accountInfo == -2) {
+                userName.innerHTML = "登录";
+                accountBox.setAttribute("onclick", "showLogFrame()");
+            }
+            else {
+                avatarBox.setAttribute("style", "background-image:url(" + accountInfo['avatar'] + ")");
+                userName.innerHTML = accountInfo['nick'];
+                accountBox.setAttribute("onclick", "myMenu(true);");
+                myUid = accountInfo['uid'];
+            }
+        });
+    }
+    catch (err) {
+        console.error("getInfo 执行错误，返回错误信息" + err);
+        userName.innerHTML = "错误";
+        accountBox.setAttribute("onclick", "newMsgBox('无法连接到登录服务器，因此无法打开此上下文菜单。');");
+    }
 }
 
 window.onload = setHeaderLog();
@@ -47,4 +54,5 @@ function myMenu(to) {
         myMenuOpe = to;
     }, 500);
 }
+
 $("*").click(function () { if (myMenuOpe) myMenu(false) });

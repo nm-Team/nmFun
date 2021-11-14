@@ -30,6 +30,7 @@ body[theme=dark]{
     flex-direction: row;
     cursor: pointer;
     padding-right: 3px;
+    border-radius: 2px;
 }
 .avatarBox .name i{
     display: block;
@@ -59,7 +60,7 @@ body[theme=dark]{
     outline: none;
 }
 .cardBox.postCardBox .content a:focus-visible object{
-    outline: auto;
+    outline: var(--outline);
 }
 .cardBox.postCardBox .content object.slug{
     line-height: 1.6;
@@ -126,7 +127,7 @@ body[theme=dark]{
     bottom: 2px;
     left: 2px;
     right: 2px;
-    outline: auto;
+    outline: var(--outline);
 }
 .cardBox.postCardBox .content .media .medias[type=x1] li{
     width: 100%;
@@ -316,7 +317,7 @@ body[theme=dark]{
     user-select: none;
 }
 .fakeInput:focus-visible{
-    outline: auto;
+    outline: var(--outline);
 }
 .inputBox .inputSurface button{
     width: 35px;
@@ -370,7 +371,7 @@ body[theme=dark]{
     box-shadow: none;
 }
 .inputArea select:focus-visible{
-    outline: auto;
+    outline: var(--outline);
 }
 .inputArea select option{
     padding: 11px ​15px;

@@ -1,4 +1,11 @@
-
+body{
+    --i-bgcolor: #9191911c;
+    --red: rgb(194, 0, 0);
+}
+body[theme=dark]{
+    --i-bgcolor: #9191911c;
+    --red: rgb(255, 89, 89);
+}
 .viewer-container{
     z-index: 99999;
 }
@@ -20,7 +27,7 @@
     transition: opacity 0.4s;
 }
 .indexSwiper *:focus-visible{
-    outline: auto;
+    outline: var(--outline);
 }
 .indexSwiper .swiper-pagination-bullet-active{
     opacity: 1;
@@ -67,7 +74,7 @@
     height: 0;
     overflow: hidden;
     position: absolute;
-    outline: auto;
+    outline: none;
 }
 .typeSelecter label{
     position: relative;
@@ -84,7 +91,7 @@
     font-weight: bold;
 }
 .typeSelecter label input:focus-visible + span{
-    outline: auto;
+    outline: var(--outline);
 }
 .typeSelecter label input:hover + span{
     background: var(--type-selecter-hover-bgcolor);
