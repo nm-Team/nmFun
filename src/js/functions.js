@@ -297,22 +297,14 @@ function longPressStop() {
 
 window.addEventListener('touchstart', function (e) {
     console.log('start');
-    // console.log(e.touches[0].clientX,e.touches[0].clientY);
-    // console.log(e.touches[0].pageX,e.touches[0].pageY);
-    // console.log(e.touches[0].screenX,e.touches[0].screenY);
-    // e.preventDefault();
     mouseX = e.touches[0].clientX;
     mouseY = e.touches[0].clientY;
 });
 window.addEventListener('touchmove', function (e) {
     console.log('move');
-    // e.preventDefault();
-    // console.log(e);
 });
 window.addEventListener('touchend', function (e) {
     console.log('end');
-    // e.preventDefault();
-    // console.log(e);
 });
 
 // 选中文字
@@ -355,10 +347,6 @@ function copyToClipboard(text = window.getSelection().toString()) {
         console.log('该浏览器不支持点击复制到剪贴板');
     }
     document.body.removeChild(textArea);
-}
-
-function cutWord(input, text = window.getSelection().toString()) {
-    alert("developing");
 }
 
 function gTime() {
@@ -506,36 +494,6 @@ function fileConversion(size) {
         return size.toFixed(2) + "GB";
 }
 
-// ajax 
-
-function newAjax(type, file, session, getParam, postParam, succeedF = function () { }, faliureF = function () { }) {
-    sessionid = localStorage.sessionid;
-    $.ajax(siteURL + "/api/" + file + "?" + (session ? "sessionid=" + sessionid + "&" : "") + getParam, {
-        type: type,
-        async: true,
-        data: postParam,
-        crossDomain: true,
-        datatype: "jsonp",
-        xhrFields: { withCredentials: true },
-        success: function (data) {
-            let status = data['status'];
-            if (status == "success") {
-                console.log("ajax接收数据成功");
-                succeedF(data);
-            } else if (status == "error") {
-                console.log("ajax接收数据失败");
-                faliureF(data);
-            }
-            return data;
-        },
-        error: function () {
-            newMsgBox("服务器故障，请重试。");
-            faliureF("Something wrong with the server");
-            return null;
-        }
-    });
-}
-
 // 更新图集
 setInterval(() => {
     $("ui.medias").each(function (index, domEle) {
@@ -561,4 +519,32 @@ function cleanHTMLTag(text) {
     text = text.replace(/<[\/\s]*div[^>]*>/g, '<br>');
     text = text.replace(/<br><br>/g, '<br>');
     return text;
+}
+
+function headerClick() {
+    if (window.offsetWidth > 800) {
+        window.location.href = "";
+    }
+    else if (pageHeader.getAttribute("open") == "true")
+        pageHeader.removeAttribute("open");
+    else pageHeader.setAttribute("open", "true");
+}
+
+// PWA-BETA
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/sw.js', { scope: '/' }).then(function (registration) {
+            // 注册成功 
+            console.log('ServiceWorker registration successful with scope: ', registration.scope)
+        }).catch(function (err) {
+            // 注册失败
+            (console.log('ServiceWorker registration failed: ', err))
+        })
+    })
+}
+
+function isPwa() {
+    if (window.matchMedia('(display-mode: standalone)').matches)
+        return true;
+    else return false;
 }

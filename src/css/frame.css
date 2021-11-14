@@ -299,139 +299,33 @@ body[theme=dark]{
     }
 }
 
-.avatarBox .name{
-    display: flex;
-    flex-direction: row;
-    cursor: pointer;
-    padding-right: 3px;
+body{
+    --swiper-button: #EAD050;
+    --type-selecter-bgcolor: rgb(255, 255, 255);
+    --type-selecter-hover-bgcolor: rgb(240, 240, 240);
+    --type-selecter: rgb(17, 17, 17);
 }
-.avatarBox .name i{
+body[theme=dark]{
+    --swiper-button: #EAD050;
+    --type-selecter-bgcolor: rgb(0, 0, 0);
+    --type-selecter-hover-bgcolor: rgb(28, 28, 29);
+    --type-selecter: rgb(224, 224, 224);
+}
+.mobileHolder{
     display: block;
-    flex-grow: 0;
-    flex-shrink: 0;
-    width: 30px;
-    height: 30px;
-    border-radius: 15px;
-    background-color: var(--i-bgcolor);
-    background-size: 30px 30px;
-    margin-right: 6px;
-    margin-top: 5px;
 }
-.avatarBox .name div{
-    display: flex;
-    flex-direction: column;
+@media (max-width: 800px) {
+    .mobileHolder{
+        height: 50px;
+    }  
 }
-.avatarBox .name div .time{
-    font-weight: normal;
-    font-size: 12px;
-    opacity: 0.6;
-}
-.cardBox.postCardBox .content .status{
-    color: var(--red);
-}
-.cardBox.postCardBox .content object.slug{
-    line-height: 1.6;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-}
-.cardBox.postCardBox .content .a{
-    font-size: 12px;
-    text-decoration: none!important;
-}
-.cardBox.postCardBox .content .media .medias{
-    width: 100%;
-    /* border-radius: 6px; */
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    overflow: hidden;
-}
-.cardBox.postCardBox .content .media .medias li, .cardBox.postCardBox .content .media .medias:after{
-    height: 0;
-    color: #00000000;
-    overflow: hidden;
-    margin-top: 5px;
-    position: relative;
-    content: '';
-}
-.cardBox.postCardBox .content .media .medias:after{
-    padding-bottom: 0!important;
-}
-.cardBox.postCardBox .content .media .medias li{
-    background-color: var(--i-bgcolor);
-    background-position: 50% 50%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    cursor: zoom-in;
-    border-radius: 2px;
-}
-.cardBox.postCardBox .content .media .medias li::marker{
-    content: '';
-    opacity: 0;
-    -webkit-box-sizing: initial;
-}
-.cardBox.postCardBox .content .media .medias li img{
-    width: 100%;
-    padding-bottom: 100vh;
-    opacity: 0;
-    outline: none;
-}
-.cardBox.postCardBox .content .media .medias li video{
-    position: absolute;
-    max-width: 100%;
-    max-height: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-}
-.cardBox.postCardBox .content .media .medias li *:focus-visible + outline{
-    position: absolute;
-    top: 2px;
-    bottom: 2px;
-    left: 2px;
-    right: 2px;
-    outline: auto;
-}
-.cardBox.postCardBox .content .media .medias[type=x1] li{
-    width: 100%;
-    padding-bottom: 100%;
-}
-.cardBox.postCardBox .content .media .medias[type=x2] li{
-    width: calc(50% - 3px);
-    padding-bottom: calc(50% - 3px);
-}
-.cardBox.postCardBox .content .media .medias[type=x3] li, .cardBox.postCardBox .content .media .medias[type=x3]:after{
-    width: calc(33.3333333% - 3px);
-    padding-bottom: calc(33.3333333% - 3px);
-}
-.cardBox.postCardBox .bottom{
-    align-items: center;
-}
-.cardBox.postCardBox .bottom .buttons button{
-    display: inline-flex;
-    margin: 0 0px 0px 4px;
-    padding: 6px 5px;
-    border-radius: 0px;
-    align-items: center;
-}
-.cardBox.postCardBox .bottom .buttons .unlikeButton{
-    transform: rotate(180deg);
-}
-.cardBox.postCardBox .bottom .buttons button svg{
-    fill: var(--card-bottom);
-    width: 19px;
-    height: 19px;
-}
-.cardBox.postCardBox .bottom .buttons button:not(*[yes]) .yes, .cardBox.postCardBox .bottom .buttons button[yes] no{
-    display: none;
-}
-.cardBox.postCardBox .bottom .buttons button span{
-    position: relative;
-    left: 2px;
+@media (min-width: 800px) {
+    .mobileHolder{
+        height: 0;
+    }  
+    .typeSelecter[fly=true]{
+        top: 0px;
+    }
 }
 .browserFrame iframe{
     position: absolute;
@@ -458,7 +352,4 @@ body[theme=dark]{
     100%{
         opacity: 1;
     }
-}
-.viewer-container{
-    z-index: 99999;
 }

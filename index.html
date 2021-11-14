@@ -17,12 +17,12 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="src/img/icon-files/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon-precomposed" href="src/img/icon-files/apple-touch-icon-57x57.png">
     <link rel="stylesheet" type="text/css" href="src/css/page.css">
+    <link rel="stylesheet" type="text/css" href="src/css/frame.css">
     <link rel="stylesheet" type="text/css" href="src/css/card.css">
-    <link rel="stylesheet" type="text/css" href="src/css/left.css">
-    <link rel="stylesheet" type="text/css" href="src/css/post.css">
+    <link rel="stylesheet" type="text/css" href="src/css/post_card.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.cncn3.cn/webstatic/0b179cec2c0ed/swiper-bundle.min.css">
     <link rel="stylesheet" type="text/css" href="src/css/viewer.min.css">
-    <link rel="stylesheet" type="text/css" href="src/css/index.css">
+    <link rel="stylesheet" type="text/css" href="src/css/package.css">
     <script>
         siteURL = "{{SiteURL}}";
         accountClient = "{{AccountClient}}";
@@ -43,9 +43,10 @@
             </div>
             <div class="right" onclick='pageHeader.removeAttribute("open");'>
                 <div class="links">
-                    <button onclick="window.location.href=''" title="首页">首页</button><button onclick=""
-                        title="搜索">搜索</button><button onclick="showPostInput('send',true)" title="投稿">投稿</button><button
-                        onclick="window.open('https://nmteam.xyz?from=nmfun')" title="nmTeam">nmTeam</button>
+                    <button onclick="window.location.href=''" title="首页">首页</button>
+                    <button onclick="" title="搜索">搜索</button><button onclick="showPostInput('send',true)"
+                        title="投稿">投稿</button>
+                    <button onclick="window.open('https://nmteam.xyz?from=nmfun')" title="nmTeam">nmTeam</button>
                 </div>
                 <div class="accountBox" id="accountBox" tabindex="0" title="点击来登录或管理您的账号" onmouseover="myMenu(true);"
                     onkeydown="divClick(this, event)">
@@ -137,7 +138,7 @@
                                             <p class="unick">{{nick}}</p>
                                             <p class="time" time="true" timestamp="{{time}}" timestyle="relative"
                                                 timesec="false" timefull="false" title="null-null-null null:null:null">
-                                                </p>
+                                            </p>
                                         </div>
                                     </a>
                                     <div class="buttons">
@@ -150,8 +151,8 @@
                                     <a href="" target="_blank" onclick="" class="text"><object class="{{slug}}">
                                             <p>{{content}}</p>
                                         </object></a>
-                                        <!-- 注：预览页（而不是详情页）此处的设定是点content进入详情页 -->
-                                        <!-- 同时设置onclick（优先）和a标签（新窗口打开，target=blank） -->
+                                    <!-- 注：预览页（而不是详情页）此处的设定是点content进入详情页 -->
+                                    <!-- 同时设置onclick（优先）和a标签（新窗口打开，target=blank） -->
                                     <div class="media">
                                         <ui class="medias" id="tes" type="x{{mediatype}}">{{medias}}</ui>
                                         {{specialMedias}}
@@ -368,12 +369,13 @@
     </div>
     <script src="src/js/jquery.min.js"></script>
     <script src="https://cdn.cncn3.cn/webstatic/d1e2b36ce909e/swiper-bundle.min.js"></script>
-    <script src="src/js/main.js"></script>
-    <script src="src/js/content.js"></script>
+    <script src="src/js/functions.js"></script>
+    <script src="src/js/post_send.js"></script>
     <script src="src/js/index.js"></script>
     <script src="src/js/viewer.min.js"></script>
     <script src="https://accounts.nmteam.xyz/src/js/getinfo.js" onerror="newMsgBox('账号服务器连接失败')"></script>
     <script src="src/js/accounts.js"></script>
+    <script src="src/js/frame.js"></script>
     <script src="src/js/browser.js"></script>
 </body>
 

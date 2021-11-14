@@ -36,3 +36,15 @@ function closeLogFrame() {
     logCover.removeAttribute("open");
     logIframe.setAttribute("src", "about:blank");
 }
+
+// "我的"菜单
+myMenuOpe = false;
+function myMenu(to) {
+    if (to == true && !isNaN(myUid)) myMenuContainer.className = " open";
+    else myMenuContainer.className = "";
+    myMenuOpe = false;
+    setTimeout(() => {
+        myMenuOpe = to;
+    }, 500);
+}
+$("*").click(function () { if (myMenuOpe) myMenu(false) });

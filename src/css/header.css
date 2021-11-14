@@ -73,6 +73,7 @@ body[theme=dark]{
         font-weight: 300;
         color: var(--header-a);
         text-decoration: none;
+        border-radius: 2px;
     }
     #hcont .header .right .links{
         display: flex;
@@ -93,9 +94,10 @@ body[theme=dark]{
     #hcont .header .right .accountBox{
         display: flex;
         flex-direction: row;
-        justify-content: end;  
+        justify-content: end;
         align-items: center;
         margin-left: 8px;
+        border-radius: 2px;
     }
     #hcont .header .right .accountBox i{
         display: inline-block;

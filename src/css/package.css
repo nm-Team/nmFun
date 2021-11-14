@@ -1,19 +1,7 @@
-body{
-    --swiper-button: #EAD050;
-    --type-selecter-bgcolor: rgb(255, 255, 255);
-    --type-selecter-hover-bgcolor: rgb(240, 240, 240);
-    --type-selecter: rgb(17, 17, 17);
-}
-body[theme=dark]{
-    --swiper-button: #EAD050;
-    --type-selecter-bgcolor: rgb(0, 0, 0);
-    --type-selecter-hover-bgcolor: rgb(28, 28, 29);
-    --type-selecter: rgb(224, 224, 224);
-}
-.mobileHolder{
-    display: block;
-}
-.indexFrame{
+
+.viewer-container{
+    z-index: 99999;
+}.indexFrame{
     overflow: auto;
 }
 .indexSwiper{
@@ -99,19 +87,4 @@ body[theme=dark]{
 }
 .typeSelecter label input:hover + span{
     background: var(--type-selecter-hover-bgcolor);
-}
-#indexMainCards .cardBox .card:not(*:hover):not(*:active){
-    transition: margin-left 0.4s, margin-right 0.4s, transform 0.2s;
-}
-@media (max-width: 800px) {
-    .mobileHolder{
-        height: 50px;
-    }  
-}@media (min-width: 800px) {
-    .mobileHolder{
-        height: 0;
-    }  
-    .typeSelecter[fly=true]{
-        top: 0px;
-    }
 }

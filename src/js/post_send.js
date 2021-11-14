@@ -17,51 +17,6 @@ function showPostInput(which, toS) {
     else document.getElementById("" + which + "EditBoxCover").removeAttribute("open");
 }
 
-// 发帖
-function sendPost(div, postType, onSuccess) {
-    if (logRequire()) {
-        // 通用：是否填写内容
-        if (div.getElementsByClassName("sendBoxInput")[0].value.replace(/ /g, "").replace(/\\n/g, "") == "") {
-            return newMsgBox("你总得写点什么再发表吧……");
-        }
-        // 通用：设置参数
-        textToSend = cleanHTMLTag(div.getElementsByClassName("sendBoxInput")[0].value);
-        mediaToSend = '{"medias": [';
-        for (i = 0; i < div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m").length; i++) {
-            try {
-                mediaInfo = cleanHTMLTag(div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m")[i].getAttribute("m")).replace(/\'/g, '"');
-                // 转换解析mediaInfo
-                // mInfoParsed = JSON.parse(switchMarks(mediaInfo));
-                // // 对部分类型进行操作
-                // if (mInfoParsed[0] == "img" || mInfoParsed[0] == "video") {
-                //     // 以后可能会在这里做一些事情
-                // }
-                mediaToSend += mediaInfo;
-                if (i < div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m").length - 1) {
-                    mediaToSend += ",";
-                }
-            }
-            catch (err) { }
-        }
-        mediaToSend += "]}";
-        tagsToSend = ""; // 开发中
-        // 发送参数：帖子
-        if (postType == "post") {
-            categoryToSend = div.getElementsByClassName("categoryS")[0].selectedIndex;
-            sendData = { type: "post", text: textToSend, media: mediaToSend, category: categoryToSend, tags: tagsToSend };
-        }
-        if (postType == "comment") {
-            // 发送参数：评论
-            if (!div.getAttribute("inpost")) return newMsgBox("啊哦，nmFun 内部出现错误");
-            inpost = div.getAttribute("inpost");
-            tocomment = div.getAttribute("tocomment");
-            sendData = { type: "comment", inpost: inpost, tocomment: tocomment, text: textToSend, media: mediaToSend, category: categoryToSend, tags: tagsToSend };
-        }
-        sendCover.setAttribute("open", "true");
-        newAjax("POST", "/post_send.php", true, "", sendData, function () { sendCover.setAttribute("open", "false"); onSuccess(); }, function (err) { sendCover.setAttribute("open", "false"); newMsgBox("出现错误，发送失败。<br>服务器返回错误 " + err['info']) });
-    }
-}
-
 postAreaUnavaliableTemplate = `
 <div class="unavaliable" noselect><i></i><p>{{w}}</p><center onclick='refreshPostArea({{pid}})'>重试</center></div>`;
 
@@ -92,51 +47,3 @@ sendBoxTemplate = `
 
 setPostInputArea(commentEditBox, "comment");
 setPostInputArea(sendEditBox, "post");
-
-// 插入文件
-function putFilesToInput(fileInput, type, id) {
-    console.log("Get files from fileInput " + fileInput.id);
-    //把选择的图片显示到img上
-    try {
-        for (fileOperated = 0; fileOperated < fileInput.files.length; fileOperated++) {
-            file = fileInput.files[fileOperated];
-            fileName = fileInput.files[fileOperated].name;
-            fileSize = fileInput.files[fileOperated].size;
-            console.log(fileInput.files[fileOperated]);
-            var reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = function (e) {
-                console.log(this.result);
-                switch (type) {
-                    case "image":
-                        addItemToFileBar(id, "['img','" + this.result + "']", "<div style='background-image: url(" + this.result + ");background-position: 50% 50%; background-size: cover; background-repeat: no-repeat;'></div>");
-                        break;
-                    case "video":
-                        addItemToFileBar(id, "['video','" + this.result + "']", "<center>视频</center>");
-                        break;
-                    default:
-                }
-            }
-        }
-        document.getElementById(id).getElementsByClassName("sendBoxInput")[0].focus();
-    }
-    catch (err) {
-        newErrorBox("putFilesToInput", err);
-    }
-}
-
-// 附件栏增加项目
-function addItemToFileBar(id, info, HTML) {
-    mtid = gTime();
-    document.getElementById(id).getElementsByClassName("mediasBox")[0].innerHTML += `<div class="m" m="` + info + `" mtid="` + mtid + `"><button class="delButton" title="删除这个媒体" onclick="delItemInFileBar(` + mtid + `)"></button>` + HTML + `</div>`;
-}
-
-// 附件栏删除项目
-function delItemInFileBar(mtid) {
-    $("*[mtid=" + mtid + "]").remove();
-}
-
-// 转换单引号双引号
-function switchMarks(t) {
-    return t.replace(/'/g, "{{double}}").replace(/"/g, "'").replace(/{{double}}/g, '"');
-}
