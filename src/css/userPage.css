@@ -12,7 +12,7 @@ body{
     flex-shrink: 0;
 }
 .uHeaderMain{
-    margin: 10px 5px 0 5px!important;
+    margin: 10px 10px 0 10px!important;
     background: url(https://ci.cncn3.cn/58ccf2b22ffbaf266b966d387519825a.png) center center no-repeat;
     background-size: cover;
 }
