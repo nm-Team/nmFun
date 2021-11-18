@@ -158,7 +158,7 @@
         min-width: 400px;
         width: calc(26vw + 106px);
         visibility: visible;
-        /* border-right: 1px solid var(--middle-line); */
+        border-right: 1px solid var(--middle-line);
     }
     .pageRight{
         flex-grow: 1;

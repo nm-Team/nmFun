@@ -14,7 +14,7 @@ body{
     --contextmenu: #000;
     --contextmenu-line: rgb(224, 224, 224);
     --contextmenu-shadow: #5151510f 1px 1px 8px;
-    --middle-line: #d1d1d1;
+    --middle-line: #d1d1d18c;
     --cover: #00000050;
     --alert-bgcolor: rgb(255, 255, 255);
     --alert-button-hover-bgcolor: rgb(235, 235, 235);
@@ -42,7 +42,7 @@ body[theme=dark]{
     --contextmenu: rgb(255, 255, 255);
     --contextmenu-line: rgb(87, 87, 87);
     --contextmenu-shadow: #0202021a 1rem 1rem 9rem;
-    --middle-line: #5c5c5c;
+    --middle-line: #5c5c5c79;
     --cover: #00000050;
     --alert-bgcolor: rgb(61, 61, 61);
     --alert-button-hover-bgcolor: rgb(71, 71, 71);

@@ -181,7 +181,7 @@ function quickBack(div, ele) {
     for (quickMenuNum = 0; quickMenuNum < divList.length + 1; quickMenuNum++) {
         if (quickMenuNum == divList.length) {
             msgContextMenuItems[quickMenuNum] = ["line"];
-            msgContextMenuItems[quickMenuNum + 1] = ["Home", "", "&#xe88a;"];
+            msgContextMenuItems[quickMenuNum + 1] = ["主页", "", "&#xe88a;"];
             for (quickMenuClickToDoNum = 0; quickMenuClickToDoNum < quickMenuNum; quickMenuClickToDoNum++)
                 msgContextMenuItems[quickMenuNum + 1][1] += "closeBox('" + div + "','" + divList[quickMenuClickToDoNum][1] + "');";
         }

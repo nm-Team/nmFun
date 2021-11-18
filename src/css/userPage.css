@@ -1,0 +1,91 @@
+body{
+    --uInfo-header-text: #000;
+    --uInfo-header-text-grey: rgba(0, 0, 0, 0.568);
+    --uInfo-header-lin: linear-gradient(to bottom, rgba(0,0,0,0) 40%, var(--page-bgcolor));
+    --uInfo-header-data-sepa: rgba(51, 51, 51, 0.342);
+}
+.userFrame .main{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.userHeader, .uHeaderMain{
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+    margin: 0 5px!important;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+.uHeaderMain{
+    background: url(https://ci.cncn3.cn/58ccf2b22ffbaf266b966d387519825a.png) center center no-repeat;
+    background-size: cover;
+}
+.userHeader .lin, .uHeaderMain, .uHeaderInfos{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 180px;
+}
+.userHeader .lin{
+    z-index: 1;
+    background: var(--uInfo-header-lin);
+}
+.uHeaderInfos{
+    z-index: 2;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    margin-bottom: 15px;
+    color: var(--uInfo-header-text);
+}
+.uHeaderMain button.avatar{
+    width: 50px;
+    height: 50px;
+    background-image: url(https://static.hdslb.com/images/akari.jpg);
+    background-size: 50px 50px;
+    border-radius: 25px;
+}
+.uHeaderInfos .name{
+    font-size: 21px;
+    margin: 10px 30px;
+    width: calc(100% - 60px);
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+}
+.uHeaderMain .uHeaderInfos .data{
+    display: flex;
+    flex-flow: wrap;
+    margin: 0 20px;
+}
+.uHeaderMain .uHeaderInfos .data button{
+    color: var(--uInfo-header-text-grey);
+    background: none;
+    border: none;
+    border-radius: 0;
+    font-size: 14px;
+    padding: 0px 7px;
+    flex-shrink: 0;
+    word-break: keep-all;
+}
+.uHeaderMain .uHeaderInfos .data button span{
+    padding-left: 5px;
+    /* font-weight: bold; */
+    color: var(--uInfo-header-text);
+}
+.uHeaderMain .uHeaderInfos .data button:not(:first-child){
+    border-left: 1px solid var(--uInfo-header-data-sepa);
+}
+.userMainCards{
+    overflow: auto;
+    border-radius: 6px 6px 0 0;
+    padding-top: 8px;
+}
