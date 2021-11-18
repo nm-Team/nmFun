@@ -70,7 +70,7 @@ body{
 }
 a {
     color: inherit;
-    text-decoration: auto;
+    text-decoration: none;
 }
 body[transitioncolor], body[transitioncolor] *{
     transition: color 0.5s cubic-bezier(0, 1, 0.25, 1), background-color 0.5s, border 0.5s, box-shadow 0.5s!important;

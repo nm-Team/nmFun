@@ -102,7 +102,7 @@
     transform: translate(-50%, 100vh);
     overflow: hidden;
     border-radius: 10px 10px 0 0;
-    transition: all 0.5s cubic-bezier(0.28, 0.97, 0.54, 0.99);
+    transition: all 0.25s cubic-bezier(0.93, 0.5, 1, 0.91);
 }
 .popFrame[open=true]{
     transform: translate(-50%, 0);
