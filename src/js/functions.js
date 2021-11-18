@@ -362,6 +362,18 @@ function pushHistory(what) {
     window.history.pushState(state, "title", "#" + what);
 }
 
+// Header动画
+$(".floatCard-content").scroll(function (e) {
+    if(!this.getAttribute("oriheight")) this.setAttribute("oriheight",this.parentNode.getElementsByClassName("floatCard-header")[0].getBoundingClientRect().height);
+    userFrameHeaderHeight = this.getAttribute("oriheight");
+    userFrameStrollPercent = (this.scrollTop / userFrameHeaderHeight > 1 ? 1 : this.scrollTop / userFrameHeaderHeight);
+    if (userFrameStrollPercent == 1) this.parentNode.getElementsByClassName("typeSelecter")[0].setAttribute("fly", "true");
+    else this.parentNode.getElementsByClassName("typeSelecter")[0].setAttribute("fly", "false");
+    this.getElementsByClassName("placeHolder")[0].style.height = ((userFrameStrollPercent < 0 ? 0 : userFrameStrollPercent) * userFrameHeaderHeight) + "px";
+    for(y=0;y<this.parentNode.getElementsByClassName("floatCard-header").length;y++)
+    this.parentNode.getElementsByClassName("floatCard-header")[y].style.height = ((1 - userFrameStrollPercent) * userFrameHeaderHeight) + "px";
+});
+
 // 时间
 setInterval(() => {
     setTimeTexts();

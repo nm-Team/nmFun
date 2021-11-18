@@ -4,20 +4,15 @@ body{
     --uInfo-header-lin: linear-gradient(to bottom, rgba(0,0,0,0) 40%, var(--page-bgcolor));
     --uInfo-header-data-sepa: rgba(51, 51, 51, 0.342);
 }
-.userFrame .main{
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
 .userHeader, .uHeaderMain{
     position: relative;
     height: 180px;
     overflow: hidden;
-    margin: 0 5px!important;
     border-radius: 6px;
     flex-shrink: 0;
 }
 .uHeaderMain{
+    margin: 10px 5px 0 5px!important;
     background: url(https://ci.cncn3.cn/58ccf2b22ffbaf266b966d387519825a.png) center center no-repeat;
     background-size: cover;
 }
@@ -87,5 +82,5 @@ body{
 .userMainCards{
     overflow: auto;
     border-radius: 6px 6px 0 0;
-    padding-top: 8px;
+    padding-top: 0px;
 }

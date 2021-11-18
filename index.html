@@ -70,19 +70,21 @@
     <div class="bodyMain" id="bodyMain">
         <!-- 此处thin控制右栏是否展示 agou 211113 -->
         <div class="pageLeft" id="pageLeft" show noani="true">
-            <div class="indexFrame leftBox box" id="indexFrame" con="on" noani>
-                <div class="mobileHolder"></div>
-                <!-- Swiper，即轮播图 -->
-                <div class="swiper-container indexSwiper" style="">
-                    <!-- 此处若设置关闭滚动图display为none agou 211113 -->
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide" onclick="alert('诶嘿，这个不可以点哦')"
-                            style="background-image: url(&quot;https://i.zerodream.net/652a55e4761d0422555a878c8b9a7c1d.png&quot;); background-position: 50% 50%; width: 780px;">
+            <div class="indexFrame leftBox box floatCard" id="indexFrame" con="on" noani>
+                <div class="floatCard-header">
+                    <div class="mobileHolder"></div>
+                    <!-- Swiper，即轮播图 -->
+                    <div class="swiper-container indexSwiper floatCard-header" style="">
+                        <!-- 此处若设置关闭滚动图display为none agou 211113 -->
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" onclick="alert('诶嘿，这个不可以点哦')"
+                                style="background-image: url(&quot;https://i.zerodream.net/652a55e4761d0422555a878c8b9a7c1d.png&quot;); background-position: 50% 50%; width: 780px;">
+                            </div>
                         </div>
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
                     </div>
-                    <div class="swiper-pagination"></div>
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
                 </div>
                 <div class="typeContainer" noselect>
                     <div class="typeSelecter" id="indexTypeSelecter">
@@ -101,7 +103,8 @@
                                 name="indexType"><span>生活</span></label>
                     </div>
                 </div>
-                <div id="indexMainCards" class="equalPages">
+                <div id="indexMainCards" class="equalPages floatCard-content">
+                    <div class="placeHolder"></div>
                     <div class="postBox cardBox postCardBox">
                         <div class="cardBox">
                             <div class="postMainSke">
@@ -128,6 +131,157 @@
                                                 disabled class="skeleton" style="width: 3em">.</button>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="postMainReal card avatarBox">
+                                <div class="header">
+                                    <a class="name" tabindex="0" onclick="newUserInfoPage('{{uid}}');" onkeydown="divClick(this, event)"><i style="background-image:url('{{avatar}}')"></i>
+                                        <div>
+                                            <p class="unick">{{nick}}</p>
+                                            <p class="time" time="true" timestamp="{{time}}" timestyle="relative" timesec="false" timefull="false" title="null-null-null null:null:null">现在</p>
+                                        </div>
+                                    </a>
+                                    <div class="buttons">
+                                        <button onclick="postContextMenu('{{type}}', '{{id}}', this);"><i class="material-icons">more_vert</i></button>
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    <p class="status">{{status}}</p>
+                                    <a href="" target="_blank" onclick="" class="text"><object class="{{slug}}">
+                                            <p>{{content}}</p>
+                                        </object></a>
+                                    <!-- 注：预览页（而不是详情页）此处的设定是点content进入详情页 -->
+                                    <!-- 同时设置onclick（优先）和a标签（新窗口打开，target=blank） -->
+                                    <div class="media">
+                                        <ul class="medias" id="tes" type="x{{mediatype}}">{{medias}}</ul>
+                                        {{specialMedias}}
+                                    </div>
+                                </div>
+                                <div class="bottom">
+                                    <div class="word">
+                                        <p>浏览<span class="viewNum">{{view}}</span>次</p>
+                                    </div>
+                                    <div class="buttons">{{buttons}} </div>
+                                </div>
+                            </div><div class="postMainReal card avatarBox">
+                                <div class="header">
+                                    <a class="name" tabindex="0" onclick="newUserInfoPage('{{uid}}');" onkeydown="divClick(this, event)"><i style="background-image:url('{{avatar}}')"></i>
+                                        <div>
+                                            <p class="unick">{{nick}}</p>
+                                            <p class="time" time="true" timestamp="{{time}}" timestyle="relative" timesec="false" timefull="false" title="null-null-null null:null:null">现在</p>
+                                        </div>
+                                    </a>
+                                    <div class="buttons">
+                                        <button onclick="postContextMenu('{{type}}', '{{id}}', this);"><i class="material-icons">more_vert</i></button>
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    <p class="status">{{status}}</p>
+                                    <a href="" target="_blank" onclick="" class="text"><object class="{{slug}}">
+                                            <p>{{content}}</p>
+                                        </object></a>
+                                    <!-- 注：预览页（而不是详情页）此处的设定是点content进入详情页 -->
+                                    <!-- 同时设置onclick（优先）和a标签（新窗口打开，target=blank） -->
+                                    <div class="media">
+                                        <ul class="medias" id="tes" type="x{{mediatype}}">{{medias}}</ul>
+                                        {{specialMedias}}
+                                    </div>
+                                </div>
+                                <div class="bottom">
+                                    <div class="word">
+                                        <p>浏览<span class="viewNum">{{view}}</span>次</p>
+                                    </div>
+                                    <div class="buttons">{{buttons}} </div>
+                                </div>
+                            </div><div class="postMainReal card avatarBox">
+                                <div class="header">
+                                    <a class="name" tabindex="0" onclick="newUserInfoPage('{{uid}}');" onkeydown="divClick(this, event)"><i style="background-image:url('{{avatar}}')"></i>
+                                        <div>
+                                            <p class="unick">{{nick}}</p>
+                                            <p class="time" time="true" timestamp="{{time}}" timestyle="relative" timesec="false" timefull="false" title="null-null-null null:null:null">现在</p>
+                                        </div>
+                                    </a>
+                                    <div class="buttons">
+                                        <button onclick="postContextMenu('{{type}}', '{{id}}', this);"><i class="material-icons">more_vert</i></button>
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    <p class="status">{{status}}</p>
+                                    <a href="" target="_blank" onclick="" class="text"><object class="{{slug}}">
+                                            <p>{{content}}</p>
+                                        </object></a>
+                                    <!-- 注：预览页（而不是详情页）此处的设定是点content进入详情页 -->
+                                    <!-- 同时设置onclick（优先）和a标签（新窗口打开，target=blank） -->
+                                    <div class="media">
+                                        <ul class="medias" id="tes" type="x{{mediatype}}">{{medias}}</ul>
+                                        {{specialMedias}}
+                                    </div>
+                                </div>
+                                <div class="bottom">
+                                    <div class="word">
+                                        <p>浏览<span class="viewNum">{{view}}</span>次</p>
+                                    </div>
+                                    <div class="buttons">{{buttons}} </div>
+                                </div>
+                            </div><div class="postMainReal card avatarBox">
+                                <div class="header">
+                                    <a class="name" tabindex="0" onclick="newUserInfoPage('{{uid}}');" onkeydown="divClick(this, event)"><i style="background-image:url('{{avatar}}')"></i>
+                                        <div>
+                                            <p class="unick">{{nick}}</p>
+                                            <p class="time" time="true" timestamp="{{time}}" timestyle="relative" timesec="false" timefull="false" title="null-null-null null:null:null">现在</p>
+                                        </div>
+                                    </a>
+                                    <div class="buttons">
+                                        <button onclick="postContextMenu('{{type}}', '{{id}}', this);"><i class="material-icons">more_vert</i></button>
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    <p class="status">{{status}}</p>
+                                    <a href="" target="_blank" onclick="" class="text"><object class="{{slug}}">
+                                            <p>{{content}}</p>
+                                        </object></a>
+                                    <!-- 注：预览页（而不是详情页）此处的设定是点content进入详情页 -->
+                                    <!-- 同时设置onclick（优先）和a标签（新窗口打开，target=blank） -->
+                                    <div class="media">
+                                        <ul class="medias" id="tes" type="x{{mediatype}}">{{medias}}</ul>
+                                        {{specialMedias}}
+                                    </div>
+                                </div>
+                                <div class="bottom">
+                                    <div class="word">
+                                        <p>浏览<span class="viewNum">{{view}}</span>次</p>
+                                    </div>
+                                    <div class="buttons">{{buttons}} </div>
+                                </div>
+                            </div><div class="postMainReal card avatarBox">
+                                <div class="header">
+                                    <a class="name" tabindex="0" onclick="newUserInfoPage('{{uid}}');" onkeydown="divClick(this, event)"><i style="background-image:url('{{avatar}}')"></i>
+                                        <div>
+                                            <p class="unick">{{nick}}</p>
+                                            <p class="time" time="true" timestamp="{{time}}" timestyle="relative" timesec="false" timefull="false" title="null-null-null null:null:null">现在</p>
+                                        </div>
+                                    </a>
+                                    <div class="buttons">
+                                        <button onclick="postContextMenu('{{type}}', '{{id}}', this);"><i class="material-icons">more_vert</i></button>
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    <p class="status">{{status}}</p>
+                                    <a href="" target="_blank" onclick="" class="text"><object class="{{slug}}">
+                                            <p>{{content}}</p>
+                                        </object></a>
+                                    <!-- 注：预览页（而不是详情页）此处的设定是点content进入详情页 -->
+                                    <!-- 同时设置onclick（优先）和a标签（新窗口打开，target=blank） -->
+                                    <div class="media">
+                                        <ul class="medias" id="tes" type="x{{mediatype}}">{{medias}}</ul>
+                                        {{specialMedias}}
+                                    </div>
+                                </div>
+                                <div class="bottom">
+                                    <div class="word">
+                                        <p>浏览<span class="viewNum">{{view}}</span>次</p>
+                                    </div>
+                                    <div class="buttons">{{buttons}} </div>
                                 </div>
                             </div>
                             <div class="postMainReal card avatarBox">
@@ -323,12 +477,13 @@
                         </div>
                     </div>
                     <div class="right">
-                        <button onclick="showUserPageContextMenu(1,this)"><i class="material-icons">&#xe5d3;</i></button>
+                        <button onclick="showUserPageContextMenu(1,this)"><i
+                                class="material-icons">&#xe5d3;</i></button>
                     </div>
                 </header>
-                <div class="main">
-                    <div class="userHeader">
-                        <div class="uHeaderMain">
+                <div class="main floatCard">
+                    <div class="userHeader floatCard-header">
+                        <div class="uHeaderMain floatCard-header">
                             <div class="lin"></div>
                             <div class="uHeaderInfos">
                                 <button class="avatar" style="background-color: url('');"
@@ -348,7 +503,7 @@
                             <label for=""><input type="radio"><span>更多</span></label>
                         </div>
                     </div>
-                    <div class="userMainCards equalPages">
+                    <div class="userMainCards equalPages floatCard-content">
                         <div class="placeHolder"></div>
                         <div class="postBox cardBox postCardBox">
                             <div class="cardBox">
