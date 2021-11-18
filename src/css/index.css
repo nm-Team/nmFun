@@ -1,0 +1,24 @@
+.indexFrame{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.indexFrame .mobileHolder{
+    flex-shrink: 0;
+}
+.mobileHolder{
+    display: block;
+}
+@media (max-width: 800px) {
+    .mobileHolder{
+        height: 50px;
+    }  
+}
+@media (min-width: 800px) {
+    .mobileHolder{
+        height: 0;
+    }  
+    .typeSelecter[fly=true]{
+        top: 0px;
+    }
+}

@@ -302,22 +302,6 @@ body[theme=dark]{
     --type-selecter-hover-bgcolor: rgb(28, 28, 29);
     --type-selecter: rgb(224, 224, 224);
 }
-.mobileHolder{
-    display: block;
-}
-@media (max-width: 800px) {
-    .mobileHolder{
-        height: 50px;
-    }  
-}
-@media (min-width: 800px) {
-    .mobileHolder{
-        height: 0;
-    }  
-    .typeSelecter[fly=true]{
-        top: 0px;
-    }
-}
 .browserFrame iframe{
     position: absolute;
     top: 0;
