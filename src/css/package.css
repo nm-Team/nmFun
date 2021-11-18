@@ -6,6 +6,7 @@ body{
 body[theme=dark]{
     --i-bgcolor: #9191911c;
     --red: rgb(255, 89, 89);
+    --typeSelector-border: #373737;
 }
 .viewer-container{
     z-index: 99999;
@@ -58,7 +59,7 @@ body[theme=dark]{
     margin: 8px 10px 0 10px;
     border-radius: 6px;
     transition: all 0.2s;
-    border-bottom: 0.5px solid #ffffffff;
+    border-bottom: 0.5px solid #ffffff00;
 }
 .typeSelecter[fly=true]{
     margin: 0;
@@ -96,16 +97,16 @@ body[theme=dark]{
 .typeSelecter label input:hover + span{
     background: var(--type-selecter-hover-bgcolor);
 }
-.floatCard{
+.floatFrame{
     display: flex;
     flex-direction: column;
     overflow: hidden;
 }
-.floatCard-header{
+.floatFrame-header{
     flex-shrink: 0;
     overflow: hidden;
     border-radius: 6px;
 }
-.floatCard-content{
+.floatFrame-content{
     overflow: auto;
 }

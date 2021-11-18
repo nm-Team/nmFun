@@ -133,6 +133,8 @@
         bottom: 0;
         left: 0;
         right: 0;
+    }
+    .bodyMain[thinable]{
         transition: all 0.4s;
     }
     .pageLeft, .pageRight{
@@ -257,19 +259,19 @@
     .bodyMain[trans=true]{
         transition: all 0.5s;
     }
-    .bodyMain[thin] #pageRight{
+    .bodyMain[thinable][thin] #pageRight{
         width: 0;
         flex-grow: 0;
     }
-    .bodyMain[thin] #pageLeft{
+    .bodyMain[thinable][thin] #pageLeft{
         flex-grow: 1;
         max-width: 800px;
         border-right: none;
     }
-    .bodyMain[thin] #widthChanger{
+    .bodyMain[thinable][thin] #widthChanger{
         visibility: hidden;
     }
-    .bodyMain[thin]{
+    .bodyMain[thinable][thin]{
         max-width: 800px;
     }
     .bodyMain[trans=true] #pageLeft , #pageLeft #listFrame, .bodyMain[trans=true] #pageRight{

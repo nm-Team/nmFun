@@ -426,6 +426,9 @@ body *[scroll=hidden]::-webkit-scrollbar-thumb{
     user-select: none!important;
     cursor: progress!important;
 }
+body[theme=dark] .skeleton{
+    filter: invert(1);
+}
 .skeleton.sentence{
     margin-bottom: 4px;
 }

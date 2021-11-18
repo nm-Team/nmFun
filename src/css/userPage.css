@@ -4,6 +4,12 @@ body{
     --uInfo-header-lin: linear-gradient(to bottom, rgba(0,0,0,0) 40%, var(--page-bgcolor));
     --uInfo-header-data-sepa: rgba(51, 51, 51, 0.342);
 }
+body[theme=dark]{
+    --uInfo-header-text: rgb(255, 255, 255);
+    --uInfo-header-text-grey: rgba(255, 255, 255, 0.568);
+    --uInfo-header-lin: linear-gradient(to bottom, rgba(0,0,0,0) 40%, var(--page-bgcolor));
+    --uInfo-header-data-sepa: rgba(255, 255, 255, 0.342);
+}
 .userHeader, .uHeaderMain{
     position: relative;
     height: 180px;
