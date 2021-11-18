@@ -1,0 +1,12 @@
+.searchFrame .main{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.searchFrame .main .typeContainer{
+    flex-shrink: 0;
+    margin-bottom: -8px;
+}
+.searchFrame .main #searchResults{
+    overflow: auto;
+}

@@ -91,20 +91,6 @@
     color: var(--header-title);
     background-color: var(--header-bgcolor);
 }
-.searchFrame .main{
-    position: absolute;
-    top: 45px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 0;
-    background-color: var(--page-bgcolor);
-    overflow-y: auto;
-    overflow-x: hidden;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-}
 .popFrame{
     background-color: var(--page-bgcolor);
     position: fixed;
