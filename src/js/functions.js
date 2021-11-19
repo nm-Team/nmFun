@@ -1,4 +1,5 @@
 hasCreatedContextMenu = false;
+themeList = ["default", "dark",];
 
 //  禁用右键
 setInterval(() => {

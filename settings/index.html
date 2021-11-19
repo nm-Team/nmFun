@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title data-i18n="settings.index.title"></title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='format-detection' content='telephone=no'>
+    <link rel="stylesheet" type="text/css" href="../src/css/page.css">
+    <link rel="stylesheet" type="text/css" href="../src/css/settings.css">
+    <script src="../src/js/info.js"></script>
+</head>
+
+<body class="settings">
+    <h1 data-i18n="settings.index.title"></h1>
+    <div class="accountBox">
+        <i id="settingAvatar"></i>
+        <div class="right">
+            <p class="nick" id="settingNick" tabindex="1"></p>
+            <p class="uid" id="settingUid" tabindex="1"></p>
+        </div>
+    </div>
+    <p class="listName" data-i18n="settings.index.account"></p>
+    <div class="lists">
+        <div class="but" onclick="goToPage('account.html')">
+            <t data-i18n="settings.index.account_setting"></t>
+        </div>
+        <div class="but" onclick="goToPage('privacy.html')">
+            <t data-i18n="settings.index.account_privacy"></t>
+        </div>
+        <div class="but" onclick="goToPage('notification.html')">
+            <t data-i18n="settings.index.account_notification"></t>
+        </div>
+    </div>
+    <p class="listName" data-i18n="settings.index.personally"></p>
+    <div class="lists">
+        <div class="but" onclick="goToPage('theme.html')">
+            <t data-i18n="settings.index.theme"></t>
+        </div>
+        <div class="but" onclick="goToPage('personally.html')">
+            <t data-i18n="settings.index.personally_settings"></t>
+        </div>
+        <div class="but" onclick="goToPage('lan&region.html')">
+            <t data-i18n="settings.index.lan&region"></t>
+        </div>
+    </div>
+    <p class="listName" data-i18n="settings.index.about"></p>
+    <div class="lists">
+        <div class="but" onclick="goToPage('about.html')">
+            <t data-i18n="settings.index.about"></t>
+        </div>
+    </div>
+    <script src="../src/js/jquery.min.js"></script>
+    <script src="../src/js/i18next-1.6.3.min.js"></script>
+    <script src="../src/js/language.js"></script>
+    <script src="../src/js/functions.js"></script>
+    <script src="../src/js/settings.js"></script>
+    <script>
+        myInfos = parent.myInfos;
+        settingNick.innerHTML = myInfos.nick;
+        settingUid.innerHTML = "UID: " + myInfos.uid;
+        settingAvatar.style.backgroundImage = "url(" + myInfos.avatar + ")";
+    </script>
+</body>
+
+</html>

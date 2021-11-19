@@ -3,19 +3,34 @@ body{
     --uInfo-header-text-grey: rgba(0, 0, 0, 0.568);
     --uInfo-header-lin: linear-gradient(to bottom, rgba(0,0,0,0) 40%, var(--page-bgcolor));
     --uInfo-header-data-sepa: rgba(51, 51, 51, 0.342);
+    --uInfo-header-interaction-button-positive-color: #000;
+    --uInfo-header-interaction-button-positive-background: rgb(255, 208, 0);
+    --uInfo-header-interaction-button-positive-border: rgb(255, 208, 0);
+    --uInfo-header-interaction-button-negative-color: rgb(0, 0, 0);
+    --uInfo-header-interaction-button-negative-background: #fffbe736;
+    --uInfo-header-interaction-button-negative-border: rgb(255, 208, 0);
 }
 body[theme=dark]{
     --uInfo-header-text: rgb(255, 255, 255);
     --uInfo-header-text-grey: rgba(255, 255, 255, 0.568);
     --uInfo-header-lin: linear-gradient(to bottom, rgba(0,0,0,0) 40%, var(--page-bgcolor));
     --uInfo-header-data-sepa: rgba(255, 255, 255, 0.342);
+    --uInfo-header-interaction-button-positive-color: #000;
+    --uInfo-header-interaction-button-positive-background: rgb(255, 208, 0);
+    --uInfo-header-interaction-button-positive-border: rgb(255, 208, 0);
+    --uInfo-header-interaction-button-negative-color: rgb(255, 255, 255);
+    --uInfo-header-interaction-button-negative-background: #46464636;
+    --uInfo-header-interaction-button-negative-border: rgb(255, 208, 0);
 }
 .userHeader, .uHeaderMain{
     position: relative;
-    height: 180px;
+    height: 220px;
     overflow: hidden;
     border-radius: 6px;
     flex-shrink: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
 }
 .uHeaderMain{
     margin: 10px 10px 0 10px!important;
@@ -27,7 +42,7 @@ body[theme=dark]{
     bottom: 0;
     left: 0;
     right: 0;
-    height: 180px;
+    height: 220px;
 }
 .userHeader .lin{
     z-index: 1;
@@ -61,6 +76,9 @@ body[theme=dark]{
     text-overflow: ellipsis;
     white-space: nowrap;
     word-break: break-all;
+    user-select: all;
+    -webkit-user-select: all;
+    -moz-user-select: all;
 }
 .uHeaderMain .uHeaderInfos .data{
     display: flex;
@@ -84,6 +102,37 @@ body[theme=dark]{
 }
 .uHeaderMain .uHeaderInfos .data button:not(:first-child){
     border-left: 1px solid var(--uInfo-header-data-sepa);
+}
+.uHeaderMain .uHeaderInfos .interaction{
+    margin: 8px 20px 0 20px;
+    text-align: center;
+}
+.uHeaderMain .uHeaderInfos .interaction button{
+    border: 1px solid #00000000;
+    border-radius: 500px;
+    font-size: 14px;
+    padding: 5px 11px;
+    flex-shrink: 0;
+    word-break: keep-all;
+}
+.uHeaderMain .uHeaderInfos .interaction button i{
+    display: inline-block;
+    position: relative;
+    top: 4px;
+    margin: 0 0 0 -2px;
+    font-size: 18px;
+    height: 12px;
+    line-height: 0;
+}
+.uHeaderMain .uHeaderInfos .interaction button.posi{
+    color: var(--uInfo-header-interaction-button-positive-color);
+    background: var(--uInfo-header-interaction-button-positive-background);
+    border-color: var(--uInfo-header-interaction-button-positive-border);
+}
+.uHeaderMain .uHeaderInfos .interaction button.nega{
+    color: var(--uInfo-header-interaction-button-negative-color);
+    background: var(--uInfo-header-interaction-button-negative-background);
+    border-color: var(--uInfo-header-interaction-button-negative-border);
 }
 .userMainCards{
     overflow: auto;

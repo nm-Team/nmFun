@@ -2,6 +2,7 @@ body{
     --i-bgcolor: #9191911c;
     --red: rgb(194, 0, 0);
     --typeSelector-border: #f5f5f5;
+    --swiperButton: #fff;
 }
 body[theme=dark]{
     --i-bgcolor: #9191911c;

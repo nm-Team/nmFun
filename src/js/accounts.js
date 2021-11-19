@@ -20,6 +20,7 @@ function setHeaderLog() {
                 userName.innerHTML = accountInfo['nick'];
                 accountBox.setAttribute("onclick", "myMenu(true);");
                 myUid = accountInfo['uid'];
+                myInfos = accountInfo;
             }
         });
     }

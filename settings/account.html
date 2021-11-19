@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title data-i18n="settings.account.title"></title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='format-detection' content='telephone=no'>
+    <link rel="stylesheet" type="text/css" href="../src/css/page.css">
+    <link rel="stylesheet" type="text/css" href="../src/css/settings.css">
+    <script src="../src/js/info.js"></script>
+</head>
+
+<body class="settings">
+    <h1 data-i18n="settings.account.title"></h1>
+    <div class="accountBox">
+        <i id="settingAvatar"></i>
+        <div class="right">
+            <p class="nick" id="settingNick" tabindex="1"></p>
+            <p class="uid" id="settingUid" tabindex="1"></p>
+        </div>
+    </div>
+    <p class="listName" data-i18n="settings.account.account"></p>
+    <div class="lists">
+        <div class="but" onclick="goToPage('account_switch.html')">
+            <t data-i18n="settings.account.switch"></t>
+        </div>
+        <div class="but" onclick="goToPage('account_editinfo.html')">
+            <t data-i18n="settings.account.editInfo"></t>
+        </div>
+    </div>
+    <p class="listName" data-i18n="settings.account.jumpt"></p>
+    <div class="lists">
+        <div class="but"
+            onclick="parent.newLegacyBrowser('https://accounts.nmteam.ml/info.html?sessionid='+getCookie('sessionid'), false, true)">
+            <t data-i18n="settings.account.jump"></t>
+        </div>
+        <p class="tip" data-i18n="settings.account.tip.jump"></p>
+        <p class="tip" data-i18n="settings.account.tip.noLogOut"></p>
+    </div>
+    <script src="../src/js/jquery.min.js"></script>
+    <script src="../src/js/i18next-1.6.3.min.js"></script>
+    <script src="../src/js/language.js"></script>
+    <script src="../src/js/functions.js"></script>
+    <script src="../src/js/settings.js"></script>
+    <script>
+        myInfos = parent.myInfos;
+        settingNick.innerHTML = myInfos.nick;
+        settingUid.innerHTML = "UID: " + myInfos.uid;
+        settingAvatar.style.backgroundImage = "url(" + myInfos.avatar + ")";
+    </script>
+</body>
+
+</html>

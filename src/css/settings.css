@@ -1,0 +1,275 @@
+body{
+    --settings-bgcolor: #F5F6F9;
+    --settings-items-bgcolor: rgb(255 255 255);
+    --settings-items-hover-bgcolor: rgb(240, 240, 240);
+    --settings-items-red: rgb(255, 44, 44);
+    --settings-accountBox: #000;
+    --settings-items-border: rgb(221, 221, 221);
+    --settings-item: #000;
+    --settings-items-arrow: rgb(173, 173, 173);
+    --settings-uid: #888;
+    --settings-listName: #888;
+    --settings-tip: rgb(41, 41, 41);
+    --select-bgcolor: #d7d7d7;
+    --select-shadow: 0rem 0rem 2rem #9e9e9e70 inset;
+    --select-y-bg: rgb(255, 238, 0);
+    --select-cursor: #fff;
+    --select-cursor-shadow: 0 0rem 1rem 2rem rgb(0 0 0 / 1%);
+    --select-label: rgb(0, 0, 0);
+}
+body[theme=dark]{
+    --settings-bgcolor: #262626;
+    --settings-items-bgcolor: rgb(46, 46, 46);
+    --settings-items-hover-bgcolor: rgb(49, 49, 49);
+    --settings-items-red: rgb(255, 44, 44);
+    --settings-accountBox: rgb(255, 255, 255);
+    --settings-items-border: rgb(68, 68, 68);
+    --settings-item: #fff;
+    --settings-items-arrow: rgb(121, 121, 121);
+    --settings-uid: rgb(170, 170, 170);
+    --settings-listName: rgb(170, 170, 170);
+    --settings-tip: rgb(243, 243, 243);
+    --select-bgcolor: #595959;
+    --select-shadow: 0rem 0rem 2rem #58585870 inset;
+    --select-y-bg: rgb(255, 238, 0);
+    --select-cursor: #f8f8f8;
+    --select-cursor-shadow: 0 0rem 1rem 2rem rgb(0 0 0 / 1%);
+    --select-label: #fff;
+}
+body{
+    overflow-x: hidden;
+    overflow-y: auto;
+    font-size: 1.09rem;
+}
+.settings{
+    color: var(--settings-item);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+.settings h1{
+    font-size: 24rem;
+    font-weight: bold;
+    padding: 28rem 16rem 16rem 16rem;
+}
+.settings .accountBox{
+    display: flex;
+    margin: 5rem 0 20rem 0;
+    padding: 10rem 16rem;
+    color: var(--settings-accountBox);
+    background-color: var(--settings-items-bgcolor);
+    border: 0 solid var(--settings-items-border);
+    border-width: 0.3rem 0;
+}
+.settings .accountBox i{
+    width: 50rem;
+    height: 50rem;
+    margin-right: 8rem;
+    flex-shrink: 0;
+    flex-grow: 0;
+    background-color: var(--i-bgcolor);
+    background-position: 0rem,0rem;
+    background-size: 50rem 50rem;
+    border-radius: 99rem;
+}
+.settings .accountBox .right{
+    flex-shrink: 1;
+    flex-grow: 1;
+    word-wrap: break-word;
+}
+.settings .accountBox .nick{
+    display: block;
+    margin-top: 4rem;
+    font-size: 20rem;
+    font-weight: 500;
+}
+.settings .accountBox .uid{
+    display: block;
+    margin-top: 6rem;
+    font-size: 12rem;
+    color: var(--settings-uid);
+}
+.settings .lists{
+    margin: 0 0 15rem 0;
+    padding: 0;
+    border: 0 solid var(--settings-items-border);
+    border-top-width: 0.3rem;
+}
+.settings .lists .loading{
+    display: block;
+    height: 60rem;
+    background-image: url('../img/loading.gif');
+    background-position: 50%, 50%;
+    background-size: 25rem;
+    background-repeat: no-repeat;
+}
+.settings .lists .but:hover, .settings .lists .but:focus-visible{
+    background-color: var(--settings-items-hover-bgcolor); 
+    /* transition: background-color 0.2s; */
+}
+.settings .lists .but[disabled] *{
+    opacity: 0.3;
+}
+.settings .lists .but[checked] {
+    background-image: url(../src/img/checked.svg);
+    background-size: 14rem;
+    background-position: calc(100% - 13rem) 50%;
+    background-repeat: no-repeat;
+}
+.settings .listName{
+    padding: 2rem 16rem;
+    font-weight: 500;
+    font-size: 11rem;
+    padding-bottom: 2rem;
+    color: var(--settings-listName);
+}
+.settings .tip{
+    padding: 6rem 16rem;
+    font-size: 11rem;
+    font-weight: 400;
+    color: var(--settings-tip);
+}
+.settings .lists .but{
+    display: flex;
+    position: relative;
+    margin: 0;
+    padding: 10rem 16rem;
+    font-size: 14rem;
+    line-height: 1.4;
+    color: var(--settings-accountBox);
+    background-color: var(--settings-items-bgcolor);
+    border: 0 solid var(--settings-items-border);
+    border-width: 0 0 0.3rem 0;
+    cursor: pointer;
+}
+.settings .lists .but t{
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin-right: 20rem;
+    min-width: 5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    white-space: nowrap;
+    word-break: break-all;
+}
+.settings .lists .but .right{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    user-select: text;
+}
+.settings .lists .but button.rightB{
+    flex-grow: 0;
+    flex-shrink: 0;
+    align-self: center;
+    width: 10rem;
+    height: 100%;
+    background: none;
+}
+.settings .lists .but button.rightB svg{
+    fill: var(--settings-items-arrow);
+    width: 10rem;
+    height: 10rem;
+}
+.settings .lists .but button:not(.rightB){
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    background: none;
+    font-size: 14rem;
+    line-height: 1.4;
+    color: var(--settings-accountBox);
+    border: none;
+    border-radius: 0;
+}
+.settings .lists .but button.red{
+    color: var(--settings-items-red);
+}
+.settings .searchBox{
+    display: block;
+    width: calc(100% - 34rem);
+    width: -webkit-fill-available;
+    margin: 8rem 10rem;
+    border-radius: 7rem;
+    padding: 8rem 7rem;
+    font-size: 14rem;
+    line-height: 1.4;
+    color: var(--settings-accountBox);
+    background-color: var(--settings-items-bgcolor);
+}
+.select-radio-box {
+	position: absolute;
+	width: 45rem;
+	height: 25rem;
+	right: 17rem;
+	top: 9rem;
+}
+.select-radio-box input {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	z-index: 99;
+}
+.select-switch {
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	border-radius: 100rem;
+	background: var(--select-bgcolor);
+	box-shadow: var(--select-shadow);
+	transition: all 0.2s ease-in-out;
+}
+.select-radio-box input:checked~.select-switch {
+	background: var(--select-y-bg);
+}
+.select-cursor {
+	display: inline-block;
+	position: absolute;
+	top: 3rem;
+	left: 3rem;
+	width: 20rem;
+	height: 20rem;
+	border-radius: 100%;
+	background: var(--select-cursor);
+	box-shadow:var(--select-cursor-shadow);
+	z-index: 10;
+	transition: all 0.3s cubic-bezier(0.05, 0.73, 0.25, 1);
+}
+.select-radio-box input:checked~.select-switch .select-cursor {
+	left: 23rem;
+}
+.select-label {
+	position: absolute;
+	top: 0;
+	width: 20rem;
+	font-size: 10rem;
+	line-height: 2;
+	color: var(--select-label);
+	text-align: center;
+	transition: all 0.3s cubic-bezier(0.05, 0.73, 0.25, 1);
+}
+.select-label-on {
+	left: -19rem;
+	opacity: 0.5;
+}
+.select-radio-box input:checked~.select-switch .select-label-on {
+	left: 3rem;
+	opacity: 1;
+}
+.select-label-off {
+	opacity: 1;
+	right: 0;
+}
+.select-radio-box input:checked~.select-switch .select-label-off {
+	opacity: 0.5;
+	right: -20rem;
+}

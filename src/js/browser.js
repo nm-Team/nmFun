@@ -1,4 +1,5 @@
 browserId = 0;
+legacyBrowserId = 0;
 
 function newBrowser(URL, className = "", withTip = true, showOpenInBrowser = true, script = function () { }, customButtons) {
     browserId++;
@@ -69,5 +70,64 @@ browserTemplate = `
 </header>
 <div class="main">
     <iframe src="{{browserURL}}" onload="updateTitle('{{browserId}}')" id="iframe{{browserId}}" oncontextmenu="return false;"></iframe>
+</div>
+`;
+
+function newLegacyBrowser(URL, withTip = true, showOpenInLegacyBrowser = true, script = function(){},customButtons) {
+    legacyBrowserId++;
+    if (withTip) fakeURL = "./jumpurl.html?" + URL;
+    else fakeURL = URL;
+    new_element = document.createElement('div');
+    new_element.setAttribute('id', "legacyBrowserFrame" + legacyBrowserId);
+    new_element.setAttribute('class', 'rightBox box legacyBrowserFrame');
+    new_element.setAttribute('con', 'none');
+    new_element.setAttribute('name', URL);
+    new_element.setAttribute('totallyClose', 'true');
+    new_element.innerHTML = legacyBrowserTemplate.replace(/{{script}}/g, script).replace(/{{legacyBrowserId}}/g, legacyBrowserId).replace(/{{legacyBrowserURL}}/g, fakeURL).replace(/{{legacyBrowserRealURL}}/g, URL);
+    pageRight.appendChild(new_element);
+    focusBox("pageRight", "legacyBrowserFrame" + legacyBrowserId);
+    if (!showOpenInLegacyBrowser) document.getElementById("legacyBrowserFrame" + legacyBrowserId).getElementsByClassName("moreButton")[0].style.display = "none";
+    iframeScript = script;
+    iframeScript(legacyBrowserId);
+}
+
+function showLegacyBrowserContextMenu(URL) {
+    msgContextMenuItems = [["Open in LegacyBrowser", "window.open('" + URL + "')"]];
+    createContextMenu(msgContextMenuItems);
+}
+
+function updateTitle(legacyBrowserId) {
+    try {
+        bFrameE = document.getElementById("legacyBrowserFrame" + legacyBrowserId);
+        iframeE = document.getElementById("iframe" + legacyBrowserId);
+        if (iframeE.contentWindow.document.title != "")
+            bFrameE.setAttribute("name", iframeE.contentWindow.document.title);
+        iframeE.setAttribute("loaded", "");
+        document.getElementById("legacyBrowserTitle" + legacyBrowserId).innerHTML = iframeE.contentWindow.document.title;
+        // 防止网络不通畅
+        setTimeout(() => {
+            updateTitle(legacyBrowserId);
+        }, 100);
+    }
+    catch (err) {
+        // newErrorBox("updateTitle", err);
+    }
+}
+
+legacyBrowserTemplate = `
+<header>
+<div class="left">
+    <button class="backButton" onclick="closeBox('pageRight','legacyBrowserFrame{{legacyBrowserId}}', true)" oncontextmenu="quickBack('pageRight')" ontouchstart="longPressToDo(function(){quickBack('pageRight')})" ontouchend="longPressStop()"><i class="material-icons">&#xe5c4;</i></button>
+    <div class="nameDiv">
+        <p class="title" id="legacyBrowserTitle{{legacyBrowserId}}"></p>
+        <p class="little"></p>
+    </div>
+</div>
+<div class="right">
+    <button class="moreButton" onclick="showLegacyBrowserContextMenu('{{legacyBrowserRealURL}}')"><i class="material-icons">&#xe5d3;</i></button>
+</div>
+</header>
+<div class="main">
+    <iframe src="{{legacyBrowserURL}}" onload="updateTitle('{{legacyBrowserId}}')" id="iframe{{legacyBrowserId}}" oncontextmenu="return false;"></iframe>
 </div>
 `;

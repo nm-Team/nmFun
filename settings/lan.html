@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title data-i18n="settings.lan.title"></title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='format-detection' content='telephone=no'>
+    <link rel="stylesheet" type="text/css" href="../src/css/page.css">
+    <link rel="stylesheet" type="text/css" href="../src/css/settings.css">
+    <script src="../src/js/info.js"></script>
+</head>
+
+<body class="settings">
+    <h1 data-i18n="settings.lan.title"></h1>
+    <p class="listName" data-i18n="settings.lan.system"></p>
+    <input class="searchBox" id="sLI" oninput="searchSetting(this, 'lanSelectionDiv');">
+    <div class="lists" id="lanSelectionDiv">
+        <div class="loading"></div>
+    </div>
+    <p class="listName" data-i18n="settings.lan.customt"></p>
+    <div class="lists">
+        <div class="but" onclick="" disabled>
+            <t data-i18n="settings.lan.custom"></t>
+        </div>
+        <p class="tip" data-i18n="settings.lan.tip.custom"></p>
+    </div>
+    <p class="listName" data-i18n="settings.lan.storet"></p>
+    <div class="lists">
+        <div class="but" onclick="" disabled>
+            <t data-i18n="settings.lan.store"></t>
+        </div>
+        <p class="tip" data-i18n="settings.lan.tip.store"></p>
+    </div>
+    <div class="lists">
+        <div class="but" onclick="" disabled>
+            <t data-i18n="settings.lan.report"></t>
+        </div>
+    </div>
+    <script src="../src/js/jquery.min.js"></script>
+    <script src="../src/js/i18next-1.6.3.min.js"></script>
+    <script src="../src/js/language.js"></script>
+    <script src="../src/js/functions.js"></script>
+    <script src="../src/js/settings.js"></script>
+    <script>
+        lanSelectionDiv.innerHTML = "";
+        for (lanSDFor = 0; lanSDFor < languageList.length; lanSDFor++) {
+            lanSelectionDiv.innerHTML += `<div class="but" id="lanButton_` + languageList[lanSDFor] + `" onclick="parent.changeLanguage('` + languageList[lanSDFor] + `');changeLanguage('` + languageList[lanSDFor] + `');changeCheckInSeries('lanSelectionDiv','lanButton_` + languageList[lanSDFor] + `',true);parent.newMsgBox(i18n.t('settings.lan.tip.reload'))"><t data-i18n="lan.` + languageList[lanSDFor] + `"></t></div>`;
+        }
+        lanSelectionDiv.innerHTML += `<p class="tip" data-i18n="settings.lan.tip.system"></p>`;
+        changeLanguage();
+        changeCheckInSeries('lanSelectionDiv', 'lanButton_' + getCookie("pageLanguage"), true);
+        // 设置input placeholder
+        setSearchBoxPlaceHolder("sLI","settings.lan.search");
+    </script>
+</body>
+
+</html>

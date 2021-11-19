@@ -1,0 +1,162 @@
+{
+    "theme": {
+        "default": "浅色",
+        "dark": "深色"
+    },
+    "settings": {
+        "account": {
+            "title": "账号",
+            "account": "管理账号",
+            "switch": "切换账号",
+            "vip": "管理 VIP",
+            "switchpage": {
+                "title": "切换账号",
+                "loged": "已登录账号",
+                "no": "当前没有可登录的账号。",
+                "add": "添加新账号……",
+                "itslog": "正在使用",
+                "errorB": "另有",
+                "errorA": "个账号登录状态失效，已移除。",
+                "makeAccountAlive": "保持其它账号登录（实验）",
+                "menu": {
+                    "switch": "登录此账号",
+                    "del": "删除此账号"
+                },
+                "tip": {
+                    "switch_0": "此列表中显示可以切换的账号，而不会显示已经注销或登录状态过期的账号。如果您的账号没有显示在此列表中，请重新登录。",
+                    "makeAccountAlive_0": "开启此功能后，nmFun 将定期向 nmTeam 服务器发送登录请求以确保账号保持登录状态。",
+                    "makeAccountAlive_1": "开启此功能后，您的账号依然可能被退出，"
+                }
+            },
+            "editInfo": "编辑账号信息",
+            "jump": "到 nmTeam Accounts Center 管理账号信息",
+            "jumpt": "基本信息",
+            "tip": {
+                "jump": "nmFun 使用 nmTeam Account 作为登录凭据。因此，要编辑您的昵称、头像或修改您的密码，请转到 nmTeam Accounts Center 管理账号信息。",
+                "noLogOut": "说明：在跳转到的 nmTeam Account Center 登出账号后需重新加载 nmFun 页面才能在 nmFun 彻底登出账号。在 nmTeam Account Center 登录的其它账号不会同步到 nmFun，要使用其他账号登录，请使用“切换账号”。"
+            }
+        },
+        "about": {
+            "title": "关于 nmFun",
+            "appName": "nmFun",
+            "webVer": "当前 webView 版本",
+            "knowledge": "nmFun 条款和条件",
+            "updatelog": "更新日志",
+            "nmteam": "访问 nmTeam 网站",
+            "network-service-protocol": "nmTeam 服务协议",
+            "copyright": "©版权所有 nmTeam。保留所有权利。"
+        },
+        "index": {
+            "title": "设置",
+            "account": "账号",
+            "account_setting": "管理账号",
+            "account_privacy": "隐私",
+            "account_notification": "通知",
+            "about": "关于 nmFun",
+            "personally": "个性化",
+            "personally_settings": "个性化设置",
+            "theme": "主题",
+            "lan&region": "语言和地区",
+            "tip": {
+                "account": "要设置您的账号，请前往 nmTeam Accounts Center。"
+            }
+        },
+        "lan&regionp": {
+            "title": "语言和地区",
+            "lan": "设置语言",
+            "region": "设置地区"
+        },
+        "personally": {
+            "title": "个性化",
+            "display": {
+                "title": "显示偏好",
+                "thinMode": "宽屏视图中启用单屏",
+                "reload": "关闭此项后，请重新加载 nmFun 页面。"
+            },
+            "keys": {
+                "title": "快捷键（键盘）",
+                "sendKey": "发送快捷键",
+                "list": "快捷键列表"
+            },
+            "sendkey": {
+                "title": "更改发送快捷键",
+                "close": "关",
+                "enter": "Enter",
+                "ctrlEnter": "Ctrl 和 Enter"
+            },
+            "fontSize": {
+                "title": "字体大小",
+                "big": "大",
+                "small": "小",
+                "compatibilityMode": "兼容模式",
+                "tip": "兼容模式下将禁用自定义字体大小及自动调整字体大小。"
+            },
+            "tip": {
+                "keys": {
+                    "sendKey1": "指定发送消息的快捷键是否需要按下 Enter。",
+                    "sendKey2": "在使用 Ctrl + Enter 作为发送快捷键时，按下 Ctrl + Shift + Enter 可发送消息而不跳转；在使用 Enter 作为发送快捷键时，按下 Ctrl + Enter 可发送消息而不跳转。",
+                    "list": "查看列出的所有快捷键以提高您的工作效率。"
+                }
+            }
+        },
+        "privacy": {
+            "title": "隐私",
+            "myinfo": "管理我的信息",
+            "know": "了解 nmTeam 如何处理您的隐私",
+            "blocklist": "黑名单",
+            "tip": {
+                "know": "nmTeam 团队和 nmFun 尊重您的隐私。转到 nmTeam 网站以了解我们保护您隐私的方法。",
+                "blocklist": "被添加到黑名单的用户将无法与您聊天或添加您到联系人。"
+            }
+        },
+        "notification": {
+            "title": "通知",
+            "sound": "声音",
+            "sound_contact": "联系人消息音效",
+            "sound_group": "启用通知的群聊消息音效",
+            "sound_custom": "管理自定义消息音效",
+            "bannel": "消息横幅",
+            "bannel_contact": "联系人消息横幅",
+            "bannel_group": "启用通知的群聊消息横幅",
+            "group": "管理群聊通知",
+            "groupsettings": "群聊消息设置",
+            "system": "设置系统推送（开发中）",
+            "system_contact": "对联系人消息进行的系统推送",
+            "system_group": "对启用通知的群聊消息进行的系统推送",
+            "tip": {
+                "banner": "消息横幅将不会在消息列表展示时显示。",
+                "system": "如果您在一些现代浏览器上使用 nmFun，您可以通过配置系统推送获取新消息提醒，即使 nmFun 未在前台运行。该功能目前不可用，因为我们还在对其进行开发。"
+            }
+        },
+        "theme": {
+            "title": "主题",
+            "search": "搜索主题",
+            "system": "nmFun 主题",
+            "usebrowser": "使用浏览器主题（开发中）"
+        },
+        "lan": {
+            "title": "语言",
+            "search": "搜索语言",
+            "system": "系统语言",
+            "customt": "自定义语言",
+            "custom": "自定义语言",
+            "storet": "语言商店",
+            "store": "语言商店",
+            "report": "报告翻译问题",
+            "tip": {
+                "system": "nmFun 将尽量以您选择的第一种语言显示。",
+                "custom": "自定义语言暂未开放。",
+                "store": "在语言商店获取更多高质量语言。语言商店暂未开放。",
+                "reload": "重置语言后，请重新加载 nmFun 页面。"
+            }
+        },
+        "region": {
+            "title": "时间和地区",
+            "select": "选择您的地区",
+            "search": "搜索国家和地区",
+            "tip": {
+                "region": "请选择您所在的时区，则 nmFun 中的时间将会被换算成此时区显示。"
+            }
+        }
+    }
+}

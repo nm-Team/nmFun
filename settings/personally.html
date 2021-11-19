@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title data-i18n="settings.personally.title"></title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='format-detection' content='telephone=no'>
+    <link rel="stylesheet" type="text/css" href="../src/css/page.css">
+    <link rel="stylesheet" type="text/css" href="../src/css/settings.css">
+    <script src="../src/js/info.js"></script>
+</head>
+
+<body class="settings">
+    <h1 data-i18n="settings.personally.title"></h1>
+    <p class="listName" data-i18n="settings.personally.display.title"></p>
+    <div class="lists">
+        <div class="but">
+            <t data-i18n="settings.personally.display.thinMode"></t>
+            <t2 class="right" id="">
+                <div class="select-radio-box">
+                    <input type="checkbox" id="thinMode">
+                    <div class="select-switch">
+                        <div class="select-cursor"></div>
+                        <div class="select-label select-label-on"></div>
+                        <div class="select-label select-label-off"></div>
+                    </div>
+                </div>
+            </t2>
+        </div>
+        <script>
+            if (localStorage.getItem("thinMode") == "false")
+                thinMode.checked = false;
+            else thinMode.checked = true;
+            setInterval(() => {
+                if (!thinMode.checked) { localStorage.setItem("thinMode", "false"); }
+                else { localStorage.setItem("thinMode", "true"); }
+            }, 1000);
+        </script>
+    </div>
+    <p class="listName" data-i18n="settings.personally.keys.title"></p>
+    <div class="lists">
+        <div class="but" onclick="goToPage('personally_sendkey.html')">
+            <t data-i18n="settings.personally.keys.sendKey"></t>
+            <t2 class="right" id="sendKeyText"></t2>
+        </div>
+        <p class="tip" data-i18n="settings.personally.tip.keys.sendKey1"></p>
+        <p class="tip" data-i18n="settings.personally.tip.keys.sendKey2"></p>
+    </div>
+    <div class="lists">
+        <div class="but" onclick="goToPage('personally_keyslist.html')">
+            <t data-i18n="settings.personally.keys.list"></t>
+        </div>
+        <p class="tip" data-i18n="settings.personally.tip.keys.list"></p>
+    </div>
+    <script src="../src/js/jquery.min.js"></script>
+    <script src="../src/js/i18next-1.6.3.min.js"></script>
+    <script src="../src/js/language.js">
+    </script>
+    <script src="../src/js/functions.js"></script>
+    <script src="../src/js/settings.js"></script>
+    <script>
+        // 设置翻译
+        setInterval(() => {
+            if (i18n)
+                sendKeyText.innerHTML = i18n.t("settings.personally.sendkey." + localStorage.getItem("sendKey"));
+        }, 200);
+    </script>
+</body>
+
+</html>

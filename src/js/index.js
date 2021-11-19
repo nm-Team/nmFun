@@ -27,6 +27,7 @@ var mySwiper = new Swiper('.swiper-container', {
     direction: 'horizontal', // 垂直切换选项
     loop: true, // 循环模式选项
     speed: 300,
+    resizeObserver: true,
     autoplay: {
         delay: 4000,
         stopOnLastSlide: false,
@@ -50,3 +51,13 @@ var mySwiper = new Swiper('.swiper-container', {
         el: '.swiper-scrollbar',
     },
 })
+
+// 首窗口的Theme按钮事件
+function showMainPageThemeContextMenu(ele) {
+    msgContextMenuItems = [];
+    for (themeFor = 0; themeFor < themeList.length; themeFor++)
+        msgContextMenuItems[themeFor] = [i18n.t("theme." + themeList[themeFor] + ""), "switchTheme('" + themeList[themeFor] + "')"];
+    msgContextMenuItems[themeFor] = ["line"];
+    msgContextMenuItems[themeFor + 1] = [i18n.t("theme.more"), "newLegacyBrowser('/settings/theme.html', false, false),openSideBar()", "&#xe8b8;"];
+    createContextMenu(msgContextMenuItems, undefined, undefined, ele);
+}

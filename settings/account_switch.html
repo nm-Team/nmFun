@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title data-i18n="settings.account.switchpage.title"></title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='format-detection' content='telephone=no'>
+    <link rel="stylesheet" type="text/css" href="../src/css/page.css">
+    <link rel="stylesheet" type="text/css" href="../src/css/settings.css">
+    <style>
+        .settings .accountBox {
+            margin: -0.6rem 0;
+            cursor: pointer;
+        }
+
+        .settings .accountBox:hover {
+            background-color: var(--settings-items-hover-bgcolor);
+        }
+    </style>
+    <script src="../src/js/info.js"></script>
+</head>
+
+<body class="settings">
+    <h1 data-i18n="settings.account.switchpage.title"></h1>
+    <p class="listName" data-i18n="settings.account.switchpage.loged"></p>
+    <div class="lists accountList" id="accountList">
+        <div class="loading"></div>
+    </div>
+    <p class="tip" id="accountError"></p>
+    <div class="lists">
+        <div class="but" onclick="parent.requireLogin('pageRight','add',true)">
+            <t data-i18n="settings.account.switchpage.add"></t>
+        </div>
+        <p class="tip" data-i18n="settings.account.switchpage.tip.switch_0"></p>
+    </div>
+    <div class="lists" id="makeAccountAliveDiv" style="display: none;">
+        <div class="but" onclick="">
+            <t data-i18n="settings.account.switchpage.makeAccountAlive"></t>
+        </div>
+        <p class="tip" data-i18n="settings.account.switchpage.tip.makeAccountAlive_0"></p>
+        <p class="tip" data-i18n="settings.account.switchpage.tip.makeAccountAlive_1"></p>
+    </div>
+    <script src="../src/js/jquery.min.js"></script>
+    <script src="../src/js/i18next-1.6.3.min.js"></script>
+    <script src="../src/js/language.js"></script>
+    <script src="../src/js/functions.js"></script>
+    <script src="../src/js/log.js"></script>
+    <script src="../src/js/settings.js"></script>
+    <script>
+        refreshStatus = false;
+        var sessionsOld = [];
+        if(getQueryVariable("from")!="logFrame") makeAccountAliveDiv.style.display="block";
+        // 每隔一秒检查sessions改动
+        setInterval(() => {
+            sessions = getSessions();
+            // console.log("Listeing Sessions List Change");
+            if (!refreshStatus && sessions.toString() != sessionsOld.toString()) {
+                console.log("Sessions List Changed");
+                listTime = 0;
+                errorTime = 0;
+                accountList.innerHTML = `<div class="loading"></div>`;
+                accountError.innerHTML = ``;
+                refreshAccountList();
+            }
+            sessionsOld = sessions;
+        }, 1000);
+
+        function refreshAccountList() {
+            refreshStatus = true;
+            console.log("List: Checking " + listTime);
+            sessions = getSessions();
+            if (sessions.length == 0) { //啥都没有玩毛
+                accountList.innerHTML = `<div class="but" onclick="" tabindex="0"><t data-i18n="settings.account.switchpage.no"></t></div>`;
+                changeLanguage();
+                refreshStatus = false;
+                sessionsOld = sessions;
+            }
+            if (sessions.length == listTime) { // 已经没有账号stop
+                accountList.innerHTML = accountList.innerHTML.replace(`<div class="loading"></div>`, "");
+                refreshStatus = false;
+                sessionsOld = sessions;
+                return 0;
+            }
+            sessionid = sessions[listTime][0];
+            getInfo(sessions[listTime][0], function () { refreshAccountSuccess() }, function () { refreshAccountError() });
+        }
+
+        function refreshAccountSuccess() {
+            accountList.innerHTML = accountList.innerHTML.replace(`<div class="loading"></div>`, "");
+            accountList.innerHTML += `
+            <div class="accountBox" onclick=" showAccountContextMenu('`+ sessionid + `')">
+                <i id="settingAvatar" style="background-image: url('` + logInfos['avatar'] + `');"></i>
+                <div class="right">
+                    <p class="nick" id="settingNick" tabindex="1">` + logInfos['nick'] + `<vip svip=""></vip></p>
+                    <p class="uid" id="settingUid" tabindex="1">UID: ` + logInfos['uid'] + ` ` + (sessionid == localStorage.getItem("sessionid") ? i18n.t("settings.account.switchpage.itslog") : "") + `</p>
+                </div>
+            </div>
+            <div class="loading"></div>`;
+            ++listTime;
+            refreshAccountList();
+        }
+
+        function refreshAccountError() {
+            removeSession(sessionid);
+            accountError.innerHTML = i18n.t("settings.account.switchpage.errorB") + " " + ++errorTime + " " + i18n.t("settings.account.switchpage.errorA");
+            refreshAccountList();
+        }
+
+        function showAccountContextMenu(sid) {
+            msgContextMenuItems = [[i18n.t("settings.account.switchpage.menu.switch"), "localStorage.setItem('sessionid', '" + sid + "');parent.window.location.href='/';", "&#xe5ca;"], [i18n.t("settings.account.switchpage.menu.del"), "removeSession('" + sid + "'); if('" + sid + "'==localStorage.getItem('sessionid')) parent.window.location.href='/';", "&#xe14c;"],];
+            createContextMenu(msgContextMenuItems);
+        }
+
+function getQueryVariable(variable) {
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=");
+        if (pair[0] == "null") {
+            return null;
+        }
+        if (pair[0] == variable) {
+            return decodeURI(pair[1]);
+        }
+    }
+    return null;
+}
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title data-i18n="settings.theme.title"></title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='format-detection' content='telephone=no'>
+    <link rel="stylesheet" type="text/css" href="../src/css/page.css">
+    <link rel="stylesheet" type="text/css" href="../src/css/settings.css">
+    <script src="../src/js/info.js"></script>
+</head>
+
+<body class="settings">
+    <h1 data-i18n="settings.theme.title"></h1>
+    <p class="listName" data-i18n="settings.theme.system"></p>
+    <input class="searchBox" id="sTI" oninput="searchSetting(this, 'themeSelectionDiv');">
+    <div class="lists" id="themeSelectionDiv">
+        <div class="loading"></div>
+    </div>
+    <div class="lists">
+        <div class="but" tabindex="0">
+            <t data-i18n="settings.theme.usebrowser"></t>
+            <t2 class="right" id="">
+                <div class="select-radio-box">
+                    <input type="checkbox" id="usebrowser">
+                    <div class="select-switch">
+                        <div class="select-cursor"></div>
+                        <div class="select-label select-label-on"></div>
+                        <div class="select-label select-label-off"></div>
+                    </div>
+                </div>
+            </t2>
+        </div>
+    </div>
+    <script src="../src/js/jquery.min.js"></script>
+    <script src="../src/js/i18next-1.6.3.min.js"></script>
+    <script src="../src/js/language.js"></script>
+    <script src="../src/js/functions.js"></script>
+    <script src="../src/js/settings.js"></script>
+    <script>
+        themeSelectionDiv.innerHTML = "";
+        for (themeSDFor = 0; themeSDFor < themeList.length; themeSDFor++) {
+            themeSelectionDiv.innerHTML += `<div class="but" id="themeButton_` + themeList[themeSDFor] + `" onclick="parent.switchTheme('` + themeList[themeSDFor] + `', true);changeCheckInSeries('themeSelectionDiv','themeButton_` + themeList[themeSDFor] + `',true)"><t data-i18n="theme.` + themeList[themeSDFor] + `"></t></div>`;
+        }
+        themeSelectionDiv.innerHTML += `<p class="tip" data-i18n="settings.theme.tip.system"></p>`;
+        changeLanguage();
+        changeCheckInSeries('themeSelectionDiv', 'themeButton_' + getTheme(), true);
+        // 设置input placeholder
+        setSearchBoxPlaceHolder("sTI", "settings.theme.search");
+    </script>
+</body>
+
+</html>

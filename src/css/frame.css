@@ -292,7 +292,7 @@ body[theme=dark]{
 }
 .browserFrame iframe{
     position: absolute;
-    top: 0;
+    top: 45px;
     bottom: 0;
     left: 0;
     right: 0;
@@ -302,6 +302,56 @@ body[theme=dark]{
     animation: iframe 3s;
 }
 .browserFrame iframe[loaded]{
+    opacity: 1;
+    animation: none;
+}
+@keyframes iframe {
+    0%{
+        opacity: 0;
+    }
+    99.9%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+body{
+    --iframe-bgcolor: #FAFCFD;
+}
+body[theme=dark]{
+    --iframe-bgcolor: #262626;
+}
+.legacyBrowserFrame .main{
+    position: absolute;
+    top: 45rem;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: calc(100vh - 45rem);
+    background-color: var(--iframe-bgcolor);
+    background-image: url('../src/img/loading.gif');
+    background-position: 50%, 50%;
+    background-size: 25rem;
+    background-repeat: no-repeat;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+.legacyBrowserFrame iframe{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: calc(100vh - 45rem);
+    opacity: 1;
+    background-color: var(--iframe-bgcolor);
+    animation: iframe 3s;
+}
+.legacyBrowserFrame iframe[loaded]{
     opacity: 1;
     animation: none;
 }

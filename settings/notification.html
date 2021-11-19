@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title data-i18n="settings.notification.title"></title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='format-detection' content='telephone=no'>
+    <link rel="stylesheet" type="text/css" href="../src/css/page.css">
+    <link rel="stylesheet" type="text/css" href="../src/css/settings.css">
+    <script src="../src/js/info.js"></script>
+</head>
+
+<body class="settings">
+    <h1 data-i18n="settings.notification.title"></h1>
+    <p class="listName" data-i18n="settings.notification.sound"></p>
+    <div class="lists">
+        <div class="but" onclick="goToPage('notification_sound.html?t=contact')"><t data-i18n="settings.notification.sound_contact"></t></div>
+        <div class="but" onclick="goToPage('notification_sound.html?t=group')"><t data-i18n="settings.notification.sound_group"></t></div>
+        <div class="but" onclick="parent.newMsgBox(i18n.t('msgBox.developing'))"><t data-i18n="settings.notification.sound_custom"></t></div>
+    </div>
+    <p class="listName" data-i18n="settings.notification.groupsettings"></p>
+    <div class="lists">
+        <div class="but" onclick="goToPage('notification_group.html')"><t data-i18n="settings.notification.group"></t></div>
+    </div>
+    <p class="listName" data-i18n="settings.notification.bannel"></p>
+    <div class="lists">
+        <div class="but" onclick="goToPage('notification_bannel.html?t=contact')"><t data-i18n="settings.notification.bannel_contact"></t></div>
+        <div class="but" onclick="goToPage('notification_bannel.html?t=group')"><t data-i18n="settings.notification.bannel_group"></t></div>
+    </div>
+    <p class="listName" data-i18n="settings.notification.system"></p>
+    <div class="lists">
+        <div class="but" onclick="" disabled><t data-i18n="settings.notification.system_contact"></t></div>
+        <div class="but" onclick="" disabled><t data-i18n="settings.notification.system_group"></t></div>
+        <p class="tip" data-i18n="settings.notification.tip.system"></p>
+    </div>
+    <script src="../src/js/jquery.min.js"></script>
+    <script src="../src/js/i18next-1.6.3.min.js"></script>
+    <script src="../src/js/language.js"></script>
+    <script src="../src/js/functions.js"></script>
+    <script src="../src/js/settings.js"></script>
+</body>
+
+</html>

@@ -3,13 +3,14 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Title</title>
+    <title>nmFun - </title>
     <meta name="keywords" content="" />
     <meta name="description" content="" />
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
     <meta name='apple-mobile-web-app-capable' content='yes'>
     <meta name='apple-mobile-web-app-status-bar-style' content='black'>
     <meta name='format-detection' content='telephone=no'>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">
     <link rel="stylesheet" type="text/css" href="src/css/header.css">
     <link rel="manifest" href="src/json/manifest.json">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="src/img/icon-files/apple-touch-icon-144x144.png">
@@ -26,14 +27,8 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.cncn3.cn/webstatic/0b179cec2c0ed/swiper-bundle.min.css">
     <link rel="stylesheet" type="text/css" href="src/css/viewer.min.css">
     <link rel="stylesheet" type="text/css" href="src/css/search.css">
-    <script>
-        siteURL = "SiteURL";
-        accountClient = "AccountClient";
-        mySettings = {
-            "zone": 'Zone'
-        };
-        categoryList = [];
-    </script>
+    <script src="src/js/info.js"></script>
+    <script src="../src/js/info.js"></script>
 </head>
 
 <body>
@@ -62,6 +57,10 @@
     <div id="myMenuContainer">
         <div id="myContextMenu" class="contextMenu" onclick="myMenu(false)" icon="true">
             <button onclick="userInfo(myUid)"><i class="material-icons">account_circle</i>个人页面</button>
+            <div class="line"></div> <button onclick="newLegacyBrowser('/settings/', false, false)"><i
+                    class="material-icons">settings</i>设置</button><button
+                onclick="myMenu(true);showMainPageThemeContextMenu(this);"><i
+                    class="material-icons">color_lens</i>主题</button>
             <div class="line"></div><button
                 onclick="window.open(accountClient+'/info.html?sessionid='+localStorage.sessionid);"><i
                     class="material-icons"></i>nmTeam Account Center</button>
@@ -357,7 +356,7 @@
                 oprt="" top="true">
                 <header>
                     <div class="left">
-                        <button class="backButton" onclick="closeBox('pageRight','postFramepid')"
+                        <button class="backButton" onclick="closeBox('pageRight','userPage_uid')"
                             oncontextmenu="quickBack('pageRight',this)"
                             ontouchstart="longPressToDo(function(){quickBack('pageRight')})"
                             ontouchend="longPressStop()"><i class="material-icons">&#xe5c4;</i></button>
@@ -382,6 +381,10 @@
                                 <div class="data">
                                     <button>关注<span class="num">233</span></button>
                                     <button>粉丝<span class="num">666</span></button>
+                                </div>
+                                <div class="interaction">
+                                    <button class="followButton nega"><i class="material-icons">add</i><span>关注</span></button>
+                                    <button class="followButton posi"><i class="material-icons">check</i><span>已关注</span></button>
                                 </div>
                             </div>
                         </div>
@@ -497,7 +500,21 @@
             <p>正在发送</p>
         </div>
     </div>
+    <!--[if IE]>
+    <style>.noie{position:fixed;top:0;bottom:0;left:0;right:0;background-color:#fff}</style>
+    <div class="noie">
+        <div id="alertBox114514" class="alertBox">
+            <div class="title">提示</div>
+            <div class="msg">本网站<b>不支持</b>您正在使用的浏览器。请使用 Microsoft Edge、Google Chrome、Safari 等受支持的浏览器访问 nmFun。</div>
+            <div class="buttons">
+                <button class="positive" onclick="window.location.href='https://www.microsoft.com/edge';">下载 Microsoft Edge</button>
+                <button class="nagative" onclick="window.close();">停止使用</button>
+            </div> 
+        </div>
+    </div>
+    <![endif]-->
     <script src="src/js/jquery.min.js"></script>
+    <script src="src/js/i18next-1.6.3.min.js"></script>
     <script src="https://cdn.cncn3.cn/webstatic/d1e2b36ce909e/swiper-bundle.min.js"></script>
     <script src="src/js/functions.js"></script>
     <script src="src/js/post_send.js"></script>

@@ -186,7 +186,7 @@ header button{
     border-radius: 99px;
 }
 header button.loading{
-    background-image: url(/public/img/loading.gif);
+    background-image: url(/src/img/loading.gif);
     background-size: 15px;
     background-position: center center;
     background-repeat: no-repeat;
