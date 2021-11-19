@@ -1,3 +1,15 @@
+body{
+    --swiper-button: #EAD050;
+    --type-selecter-bgcolor: rgb(255, 255, 255);
+    --type-selecter-hover-bgcolor: rgb(240, 240, 240);
+    --type-selecter: rgb(17, 17, 17);
+}
+body[theme=dark]{
+    --swiper-button: #EAD050;
+    --type-selecter-bgcolor: rgb(28, 28, 29);
+    --type-selecter-hover-bgcolor: rgb(58, 58, 58);
+    --type-selecter: rgb(224, 224, 224);
+}
 .bodyMain{
     position: relative;
 }
@@ -277,18 +289,6 @@
     .bodyMain[trans=true] #pageLeft , #pageLeft #listFrame, .bodyMain[trans=true] #pageRight{
         transition: all 0.3s, border-right 0s 0s;
     }
-}
-body{
-    --swiper-button: #EAD050;
-    --type-selecter-bgcolor: rgb(255, 255, 255);
-    --type-selecter-hover-bgcolor: rgb(240, 240, 240);
-    --type-selecter: rgb(17, 17, 17);
-}
-body[theme=dark]{
-    --swiper-button: #EAD050;
-    --type-selecter-bgcolor: rgb(0, 0, 0);
-    --type-selecter-hover-bgcolor: rgb(28, 28, 29);
-    --type-selecter: rgb(224, 224, 224);
 }
 .browserFrame iframe{
     position: absolute;
