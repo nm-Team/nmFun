@@ -13,7 +13,7 @@
     <script src="../src/js/info.js"></script>
 </head>
 
-<body class="settings">
+<body class="settings radius">
     <h1 data-i18n="settings.theme.title"></h1>
     <p class="listName" data-i18n="settings.theme.system"></p>
     <input class="searchBox" id="sTI" oninput="searchSetting(this, 'themeSelectionDiv');">
@@ -45,7 +45,6 @@
         for (themeSDFor = 0; themeSDFor < themeList.length; themeSDFor++) {
             themeSelectionDiv.innerHTML += `<div class="but" id="themeButton_` + themeList[themeSDFor] + `" onclick="parent.switchTheme('` + themeList[themeSDFor] + `', true);changeCheckInSeries('themeSelectionDiv','themeButton_` + themeList[themeSDFor] + `',true)"><t data-i18n="theme.` + themeList[themeSDFor] + `"></t></div>`;
         }
-        themeSelectionDiv.innerHTML += `<p class="tip" data-i18n="settings.theme.tip.system"></p>`;
         changeLanguage();
         changeCheckInSeries('themeSelectionDiv', 'themeButton_' + getTheme(), true);
         // 设置input placeholder

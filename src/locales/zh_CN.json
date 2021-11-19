@@ -9,6 +9,7 @@
             "account": "管理账号",
             "switch": "切换账号",
             "vip": "管理 VIP",
+            "logout": "注销账号",
             "switchpage": {
                 "title": "切换账号",
                 "loged": "已登录账号",
@@ -101,12 +102,14 @@
         },
         "privacy": {
             "title": "隐私",
+            "showfollow": "对外展示关注",
+            "showfans": "对外展示粉丝",
             "myinfo": "管理我的信息",
             "know": "了解 nmTeam 如何处理您的隐私",
             "blocklist": "黑名单",
             "tip": {
                 "know": "nmTeam 团队和 nmFun 尊重您的隐私。转到 nmTeam 网站以了解我们保护您隐私的方法。",
-                "blocklist": "被添加到黑名单的用户将无法与您聊天或添加您到联系人。"
+                "blocklist": "被添加到黑名单的用户将无法关注您或与您互动，您也不会看到他们的帖子或回复。"
             }
         },
         "notification": {

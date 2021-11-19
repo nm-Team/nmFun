@@ -13,7 +13,7 @@
     <script src="../src/js/info.js"></script>
 </head>
 
-<body class="settings">
+<body class="settings radius">
     <h1 data-i18n="settings.account.title"></h1>
     <div class="accountBox">
         <i id="settingAvatar"></i>
@@ -24,8 +24,8 @@
     </div>
     <p class="listName" data-i18n="settings.account.account"></p>
     <div class="lists">
-        <div class="but" onclick="goToPage('account_switch.html')">
-            <t data-i18n="settings.account.switch"></t>
+        <div class="but" onclick="parent.alert('确定要注销账号吗？','注销','是','localStorage.sessionid=``;window.location.href=``;','取消')">
+            <t data-i18n="settings.account.logout"></t>
         </div>
         <div class="but" onclick="goToPage('account_editinfo.html')">
             <t data-i18n="settings.account.editInfo"></t>
@@ -34,7 +34,7 @@
     <p class="listName" data-i18n="settings.account.jumpt"></p>
     <div class="lists">
         <div class="but"
-            onclick="parent.newLegacyBrowser('https://accounts.nmteam.ml/info.html?sessionid='+getCookie('sessionid'), false, true)">
+            onclick="parent.newBrowser('https://accounts.nmteam.ml/info.html?sessionid='+getCookie('sessionid'), undefined, false, true)">
             <t data-i18n="settings.account.jump"></t>
         </div>
         <p class="tip" data-i18n="settings.account.tip.jump"></p>

@@ -60,7 +60,6 @@ function setSearchBoxPlaceHolder(divid, word){
 }
 
 setInterval(() => {
-    $(".but").each(function (index, domEle){
-        domEle.setAttribute("tabindex","0");
-    });
+    $(".but").attr("tabindex","0");
+    $(".but").attr("onkeydown","divClick(this, event)");
 }, 500);

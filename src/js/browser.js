@@ -1,9 +1,9 @@
-browserId = 0;
+rowserId = 0;
 legacyBrowserId = 0;
 
 function newBrowser(URL, className = "", withTip = true, showOpenInBrowser = true, script = function () { }, customButtons) {
     browserId++;
-    if (withTip) fakeURL = siteURL+"/jumpurl.php?" + URL;
+    if (withTip) fakeURL = siteURL+"/jumpurl.html?" + URL;
     else fakeURL = URL;
     new_element = document.createElement('div');
     new_element.setAttribute('id', "browserFrame" + browserId);

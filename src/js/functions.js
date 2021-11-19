@@ -1,5 +1,6 @@
 hasCreatedContextMenu = false;
 themeList = ["default", "dark",];
+languageList=["zh_cn"]
 
 //  禁用右键
 setInterval(() => {

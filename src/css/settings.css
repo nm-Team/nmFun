@@ -40,12 +40,18 @@ body{
     overflow-x: hidden;
     overflow-y: auto;
     font-size: 1.09rem;
+    width: auto;
+    height: auto;
 }
 .settings{
     color: var(--settings-item);
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
+}
+.settings.radius{
+    margin-left: 10px;
+    margin-right: 10px;
 }
 .settings h1{
     font-size: 24rem;
@@ -60,6 +66,10 @@ body{
     background-color: var(--settings-items-bgcolor);
     border: 0 solid var(--settings-items-border);
     border-width: 0.3rem 0;
+}
+.settings.radius .accountBox{
+    border-radius: 6px;
+    border: none;
 }
 .settings .accountBox i{
     width: 50rem;
@@ -95,6 +105,9 @@ body{
     border: 0 solid var(--settings-items-border);
     border-top-width: 0.3rem;
 }
+.settings.radius .lists{
+    border: none;
+}
 .settings .lists .loading{
     display: block;
     height: 60rem;
@@ -105,13 +118,14 @@ body{
 }
 .settings .lists .but:hover, .settings .lists .but:focus-visible{
     background-color: var(--settings-items-hover-bgcolor); 
+    outline: none;
     /* transition: background-color 0.2s; */
 }
 .settings .lists .but[disabled] *{
     opacity: 0.3;
 }
-.settings .lists .but[checked] {
-    background-image: url(../src/img/checked.svg);
+.settings .lists .but[checked]{
+    background-image: url(../img/checked.svg);
     background-size: 14rem;
     background-position: calc(100% - 13rem) 50%;
     background-repeat: no-repeat;
@@ -141,6 +155,15 @@ body{
     border: 0 solid var(--settings-items-border);
     border-width: 0 0 0.3rem 0;
     cursor: pointer;
+}
+.settings.radius .lists .but:first-of-type{
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+.settings.radius .lists .but:last-of-type{
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-width: 0;
 }
 .settings .lists .but t{
     flex-grow: 1;
@@ -202,14 +225,26 @@ body{
     color: var(--settings-accountBox);
     background-color: var(--settings-items-bgcolor);
 }
-.select-radio-box {
+.settings.radius .searchBox{
+    display: block;
+    width: calc(100% - 32rem);
+    width: -webkit-fill-available;
+    margin: 8rem 0rem;
+    border-radius: 6rem;
+    padding: 8rem 16rem;
+    font-size: 14rem;
+    line-height: 1.4;
+    color: var(--settings-accountBox);
+    background-color: var(--settings-items-bgcolor);
+}
+.select-radio-box{
 	position: absolute;
 	width: 45rem;
 	height: 25rem;
 	right: 17rem;
 	top: 9rem;
 }
-.select-radio-box input {
+.select-radio-box input{
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -218,7 +253,7 @@ body{
 	opacity: 0;
 	z-index: 99;
 }
-.select-switch {
+.select-switch{
 	overflow: hidden;
 	position: relative;
 	width: 100%;
@@ -228,10 +263,10 @@ body{
 	box-shadow: var(--select-shadow);
 	transition: all 0.2s ease-in-out;
 }
-.select-radio-box input:checked~.select-switch {
+.select-radio-box input:checked~.select-switch{
 	background: var(--select-y-bg);
 }
-.select-cursor {
+.select-cursor{
 	display: inline-block;
 	position: absolute;
 	top: 3rem;
@@ -244,10 +279,10 @@ body{
 	z-index: 10;
 	transition: all 0.3s cubic-bezier(0.05, 0.73, 0.25, 1);
 }
-.select-radio-box input:checked~.select-switch .select-cursor {
+.select-radio-box input:checked~.select-switch .select-cursor{
 	left: 23rem;
 }
-.select-label {
+.select-label{
 	position: absolute;
 	top: 0;
 	width: 20rem;
@@ -257,19 +292,19 @@ body{
 	text-align: center;
 	transition: all 0.3s cubic-bezier(0.05, 0.73, 0.25, 1);
 }
-.select-label-on {
+.select-label-on{
 	left: -19rem;
 	opacity: 0.5;
 }
-.select-radio-box input:checked~.select-switch .select-label-on {
+.select-radio-box input:checked~.select-switch .select-label-on{
 	left: 3rem;
 	opacity: 1;
 }
-.select-label-off {
+.select-label-off{
 	opacity: 1;
 	right: 0;
 }
-.select-radio-box input:checked~.select-switch .select-label-off {
+.select-radio-box input:checked~.select-switch .select-label-off{
 	opacity: 0.5;
 	right: -20rem;
 }
