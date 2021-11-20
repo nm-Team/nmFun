@@ -329,7 +329,7 @@ header .nameDiv .little{
 }
 .alertBox .msg{
     font-size: 13px;
-    overflow: auto;
+    overflow: overlay;
     padding: 5px 25px 12px 20px;
 }
 .alertBox .buttons{
@@ -371,7 +371,7 @@ header .nameDiv .little{
     border-radius: 4px;
     box-shadow: var(--msgBox-shadow);
     animation: msgBox 7s;
-    overflow: auto;
+    overflow: overlay;
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
@@ -460,7 +460,7 @@ body[theme=dark] .skeleton{
         opacity: 1;
         width: 200px;
         max-height: 40vh;
-        overflow: auto;
+        overflow: overlay;
     }
 }
 

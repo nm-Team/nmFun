@@ -13,7 +13,7 @@ body[theme=dark]{
     z-index: 99999;
 }
 .indexFrame{
-    overflow: auto;
+    overflow: overlay;
 }
 .indexSwiper{
     height: 200px;
@@ -109,5 +109,5 @@ body[theme=dark]{
     border-radius: 6px;
 }
 .floatFrame-content{
-    overflow: auto;
+    overflow: overlay;
 }

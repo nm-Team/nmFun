@@ -137,7 +137,7 @@ body[theme=dark]{
     bottom: 0;
     left: 0;
     right: 0;
-    overflow: auto;
+    overflow: overlay;
     background-color: var(--page-bgcolor);
 }
 @media (min-width: 800px) {
@@ -242,7 +242,7 @@ body[theme=dark]{
         opacity: 1;
         width: 200px;
         max-height: 40vh;
-        overflow: auto;
+        overflow: overlay;
     }
 }
 @keyframes toLeft {

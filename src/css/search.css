@@ -8,7 +8,7 @@
     margin-bottom: -7px;
 }
 .searchFrame .main #searchResults{
-    overflow: auto;
+    overflow: overlay;
 }
 .unavaliable.search-not-start i{
     background-image: url(../img/search_not_start.png);
