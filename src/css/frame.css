@@ -34,6 +34,9 @@ body[theme=dark]{
     visibility: visible;
     transition: visibility 0s 0.5s;
 }
+.pageLeft[show]{
+    z-index: 102;
+}
 .widthChanger{
     width: 6px;
     margin: 0 -3px;
