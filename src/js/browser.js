@@ -1,4 +1,4 @@
-rowserId = 0;
+browserId = 0;
 legacyBrowserId = 0;
 
 function newBrowser(URL, className = "", withTip = true, showOpenInBrowser = true, script = function () { }, customButtons) {
@@ -37,7 +37,7 @@ function showBrowserContextMenu(URL) {
     createContextMenu(msgContextMenuItems);
 }
 
-function updateTitle(browserId) {
+function updateLegacyTitle(browserId) {
     try {
         bFrameE = document.getElementById("browserFrame" + browserId);
         iframeE = document.getElementById("iframe" + browserId);
@@ -47,11 +47,11 @@ function updateTitle(browserId) {
         document.getElementById("browserTitle" + browserId).innerHTML = iframeE.contentWindow.document.title;
         // 防止网络不通畅
         setTimeout(() => {
-            updateTitle(browserId);
+            updateLegacyTitle(browserId);
         }, 100);
     }
     catch (err) {
-        // newErrorBox("updateTitle", err);
+        // newErrorBox("updateLegacyTitle", err);
     }
 }
 
@@ -69,7 +69,7 @@ browserTemplate = `
 </div>
 </header>
 <div class="main">
-    <iframe src="{{browserURL}}" onload="updateTitle('{{browserId}}')" id="iframe{{browserId}}" oncontextmenu="return false;"></iframe>
+    <iframe src="{{browserURL}}" onload="updateLegacyTitle('{{browserId}}')" id="iframe{{browserId}}" oncontextmenu="return false;"></iframe>
 </div>
 `;
 
@@ -92,11 +92,11 @@ function newLegacyBrowser(URL, withTip = true, showOpenInLegacyBrowser = true, s
 }
 
 function showLegacyBrowserContextMenu(URL) {
-    msgContextMenuItems = [["Open in LegacyBrowser", "window.open('" + URL + "')"]];
+    msgContextMenuItems = [["在浏览器中打开", "window.open('" + URL + "')"]];
     createContextMenu(msgContextMenuItems);
 }
 
-function updateTitle(legacyBrowserId) {
+function updateLegacyTitle(legacyBrowserId) {
     try {
         bFrameE = document.getElementById("legacyBrowserFrame" + legacyBrowserId);
         iframeE = document.getElementById("iframe" + legacyBrowserId);
@@ -106,11 +106,11 @@ function updateTitle(legacyBrowserId) {
         document.getElementById("legacyBrowserTitle" + legacyBrowserId).innerHTML = iframeE.contentWindow.document.title;
         // 防止网络不通畅
         setTimeout(() => {
-            updateTitle(legacyBrowserId);
+            updateLegacyTitle(legacyBrowserId);
         }, 100);
     }
     catch (err) {
-        // newErrorBox("updateTitle", err);
+        // newErrorBox("updateLegacyTitle", err);
     }
 }
 
@@ -128,6 +128,6 @@ legacyBrowserTemplate = `
 </div>
 </header>
 <div class="main">
-    <iframe src="{{legacyBrowserURL}}" onload="updateTitle('{{legacyBrowserId}}')" id="iframe{{legacyBrowserId}}" oncontextmenu="return false;"></iframe>
+    <iframe src="{{legacyBrowserURL}}" onload="updateLegacyTitle('{{legacyBrowserId}}')" id="iframe{{legacyBrowserId}}" oncontextmenu="return false;"></iframe>
 </div>
 `;

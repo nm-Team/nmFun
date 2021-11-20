@@ -52,12 +52,39 @@ var mySwiper = new Swiper('.swiper-container', {
     },
 })
 
+// 自动切换主题色
+if (localStorage.usebrowser == "true") {
+    console.log("正在识别系统主题...");
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        switchTheme("dark");
+    else switchTheme("default");
+}
+
 // 首窗口的Theme按钮事件
 function showMainPageThemeContextMenu(ele) {
     msgContextMenuItems = [];
-    for (themeFor = 0; themeFor < themeList.length; themeFor++)
-        msgContextMenuItems[themeFor] = [i18n.t("theme." + themeList[themeFor] + ""), "switchTheme('" + themeList[themeFor] + "')"];
+    if (localStorage.usebrowser == "true") msgContextMenuItems = [[i18n.t("theme.usebrowser"), "newLegacyBrowser('/settings/theme.html', false, false)"]];
+    else {
+        msgContextMenuItems =["line"];
+        for(themeFor = 0; themeFor <themeList.length; themeFor++)
+    msgContextMenuItems[themeFor] = [i18n.t("theme." + themeList[themeFor] + ""), "switchTheme('" + themeList[themeFor] + "')"];
     msgContextMenuItems[themeFor] = ["line"];
-    msgContextMenuItems[themeFor + 1] = [i18n.t("theme.more"), "newLegacyBrowser('/settings/theme.html', false, false),openSideBar()", "&#xe8b8;"];
-    createContextMenu(msgContextMenuItems, undefined, undefined, ele);
+    msgContextMenuItems[themeFor + 1] = [i18n.t("theme.more"), "newLegacyBrowser('/settings/theme.html', false, false)", "&#xe8b8;"];
+  } createContextMenu(msgContextMenuItems, undefined, undefined, ele);
+}
+
+// 登录 
+inv = setInterval(() => {
+    if (getInfo) {
+        clearInterval(inv);
+        setHeaderLog();
+    }
+}, 1000);
+
+// 预定义的选项表
+settingsPreDefineList = [["zone", -8], ["usebrowser", false],]
+
+for (settingsPDT == 0; settingsPDT < settingsPreDefineList.length; settingsPDT++) {
+    if (!localStorage.getItem(settingsPreDefineList[settingsPDT][0]))
+        localStorage.setItem(settingsPreDefineList[settingsPDT][0], settingsPreDefineList[settingsPDT][0]);
 }

@@ -41,7 +41,6 @@
             </div>
             <div class="right" onclick='pageHeader.removeAttribute("open");'>
                 <div class="links">
-                    <button onclick="window.location.href=''" title="首页">首页</button>
                     <button onclick="focusBox('pageLeft','searchFrame')" title="搜索">搜索</button><button
                         onclick="showPostInput('send',true)" title="投稿">投稿</button>
                     <button onclick="window.open('https://nmteam.xyz?from=nmfun')" title="nmTeam">nmTeam</button>
@@ -64,7 +63,7 @@
             <div class="line"></div><button
                 onclick="window.open(accountClient+'/info.html?sessionid='+localStorage.sessionid);"><i
                     class="material-icons"></i>nmTeam Account Center</button>
-            <button onclick="alert('确定要注销账号吗？','注销','是','localStorage.sessionid=``;window.location.href=``;','取消')"><i
+            <button onclick="alert('确定要注销账号吗？','注销','是','logOut();window.location.href=``;','取消')"><i
                     class="material-icons"></i>注销账号</button>
         </div>
     </div>
@@ -192,7 +191,7 @@
                         <button id="" onclick=""><i class="material-icons">search</i></button>
                     </div>
                 </header>
-                <div class="postBox cardBox postCardBox main">
+                <div class="cardBox postCardBox main">
                     <div class="typeContainer" noselect="">
                         <div class="typeSelecter" fly="true">
                             <label for=""><input type="radio"><span>全部</span></label>
@@ -451,7 +450,7 @@
                 <button onclick="closeLogFrame()"><i class="material-icons">keyboard_arrow_down</i></button>
             </div>
         </header>
-        <div class="content">
+        <div class="main">
             <iframe id="logIframe"></iframe>
         </div>
     </div>
@@ -515,12 +514,12 @@
     <![endif]-->
     <script src="src/js/jquery.min.js"></script>
     <script src="src/js/i18next-1.6.3.min.js"></script>
+    <script src="src/js/language.js"></script>
     <script src="https://cdn.cncn3.cn/webstatic/d1e2b36ce909e/swiper-bundle.min.js"></script>
     <script src="src/js/functions.js"></script>
     <script src="src/js/post_send.js"></script>
     <script src="src/js/index.js"></script>
     <script src="src/js/viewer.min.js"></script>
-    <script src="https://accounts.nmteam.xyz/src/js/getinfo.js" onerror="newMsgBox('账号服务器连接失败')"></script>
     <script src="src/js/accounts.js"></script>
     <script src="src/js/userPage.js"></script>
     <script src="src/js/frame.js"></script>

@@ -253,6 +253,10 @@ body{
 	opacity: 0;
 	z-index: 99;
 }
+.select-radio-box input:focus+.select-switch{
+    outline: var(--outline);
+    transition: outline 0s;
+}
 .select-switch{
 	overflow: hidden;
 	position: relative;

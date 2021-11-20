@@ -562,3 +562,11 @@ function isPwa() {
         return true;
     else return false;
 }
+
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var url = decodeURI(decodeURI(window.location.search))
+    var r = url.substr(1).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+}

@@ -1,7 +1,19 @@
 {
+    "logverify": {
+        "title": "继续",
+        "confirm": "确认登录",
+        "confirm&refresh": "确认登录并刷新",
+        "error":"出现问题，无法登录到账户。",
+        "tip": {
+            "goas": "将以此账号身份登录 nmFun。",
+            "refresh": "请注意，您可能需要刷新 nmFun 页面才能继续某些操作。"
+        }
+    },
     "theme": {
         "default": "浅色",
-        "dark": "深色"
+        "dark": "深色",
+        "more":"更多...",
+        "usebrowser":"正在使用浏览器主题"
     },
     "settings": {
         "account": {
@@ -72,7 +84,7 @@
             "display": {
                 "title": "显示偏好",
                 "thinMode": "宽屏视图中启用单屏",
-                "reload": "关闭此项后，请重新加载 nmFun 页面。"
+                "reload": "设置此项后，请重新加载 nmFun 页面。"
             },
             "keys": {
                 "title": "快捷键（键盘）",
@@ -113,29 +125,17 @@
             }
         },
         "notification": {
-            "title": "通知",
-            "sound": "声音",
-            "sound_contact": "联系人消息音效",
-            "sound_group": "启用通知的群聊消息音效",
-            "sound_custom": "管理自定义消息音效",
-            "bannel": "消息横幅",
-            "bannel_contact": "联系人消息横幅",
-            "bannel_group": "启用通知的群聊消息横幅",
-            "group": "管理群聊通知",
-            "groupsettings": "群聊消息设置",
-            "system": "设置系统推送（开发中）",
-            "system_contact": "对联系人消息进行的系统推送",
-            "system_group": "对启用通知的群聊消息进行的系统推送",
-            "tip": {
-                "banner": "消息横幅将不会在消息列表展示时显示。",
-                "system": "如果您在一些现代浏览器上使用 nmFun，您可以通过配置系统推送获取新消息提醒，即使 nmFun 未在前台运行。该功能目前不可用，因为我们还在对其进行开发。"
-            }
+            "title": "通知"
         },
         "theme": {
             "title": "主题",
             "search": "搜索主题",
             "system": "nmFun 主题",
-            "usebrowser": "使用浏览器主题（开发中）"
+            "usebrowser": "使用浏览器主题（开发中）",
+            "tip": {
+                "usebrowser1": "nmFun 会检测您的浏览器主题色，并在您更改颜色时作出切换。更换浏览器主题色后，请重新加载 nmFun 页面。",
+                "usebrowser2": "若是开启了此选项，您将不能自定义 nmFun 的主题色。若在此设置页面中更改了颜色，下次加载 nmFun 时将继续使用浏览器主题色。"
+            }
         },
         "lan": {
             "title": "语言",

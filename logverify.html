@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title> </title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='format-detection' content='telephone=no'>
+    <link rel="stylesheet" type="text/css" href="./src/css/page.css">
+    <link rel="stylesheet" type="text/css" href="./src/css/settings.css">
+    <script src="./src/js/info.js"></script>
+</head>
+
+<body class="settings radius">
+    <h1 data-i18n="logverify.title"></h1>
+    <div class="accountBox">
+        <i id="settingAvatar"></i>
+        <div class="right">
+            <p class="nick" id="settingNick" tabindex="1"></p>
+            <p class="uid" id="settingUid" tabindex="1"></p>
+        </div>
+    </div>
+    <div class="lists">
+        <div class="but" onclick="confirmLog();">
+            <t data-i18n="logverify.confirm"></t>
+        </div>
+    <p class="tip" data-i18n="logverify.tip.goas"></p>
+    </div>
+    <div class="lists">
+        <div class="but" onclick="confirmLog();parent.window.location.reload();">
+            <t data-i18n="logverify.confirm&refresh"></t>
+        </div>
+    <p class="tip" data-i18n="logverify.tip.refresh"></p>
+    </div>
+    <script src="./src/js/jquery.min.js"></script>
+    <script src="./src/js/i18next-1.6.3.min.js"></script>
+    <script src="./src/js/language.js"></script>
+    <script src="./src/js/functions.js"></script>
+    <script src="./src/js/accounts.js"></script>
+    <script src="./src/js/settings.js"></script>
+    <script>
+        sessionid = getUrlParam("sessionid");
+        returnWord = "";
+        document.cookie = "PHPSESSID=" + sessionid + ";domain=" + siteURL.split("/")[2];
+        loginv = setInterval(() => {
+            getInfo(function () {
+                clearInterval(loginv);
+                accountInfo = returnWord;
+                if (accountInfo == -1 || accountInfo == -2) {
+                    alert(i18n.t("logverify.error"));
+                }
+                else {
+                    myUid = accountInfo['uid'];
+                    myInfos = accountInfo;
+                    settingNick.innerHTML = myInfos.nick;
+                    settingUid.innerHTML = "UID: " + myInfos.uid;
+                    settingAvatar.style.backgroundImage = "url(" + myInfos.avatar + ")";
+                }
+            });
+        }, 100);
+
+        function confirmLog() {
+            parent.closeLogFrame();
+            localStorage.setItem('sessionid', sessionid);
+            parent.setHeaderLog();
+        }
+    </script>
+</body>
+
+</html>

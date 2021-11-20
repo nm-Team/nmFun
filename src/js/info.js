@@ -1,5 +1,5 @@
 siteURL = "https://fun.nmteam.xyz";
-accountClient = "AccountClient";
+accountClient = "https://accounts.nmteam.xyz";
 mySettings = {
     "zone": 'Zone'
 };

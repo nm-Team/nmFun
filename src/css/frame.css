@@ -320,7 +320,7 @@ body{
     --iframe-bgcolor: #FAFCFD;
 }
 body[theme=dark]{
-    --iframe-bgcolor: #262626;
+    --iframe-bgcolor: #010101;
 }
 .legacyBrowserFrame .main{
     position: absolute;
@@ -331,7 +331,7 @@ body[theme=dark]{
     width: 100%;
     height: calc(100vh - 45rem);
     background-color: var(--iframe-bgcolor);
-    background-image: url('../src/img/loading.gif');
+    background-image: url('../img/loading.gif');
     background-position: 50%, 50%;
     background-size: 25rem;
     background-repeat: no-repeat;

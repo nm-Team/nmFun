@@ -34,6 +34,18 @@
                 </div>
             </t2>
         </div>
+        <script>
+            if (localStorage.getItem("usebrowser") == "false")
+                usebrowser.checked = false;
+            else usebrowser.checked = true;
+            setInterval(() => {
+                if (!usebrowser.checked) { localStorage.setItem("usebrowser", "false"); }
+                else { localStorage.setItem("usebrowser", "true"); }
+            }, 1000);
+        </script>
+
+        <p class="tip" data-i18n="settings.theme.tip.usebrowser1"></p>
+        <p class="tip" data-i18n="settings.theme.tip.usebrowser2"></p>
     </div>
     <script src="../src/js/jquery.min.js"></script>
     <script src="../src/js/i18next-1.6.3.min.js"></script>
