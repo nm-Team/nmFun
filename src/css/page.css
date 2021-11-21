@@ -140,6 +140,9 @@ body[select=false] *{
     visibility: visible;
     opacity: 1;
 }
+.coverWithColor.pop{
+    z-index: 900;
+}
 header{
     position: absolute;
     z-index: 20;
@@ -208,7 +211,7 @@ header .nameDiv{
     align-items: center;
     margin-left: 0px;
     overflow: hidden;
-    width: calc(100% - 125px);
+    max-width: calc(100% - 200px);
     position: absolute;
     top: 0;
     bottom: 0;

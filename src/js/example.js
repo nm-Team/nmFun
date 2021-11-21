@@ -7,7 +7,7 @@ new_element.innerHTML = `
                 style="background-image:url('avatar')"></i>
             <div>
                 <p class="unick">nick</p>
-                <p class="time" time="true" timestamp="time" timestyle="relative"
+                <p class="time" time="true" timestamp="1919810" timestyle="relative"
                     timesec="false" timefull="false"
                     title=""></p>
             </div>

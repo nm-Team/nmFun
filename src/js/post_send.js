@@ -13,8 +13,22 @@ function showPostInput(which, toS) {
     document.getElementById("" + which + "Edit").setAttribute("open", toS);
     if (toS) {
         document.getElementById("" + which + "EditBoxCover").setAttribute("open", "true");
+        if (localStorage.getItem("sendCraft" + "_" + "" + which + "EditBox"))
+            document.getElementById("" + which + "EditBox").getElementsByClassName("sendBoxInput")[0].value = localStorage.getItem("sendCraft" + "_" + "" + which + "EditBox");
     }
-    else document.getElementById("" + which + "EditBoxCover").removeAttribute("open");
+    else document.getElementById("" + which + "EditBox").removeAttribute("open");
+}
+
+// 保存到草稿箱
+function saveCraft(ele, type) {
+    localStorage.setItem("sendCraft" + "_" + ele.id, ele.getElementsByClassName("sendBoxInput")[0].value);
+    newMsgBox("当前内容已保存到草稿箱。");
+}
+
+// 清空草稿箱和输入框
+function dropCraft(ele, type) {
+    localStorage.removeItem("sendCraft" + "_" + ele.id);
+    ele.getElementsByClassName("sendBoxInput")[0].value = "";
 }
 
 errorCode = {

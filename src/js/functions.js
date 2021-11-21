@@ -392,7 +392,7 @@ function setTimeTexts() {
         // 换算PHP的时间戳
         timeS *= 1000;
         // 将时间转为当前时区
-        zone = Number(mySettings.zone);
+        zone = Number(localStorage.zone);
         timeInText = new Date();
         timeInText.setTime(timeS + 3600000 * zone * 0);// 禁用了这里的转换，问就不知道为什么
         time.setTime(time.getTime() + 3600000 * zone);

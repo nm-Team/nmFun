@@ -14,7 +14,7 @@ function newBrowser(URL, className = "", withTip = true, showOpenInBrowser = tru
     document.body.appendChild(new_element);
     new_element = document.createElement('div');
     new_element.setAttribute('id', 'coverWithColorBro' + browserId);
-    new_element.setAttribute('class', 'coverWithColor');
+    new_element.setAttribute('class', 'coverWithColor pop');
     new_element.setAttribute('open', 'true');
     document.body.appendChild(new_element);
     if (!showOpenInBrowser) document.getElementById("browserFrame" + browserId).getElementsByClassName("moreButton")[0].style.display = "none";

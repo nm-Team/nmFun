@@ -86,9 +86,9 @@ inv = setInterval(() => {
 }, 1000);
 
 // 预定义的选项表
-settingsPreDefineList = [["zone", -8], ["usebrowser", "false"], ["thinMode", "true"]]
+settingsPreDefineList = [["region", "China Standard Time (UTC + 8:00)"], ["zone", -8], ["usebrowser", "false"], ["thinMode", "true"]]
 
-for (settingsPDT == 0; settingsPDT < settingsPreDefineList.length; settingsPDT++) {
+for (settingsPDT = 0; settingsPDT < settingsPreDefineList.length; settingsPDT++) {
     if (!localStorage.getItem(settingsPreDefineList[settingsPDT][0]))
-        localStorage.setItem(settingsPreDefineList[settingsPDT][0], settingsPreDefineList[settingsPDT][0]);
+        localStorage.setItem(settingsPreDefineList[settingsPDT][0], settingsPreDefineList[settingsPDT][1]);
 }

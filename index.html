@@ -280,7 +280,7 @@
                                 onkeydown="divClick(this, event)"><i style="background-image:url('avatar')"></i>
                                 <div>
                                     <p class="unick">nick</p>
-                                    <p class="time" time="true" timestamp="time" timestyle="relative" timesec="false"
+                                    <p class="time" time="true" timestamp="1919810" timestyle="relative" timesec="false"
                                         timefull="false"></p>
                                 </div>
                             </a>
@@ -439,7 +439,7 @@
             </div>
         </div>
     </div>
-    <div class="coverWithColor" id="logCover" hidden></div>
+    <div class="coverWithColor pop" id="logCover" hidden></div>
     <div id="logPop" style="z-index: 1004;" class="popFrame browserFrame specialBrowserFrame" open="false">
         <header>
             <div class="left">
@@ -456,7 +456,7 @@
             <iframe id="logIframe"></iframe>
         </div>
     </div>
-    <div class="coverWithColor" id="sendEditBoxCover" hidden></div>
+    <div class="coverWithColor pop" id="sendEditBoxCover" hidden></div>
     <div id="sendEdit" class="popFrame" open="false">
         <header>
             <div class="left">
@@ -467,6 +467,9 @@
                 </div>
             </div>
             <div class="right">
+                <button onclick="saveCraft(sendEditBox,'post')"><i class="material-icons">save</i></button>
+                <button onclick="alert('确定要清空草稿箱并清空当前键入内容吗？','提示','好','dropCraft(sendEditBox,`post`)','取消')"><i
+                        class="material-icons">delete_forever</i></button>
                 <button
                     onclick="sendPost(sendEditBox,'post',function(){showPostInput('send',false);newMsgBox('帖子发送成功！');setPostInputArea(sendEditBox, 'post');})"><i
                         class="material-icons">send</i></button>
@@ -475,7 +478,7 @@
         <div class="content" id="sendEditBox">
         </div>
     </div>
-    <div class="coverWithColor" id="commentEditBoxCover" hidden></div>
+    <div class="coverWithColor pop" id="commentEditBoxCover" hidden></div>
     <div id="commentEdit" class="popFrame" open="false">
         <header>
             <div class="left">
