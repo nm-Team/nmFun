@@ -13,10 +13,9 @@ function showPostInput(which, toS) {
     document.getElementById("" + which + "Edit").setAttribute("open", toS);
     if (toS) {
         document.getElementById("" + which + "EditBoxCover").setAttribute("open", "true");
-        if (localStorage.getItem("sendCraft" + "_" + "" + which + "EditBox"))
-            document.getElementById("" + which + "EditBox").getElementsByClassName("sendBoxInput")[0].value = localStorage.getItem("sendCraft" + "_" + "" + which + "EditBox");
+        document.getElementById("" + which + "EditBox").getElementsByClassName("sendBoxInput")[0].value = localStorage.getItem("sendCraft" + "_" + "" + which + "EditBox");
     }
-    else document.getElementById("" + which + "EditBox").removeAttribute("open");
+    else document.getElementById("" + which + "EditBoxCover").removeAttribute("open");
 }
 
 // 保存到草稿箱
