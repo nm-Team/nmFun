@@ -404,8 +404,9 @@ body[theme=dark]{
 .inputArea .mediasBox{
     display: flex;
     flex-direction: row;
-    overflow-x: auto;
+    overflow-x: overlay;
     max-height: 150px;
+    margin: 0 10px;
 }
 .inputArea .mediasBox div.m{
     position: relative;
@@ -413,7 +414,7 @@ body[theme=dark]{
     height: 80px;
     color: var(--textarea);
     font-size: 14px;
-    border-radius: 8px;
+    border-radius: 6px;
     margin: 6px 3px;
     flex-grow: 0;
     flex-shrink: 0;
@@ -428,6 +429,9 @@ body[theme=dark]{
     justify-content: center;
     align-items: stretch;
 }
+.inputArea .mediasBox div.m:first-child{
+    margin-left: 0;
+}
 .inputArea .mediasBox div.m .delButton{
     position: absolute;
     top: 0;
@@ -436,8 +440,8 @@ body[theme=dark]{
     padding: 11px;
     border: none;
     width: 13px;
-    height: 13px;    
-    border-radius: 8px;
+    height: 13px;
+    border-radius: 6px;
     background-color: rgba(0, 0, 0, 0.267);
     background-image: url('../img/close.svg');
     background-size: 15px;
@@ -453,7 +457,7 @@ body[theme=dark]{
     border: none;
     width: 80px;
     height: 80px;
-    border-radius: 8px;
+    border-radius: 6px;
     background-size: 80px 80px;
     font-size: 14px;
     font-weight: normal;

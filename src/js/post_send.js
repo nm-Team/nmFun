@@ -40,7 +40,7 @@ biliVideoTemplate = `<iframe class="biliVideo" frameborder="no" scrolling="no" s
 
 sendBoxTemplate = `
 <select hideincomment class="categoryS" placeholder="请选择分区…" title="请选择分区…">{{cg}}</select>
-<textarea class="sendBoxInput" placeholder="说点什么吧……"></textarea>
+<textarea class="sendBoxInput" title="说点什么吧……"></textarea>
 <div class="mediasBox" noselect></div>
 <div class="inputBox">
     <div class="inputSurface">
@@ -57,3 +57,51 @@ sendBoxTemplate = `
 
 setPostInputArea(commentEditBox, "comment");
 setPostInputArea(sendEditBox, "post");
+
+// 插入文件
+function putFilesToInput(fileInput, type, id) {
+    console.log("Get files from fileInput " + fileInput.id);
+    //把选择的图片显示到img上
+    try {
+        for (fileOperated = 0; fileOperated < fileInput.files.length; fileOperated++) {
+            file = fileInput.files[fileOperated];
+            fileName = fileInput.files[fileOperated].name;
+            fileSize = fileInput.files[fileOperated].size;
+            console.log(fileInput.files[fileOperated]);
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function (e) {
+                console.log(this.result);
+                switch (type) {
+                    case "image":
+                        addItemToFileBar(id, "['img','" + this.result + "']", "<div style='background-image: url(" + this.result + ");background-position: 50% 50%; background-size: cover; background-repeat: no-repeat;'></div>");
+                        break;
+                    case "video":
+                        addItemToFileBar(id, "['video','" + this.result + "']", "<center>视频</center>");
+                        break;
+                    default:
+                }
+            }
+        }
+        document.getElementById(id).getElementsByClassName("sendBoxInput")[0].focus();
+    }
+    catch (err) {
+        newErrorBox("putFilesToInput", err);
+    }
+}
+
+// 附件栏增加项目
+function addItemToFileBar(id, info, HTML) {
+    mtid = gTime();
+    document.getElementById(id).getElementsByClassName("mediasBox")[0].innerHTML += `<div class="m" m="` + info + `" mtid="` + mtid + `"><button class="delButton" title="删除这个媒体" onclick="delItemInFileBar(` + mtid + `)"></button>` + HTML + `</div>`;
+}
+
+// 附件栏删除项目
+function delItemInFileBar(mtid) {
+    $("*[mtid=" + mtid + "]").remove();
+}
+
+// 转换单引号双引号
+function switchMarks(t) {
+    return t.replace(/'/g, "{{double}}").replace(/"/g, "'").replace(/{{double}}/g, '"');
+}

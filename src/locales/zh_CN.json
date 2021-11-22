@@ -56,6 +56,7 @@
             "knowledge": "nmFun 条款和条件",
             "updatelog": "更新日志",
             "nmteam": "访问 nmTeam 网站",
+            "bug_report": "反馈 Bug",
             "network-service-protocol": "nmTeam 服务协议",
             "copyright": "©版权所有 nmTeam。保留所有权利。"
         },
@@ -112,6 +113,22 @@
                     "sendKey2": "在使用 Ctrl + Enter 作为发送快捷键时，按下 Ctrl + Shift + Enter 可发送消息而不跳转；在使用 Enter 作为发送快捷键时，按下 Ctrl + Enter 可发送消息而不跳转。",
                     "list": "查看列出的所有快捷键以提高您的工作效率。"
                 }
+            }
+        },
+        "bug_report": {
+            "title": "报告问题",
+            "type": {
+                "bug": {
+                    "n": "提交 Bug",
+                    "i": "若 nmFun 无法正常运行或遇到问题，请向我们反馈问题。"
+                },
+                "feature": {
+                    "n": "功能建议",
+                    "i": "没有问题，但对 nmFun 有建议？请告知我们您的想法。"
+                }
+            },
+            "tip": {
+                "3p": "您可能被重定向到外部网站来完成这个过程。"
             }
         },
         "privacy": {

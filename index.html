@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>nmFun - </title>
+    <title>nmFun</title>
     <meta name="keywords" content="" />
     <meta name="description" content="" />
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
@@ -36,8 +36,8 @@
         <div class="placeHolder"></div>
         <div class="header" id="pageHeader">
             <div class="left" onclick="headerClick();" tabindex="">
-                <i class="logo" style="background-image: url('SiteLogo');"></i>
-                <p class="name">Title</p>
+                <i class="logo" style="background-image: url('./src/img/logo.svg');"></i>
+                <p class="name">nmFun</p>
             </div>
             <div class="right" onclick='pageHeader.removeAttribute("open");'>
                 <div class="links">
@@ -83,8 +83,8 @@
                                 </div>
                             </div>
                             <div class="swiper-pagination"></div>
-                            <div class="swiper-button-prev"></div>
-                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev" title="前一张轮播图"></div>
+                            <div class="swiper-button-next" title="下一张轮播图"></div>
                         </div>
                     </div>
                     <div class="typeContainer" noselect>
@@ -149,13 +149,14 @@
                                             </div>
                                         </a>
                                         <div class="buttons">
-                                            <button onclick="postContextMenu('type', 'id', this);"><i
+                                            <button onclick="postContextMenu('type', 'id', this);" title="选项"><i
                                                     class="material-icons">more_vert</i></button>
                                         </div>
                                     </div>
                                     <div class="content">
                                         <p class="status">status</p>
-                                        <a href="" target="_blank" onclick="" class="text"><object class="slug">
+                                        <a href="" target="_blank" onclick="" class="text" title="点击来进入帖子详情"><object
+                                                class="slug">
                                                 <p>content</p>
                                             </object></a>
                                         <!-- 注：预览页（而不是详情页）此处的设定是点content进入详情页 -->
@@ -181,14 +182,14 @@
             <div class="searchFrame leftBox box" id="searchFrame" name="搜索" totallyclose="false">
                 <header>
                     <div class="left">
-                        <button class="backButton" onclick="closeBox('pageLeft','searchFrame',false)"
+                        <button class="backButton" title="返回" onclick="closeBox('pageLeft','searchFrame',false)"
                             oncontextmenu="quickBack('pageLeft')"
                             ontouchstart="longPressToDo(function(){quickBack('pageLeft')})"
                             ontouchend="longPressStop()"><i class="material-icons"></i></button>
-                        <input id="searchFrame_input" placeholder="搜索...">
+                        <input id="searchFrame_input" placeholder="搜索..." title="搜索">
                     </div>
                     <div class="right">
-                        <button id="" onclick=""><i class="material-icons">search</i></button>
+                        <button id="" onclick="" title="点击以搜索"><i class="material-icons">search</i></button>
                     </div>
                 </header>
                 <div class="cardBox postCardBox main">
@@ -219,7 +220,7 @@
                 noother="" from="" oprt="" top="true">
                 <header>
                     <div class="left">
-                        <button class="backButton" onclick="closeBox('pageRight','postFramepid')"
+                        <button class="backButton" title="返回" onclick="closeBox('pageRight','postFramepid')"
                             oncontextmenu="quickBack('pageRight',this)"
                             ontouchstart="longPressToDo(function(){quickBack('pageRight')})"
                             ontouchend="longPressStop()"><i class="material-icons">&#xe5c4;</i></button>
@@ -229,7 +230,8 @@
                         </div>
                     </div>
                     <div class="right">
-                        <button style="display:none" onclick=""><i class="material-icons">&#xe5d3;</i></button>
+                        <button style="display:none" onclick="" title="选项"><i
+                                class="material-icons">&#xe5d3;</i></button>
                     </div>
                 </header>
                 <div class="postBox cardBox postCardBox main">
@@ -285,7 +287,7 @@
                                 </div>
                             </a>
                             <div class="buttons">
-                                <button onclick="postContextMenu('type', 'id', this);"><i
+                                <button onclick="postContextMenu('type', 'id', this);" title="选项"><i
                                         class="material-icons">more_vert</i></button>
                             </div>
                         </div>
@@ -310,7 +312,7 @@
                     <div class="card comments avatarBox" style="">
                         <div class="header">
                             <h2 noselect>评论</h2>
-                            <div class="buttons"><button onclick="showCommentTypeSwitch('pid')"><i
+                            <div class="buttons"><button title="排序方式" onclick="showCommentTypeSwitch('pid')"><i
                                         class="material-icons">swap_horiz</i></button></div>
                         </div>
                         <div class="commentsReal"></div>
@@ -344,10 +346,11 @@
                     <div class="inputSurface">
                         <div onclick="newMsgBox('开发中')" class="fakeInput" tabindex="0" onkeydown="divClick(this, event)"
                             title="点击来发表评论">精彩的评论也是乐子的一部分</div>
-                        <button onclick="newMsgBox('开发中')" class="starButton"><i
+                        <button onclick="newMsgBox('开发中')" class="starButton" title="收藏"><i
                                 class="material-icons star">star_border</i><i
                                 class="material-icons starred">star</i></button>
-                        <button onclick="newMsgBox('开发中')" class="share"><i class="material-icons">share</i></button>
+                        <button onclick="newMsgBox('开发中')" class="share" title="分享"><i
+                                class="material-icons">share</i></button>
                     </div>
                 </div>
             </div>
@@ -355,7 +358,7 @@
                 oprt="" top="true">
                 <header>
                     <div class="left">
-                        <button class="backButton" onclick="closeBox('pageRight','userPage_uid')"
+                        <button class="backButton" title="返回" onclick="closeBox('pageRight','userPage_uid')"
                             oncontextmenu="quickBack('pageRight',this)"
                             ontouchstart="longPressToDo(function(){quickBack('pageRight')})"
                             ontouchend="longPressStop()"><i class="material-icons">&#xe5c4;</i></button>
@@ -365,7 +368,7 @@
                         </div>
                     </div>
                     <div class="right">
-                        <button onclick="showUserPageContextMenu(1,this)"><i
+                        <button onclick="showUserPageContextMenu(1,this)" title="选项"><i
                                 class="material-icons">&#xe5d3;</i></button>
                     </div>
                 </header>
@@ -449,7 +452,7 @@
                 </div>
             </div>
             <div class="right">
-                <button onclick="closeLogFrame()"><i class="material-icons">keyboard_arrow_down</i></button>
+                <button onclick="closeLogFrame()" title="关闭登录窗口"><i class="material-icons">keyboard_arrow_down</i></button>
             </div>
         </header>
         <div class="main">
@@ -460,19 +463,18 @@
     <div id="sendEdit" class="popFrame" open="false">
         <header>
             <div class="left">
-                <button onclick="showPostInput('send',false)"><i class="material-icons">keyboard_arrow_down</i></button>
+                <button onclick="showPostInput('send',false)" title="关闭"><i class="material-icons">keyboard_arrow_down</i></button>
                 <div class="nameDiv">
                     <p class="title">发帖</p>
                     <p class="little"></p>
                 </div>
             </div>
             <div class="right">
-                <button onclick="saveCraft(sendEditBox,'post')"><i class="material-icons">save</i></button>
-                <button onclick="alert('确定要清空草稿箱并清空当前键入内容吗？','提示','好','dropCraft(sendEditBox,`post`)','取消')"><i
-                        class="material-icons">delete_forever</i></button>
-                <button
-                    onclick="sendPost(sendEditBox,'post',function(){showPostInput('send',false);newMsgBox('帖子发送成功！');setPostInputArea(sendEditBox, 'post');})"><i
-                        class="material-icons">send</i></button>
+                <button onclick="saveCraft(sendEditBox,'post')" title="保存到草稿箱"><i
+                        class="material-icons">save</i></button>
+                <button onclick="alert('确定要清空草稿箱并清空当前键入内容吗？','提示','好','dropCraft(sendEditBox,`post`)','取消')"
+                    title="清空输入内容并清空草稿箱"><i class="material-icons">delete_forever</i></button>
+                <button onclick="" title="发送"><i class="material-icons">send</i></button>
             </div>
         </header>
         <div class="content" id="sendEditBox">
@@ -482,7 +484,7 @@
     <div id="commentEdit" class="popFrame" open="false">
         <header>
             <div class="left">
-                <button onclick="showPostInput('comment',false)"><i
+                <button onclick="showPostInput('comment',false)" title="关闭"><i
                         class="material-icons">keyboard_arrow_down</i></button>
                 <div class="nameDiv">
                     <p class="title">回复</p>
@@ -490,8 +492,12 @@
                 </div>
             </div>
             <div class="right">
+                <button onclick="saveCraft(commentEditBox,'comment')" title="保存到草稿箱"><i
+                    class="material-icons">save</i></button>
+            <button onclick="alert('确定要清空草稿箱并清空当前键入内容吗？','提示','好','dropCraft(commentEditBox,`comment`)','取消')"
+                title="清空输入内容并清空草稿箱"><i class="material-icons">delete_forever</i></button>
                 <button
-                    onclick="sendPost(commentEditBox,'comment',function(){showPostInput('comment',false);newMsgBox('回复发送成功！');setPostInputArea(commentEditBox, 'comment');})"><i
+                    onclick=""><i
                         class="material-icons">send</i></button>
             </div>
         </header>

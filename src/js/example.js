@@ -13,13 +13,13 @@ new_element.innerHTML = `
             </div>
         </a>
         <div class="buttons">
-            <button onclick="postContextMenu('type', 'id', this);"><i
+            <button onclick="postContextMenu('type', 'id', this);" title="选项"><i
                     class="material-icons">more_vert</i></button>
         </div>
     </div>
     <div class="content">
         <p class="status">status</p>
-        <a href="" target="_blank" onclick="" class="text"><object class="slug">
+        <a href="" target="_blank" onclick="" class="text" title="点击来进入帖子详情"><object class="slug">
                 <p>content</p>
             </object></a>
         <!-- 注：预览页（而不是详情页）此处的设定是点content进入详情页 -->
