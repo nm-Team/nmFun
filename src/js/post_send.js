@@ -4,7 +4,7 @@ function setPostInputArea(ele, type) {
     for (i = 0; i < categoryList.length; i++) {
         cgOptions += `<option cgid="` + categoryList[i][0] + `">` + categoryList[i][1] + `</option>`;
     }
-    ele.innerHTML = sendBoxTemplate.replace(/{{cg}}/g, cgOptions).replace(/{{id}}/g, ele.id);
+    ele.innerHTML = sendBoxTemplate.replace(/{{cg}}/g, cgOptions).replace(/{{id}}/g, ele.id).replace(/{{type}}/g, type);
     ele.className += " inputArea " + type;
 }
 
@@ -19,9 +19,9 @@ function showPostInput(which, toS) {
 }
 
 // 保存到草稿箱
-function saveCraft(ele, type) {
+function saveCraft(ele, type, noti = true) {
     localStorage.setItem("sendCraft" + "_" + ele.id, ele.getElementsByClassName("sendBoxInput")[0].value);
-    newMsgBox("当前内容已保存到草稿箱。");
+    if (noti) newMsgBox("当前内容已保存到草稿箱。");
 }
 
 // 清空草稿箱和输入框
@@ -40,7 +40,7 @@ biliVideoTemplate = `<iframe class="biliVideo" frameborder="no" scrolling="no" s
 
 sendBoxTemplate = `
 <select hideincomment class="categoryS" placeholder="请选择分区…" title="请选择分区…">{{cg}}</select>
-<textarea class="sendBoxInput" title="说点什么吧……"></textarea>
+<textarea class="sendBoxInput" title="说点什么吧……" oninput="autoSaveCraft({{id}},'{{type}}')"></textarea>
 <div class="mediasBox" noselect></div>
 <div class="inputBox">
     <div class="inputSurface">
@@ -104,4 +104,11 @@ function delItemInFileBar(mtid) {
 // 转换单引号双引号
 function switchMarks(t) {
     return t.replace(/'/g, "{{double}}").replace(/"/g, "'").replace(/{{double}}/g, '"');
+}
+
+// 自动保存
+function autoSaveCraft(ele, type) {
+    if (localStorage.autoSaveCraft == "true") {
+        saveCraft(ele, type, false);
+    }
 }

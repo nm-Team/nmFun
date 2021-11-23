@@ -39,10 +39,37 @@
                 else { localStorage.setItem("thinMode", "true"); }
             }, 1000);
         </script>
-                <p class="tip" data-i18n="settings.personally.tip.thin1"></p>
-                <p class="tip" data-i18n="settings.personally.tip.thin2"></p>
+        <p class="tip" data-i18n="settings.personally.tip.thin1"></p>
+        <p class="tip" data-i18n="settings.personally.tip.thin2"></p>
     </div>
- 
+    <div class="lists">
+        <div class="but">
+            <t data-i18n="settings.personally.autoSaveCraft"></t>
+            <t2 class="right" id="">
+                <div class="select-radio-box">
+                    <input type="checkbox" id="autoSaveCraft">
+                    <div class="select-switch">
+                        <div class="select-cursor"></div>
+                        <div class="select-label select-label-on"></div>
+                        <div class="select-label select-label-off"></div>
+                    </div>
+                </div>
+            </t2>
+        </div>
+        <script>
+            if (localStorage.getItem("autoSaveCraft") == "false")
+                autoSaveCraft.checked = false;
+            else autoSaveCraft.checked = true;
+            setInterval(() => {
+                if (!autoSaveCraft.checked) { localStorage.setItem("autoSaveCraft", "false"); }
+                else { localStorage.setItem("autoSaveCraft", "true"); }
+            }, 1000);
+        </script>
+        <p class="tip" data-i18n="settings.personally.tip.autoSaveCraft1"></p>
+        <p class="tip" data-i18n="settings.personally.tip.autoSaveCraft2"></p>
+        <p class="tip" data-i18n="settings.personally.tip.autoSaveCraft3"></p>
+    </div>
+
     <script src="../src/js/jquery.min.js"></script>
     <script src="../src/js/i18next-1.6.3.min.js"></script>
     <script src="../src/js/language.js">
@@ -50,11 +77,6 @@
     <script src="../src/js/functions.js"></script>
     <script src="../src/js/settings.js"></script>
     <script>
-        // 设置翻译
-        setInterval(() => {
-            if (i18n)
-                sendKeyText.innerHTML = i18n.t("settings.personally.sendkey." + localStorage.getItem("sendKey"));
-        }, 200);
     </script>
 </body>
 

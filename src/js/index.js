@@ -83,12 +83,17 @@ inv = setInterval(() => {
         clearInterval(inv);
         setHeaderLog();
     }
-}, 1000);
+}, 10);
 
 // 预定义的选项表
-settingsPreDefineList = [["region", "China Standard Time (UTC + 8:00)"], ["zone", -8], ["usebrowser", "false"], ["thinMode", "true"]]
+settingsPreDefineList = [["region", "China Standard Time (UTC + 8:00)"], ["zone", -8], ["usebrowser", "false"], ["thinMode", "true"], ["autoSaveCraft", "false"],];
 
 for (settingsPDT = 0; settingsPDT < settingsPreDefineList.length; settingsPDT++) {
     if (!localStorage.getItem(settingsPreDefineList[settingsPDT][0]))
         localStorage.setItem(settingsPreDefineList[settingsPDT][0], settingsPreDefineList[settingsPDT][1]);
+}
+
+// 保存到草稿箱按钮
+if (localStorage.getItem("autoSaveCraft") == "true") {
+    $(".editbox-save").attr("style", "display: none");
 }

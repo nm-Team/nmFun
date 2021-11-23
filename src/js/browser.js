@@ -65,7 +65,7 @@ browserTemplate = `
     </div>
 </div>
 <div class="right">
-    <button class="moreButton" title="选项" onclick="showBrowserContextMenu('{{browserRealURL}}')"><i class="material-icons">&#xe5d3;</i></button>
+    <button class="moreButton" title="选项" onclick="showBrowserContextMenu('{{browserRealURL}}',this)"><i class="material-icons">&#xe5d3;</i></button>
 </div>
 </header>
 <div class="main">
@@ -124,7 +124,7 @@ legacyBrowserTemplate = `
     </div>
 </div>
 <div class="right">
-    <button class="moreButton" title="选项" onclick="showLegacyBrowserContextMenu('{{legacyBrowserRealURL}}')"><i class="material-icons">&#xe5d3;</i></button>
+    <button class="moreButton" title="选项" onclick="showLegacyBrowserContextMenu('{{legacyBrowserRealURL}}',this)"><i class="material-icons">&#xe5d3;</i></button>
 </div>
 </header>
 <div class="main">
