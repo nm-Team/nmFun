@@ -11,7 +11,7 @@
 }
 @media (max-width: 800px) {
     .mobileHolder{
-        height: 42px;
+        height: 42rem;
     }  
 }
 @media (min-width: 800px) {
@@ -19,6 +19,6 @@
         height: 0;
     }  
     .typeSelecter[fly=true]{
-        top: 0px;
+        top: 0rem;
     }
 }

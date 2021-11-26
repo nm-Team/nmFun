@@ -1,6 +1,6 @@
 hasCreatedContextMenu = false;
 themeList = ["default", "dark",];
-languageList=["zh_cn"]
+languageList = ["zh_cn"]
 
 //  禁用右键
 setInterval(() => {
@@ -570,3 +570,13 @@ function getUrlParam(name) {
     if (r != null) return unescape(r[2]);
     return null;
 }
+
+// 大号字体
+setInterval(() => {
+    if (localStorage.bigText == "true") {
+        document.getElementsByTagName("html")[0].style.fontSize = "1.35px";
+    }
+    else {
+        document.getElementsByTagName("html")[0].style.fontSize = "1px";
+    }
+}, 1000);

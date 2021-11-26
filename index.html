@@ -61,7 +61,7 @@
                 onclick="myMenu(true);showMainPageThemeContextMenu(this);"><i
                     class="material-icons">color_lens</i>主题</button>
             <div class="line"></div><button
-                onclick="window.open(accountClient+'/info.html?sessionid='+localStorage.sessionid);"><i
+                onclick="newBrowser(accountClient+'/info.html?sessionid='+localStorage.sessionid, false, false);"><i
                     class="material-icons"></i>nmTeam Account Center</button>
             <button onclick="alert('确定要注销账号吗？','注销','是','logOut();window.location.href=``;','取消')"><i
                     class="material-icons"></i>注销账号</button>
@@ -75,11 +75,11 @@
                 <div class="floatFrame">
                     <div class="floatFrame-header">
                         <!-- Swiper，即轮播图 -->
-                        <div class="swiper-container indexSwiper floatFrame-header" style="">
+                        <div class="swiper-container indexSwiper floatFrame-header">
                             <!-- 此处若设置关闭滚动图display为none agou 211113 -->
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide" onclick="alert('诶嘿，这个不可以点哦')"
-                                    style="background-image: url(&quot;https://i.zerodream.net/652a55e4761d0422555a878c8b9a7c1d.png&quot;); background-position: 50% 50%; width: 780px;">
+                                    style="background-image: url(https://i.zerodream.net/652a55e4761d0422555a878c8b9a7c1d.png); background-position: 50% 50%; width: 780px;">
                                 </div>
                             </div>
                             <div class="swiper-pagination"></div>
@@ -309,7 +309,7 @@
                         </div>
                     </div>
                     <div class="postRelated" noselect></div>
-                    <div class="card comments avatarBox" style="">
+                    <div class="card comments avatarBox">
                         <div class="header">
                             <h2 noselect>评论</h2>
                             <div class="buttons"><button title="排序方式" onclick="showCommentTypeSwitch('pid')"><i

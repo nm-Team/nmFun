@@ -98,14 +98,11 @@
                 "enter": "Enter",
                 "ctrlEnter": "Ctrl 和 Enter"
             },
-            "fontSize": {
-                "title": "字体大小",
-                "big": "大",
-                "small": "小",
-                "compatibilityMode": "兼容模式",
-                "tip": "兼容模式下将禁用自定义字体大小及自动调整字体大小。"
-            },
             "autoSaveCraft": "自动保存到草稿箱",
+            "accessibility": {
+                "title": "辅助功能",
+                "bigText": "更大字体"
+            },
             "tip": {
                 "thin1": "开启此选项后，在宽屏视图下未查看详情页时，原左侧的页面内容将被扩大并居中。",
                 "thin2": "更改此选项后，请重新加载页面以使修改生效。",

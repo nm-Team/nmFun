@@ -27,10 +27,10 @@ body[theme=dark]{
     align-items: flex-start;
     flex-direction: row;
     justify-content: space-between;
-    padding: 33px 21px 13px 21px;
+    padding: 33rem 21rem 13rem 21rem;
 }
 .cardBox .titleBox h1{
-    font-size: 24px;
+    font-size: 24rem;
     font-weight: bold;
     color: var(--card-title);
 }
@@ -38,25 +38,25 @@ body[theme=dark]{
     flex-shrink: 0;
 }
 .cardBox .titleBox .buttons button{
-    margin: 0 3px 2px 3px;
-    padding: 9px;
-    font-size: 15px;
-    width: 35px;
-    height: 35px;
+    margin: 0 3rem 2rem 3rem;
+    padding: 9rem;
+    font-size: 15rem;
+    width: 35rem;
+    height: 35rem;
     color: var(--card-title-button);
     background-color: var(--card-title-button-bgcolor);
-    border-radius: 99px;
+    border-radius: 99rem;
 }
 .cardBox .card{
     display: flex;
     flex-direction: column;
-    margin: 10px 10px;
-    padding: 13px 15px;
-    font-size: 14px;
+    margin: 10rem 10rem;
+    padding: 13rem 15rem;
+    font-size: 14rem;
     line-height: 1.5;
     color: var(--card);
     background-color: var(--card-single-bgcolor);
-    border-radius: 6px;
+    border-radius: 6rem;
 }
 .cardBox .card.clickable{
     filter: none;
@@ -79,7 +79,7 @@ body[theme=dark] .cardBox .card.clickable:hover, .cardBox .card.clickable:focus-
     display: flex;
     align-items: flex-start;
     flex-direction: row;
-    margin-bottom: 7px;
+    margin-bottom: 7rem;
     justify-content: space-between;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -89,21 +89,21 @@ body[theme=dark] .cardBox .card.clickable:hover, .cardBox .card.clickable:focus-
     font-weight: bold;
 }
 .cardBox .card .header .h2{
-    font-size: 20px;
+    font-size: 20rem;
     font-weight: bold;
 }
 .cardBox .card .header .buttons{
     flex-shrink: 0;
 }
 .cardBox .card .header .buttons button{
-    margin: 0 -6px 0px 6px;
-    padding: 4px;
-    font-size: 12px;
-    width: 20px;
-    height: 20px;
+    margin: 0 -6rem 0rem 6rem;
+    padding: 4rem;
+    font-size: 12rem;
+    width: 20rem;
+    height: 20rem;
     color: var(--card-button);
     background: none;
-    border-radius: 99px;
+    border-radius: 99rem;
 }
 .cardBox .card .header .buttons button:hover, .cardBox .card .header .buttons button:focus-visible{
     background-color: var(--card-button-bgcolor);
@@ -112,13 +112,13 @@ body[theme=dark] .cardBox .card.clickable:hover, .cardBox .card.clickable:focus-
     display: flex;
     align-items: flex-start;
     flex-direction: row;
-    margin-top: 7px;
+    margin-top: 7rem;
     justify-content: space-between;
     color: var(--card-bottom);
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
-    font-size: 12px;
+    font-size: 12rem;
 }
 .cardBox .card .bottom .name{
     font-weight: bold;
@@ -127,12 +127,12 @@ body[theme=dark] .cardBox .card.clickable:hover, .cardBox .card.clickable:focus-
     flex-shrink: 0;
 }
 .cardBox .card .bottom .buttons button{
-    margin: 0 0px 0px 4px;
-    padding: 0px;
-    font-size: 12px;
+    margin: 0 0rem 0rem 4rem;
+    padding: 0rem;
+    font-size: 12rem;
     color: var(--card-bottom);
     background: none;
-    border-radius: 99px;
+    border-radius: 99rem;
 }
 .cardBox .card .bottom .buttons button:hover, .cardBox .card .header .buttons button:focus-visible{
     color: var(--card-bottom-button-hover);

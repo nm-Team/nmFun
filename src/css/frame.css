@@ -38,8 +38,8 @@ body[theme=dark]{
     z-index: 102;
 }
 .widthChanger{
-    width: 6px;
-    margin: 0 -3px;
+    width: 6rem;
+    margin: 0 -3rem;
     position: relative;
     z-index: 22;
     cursor: e-resize;
@@ -52,7 +52,7 @@ body[theme=dark]{
     right: 0;
     z-index: 2;
     visibility: hidden;
-    transform: translate(calc(100% + 20px), 0);
+    transform: translate(calc(100% + 20rem), 0);
 }
 .rightBox[con=on], .leftBox[con=on]{
     visibility: visible;
@@ -62,7 +62,7 @@ body[theme=dark]{
 .rightBox[con=gone], .leftBox[con=gone]{
     visibility: hidden;
     animation: rightGo 0.5s cubic-bezier(0.28, 0.97, 0.54, 0.99) 1 forwards;
-    transform: translate(calc(100% + 20px),0);
+    transform: translate(calc(100% + 20rem),0);
 }
 .rightBox[con=none], .leftBox[con=none]{
     visibility: visible;
@@ -76,7 +76,7 @@ body[theme=dark]{
 }
 .box .main{
     position: absolute;
-    top: 45px;
+    top: 45rem;
     bottom: 0;
     left: 0;
     right: 0;
@@ -89,7 +89,7 @@ body[theme=dark]{
 }
 .developing{
     color: grey;
-    font-size: 21px;
+    font-size: 21rem;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -99,9 +99,9 @@ body[theme=dark]{
 .searchFrame header input{
     display: block;
     flex-grow: 1;
-    border-radius: 7px;
-    padding: 8px 7px;
-    font-size: 14px;
+    border-radius: 7rem;
+    padding: 8rem 7rem;
+    font-size: 14rem;
     line-height: 1.4;
     color: var(--header-title);
     background-color: var(--header-bgcolor);
@@ -112,12 +112,12 @@ body[theme=dark]{
     position: fixed;
     bottom: 0;
     left: 50%;
-    width: min(100%, 600px);
-    height: min(95%, 870px);
+    width: min(100%, 600rem);
+    height: min(95%, 870rem);
     z-index: 902;
     transform: translate(-50%, 100vh);
     overflow: hidden;
-    border-radius: 10px 10px 0 0;
+    border-radius: 10rem 10rem 0 0;
     transition: all 0.15s cubic-bezier(0.37, 0.37, 1, 0.91);
 }
 .popFrame[open=true]{
@@ -135,7 +135,7 @@ body[theme=dark]{
 }
 .popFrame .content{
     position: absolute;
-    top: 45px;
+    top: 45rem;
     bottom: 0;
     left: 0;
     right: 0;
@@ -146,7 +146,7 @@ body[theme=dark]{
     .bodyMain{
         position: fixed;
         display: flex;
-        top: 50px;
+        top: 50rem;
         bottom: 0;
         left: 0;
         right: 0;
@@ -160,10 +160,10 @@ body[theme=dark]{
         overflow: hidden;
     }
     .pageLeft{
-        min-width: 400px;
-        width: calc(26vw + 106px);
+        min-width: 400rem;
+        width: calc(26vw + 106rem);
         visibility: visible;
-        border-right: 1px solid var(--middle-line);
+        border-right: 1rem solid var(--middle-line);
     }
     .pageRight{
         flex-grow: 1;
@@ -188,7 +188,7 @@ body[theme=dark]{
 }
 @keyframes rightCome {
     0%{
-        transform: translate(calc(100% + 20px),0);
+        transform: translate(calc(100% + 20rem),0);
         box-shadow: var(--animation-box-shadow-0);
     }
     80%{
@@ -200,7 +200,7 @@ body[theme=dark]{
 }
 @keyframes rightGo {
     100%{
-        transform: translate(calc(100% + 20px),0);
+        transform: translate(calc(100% + 20rem),0);
         box-shadow: var(--animation-box-shadow-0);
         visibility: hidden;
     }
@@ -215,7 +215,7 @@ body[theme=dark]{
 }
 @keyframes simpleGo {
     100%{
-        transform: translate(calc(100% + 20px),0);
+        transform: translate(calc(100% + 20rem),0);
         visibility: hidden;
     }
     99%{
@@ -242,7 +242,7 @@ body[theme=dark]{
     }
     100%{
         opacity: 1;
-        width: 200px;
+        width: 200rem;
         max-height: 40vh;
         overflow: overlay;
     }
@@ -297,7 +297,7 @@ body[theme=dark]{
 }
 .browserFrame iframe{
     position: absolute;
-    top: 45px;
+    top: 45rem;
     bottom: 0;
     left: 0;
     right: 0;

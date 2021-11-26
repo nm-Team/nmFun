@@ -5,7 +5,7 @@ body{
     --visible-color: rgb(92, 92, 92);
     --header-buttoncolor: #393939;
     --header-buttoncolor-hover: #3f3f3f23;
-    --header-shadow: #96969654 0px -5px 15px;
+    --header-shadow: #96969654 0rem -5rem 15rem;
     --header-title: #3f3f3f;
     --header-little: rgb(128, 128, 128);
     --scroller-grey: #c8c8c854;
@@ -13,7 +13,7 @@ body{
     --contextmenu-hover-bgcolor: #f2f2f2;
     --contextmenu: #000;
     --contextmenu-line: rgb(224, 224, 224);
-    --contextmenu-shadow: #5151510f 1px 1px 8px;
+    --contextmenu-shadow: #5151510f 1rem 1rem 8rem;
     --middle-line: #d1d1d18c;
     --cover: #00000050;
     --alert-bgcolor: rgb(255, 255, 255);
@@ -21,11 +21,11 @@ body{
     --alert-button: rgb(247, 247, 247);
     --alert-border: rgb(223, 223, 223);
     --alert: #000;
-    --animation-box-shadow-0: #51515152 -2px 0px 11px;
-    --animation-box-shadow-1: #51515141 -2px 0px 11px;
+    --animation-box-shadow-0: #51515152 -2rem 0rem 11rem;
+    --animation-box-shadow-1: #51515141 -2rem 0rem 11rem;
     --msgBox: #000;
     --msgBox-bgcolor: rgb(255 255 255);
-    --msgBox-shadow: #e3e3e366 0px 0px 2px;
+    --msgBox-shadow: #e3e3e366 0rem 0rem 2rem;
 }
 body[theme=dark]{
     --page-bgcolor: rgb(1,1,1);
@@ -56,7 +56,7 @@ body[theme=dark]{
     --msgBox-shadow: #0000002b 0rem 0rem 1rem;
 }
 body{
-    --outline: 3px solid rgb(250 187 0 / 60%);
+    --outline: 3rem solid rgb(250 187 0 / 60%);
 }
 *{
     margin: 0;
@@ -80,7 +80,7 @@ body[transitioncolor], body[transitioncolor] *{
 }
 :focus-visible {
     outline: var(--outline);
-    outline-offset: 1px;
+    outline-offset: 1rem;
 }
 *[noselect]{
     -webkit-user-select: none;
@@ -149,12 +149,12 @@ header{
     top: 0;
     left: 0;
     right: 0;
-    height: 45px;
+    height: 45rem;
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
-    padding: 0 7px;
+    padding: 0 7rem;
     background-color: var(--header-bgcolor);
     box-shadow: var(--header-shadow);
     -webkit-user-select: none;
@@ -178,40 +178,40 @@ header .right{
     flex-shrink: 0;
     flex-wrap: nowrap;
     justify-content: right;
-    margin-left: 10px;
+    margin-left: 10rem;
 }
 header button{
-    width: 35px;
-    height: 35px;
-    padding: 7px;
+    width: 35rem;
+    height: 35rem;
+    padding: 7rem;
     border: none;
     background-color: rgba(0,0,0,0);
-    border-radius: 99px;
+    border-radius: 99rem;
 }
 header button.loading{
     background-image: url(/src/img/loading.gif);
-    background-size: 15px;
+    background-size: 15rem;
     background-position: center center;
     background-repeat: no-repeat;
 }
 header .right button{
-    margin-left: 0px;
+    margin-left: 0rem;
 }
 header button:hover, header button:focus-visible{
     background-color: var(--header-buttoncolor-hover);
 }
 header button i{
     color: var(--header-buttoncolor);
-    font-size: 21px;
+    font-size: 21rem;
 }
 header .nameDiv{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-left: 0px;
+    margin-left: 0rem;
     overflow: hidden;
-    max-width: calc(100% - 200px);
+    max-width: calc(100% - 200rem);
     position: absolute;
     top: 0;
     bottom: 0;
@@ -227,22 +227,22 @@ header .nameDiv *{
     flex-shrink: 1;
 }
 header .nameDiv .title{
-    font-size: 16px;
+    font-size: 16rem;
     color: var(--header-title);
 }
 header .nameDiv .little{
-    font-size: 9px;
+    font-size: 9rem;
     color: var(--header-little);
 }
 .contextMenu{
     position: fixed;
     z-index: 1600;
-    width: 200px;
+    width: 200rem;
     max-height: 50vh;
-    padding: 4px 0;
+    padding: 4rem 0;
     background: var(--contextmenu-bgcolor);
     box-shadow: var(--contextmenu-shadow);
-    border-radius: 4.4px;
+    border-radius: 4.4rem;
     overflow-y: auto;
 }
 .contextMenu button{
@@ -252,8 +252,8 @@ header .nameDiv .little{
     outline: none;
     color: var(--contextmenu);
     background: none;
-    padding: 6px 12px;
-    font-size: 14px;
+    padding: 6rem 12rem;
+    font-size: 14rem;
     text-align: left;
     cursor: pointer;
     border-radius: 0;
@@ -268,9 +268,9 @@ header .nameDiv .little{
 .contextMenu .line{
     display: block;
     height: 0;
-    margin: 0 8px 0 8px;
-    border: 1px solid var(--contextmenu-line);
-    border-width: 1px 0 0 0;
+    margin: 0 8rem 0 8rem;
+    border: 1rem solid var(--contextmenu-line);
+    border-width: 1rem 0 0 0;
     border-radius: 0;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -283,14 +283,14 @@ header .nameDiv .little{
 .contextMenu[icon=true] button i{
     display: inline-block;
     visibility: visible;
-    width: 18px;
+    width: 18rem;
     height: 0;
-    font-size: 16px;
+    font-size: 16rem;
     line-height: 0;
-    margin: 0 3px 0px -5px;
+    margin: 0 3rem 0rem -5rem;
     position: relative;
     opacity: 0.8;
-    top: 3px;
+    top: 3rem;
 }
 .contextMenu[die=true]{
     opacity: 0;
@@ -305,8 +305,8 @@ header .nameDiv .little{
     top: 50%;
     left: 50%;
     z-index: 999999999999;
-    width: min(60vw, 400px);
-    max-height: min(60vh, 300px);
+    width: min(60vw, 400rem);
+    max-height: min(60vh, 300rem);
     padding: 0;
     display: flex;
     flex-direction: column;
@@ -314,7 +314,7 @@ header .nameDiv .little{
     background-color: var(--alert-bgcolor);
     color: var(--alert);
     text-align: center;
-    border-radius: 4px;
+    border-radius: 4rem;
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
@@ -326,30 +326,30 @@ header .nameDiv .little{
     visibility: hidden;
 }
 .alertBox .title{
-    font-size: 16px;
+    font-size: 16rem;
     font-weight: bold;
-    margin: 12px 20px 0 20px;
+    margin: 12rem 20rem 0 20rem;
 }
 .alertBox .msg{
-    font-size: 13px;
+    font-size: 13rem;
     overflow: overlay;
-    padding: 5px 25px 12px 20px;
+    padding: 5rem 25rem 12rem 20rem;
 }
 .alertBox .buttons{
-    height: 30px;
+    height: 30rem;
     display: flex;
-    margin-top: 10px;
+    margin-top: 10rem;
     justify-content: space-between;
-    margin: 0 -0.4px;
+    margin: 0 -0.4rem;
     background-color: var(--alert-border);
 }
 .alertBox .buttons button{
-    margin: 0.5px 0.4px 0 0.4px;
+    margin: 0.5rem 0.4rem 0 0.4rem;
     outline: none;
     width: 50%;
     flex-grow: 1;
     border-radius: 0;
-    font-size: 12px;
+    font-size: 12rem;
     color: var(--alert);
     background-color: var(--alert-bgcolor);
 }
@@ -359,19 +359,19 @@ header .nameDiv .little{
 .msgBox{
     position: fixed;
     z-index: 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
-    top: 45px;
+    top: 45rem;
     left: 50%;
     transform: translate(-50%, 0);
     width: 70%;
-    max-width: 400px;
+    max-width: 400rem;
     max-height: 70%;
-    padding: 10px 17px;
+    padding: 10rem 17rem;
     background-color: var(--msgBox-bgcolor);
     color: var(--msgBox);
     line-height: 1.6;
-    font-size: 14px;
+    font-size: 14rem;
     visibility: hidden;
-    border-radius: 4px;
+    border-radius: 4rem;
     box-shadow: var(--msgBox-shadow);
     animation: msgBox 7s;
     overflow: overlay;
@@ -389,8 +389,8 @@ header .nameDiv .little{
     font-style: normal;
 }
 .material-icons svg{
-    width: 16px;
-    height: 22px;
+    width: 16rem;
+    height: 22rem;
     fill: var(--header-buttoncolor);
     transition: color 0.5s;
 }
@@ -401,22 +401,22 @@ header .nameDiv .little{
     src: url(../fonts/MaterialIcons-Regular.woff2) format('woff2');
 }
 ::-webkit-scrollbar{
-    width: 7px;
-    height: 7px; 
+    width: 7rem;
+    height: 7rem; 
 }
 ::-webkit-scrollbar:hover{
-    width: 7px;
-    height: 7px; 
+    width: 7rem;
+    height: 7rem; 
 }
 ::-webkit-scrollbar-thumb{
-    border-radius: 10px;
+    border-radius: 10rem;
     background: var(--scroller-grey);
 }
 body *[scroll=hidden]::-webkit-scrollbar-thumb{
     background: none;
 }
 ::-webkit-scrollbar-track{
-    border-radius: 10px;
+    border-radius: 10rem;
     width: 0;
     opacity: 0;
 }
@@ -433,7 +433,7 @@ body[theme=dark] .skeleton{
     filter: invert(1);
 }
 .skeleton.sentence{
-    margin-bottom: 4px;
+    margin-bottom: 4rem;
 }
 .skeleton.noscale{
     transform: none!important;
@@ -461,7 +461,7 @@ body[theme=dark] .skeleton{
     }
     100%{
         opacity: 1;
-        width: 200px;
+        width: 200rem;
         max-height: 40vh;
         overflow: overlay;
     }
@@ -506,17 +506,17 @@ body[theme=dark] .skeleton{
 
 @keyframes msgBox {
     0%{
-        top: calc(-100% + 50px);
+        top: calc(-100% + 50rem);
         visibility: visible;
     }
     10%{
-        top: 45px;
+        top: 45rem;
     }
     90%{
-        top: 45px;
+        top: 45rem;
     }
     100%{
-        top: calc(-100% + 50px);
+        top: calc(-100% + 50rem);
         visibility: hidden;
     }
 }

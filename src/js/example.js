@@ -6,7 +6,7 @@ new_element.innerHTML = `
             onkeydown="divClick(this, event)"><i
                 style="background-image:url('avatar')"></i>
             <div>
-                <p class="unick">nick</p>
+                <p class="unick">nick<span class="usertag border">圈主</span></p>
                 <p class="time" time="true" timestamp="1919810" timestyle="relative"
                     timesec="false" timefull="false"
                     title=""></p>

@@ -69,6 +69,31 @@
         <p class="tip" data-i18n="settings.personally.tip.autoSaveCraft2"></p>
         <p class="tip" data-i18n="settings.personally.tip.autoSaveCraft3"></p>
     </div>
+    <p class="listName" data-i18n="settings.personally.accessibility.title"></p>
+    <div class="lists">
+        <div class="but">
+            <t data-i18n="settings.personally.accessibility.bigText"></t>
+            <t2 class="right" id="">
+                <div class="select-radio-box">
+                    <input type="checkbox" id="bigText">
+                    <div class="select-switch">
+                        <div class="select-cursor"></div>
+                        <div class="select-label select-label-on"></div>
+                        <div class="select-label select-label-off"></div>
+                    </div>
+                </div>
+            </t2>
+        </div>
+        <script>
+            if (localStorage.getItem("bigText") == "false")
+                bigText.checked = false;
+            else bigText.checked = true;
+            setInterval(() => {
+                if (!bigText.checked) { localStorage.setItem("bigText", "false"); }
+                else { localStorage.setItem("bigText", "true"); }
+            }, 1000);
+        </script>
+    </div>
 
     <script src="../src/js/jquery.min.js"></script>
     <script src="../src/js/i18next-1.6.3.min.js"></script>
