@@ -3,15 +3,61 @@ body{
     --type-selecter-bgcolor: rgb(255, 255, 255);
     --type-selecter-hover-bgcolor: rgb(240, 240, 240);
     --type-selecter: rgb(17, 17, 17);
+    --scalePercent: 0.96;
+    --real-bg: #fff;
 }
 body[theme=dark]{
     --swiper-button: #EAD050;
     --type-selecter-bgcolor: rgb(28, 28, 29);
     --type-selecter-hover-bgcolor: rgb(58, 58, 58);
     --type-selecter: rgb(224, 224, 224);
+    --real-bg: #000;
+}
+body[scale=true]{
+    transform: scale(var(--scalePercent));
+    border-radius: 17px;
+}
+@media (min-width: 800px) {
+    body[scale=true] #pageHeader{
+        border-top-left-radius: 17px;
+        border-top-right-radius: 17px;
+        transition: all 0.4s;
+    }
+}
+@media (max-width: 800px) {
+    body[scale=true] #pageHeader{
+        border-top-left-radius: 17px;
+        border-top-right-radius: 17px;
+        transition: all 0.4s;
+    }
+    body[scale=true] .box{
+        border-radius: 17px;
+        transition: border-radius 0.4s;
+    }
+    body[scale=true] .box header{
+        border-top-left-radius: 17px;
+        border-top-right-radius: 17px;
+        box-shadow: none;
+        transition: all 0.4s;
+    }
+}
+@keyframes brts{
+    0%{
+        transition: all 0.4s;
+    }
+    100%{
+        transition: all 0.4s;
+    }
 }
 .bodyMain{
     position: relative;
+}
+html{
+    background: var(--real-bg);
+}
+body{
+    background: var(--page-bgcolor);
+    transition: all 0.4s;
 }
 .pageLeft, .pageRight{
     position: fixed;
@@ -24,7 +70,7 @@ body[theme=dark]{
     z-index: 1;
 }
 .pageRight{
-    z-index: 999;
+    z-index: 899;
 }
 .pageRight, .pageLeft{
     visibility: hidden;
@@ -115,22 +161,22 @@ body[theme=dark]{
     width: min(100%, 600rem);
     height: min(95%, 870rem);
     z-index: 902;
-    transform: translate(-50%, 100vh);
+    transform: translate(-50%, 100vh)scale(calc(1 / var(--scalePercent)));
     overflow: hidden;
     border-radius: 10rem 10rem 0 0;
     transition: all 0.15s cubic-bezier(0.37, 0.37, 1, 0.91);
 }
 .popFrame[open=true]{
     visibility: visible;
-    transform: translate(-50%, 0);
+    transform: translate(-50%, 0)scale(calc(1 / var(--scalePercent)));
     animation: popCome 0.5s cubic-bezier(0.28, 0.97, 0.54, 0.99);
 }
 @keyframes popCome {
     0%{
-        transform: translate(-50%, 100vh);        
+        transform: translate(-50%, 100vh)scale(1);        
     }
     100%{
-        transform: translate(-50%, 0);
+        transform: translate(-50%, 0)scale(calc(1 / var(--scalePercent)));
     }
 }
 .popFrame .content{

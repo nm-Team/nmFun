@@ -70,13 +70,12 @@ body[theme=dark]{
 .uHeaderInfos .name{
     font-size: 21rem;
     margin: 10rem 30rem;
-    width: calc(100% - 60rem);
+    max-width: calc(100% - 60rem);
     font-weight: bold;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     word-break: break-all;
-    display: flex;
     align-items: center;
     user-select: all;
     -webkit-user-select: all;

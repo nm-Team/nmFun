@@ -577,6 +577,6 @@ setInterval(() => {
         document.getElementsByTagName("html")[0].style.fontSize = "1.35px";
     }
     else {
-        document.getElementsByTagName("html")[0].style.fontSize = "1px";
+        document.getElementsByTagName("html")[0].style.fontSize = "var(--fontSize)";
     }
 }, 1000);

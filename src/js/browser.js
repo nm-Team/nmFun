@@ -34,7 +34,7 @@ function closeBrowser(id) {
 
 function showBrowserContextMenu(URL, ele = this) {
     msgContextMenuItems = [["在浏览器中打开", "window.open('" + URL + "')"]];
-    createContextMenu(msgContextMenuItems, undefined, undefined, ele);
+    createContextMenu(msgContextMenuItems, true, undefined, ele);
 }
 
 function updateTitle(browserId) {

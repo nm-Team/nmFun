@@ -4,7 +4,7 @@ body{
     --settings-items-hover-bgcolor: rgb(240, 240, 240);
     --settings-items-red: rgb(255, 44, 44);
     --settings-accountBox: #000;
-    --settings-items-border: rgb(221, 221, 221);
+    --settings-items-border: rgb(231, 231, 231);
     --settings-item: #000;
     --settings-items-arrow: rgb(173, 173, 173);
     --settings-uid: #888;
@@ -19,16 +19,16 @@ body{
 }
 body[theme=dark]{
     --settings-bgcolor: #262626;
-    --settings-items-bgcolor: rgb(46, 46, 46);
+    --settings-items-bgcolor: rgb(28, 28, 29);
     --settings-items-hover-bgcolor: rgb(49, 49, 49);
     --settings-items-red: rgb(255, 44, 44);
     --settings-accountBox: rgb(255, 255, 255);
-    --settings-items-border: rgb(68, 68, 68);
+    --settings-items-border: rgb(49, 49, 49);
     --settings-item: #fff;
     --settings-items-arrow: rgb(121, 121, 121);
     --settings-uid: rgb(170, 170, 170);
     --settings-listName: rgb(170, 170, 170);
-    --settings-tip: rgb(243, 243, 243);
+    --settings-tip: rgb(230, 230, 230);
     --select-bgcolor: #595959;
     --select-shadow: 0rem 0rem 2rem #58585870 inset;
     --select-y-bg: rgb(255, 238, 0);
@@ -36,10 +36,12 @@ body[theme=dark]{
     --select-cursor-shadow: 0 0rem 1rem 2rem rgb(0 0 0 / 1%);
     --select-label: #fff;
 }
+:root{
+    --fontSize: 1.07px;
+}
 body{
     overflow-x: hidden;
     overflow-y: auto;
-    font-size: 1.09px;
     width: auto;
     height: auto;
 }

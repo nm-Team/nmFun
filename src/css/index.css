@@ -10,11 +10,17 @@
     display: block;
 }
 @media (max-width: 800px) {
+    :root{
+        --fontSize: 1.09px;
+    }
     .mobileHolder{
         height: 42rem;
     }  
 }
 @media (min-width: 800px) {
+    :root{
+        --fontSize: 1.02px;
+    }
     .mobileHolder{
         height: 0;
     }  

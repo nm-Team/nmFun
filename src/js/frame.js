@@ -218,3 +218,13 @@ function closePop(ele, totally = false) {
         }, 1000);
     }
 }
+
+// scale
+setInterval(() => {
+    if ($(".popFrame[open=true]").length > 0) {
+        document.body.setAttribute("scale", "true");
+    }
+    else {
+        document.body.setAttribute("scale", "false");
+    }
+}, 40);
