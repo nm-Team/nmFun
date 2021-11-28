@@ -24,6 +24,7 @@
     <link rel="stylesheet" type="text/css" href="src/css/index.css">
     <link rel="stylesheet" type="text/css" href="src/css/userPage.css">
     <link rel="stylesheet" type="text/css" href="src/css/post_card.css">
+    <link rel="stylesheet" type="text/css" href="src/css/settings.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.cncn3.cn/webstatic/0b179cec2c0ed/swiper-bundle.min.css">
     <link rel="stylesheet" type="text/css" href="src/css/viewer.min.css">
     <link rel="stylesheet" type="text/css" href="src/css/search.css">
@@ -452,7 +453,8 @@
                 </div>
             </div>
             <div class="right">
-                <button onclick="closeLogFrame()" title="关闭登录窗口"><i class="material-icons">keyboard_arrow_down</i></button>
+                <button onclick="closeLogFrame()" title="关闭登录窗口"><i
+                        class="material-icons">keyboard_arrow_down</i></button>
             </div>
         </header>
         <div class="main">
@@ -463,7 +465,8 @@
     <div id="sendEdit" class="popFrame" open="false">
         <header>
             <div class="left">
-                <button onclick="showPostInput('send',false)" title="关闭"><i class="material-icons">keyboard_arrow_down</i></button>
+                <button onclick="showPostInput('send',false)" title="关闭"><i
+                        class="material-icons">keyboard_arrow_down</i></button>
                 <div class="nameDiv">
                     <p class="title">发帖</p>
                     <p class="little"></p>
@@ -493,12 +496,10 @@
             </div>
             <div class="right">
                 <button onclick="saveCraft(commentEditBox,'comment')" title="保存到草稿箱" class="editbox-save"><i
-                    class="material-icons">save</i></button>
-            <button onclick="alert('确定要清空草稿箱并清空当前键入内容吗？','提示','好','dropCraft(commentEditBox,`comment`)','取消')"
-                title="清空输入内容并清空草稿箱"><i class="material-icons">delete_forever</i></button>
-                <button
-                    onclick=""><i
-                        class="material-icons">send</i></button>
+                        class="material-icons">save</i></button>
+                <button onclick="alert('确定要清空草稿箱并清空当前键入内容吗？','提示','好','dropCraft(commentEditBox,`comment`)','取消')"
+                    title="清空输入内容并清空草稿箱"><i class="material-icons">delete_forever</i></button>
+                <button onclick=""><i class="material-icons">send</i></button>
             </div>
         </header>
         <div class="content" id="commentEditBox">

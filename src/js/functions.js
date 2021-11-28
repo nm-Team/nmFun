@@ -580,3 +580,16 @@ setInterval(() => {
         document.getElementsByTagName("html")[0].style.fontSize = "var(--fontSize)";
     }
 }, 1000);
+
+// TestField
+function showTestField() {
+    newBrowser("settings/testfield.html", "", false, false);
+}
+
+ClickTestField = 0;
+pageHeader.getElementsByClassName("logo")[0].onclick = function () {
+    if (++ClickTestField == 7) showTestField();
+    setTimeout(() => {
+        ClickTestField = 0;
+    }, 2000);
+}

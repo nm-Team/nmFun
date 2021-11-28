@@ -57,6 +57,7 @@ html{
 }
 body{
     background: var(--page-bgcolor);
+    overflow: hidden!important;
     transition: all 0.4s;
 }
 .pageLeft, .pageRight{
@@ -348,7 +349,7 @@ body{
     left: 0;
     right: 0;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 45rem);
     opacity: 1;
     animation: iframe 3s;
 }
