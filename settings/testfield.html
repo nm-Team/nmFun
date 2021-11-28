@@ -27,6 +27,12 @@
             <t>Show browser demo</t>
         </div>
     </div>
+    <p class="listName">DEBUG TOOLS</p>
+    <div class="lists">
+        <div class="but" onclick="localStorage.clear();parent.window.location.reload()">
+            <t>Clear localStorage and refresh</t>
+        </div>
+    </div>
     <p class="listName">RUN JAVASCRIPT</p>
     <div class="lists">
         <textarea class="searchBox" id="errorCheckInputBox" oninput="" placeholder="JavaScript"></textarea>
@@ -47,6 +53,12 @@
     <script>for (var propname in navigator)
             navigatorB.innerHTML += "<b>" + propname + "</b>: " + navigator[propname] + "<br>";
     </script>
+    <p class="listName">ACCOUNT</p>
+    <div class="lists">
+        <p class="tip"><b>Session ID: </b><span id="sidB"
+                style="user-select: text; -webkit-user-select: text; -moz-user-select: text;"></span></p>
+        <script>sidB.innerHTML = localStorage.sessionid;</script>
+    </div>
     <p class="listName">NMFUN LOG</p>
     <div class="lists">
         <div class="but" onclick="copyToClipboard(logB.innerHTML)">
