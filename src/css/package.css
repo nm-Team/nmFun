@@ -110,5 +110,6 @@ body[theme=dark]{
     border-radius: 6rem;
 }
 .floatFrame-content{
-    overflow: overlay;
+    overflow-x: hidden;
+    overflow-y: overlay;
 }

@@ -588,8 +588,8 @@ function showTestField() {
 
 ClickTestField = 0;
 pageHeader.getElementsByClassName("logo")[0].onclick = function () {
-    if (++ClickTestField == 7) showTestField();
+    if (++ClickTestField >= 7) showTestField();
     setTimeout(() => {
         ClickTestField = 0;
-    }, 2000);
+    }, 10000);
 }
