@@ -26,16 +26,26 @@
         <div class="but" onclick="parent.newBrowser('https://nmteam.xyz')">
             <t>Show browser demo</t>
         </div>
+        <div class="but" onclick="parent.newLegacyBrowser('/settings/', false, false)">
+            <t>Show settings</t>
+        </div>
     </div>
-    <p class="listName">DEBUG TOOLS</p>
+    <p class="listName">LOCALSTORAGE</p>
     <div class="lists">
+        <div class="but" onclick="copyToClipboard(lsB.innerHTML)">
+            <t>Copy to clipboard</t>
+        </div>
         <div class="but" onclick="localStorage.clear();parent.window.location.reload()">
             <t>Clear localStorage and refresh</t>
         </div>
+        <p class="tip" id="lsB" style="user-select: text; -webkit-user-select: text; -moz-user-select: text;">
+        </p>
+        <script>lsB.innerHTML = JSON.stringify(localStorage);</script>
     </div>
     <p class="listName">RUN JAVASCRIPT</p>
     <div class="lists">
-        <textarea class="searchBox" id="errorCheckInputBox" oninput="" placeholder="JavaScript"></textarea>
+        <textarea class="searchBox" id="errorCheckInputBox" oninput="" placeholder="JavaScript"
+            style="resize: vertical;"></textarea>
         <div class="but" onclick="errorChecker()">
             <t>Run</t>
         </div>
@@ -51,7 +61,7 @@
         </p>
     </div>
     <script>for (var propname in navigator)
-            navigatorB.innerHTML += "<b>" + propname + "</b>: " + navigator[propname] + "<br>";
+            navigatorB.innerHTML += "<b>" + propname + "</b>: " + JSON.stringify(navigator[propname]) + "<br>";
     </script>
     <p class="listName">ACCOUNT</p>
     <div class="lists">

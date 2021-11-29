@@ -381,7 +381,6 @@ body[theme=dark]{
     left: 0;
     right: 0;
     width: 100%;
-    height: calc(100vh - 45rem);
     background-color: var(--iframe-bgcolor);
     background-image: url('../img/loading.gif');
     background-position: 50%, 50%;
@@ -398,7 +397,7 @@ body[theme=dark]{
     left: 0;
     right: 0;
     width: 100%;
-    height: calc(100vh - 90rem);
+    height: 100%;
     opacity: 1;
     background-color: var(--iframe-bgcolor);
     animation: iframe 3s;

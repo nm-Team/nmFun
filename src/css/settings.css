@@ -39,7 +39,7 @@ body[theme=dark]{
 :root{
     --fontSize: 1.07px;
 }
-body{
+body.settings{
     overflow-x: hidden;
     overflow-y: auto;
     width: auto;
