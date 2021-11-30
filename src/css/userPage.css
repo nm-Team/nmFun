@@ -136,7 +136,7 @@ body[theme=dark]{
     border-color: var(--uInfo-header-interaction-button-negative-border);
 }
 .userMainCards{
-    overflow: overlay;
+    overflow-y: overlay;
     border-radius: 6rem 6rem 0 0;
     padding-top: 0rem;
 }

@@ -40,7 +40,10 @@
         </div>
         <p class="tip" id="lsB" style="user-select: text; -webkit-user-select: text; -moz-user-select: text;">
         </p>
-        <script>lsB.innerHTML = JSON.stringify(localStorage);</script>
+        <script>
+            for (var propname in localStorage)
+                lsB.innerHTML += "<b>" + propname + "</b>: " + JSON.stringify(localStorage[propname]) + "<br>";
+        </script>
     </div>
     <p class="listName">TOOLS</p>
     <div class="lists">
@@ -63,7 +66,8 @@
         <p class="tip" id="navigatorB" style="user-select: text; -webkit-user-select: text; -moz-user-select: text;">
         </p>
     </div>
-    <script>for (var propname in navigator)
+    <script>
+        for (var propname in navigator)
             navigatorB.innerHTML += "<b>" + propname + "</b>: " + JSON.stringify(navigator[propname]) + "<br>";
     </script>
     <p class="listName">ACCOUNT</p>

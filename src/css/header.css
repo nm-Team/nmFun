@@ -1,9 +1,11 @@
 body{
+    --jianbian-color: rgba(255,255,255,0.72);
     --header-text: #000;
     --header-a: rgb(82, 82, 82);
     --header-a-hover: rgb(49, 49, 49);
 }
 body[theme=dark]{
+    --jianbian-color: rgba(52,50,50,0.7);
     --header-text: rgb(250, 250, 250);
     --header-a: rgb(231, 231, 231);
     --header-a-hover: rgb(241, 241, 241);

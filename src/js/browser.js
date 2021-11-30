@@ -117,7 +117,7 @@ function updateLegacyTitle(legacyBrowserId) {
 legacyBrowserTemplate = `
 <header>
 <div class="left">
-    <button class="backButton" title="返回" onclick="closeBox('pageRight','legacyBrowserFrame{{legacyBrowserId}}', true)" oncontextmenu="quickBack('pageRight',this)" ontouchstart="longPressToDo(function(){quickBack('pageRight',this)})" ontouchend="longPressStop()"><i class="material-icons">&#xe5c4;</i></button>
+    <button class="backButton" title="返回" onclick="closeBox('pageRight','legacyBrowserFrame{{legacyBrowserId}}', true)" oncontextmenu="quickBack('pageRight',this)" ontouchstart="longPressToDo(function(){quickBack('pageRight')})" ontouchend="longPressStop()"><i class="material-icons">&#xe5c4;</i></button>
     <div class="nameDiv">
         <p class="title" id="legacyBrowserTitle{{legacyBrowserId}}"></p>
         <p class="little"></p>
