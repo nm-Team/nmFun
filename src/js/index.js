@@ -90,7 +90,15 @@ settingsPreDefineList = [["region", "China Standard Time (UTC + 8:00)"], ["zone"
 
 for (settingsPDT = 0; settingsPDT < settingsPreDefineList.length; settingsPDT++) {
     if (!localStorage.getItem(settingsPreDefineList[settingsPDT][0]))
-        localStorage.setItem(settingsPreDefineList[settingsPDT][0], settingsPreDefineList[settingsPDT][1]);
+        localStorage.setItem(settingsPreDefineList[settingsPDT][0], settingsPreDefineList[settingsPDT][0]);
+}
+
+// 测试版显示
+if (version.betaVersion) {
+    bVE = document.createElement("div");
+    bVE.setAttribute("style", "position: fixed; bottom: 6px; right: 10px; font-size: 12px; color: var(--page-bgcolor); filter: invert(1); z-index: 9999999999999999999999999999999; ");
+    bVE.innerHTML = `nmFun Beta Version ` + version.version + `(` + version.versionNum + `_` + version.branch + `). For Test Purpose only. <br>Content on the page does not represent the final quality. `;
+    document.body.appendChild(bVE);
 }
 
 // 保存到草稿箱按钮
