@@ -6,20 +6,20 @@ new_element.innerHTML = `
             onkeydown="divClick(this, event)"><i
                 style="background-image:url('avatar')"></i>
             <div>
-                <p class="unick">nick</p>
-                <p class="time" time="true" timestamp="time" timestyle="relative"
+                <p class="unick">nick<span class="usertag border">圈主</span></p>
+                <p class="time" time="true" timestamp="1919810" timestyle="relative"
                     timesec="false" timefull="false"
                     title=""></p>
             </div>
         </a>
         <div class="buttons">
-            <button onclick="postContextMenu('type', 'id', this);"><i
+            <button onclick="postContextMenu('type', 'id', this);" title="选项"><i
                     class="material-icons">more_vert</i></button>
         </div>
     </div>
     <div class="content">
         <p class="status">status</p>
-        <a href="" target="_blank" onclick="" class="text"><object class="slug">
+        <a href="" target="_blank" onclick="" class="text" title="点击来进入帖子详情"><object class="slug">
                 <p>content</p>
             </object></a>
         <!-- 注：预览页（而不是详情页）此处的设定是点content进入详情页 -->

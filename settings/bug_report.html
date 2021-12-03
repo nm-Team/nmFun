@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title data-i18n="settings.bug_report.title"></title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='format-detection' content='telephone=no'>
+    <link rel="stylesheet" type="text/css" href="../src/css/page.css">
+    <link rel="stylesheet" type="text/css" href="../src/css/settings.css">
+    <style>
+        .bug_report {
+            flex-direction: column !important;
+            text-align: center !important;
+            text-overflow: unset !important;
+            white-space: normal !important;
+            word-wrap: break-word !important;
+        }
+
+        .bug_report i {
+            display: block;
+            height: 40rem;
+            margin: 10rem;
+            border-radius: 0rem;
+            background-size: 40rem 60rem;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .bug_report t {
+            margin: 0 !important;
+            padding: 4rem;
+        }
+
+        .bug_report t.appName {
+            font-size: 20rem !important;
+            font-weight: 500;
+        }
+    </style>
+    <script src="../src/js/info.js"></script>
+</head>
+
+<body class="settings radius">
+    <h1 data-i18n="settings.bug_report.title"></h1>
+    <div class="lists">
+        <div class="but bug_report" onclick="window.location.href='https://wj.qq.com/s2/9348833/8250/'"><i
+                style="background-image: url(../src/img/bug.svg);"></i>
+            <t class="appName" data-i18n="settings.bug_report.type.bug.n"></t>
+        </div>
+        <p class="tip" data-i18n="settings.bug_report.type.bug.i"></p>
+    </div>
+    <div class="lists">
+        <div class="but bug_report" onclick="window.location.href='https://wj.qq.com/s2/9348846/00b6/'"><i
+                style="background-image: url(../src/img/suggest.svg);"></i>
+            <t class="appName" data-i18n="settings.bug_report.type.feature.n"></t>
+        </div>
+        <p class="tip" data-i18n="settings.bug_report.type.feature.i"></p>
+    </div>
+    <p class="tip" data-i18n="settings.bug_report.tip.3p"></p>
+
+    <script src="../src/js/jquery.min.js"></script>
+    <script src="../src/js/i18next-1.6.3.min.js"></script>
+    <script src="../src/js/language.js"></script>
+    <script src="../src/js/functions.js"></script>
+    <script src="../src/js/settings.js"></script>
+</body>
+
+</html>

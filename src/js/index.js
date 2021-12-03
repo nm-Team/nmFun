@@ -59,18 +59,22 @@ if (localStorage.usebrowser == "true") {
         switchTheme("dark");
     else switchTheme("default");
 }
-
+// thinmode
+if (localStorage.thinMode == "true") {
+    bodyMain.setAttribute("thinable", "true");
+}
+else bodyMain.removeAttribute("thinable");
 // 首窗口的Theme按钮事件
 function showMainPageThemeContextMenu(ele) {
     msgContextMenuItems = [];
     if (localStorage.usebrowser == "true") msgContextMenuItems = [[i18n.t("theme.usebrowser"), "newLegacyBrowser('/settings/theme.html', false, false)"]];
     else {
-        msgContextMenuItems =["line"];
-        for(themeFor = 0; themeFor <themeList.length; themeFor++)
-    msgContextMenuItems[themeFor] = [i18n.t("theme." + themeList[themeFor] + ""), "switchTheme('" + themeList[themeFor] + "')"];
-    msgContextMenuItems[themeFor] = ["line"];
-    msgContextMenuItems[themeFor + 1] = [i18n.t("theme.more"), "newLegacyBrowser('/settings/theme.html', false, false)", "&#xe8b8;"];
-  } createContextMenu(msgContextMenuItems, undefined, undefined, ele);
+        msgContextMenuItems = ["line"];
+        for (themeFor = 0; themeFor < themeList.length; themeFor++)
+            msgContextMenuItems[themeFor] = [i18n.t("theme." + themeList[themeFor] + ""), "switchTheme('" + themeList[themeFor] + "')"];
+        msgContextMenuItems[themeFor] = ["line"];
+        msgContextMenuItems[themeFor + 1] = [i18n.t("theme.more"), "newLegacyBrowser('/settings/theme.html', false, false)", "&#xe8b8;"];
+    } createContextMenu(msgContextMenuItems, undefined, undefined, ele);
 }
 
 // 登录 
@@ -79,12 +83,12 @@ inv = setInterval(() => {
         clearInterval(inv);
         setHeaderLog();
     }
-}, 1000);
+}, 10);
 
 // 预定义的选项表
-settingsPreDefineList = [["zone", -8], ["usebrowser", false],]
+settingsPreDefineList = [["region", "China Standard Time (UTC + 8:00)"], ["zone", -8], ["usebrowser", "false"], ["thinMode", "true"], ["autoSaveCraft", "false"], ["bigText", "false"]];
 
-for (settingsPDT == 0; settingsPDT < settingsPreDefineList.length; settingsPDT++) {
+for (settingsPDT = 0; settingsPDT < settingsPreDefineList.length; settingsPDT++) {
     if (!localStorage.getItem(settingsPreDefineList[settingsPDT][0]))
         localStorage.setItem(settingsPreDefineList[settingsPDT][0], settingsPreDefineList[settingsPDT][0]);
 }
@@ -95,4 +99,9 @@ if (version.betaVersion) {
     bVE.setAttribute("style", "position: fixed; bottom: 6px; right: 10px; font-size: 12px; color: var(--page-bgcolor); filter: invert(1); z-index: 9999999999999999999999999999999; ");
     bVE.innerHTML = `nmFun Beta Version ` + version.version + `(` + version.versionNum + `_` + version.branch + `). For Test Purpose only. <br>Content on the page does not represent the final quality. `;
     document.body.appendChild(bVE);
+}
+
+// 保存到草稿箱按钮
+if (localStorage.getItem("autoSaveCraft") == "true") {
+    $(".editbox-save").attr("style", "display: none");
 }

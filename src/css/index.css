@@ -10,15 +10,21 @@
     display: block;
 }
 @media (max-width: 800px) {
+    :root{
+        --fontSize: 1.09px;
+    }
     .mobileHolder{
-        height: 42px;
+        height: 42rem;
     }  
 }
 @media (min-width: 800px) {
+    :root{
+        --fontSize: 1.02px;
+    }
     .mobileHolder{
         height: 0;
     }  
     .typeSelecter[fly=true]{
-        top: 0px;
+        top: 0rem;
     }
 }

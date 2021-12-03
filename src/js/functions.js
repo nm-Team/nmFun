@@ -1,6 +1,6 @@
 hasCreatedContextMenu = false;
 themeList = ["default", "dark",];
-languageList=["zh_cn"]
+languageList = ["zh_cn"]
 
 //  禁用右键
 setInterval(() => {
@@ -392,7 +392,7 @@ function setTimeTexts() {
         // 换算PHP的时间戳
         timeS *= 1000;
         // 将时间转为当前时区
-        zone = Number(mySettings.zone);
+        zone = Number(localStorage.zone);
         timeInText = new Date();
         timeInText.setTime(timeS + 3600000 * zone * 0);// 禁用了这里的转换，问就不知道为什么
         time.setTime(time.getTime() + 3600000 * zone);
@@ -569,4 +569,27 @@ function getUrlParam(name) {
     var r = url.substr(1).match(reg);
     if (r != null) return unescape(r[2]);
     return null;
+}
+
+// 大号字体
+setInterval(() => {
+    if (localStorage.bigText == "true") {
+        document.getElementsByTagName("html")[0].style.fontSize = "1.35px";
+    }
+    else {
+        document.getElementsByTagName("html")[0].style.fontSize = "var(--fontSize)";
+    }
+}, 1000);
+
+// TestField
+function showTestField() {
+    newBrowser("settings/testfield.html", "", false, false);
+}
+
+ClickTestField = 0;
+pageHeader.getElementsByClassName("logo")[0].onclick = function () {
+    if (++ClickTestField >= 7) showTestField();
+    setTimeout(() => {
+        ClickTestField = 0;
+    }, 10000);
 }

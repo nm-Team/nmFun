@@ -4,7 +4,7 @@ body{
     --settings-items-hover-bgcolor: rgb(240, 240, 240);
     --settings-items-red: rgb(255, 44, 44);
     --settings-accountBox: #000;
-    --settings-items-border: rgb(221, 221, 221);
+    --settings-items-border: rgb(231, 231, 231);
     --settings-item: #000;
     --settings-items-arrow: rgb(173, 173, 173);
     --settings-uid: #888;
@@ -19,16 +19,16 @@ body{
 }
 body[theme=dark]{
     --settings-bgcolor: #262626;
-    --settings-items-bgcolor: rgb(46, 46, 46);
+    --settings-items-bgcolor: rgb(28, 28, 29);
     --settings-items-hover-bgcolor: rgb(49, 49, 49);
     --settings-items-red: rgb(255, 44, 44);
     --settings-accountBox: rgb(255, 255, 255);
-    --settings-items-border: rgb(68, 68, 68);
+    --settings-items-border: rgb(49, 49, 49);
     --settings-item: #fff;
     --settings-items-arrow: rgb(121, 121, 121);
     --settings-uid: rgb(170, 170, 170);
     --settings-listName: rgb(170, 170, 170);
-    --settings-tip: rgb(243, 243, 243);
+    --settings-tip: rgb(230, 230, 230);
     --select-bgcolor: #595959;
     --select-shadow: 0rem 0rem 2rem #58585870 inset;
     --select-y-bg: rgb(255, 238, 0);
@@ -36,10 +36,12 @@ body[theme=dark]{
     --select-cursor-shadow: 0 0rem 1rem 2rem rgb(0 0 0 / 1%);
     --select-label: #fff;
 }
-body{
+:root{
+    --fontSize: 1.07px;
+}
+body.settings{
     overflow-x: hidden;
     overflow-y: auto;
-    font-size: 1.09rem;
     width: auto;
     height: auto;
 }
@@ -50,8 +52,8 @@ body{
     user-select: none;
 }
 .settings.radius{
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 10rem;
+    margin-right: 10rem;
 }
 .settings h1{
     font-size: 24rem;
@@ -68,7 +70,7 @@ body{
     border-width: 0.3rem 0;
 }
 .settings.radius .accountBox{
-    border-radius: 6px;
+    border-radius: 6rem;
     border: none;
 }
 .settings .accountBox i{
@@ -131,17 +133,19 @@ body{
     background-repeat: no-repeat;
 }
 .settings .listName{
-    padding: 2rem 16rem;
+    padding: 2rem 16rem 7rem 16rem;
     font-weight: 500;
     font-size: 11rem;
-    padding-bottom: 2rem;
     color: var(--settings-listName);
 }
 .settings .tip{
-    padding: 6rem 16rem;
+    padding: 12rem 16rem 6rem 16rem;
     font-size: 11rem;
     font-weight: 400;
     color: var(--settings-tip);
+}
+.settings .tip + .tip {
+    padding-top: 1rem;
 }
 .settings .lists .but{
     display: flex;
@@ -157,12 +161,12 @@ body{
     cursor: pointer;
 }
 .settings.radius .lists .but:first-of-type{
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+    border-top-left-radius: 6rem;
+    border-top-right-radius: 6rem;
 }
 .settings.radius .lists .but:last-of-type{
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6rem;
+    border-bottom-right-radius: 6rem;
     border-width: 0;
 }
 .settings .lists .but t{
@@ -229,7 +233,7 @@ body{
     display: block;
     width: calc(100% - 32rem);
     width: -webkit-fill-available;
-    margin: 8rem 0rem;
+    margin: 0 0 15rem 0rem;
     border-radius: 6rem;
     padding: 8rem 16rem;
     font-size: 14rem;

@@ -1,12 +1,9 @@
-siteURL = "https://fun-test.nmteam.top";
+siteURL = "https://fun.nmteam.xyz";
 accountClient = "https://accounts.nmteam.xyz";
-mySettings = {
-    "zone": 'Zone'
-};
 categoryList = [];
 version = {
     version: "0.1",
     versionNum: "0",
-    branch: "co_dev_user",
+    branch: "co_refresh",
     betaVersion: true
 }
