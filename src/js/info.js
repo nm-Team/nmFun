@@ -4,3 +4,9 @@ mySettings = {
     "zone": 'Zone'
 };
 categoryList = [];
+version = {
+    version: "0.1",
+    versionNum: "0",
+    branch: "co_dev_user",
+    betaVersion: true
+}
