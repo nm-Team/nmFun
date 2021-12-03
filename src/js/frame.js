@@ -56,6 +56,7 @@ function focusBox(div, boxId, noOther) {
         thinPageRight(false);
     }
     else thinPageRight(true);
+    writeLog("i", "focusBox", "div: " + div + ", boxId: " + boxId + ", noOther: " + noOther + ", allBoxes: " + getAllBoxes(div));
 }
 
 function closeBox(div, boxId, totally = false, origin = "") {
@@ -74,7 +75,7 @@ function closeBox(div, boxId, totally = false, origin = "") {
         if (!((navigator.userAgent.indexOf("ios") > 0 || navigator.userAgent.indexOf("iPhone") > 0 || navigator.userAgent.indexOf("iPad") > 0) && isPwa()) || origin == "system")
             document.getElementById(openBoxes[1][1]).setAttribute("from", "none");
     } document.getElementById(boxId).removeAttribute("nownoani");
-    if (((navigator.userAgent.indexOf("ios") > 0 || navigator.userAgent.indexOf("iPhone") > 0 || navigator.userAgent.indexOf("iPad") > 0) && isPwa()) || origin == "system") {
+    if (((navigator.userAgent.indexOf("ios") > 0 || navigator.userAgent.indexOf("iPhone") > 0 || navigator.userAgent.indexOf("iPad") > 0) && isPwa()) && origin == "system") {
         document.getElementById(boxId).setAttribute("noani", "true");
     }
     document.getElementById(boxId).setAttribute("con", "gone");
@@ -90,6 +91,7 @@ function closeBox(div, boxId, totally = false, origin = "") {
         thinPageRight(false);
     }
     else thinPageRight(true);
+    writeLog("i", "closeBox", "div: " + div + ", boxId: " + boxId + ", totally: " + totally + ", origin: " + origin + ", allBoxes: " + getAllBoxes(div));
 }
 
 function thinPageRight(to) {
@@ -192,6 +194,8 @@ function quickBack(div, ele) {
         }
     }
     createContextMenu(msgContextMenuItems, undefined, undefined, ele);
+    writeLog("i", "quickBack", "div: " + div + ", contextMenuItems: " + msgContextMenuItems);
+
 }
 
 $(function () {

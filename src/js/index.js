@@ -89,8 +89,10 @@ inv = setInterval(() => {
 settingsPreDefineList = [["region", "China Standard Time (UTC + 8:00)"], ["zone", -8], ["usebrowser", "false"], ["thinMode", "true"], ["autoSaveCraft", "false"], ["bigText", "false"]];
 
 for (settingsPDT = 0; settingsPDT < settingsPreDefineList.length; settingsPDT++) {
-    if (!localStorage.getItem(settingsPreDefineList[settingsPDT][0]))
-        localStorage.setItem(settingsPreDefineList[settingsPDT][0], settingsPreDefineList[settingsPDT][0]);
+    if (!localStorage.getItem(settingsPreDefineList[settingsPDT][0])) {
+        localStorage.setItem(settingsPreDefineList[settingsPDT][0], settingsPreDefineList[settingsPDT][1]);
+        writeLog("i", "set default setting", "" + settingsPreDefineList[settingsPDT][0] + ", " + settingsPreDefineList[settingsPDT][1]);
+    }
 }
 
 // 测试版显示
@@ -104,4 +106,76 @@ if (version.betaVersion) {
 // 保存到草稿箱按钮
 if (localStorage.getItem("autoSaveCraft") == "true") {
     $(".editbox-save").attr("style", "display: none");
+    writeLog("i", "autoSaveCraft", "autoSaveCraft open, save button hidden");
+}
+
+// 欢迎页面
+welcomeFrameHTML = `
+<div class="popFrame welcomeFrame" id="welcomeFrame" open="true" style="display:none">
+    <link rel="stylesheet" type="text/css" href="src/css/welcome.css">
+    <header id="welcomeFrame_frameHeader">
+        <div class="left">
+            <div class="nameDiv">
+                <p class="title">欢迎使用 nmFun</p>
+                <p class="little"></p>
+            </div>
+        </div>
+        <div class="right"> </div>
+    </header>
+    <div class="main" id="welcomeFrame_main">
+        <div class="welcome_icon" id="welcome_icon" title="nmFun Icon"></div>
+        <h1 class="welcome_Header" id="welcome_Header">欢迎使用 nmFun</h1>
+        <p class="welcome_FirstIntroduce" id="welcome_Header">nmFun 将为您营造全新的看乐子体验。</p>
+        <div class="welcome_Intro" id="welcome_Intro">
+            <div class="intro_item">
+                <i style="background-image: url(./src/img/welcome/laugh.svg);" title="大笑"></i>
+                <div class="intro">
+                    <h2>让人开心的乐子，开了又开</h2>
+                    <p>在 nmFun 社区的努力下，nmFun 将源源不断地更新新的高质量乐子。</p>
+                </div>
+            </div>
+            <div class="intro_item">
+                <i style="background-image: url(./src/img/welcome/act.svg);" title="用户在 nmFun 愉快的互动"></i>
+                <div class="intro">
+                    <h2>独乐乐不如众乐乐</h2>
+                    <p>精彩的评论也是乐子的一部分。<br />nmFun 包含的丰富互动功能使乐子更上一层楼。</p>
+                </div>
+            </div>
+            <div class="intro_item">
+                <i style="background-image: url(./src/img/welcome/minutiae.svg);" title="nmFun 正在研究细节"></i>
+                <div class="intro">
+                    <h2>细节决定成败</h2>
+                    <p>nmFun 历经百般打磨，每一处细节都让使用更简单高效。</p>
+                </div>
+            </div>
+            <div class="intro_item">
+                <i style="background-image: url(https://logos.nmteam.agou.im/nmTeam/logo@64.png);"
+                    title="nmTeam"></i>
+                <div class="intro">
+                    <h2>由 nmTeam 开发</h2>
+                    <p>nmFun 由 nmTeam 开发和运营，定能保证您的优质体验。</p>
+                </div>
+            </div>
+        </div>
+        <button class="welcome_goButton" title="开始使用 nmFun"
+            onclick="document.getElementById('welcomeFramePop').removeAttribute('open');welcomeFrame.setAttribute('open','false');localStorage.started='true';">开始使用
+            nmFun</button>
+    </div>
+</div>
+<div class="coverWithColor pop" id="welcomeFramePop" hidden open="true"></div>
+`;
+
+if (localStorage.getItem("started") != "true") {
+    startPage = document.createElement("div");
+    startPage.innerHTML = welcomeFrameHTML;
+    document.body.appendChild(startPage);
+    writeLog("i", "welcomeFrame", "shown");
+    welcomeFrame_main.onscroll = function () {
+        if (welcomeFrame_main.scrollTop > welcome_icon.offsetHeight + 40)
+            welcomeFrame_frameHeader.setAttribute("hidden", "false");
+        else welcomeFrame_frameHeader.setAttribute("hidden", "true");
+        if (welcomeFrame_main.scrollTop < welcome_icon.offsetHeight * 0.63)
+            welcome_icon.setAttribute("hidden", "false");
+        else welcome_icon.setAttribute("hidden", "true");
+    }
 }

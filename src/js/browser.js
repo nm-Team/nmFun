@@ -21,6 +21,7 @@ function newBrowser(URL, className = "", withTip = true, showOpenInBrowser = tru
     document.getElementById("browserFrame" + browserId).setAttribute('open', 'true');
     iframeScript = script;
     iframeScript(browserId);
+    writeLog("i", "newBrowser", "URL: " + URL + ", className: " + className + ", withTip: " + withTip + ", showOpenInBrowser: " + showOpenInBrowser);
 }
 
 function closeBrowser(id) {
@@ -30,6 +31,7 @@ function closeBrowser(id) {
         document.getElementById("browserFrame" + id).outerHTML = "";
         document.getElementById("coverWithColorBro" + id).outerHTML = "";
     }, 500);
+    writeLog("i", "closeBrowser", "div: " + id);
 }
 
 function showBrowserContextMenu(URL, ele = this) {
@@ -47,11 +49,11 @@ function updateTitle(browserId) {
         document.getElementById("browserTitle" + browserId).innerHTML = iframeE.contentWindow.document.title;
         // 防止网络不通畅
         setTimeout(() => {
-            updateLegacyTitle(browserId);
+            updateTitle(browserId);
         }, 100);
     }
     catch (err) {
-        // newErrorBox("updateLegacyTitle", err);
+        // newErrorBox("updateTitle", err);
     }
 }
 

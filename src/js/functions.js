@@ -593,3 +593,20 @@ pageHeader.getElementsByClassName("logo")[0].onclick = function () {
         ClickTestField = 0;
     }, 10000);
 }
+
+function writeLog(logType, funName, content) {
+    if (!localStorage.systemLog) localStorage.systemLog = "";
+    logTypeList = ["INFO", "DEBUG", "WARN", "ERROR", "FATAL"];
+    logTypeList.forEach(en => {
+        if (en[0].toLowerCase() == logType.toLowerCase()) logType = en;
+    });
+    logTime = new Date();
+    logTime.setTime(logTime.getTime() + 60000 * logTime.getTimezoneOffset());
+    logTime = JSON.parse(splitTime(logTime));
+    ltime = logTime.year + "-" + logTime.month + "-" + logTime.date + " " + logTime.hour + ":" + logTime.sMinute + ":" + logTime.sSecond;
+    logWord = `[` + logType + `] ` + ltime + " " + funName + `: ` + content + ` \\n`;
+    localStorage.systemLog += logWord;
+    console.log(logWord);
+}
+
+writeLog("i", "Page", "found page loading...");

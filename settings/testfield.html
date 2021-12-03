@@ -14,6 +14,7 @@
 </head>
 
 <body class="settings radius">
+    <script>parent.writeLog("i", "Test Field", "enabled");</script>
     <h1>Test Field</h1>
     <p class="listName">MODULES TEST</p>
     <div class="lists">
@@ -30,23 +31,11 @@
             <t>Show settings</t>
         </div>
     </div>
-    <p class="listName">LOCALSTORAGE</p>
-    <div class="lists">
-        <div class="but" onclick="copyToClipboard(lsB.innerHTML)">
-            <t>Copy to clipboard</t>
-        </div>
-        <div class="but" onclick="localStorage.clear();parent.window.location.reload()">
-            <t>Clear localStorage and refresh</t>
-        </div>
-        <p class="tip" id="lsB" style="user-select: text; -webkit-user-select: text; -moz-user-select: text;">
-        </p>
-        <script>
-            for (var propname in localStorage)
-                lsB.innerHTML += "<b>" + propname + "</b>: " + JSON.stringify(localStorage[propname]) + "<br>";
-        </script>
-    </div>
     <p class="listName">TOOLS</p>
     <div class="lists">
+        <div class="but" onclick="localStorage.started='false'; parent.window.location.reload()">
+            <t>Reopen introductive pop page (will refresh)</t>
+        </div>
     </div>
     <p class="listName">RUN JAVASCRIPT</p>
     <div class="lists">
@@ -75,6 +64,11 @@
         <p class="tip"><b>Session ID: </b><span id="sidB"
                 style="user-select: text; -webkit-user-select: text; -moz-user-select: text;"></span></p>
         <script>sidB.innerHTML = localStorage.sessionid;</script>
+        <p class="tip" id="aci"> </p>
+        <script>
+            for (var propname in parent.myInfos)
+                aci.innerHTML += "<b>" + propname + "</b>: " + JSON.stringify(parent.myInfos[propname]) + "<br>";
+        </script>
     </div>
     <p class="listName">NMFUN LOG</p>
     <div class="lists">
@@ -84,9 +78,28 @@
         <div class="but" onclick="parent.newMsgBox('This function is developing.')">
             <t>Upload to nmFun</t>
         </div>
-        <p class="tip" id="logB" style="user-select: text; -webkit-user-select: text; -moz-user-select: text;">
-            Developing...
+        <p class="tip" id="logB"
+            style="user-select: text; -webkit-user-select: text; -moz-user-select: text; max-height: 100vh; overflow: scroll;">
         </p>
+    </div>
+    <script>
+        logB.innerHTML = localStorage.systemLog.replace(/\\n/g, "<br>");
+    </script>
+    <p class="listName">LOCALSTORAGE</p>
+    <div class="lists">
+        <div class="but" onclick="copyToClipboard(lsB.innerHTML)">
+            <t>Copy to clipboard</t>
+        </div>
+        <div class="but" onclick="localStorage.clear();parent.window.location.reload()">
+            <t>Clear localStorage and refresh</t>
+        </div>
+        <p class="tip" id="lsB"
+            style="user-select: text; -webkit-user-select: text; -moz-user-select: text; max-height: 100vh; overflow: scroll;">
+        </p>
+        <script>
+            for (var propname in localStorage)
+                lsB.innerHTML += "<b>" + propname + "</b>: " + JSON.stringify(localStorage[propname]) + "<br>";
+        </script>
     </div>
     <script src="../src/js/jquery.min.js"></script>
     <script src="../src/js/i18next-1.6.3.min.js"></script>
