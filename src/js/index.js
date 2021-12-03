@@ -84,11 +84,6 @@ inv = setInterval(() => {
 // 预定义的选项表
 settingsPreDefineList = [["zone", -8], ["usebrowser", false],]
 
-for (settingsPDT == 0; settingsPDT < settingsPreDefineList.length; settingsPDT++) {
-    if (!localStorage.getItem(settingsPreDefineList[settingsPDT][0]))
-        localStorage.setItem(settingsPreDefineList[settingsPDT][0], settingsPreDefineList[settingsPDT][0]);
-}
-
 // 测试版显示
 if (version.betaVersion) {
     bVE = document.createElement("div");
