@@ -3,7 +3,7 @@
         "title": "继续",
         "confirm": "确认登录",
         "confirm&refresh": "确认登录并刷新",
-        "error":"出现问题，无法登录到账户。",
+        "error": "出现问题，无法登录到账户。",
         "tip": {
             "goas": "将以此账号身份登录 nmFun。",
             "refresh": "请注意，您可能需要刷新 nmFun 页面才能继续某些操作。"
@@ -12,8 +12,8 @@
     "theme": {
         "default": "浅色",
         "dark": "深色",
-        "more":"更多...",
-        "usebrowser":"正在使用浏览器主题"
+        "more": "更多...",
+        "usebrowser": "正在使用浏览器主题"
     },
     "settings": {
         "account": {
@@ -56,6 +56,7 @@
             "knowledge": "nmFun 条款和条件",
             "updatelog": "更新日志",
             "nmteam": "访问 nmTeam 网站",
+            "bug_report": "反馈 Bug",
             "network-service-protocol": "nmTeam 服务协议",
             "copyright": "©版权所有 nmTeam。保留所有权利。"
         },
@@ -97,19 +98,38 @@
                 "enter": "Enter",
                 "ctrlEnter": "Ctrl 和 Enter"
             },
-            "fontSize": {
-                "title": "字体大小",
-                "big": "大",
-                "small": "小",
-                "compatibilityMode": "兼容模式",
-                "tip": "兼容模式下将禁用自定义字体大小及自动调整字体大小。"
+            "autoSaveCraft": "自动保存到草稿箱",
+            "accessibility": {
+                "title": "辅助功能",
+                "bigText": "更大字体"
             },
             "tip": {
+                "thin1": "开启此选项后，在宽屏视图下未查看详情页时，原左侧的页面内容将被扩大并居中。",
+                "thin2": "更改此选项后，请重新加载页面以使修改生效。",
+                "autoSaveCraft1": "键入文本时，自动保存内容到草稿箱。这样在重新加载页面后，之前输入的内容将被自动保存。",
+                "autoSaveCraft2": "当此选项启用时，发帖窗口中的“保存到草稿箱”按钮不会显示。",
+                "autoSaveCraft3": "更改此选项后，请重新加载页面以使修改生效。",
                 "keys": {
                     "sendKey1": "指定发送消息的快捷键是否需要按下 Enter。",
                     "sendKey2": "在使用 Ctrl + Enter 作为发送快捷键时，按下 Ctrl + Shift + Enter 可发送消息而不跳转；在使用 Enter 作为发送快捷键时，按下 Ctrl + Enter 可发送消息而不跳转。",
                     "list": "查看列出的所有快捷键以提高您的工作效率。"
                 }
+            }
+        },
+        "bug_report": {
+            "title": "报告问题",
+            "type": {
+                "bug": {
+                    "n": "提交 Bug",
+                    "i": "若 nmFun 无法正常运行或遇到问题，请向我们反馈问题。"
+                },
+                "feature": {
+                    "n": "功能建议",
+                    "i": "没有问题，但对 nmFun 有建议？请告知我们您的想法。"
+                }
+            },
+            "tip": {
+                "3p": "您可能被重定向到外部网站来完成这个过程。"
             }
         },
         "privacy": {
@@ -161,5 +181,8 @@
                 "region": "请选择您所在的时区，则 nmFun 中的时间将会被换算成此时区显示。"
             }
         }
+    },
+    "lan": {
+        "zh_cn": "中文（简体）"
     }
 }

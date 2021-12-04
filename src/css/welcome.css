@@ -1,0 +1,275 @@
+body{
+    --welcome: #000;
+    --welcome-bg: #fff;
+    --welcome-moreButton: #EAD050;
+}
+body[theme=dark]{
+    --welcome: #fff;
+    --welcome-bg: rgb(27, 27, 27);
+}
+.welcomeFrame{
+    display: block!important;
+    z-index: 99999;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+#welcomeFrame_frameHeader{
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+#welcomeFrame_frameHeader[hidden=false]{
+    opacity: 1;
+}
+.welcomeFrame .main{
+    display: block;
+    margin: 0;
+    padding: 30rem 20rem;
+    overflow-x: hidden;
+    overflow-y: overlay;
+    position: absolute;
+    background-color: var(--welcome-bg);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    animation: welcome_main 3.99s;
+}
+.welcomeFrame .main .welcome_icon{
+    display: block;
+    height: 100rem;
+    background-image: url(../img/logo.svg);
+    background-size: 100rem;
+    background-position: center center;
+    background-repeat: no-repeat;
+    transition: opacity 0.3s;
+    animation: welcome_icon 3.99s;
+}
+.welcomeFrame .main .welcome_icon[hidden=true]{
+    opacity: 0;
+}
+.welcomeFrame .main .welcome_Header{
+    display: block;
+    color: var(--welcome);
+    font-size: 24rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 19rem 22rem 7rem 22rem;
+    animation: welcome_title 4.5s;
+}
+.welcomeFrame .main .welcome_FirstIntroduce{
+    display: block;
+    color: var(--welcome);
+    font-size: 16rem;
+    font-weight: 400;
+    text-align: center;
+    padding: 8rem 22rem 6rem 22rem;
+    animation: welcome_title 4.5s;
+}
+.welcomeFrame .main .welcome_Intro{    
+    display: block;
+    color: var(--welcome);
+    font-size: 16rem;
+    font-weight: 400;
+    text-align: left;
+    padding: 6rem 22rem;
+}
+.welcome_Intro .intro_item{
+    display: flex;
+    margin-top: 15rem;
+    animation: welcome_intro 5s;
+}
+.welcome_Intro .intro_item i{
+    width: 40rem;
+    height: 40rem;
+    margin-right: 13rem;
+    background-size: 40rem;
+    background-position: center center;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+    animation: welcome_intro_i 5s;
+}
+.welcome_Intro .intro_item .intro{
+    line-height: 1.5;
+}
+.welcome_Intro .intro_item .intro h2{
+    font-size: 17rem;
+    font-weight: bold;
+    margin-bottom: 3rem;
+    animation: welcome_intro_h2 6s;
+}
+.welcome_Intro .intro_item .intro p{
+    font-size: 14rem;
+    font-weight: 400;
+    margin-bottom: 5rem;
+    overflow: hidden;
+    animation: welcome_intro_p 14s;
+}
+.welcomeFrame .main .welcome_goButton{
+    display: block;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    font-size: 16rem;
+    margin: 14rem 0 5rem 0;
+    border-radius: 8rem;
+    padding: 10rem 20rem;
+    color: #000;
+    background-color: #ead050;
+    animation: welcome_button 7s;
+}
+.welcomeFrame .main .welcome_knowMore{
+    display: block;
+    position: relative;
+    width: 100%;
+    font-size: 14rem;
+    margin: 3rem 0 2rem 0;
+    border-radius: 8rem;
+    padding: 8rem 40rem;
+    color: var(--welcome-moreButton);
+    background: none;
+    animation: welcome_more 8s;
+}
+.welcomeFrame .main .welcome_knowMore .icon{
+    width: 12rem;
+    height: 12rem;
+    position: relative;
+    top: -2px;
+    fill: var(--welcome-moreButton);
+}
+@keyframes welcome_main {
+    0%{
+        overflow: hidden;
+    }
+    100%{
+        overflow: hidden;
+    }
+}
+@keyframes welcome_icon {
+    0%{
+        opacity: 0;
+        padding-top: 70vh;
+        margin-bottom: 20vh;
+        background-size: min(70vw, 70vh);
+    }
+    38%{
+        opacity: 1;
+        padding-top: 70vh;
+        margin-bottom: 0;
+        background-size: min(70vw, 70vh);
+    }
+    100%{
+        padding-top: 0rem;
+        background-size: 100rem;
+    }
+}
+@keyframes welcome_title {
+    0%{
+        opacity: 0;
+    }
+    59%{
+        opacity: 0;
+    }
+    84%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+@keyframes welcome_intro {
+    60%{
+        opacity: 0;
+        position: relative;
+        top: 14rem;
+    }
+    100%{
+        opacity: 1;
+        position: relative;
+        top: 0rem;
+    }
+}
+@keyframes welcome_intro_i {
+    0%{
+        opacity: 0;
+    }
+    60%{
+        opacity: 0;
+        margin-top: 120rem;
+    }
+    90%{
+        opacity: 1;
+        margin-top: 0rem;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+@keyframes welcome_intro_h2 {
+    0%{
+        opacity: 0;
+    }
+    65%{
+        opacity: 0;
+        position: relative;
+        top: 12rem;
+    }
+    79%{
+        opacity: 1;
+        position: relative;
+        top: 0rem;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+@keyframes welcome_intro_p {
+    0%{
+        opacity: 0;
+        max-height: 0;
+        overflow: visible;
+    }
+    37%{
+        opacity: 0;
+        max-height: 0;
+        overflow: visible;
+    }
+    58%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 1;
+        max-height: 100vh;
+        overflow: visible;
+    }
+}
+@keyframes welcome_button {
+    0%{
+        opacity: 0;
+        visibility: hidden;
+    }
+    85%{
+        opacity: 0;
+        visibility: hidden;
+    }
+    100%{
+        opacity: 1;
+        visibility: visible;
+    }
+}
+@keyframes welcome_more {
+    0%{
+        opacity: 0;
+        visibility: hidden;
+    }
+    83%{
+        opacity: 0;
+        top: -30rem;
+        visibility: hidden;
+    }
+    100%{
+        opacity: 1;
+        top: 0;
+        visibility: visible;
+    }
+}

@@ -1,6 +1,6 @@
 hasCreatedContextMenu = false;
 themeList = ["default", "dark",];
-languageList=["zh_cn"]
+languageList = ["zh_cn"]
 
 //  禁用右键
 setInterval(() => {
@@ -112,6 +112,7 @@ function createContextMenu(items, customX = false, customY = false, element = un
         document.body.appendChild(new_element);
         document.getElementById('contextMenu' + time).getElementsByTagName("button")[0].focus();
         hasCreatedContextMenu = true;
+        writeLog("i", "createContextMenu", "time: " + time + ", content: " + items + ", x: " + menuX + " " + positionX + " " + menuWidth + ", y: " + menuY + " " + positionY + " " + menuHeight);
         setTimeout(() => {
             hasCreatedContextMenu = false;
         }, 10);
@@ -124,7 +125,7 @@ function closeContextMenu(time) {
     // setTimeout(() => {
     document.getElementById('contextMenu' + time).outerHTML = "";
     // }, 500);
-
+    writeLog("i", "closeContextMenu", "time: " + time);
 }
 
 // alert
@@ -148,6 +149,7 @@ function alert(msg, title = "提示", positive = "好", positiveEvent, negative 
     new_element.setAttribute('open', 'true');
     document.body.appendChild(new_element);
     document.getElementById('alertBox' + time).getElementsByClassName("buttons")[0].getElementsByClassName("positive")[0].focus();
+    writeLog("i", "alert", "time: " + time + ", content: " + document.getElementById('alertBox' + time).innerHTML);
 }
 
 function closeAlert(time) {
@@ -157,6 +159,7 @@ function closeAlert(time) {
         document.getElementById('coverWithColor' + time).outerHTML = "";
         document.getElementById('alertBox' + time).outerHTML = "";
     }, 500);
+    writeLog("i", "closeAlert", "time: " + time);
 }
 
 // msgBox
@@ -170,6 +173,7 @@ function newMsgBox(msg) {
     setTimeout(() => {
         document.getElementById('msgBox' + time).outerHTML = "";
     }, 10000);
+    writeLog("i", "newMsgBox", "msg: " + msg);
 }
 
 function newErrorBox(funame, err) {
@@ -392,7 +396,7 @@ function setTimeTexts() {
         // 换算PHP的时间戳
         timeS *= 1000;
         // 将时间转为当前时区
-        zone = Number(mySettings.zone);
+        zone = Number(localStorage.zone);
         timeInText = new Date();
         timeInText.setTime(timeS + 3600000 * zone * 0);// 禁用了这里的转换，问就不知道为什么
         time.setTime(time.getTime() + 3600000 * zone);
@@ -570,3 +574,47 @@ function getUrlParam(name) {
     if (r != null) return unescape(r[2]);
     return null;
 }
+
+// 大号字体
+setInterval(() => {
+    if (localStorage.bigText == "true") {
+        document.getElementsByTagName("html")[0].style.fontSize = "1.35px";
+    }
+    else {
+        document.getElementsByTagName("html")[0].style.fontSize = "var(--fontSize)";
+    }
+}, 1000);
+
+// TestField
+function showTestField() {
+    newBrowser("settings/testfield.html", "", false, false);
+}
+
+ClickTestField = 0;
+pageHeader.getElementsByClassName("logo")[0].onclick = function () {
+    if (++ClickTestField >= 7) showTestField();
+    setTimeout(() => {
+        ClickTestField = 0;
+    }, 10000);
+}
+
+function writeLog(logType, funName, content) {
+    if (!localStorage.systemLog) localStorage.systemLog = "";
+    logTypeList = ["INFO", "DEBUG", "WARN", "ERROR", "FATAL"];
+    logTypeList.forEach(en => {
+        if (en[0].toLowerCase() == logType.toLowerCase()) logType = en;
+    });
+    logTime = new Date();
+    logTime.setTime(logTime.getTime() + 60000 * logTime.getTimezoneOffset());
+    logTime = JSON.parse(splitTime(logTime));
+    ltime = logTime.year + "-" + logTime.month + "-" + logTime.date + " " + logTime.hour + ":" + logTime.sMinute + ":" + logTime.sSecond;
+    logWord = `[` + logType + `] ` + ltime + " " + funName + `: ` + content + ` \\n`;
+    localStorage.systemLog += logWord;
+    console.log(logWord);
+}
+
+writeLog("i", "Page", "found page loading...");
+lsItems = '';
+for (var propname in localStorage)
+    if (propname != "systemLog") lsItems += propname + ": " + JSON.stringify(localStorage[propname]) + "; ";
+writeLog("i", "localStorage", lsItems);

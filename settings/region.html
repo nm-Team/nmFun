@@ -280,8 +280,8 @@
         changeLanguage();
         changeCheckInSeries('regionSelectionDiv', 'regionButton_' + parent.mySettings.region, true);
         function changeRegion(toWord, toNum) {
-            parent.mySettings.region = toWord;
-            parent.mySettings.zone = toNum;
+            parent.localStorage.region = toWord;
+            parent.localStorage.zone = toNum;
             // 更新设置到服务器的代码
         }
         // 设置input placeholder

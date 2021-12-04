@@ -5,10 +5,10 @@
 }
 .searchFrame .main .typeContainer{
     flex-shrink: 0;
-    margin-bottom: -7px;
+    margin-bottom: -7rem;
 }
 .searchFrame .main #searchResults{
-    overflow: auto;
+    overflow: overlay;
 }
 .unavaliable.search-not-start i{
     background-image: url(../img/search_not_start.png);

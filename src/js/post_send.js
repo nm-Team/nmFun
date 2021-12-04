@@ -4,8 +4,9 @@ function setPostInputArea(ele, type) {
     for (i = 0; i < categoryList.length; i++) {
         cgOptions += `<option cgid="` + categoryList[i][0] + `">` + categoryList[i][1] + `</option>`;
     }
-    ele.innerHTML = sendBoxTemplate.replace(/{{cg}}/g, cgOptions).replace(/{{id}}/g, ele.id);
+    ele.innerHTML = sendBoxTemplate.replace(/{{cg}}/g, cgOptions).replace(/{{id}}/g, ele.id).replace(/{{type}}/g, type);
     ele.className += " inputArea " + type;
+    writeLog("i", "setPostInputArea", ele.id);
 }
 
 // 展示/关闭发帖
@@ -13,8 +14,24 @@ function showPostInput(which, toS) {
     document.getElementById("" + which + "Edit").setAttribute("open", toS);
     if (toS) {
         document.getElementById("" + which + "EditBoxCover").setAttribute("open", "true");
+        document.getElementById("" + which + "EditBox").getElementsByClassName("sendBoxInput")[0].value = localStorage.getItem("sendCraft" + "_" + "" + which + "EditBox");
     }
     else document.getElementById("" + which + "EditBoxCover").removeAttribute("open");
+    writeLog("i", "showPostInput", which + " to " + toS);
+}
+
+// 保存到草稿箱
+function saveCraft(ele, type, noti = true) {
+    localStorage.setItem("sendCraft" + "_" + ele.id, ele.getElementsByClassName("sendBoxInput")[0].value);
+    if (noti) newMsgBox("当前内容已保存到草稿箱。");
+    writeLog("i", "saveCraft", ele.id + ", content is " + ele.getElementsByClassName("sendBoxInput")[0].value);
+}
+
+// 清空草稿箱和输入框
+function dropCraft(ele, type) {
+    localStorage.removeItem("sendCraft" + "_" + ele.id);
+    ele.getElementsByClassName("sendBoxInput")[0].value = "";
+    writeLog("i", "dropCraft", ele.id);
 }
 
 errorCode = {
@@ -27,7 +44,7 @@ biliVideoTemplate = `<iframe class="biliVideo" frameborder="no" scrolling="no" s
 
 sendBoxTemplate = `
 <select hideincomment class="categoryS" placeholder="请选择分区…" title="请选择分区…">{{cg}}</select>
-<textarea class="sendBoxInput" placeholder="说点什么吧……"></textarea>
+<textarea class="sendBoxInput" title="说点什么吧……" oninput="autoSaveCraft({{id}},'{{type}}')"></textarea>
 <div class="mediasBox" noselect></div>
 <div class="inputBox">
     <div class="inputSurface">
@@ -44,3 +61,61 @@ sendBoxTemplate = `
 
 setPostInputArea(commentEditBox, "comment");
 setPostInputArea(sendEditBox, "post");
+
+// 插入文件
+function putFilesToInput(fileInput, type, id) {
+    console.log("Get files from fileInput " + fileInput.id);
+    //把选择的图片显示到img上
+    try {
+        for (fileOperated = 0; fileOperated < fileInput.files.length; fileOperated++) {
+            file = fileInput.files[fileOperated];
+            fileName = fileInput.files[fileOperated].name;
+            fileSize = fileInput.files[fileOperated].size;
+            console.log(fileInput.files[fileOperated]);
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function (e) {
+                console.log(this.result);
+                switch (type) {
+                    case "image":
+                        addItemToFileBar(id, "['img','" + this.result + "']", "<div style='background-image: url(" + this.result + ");background-position: 50% 50%; background-size: cover; background-repeat: no-repeat;'></div>");
+                        break;
+                    case "video":
+                        addItemToFileBar(id, "['video','" + this.result + "']", "<center>视频</center>");
+                        break;
+                    default:
+                }
+            }
+        }
+        document.getElementById(id).getElementsByClassName("sendBoxInput")[0].focus();
+    }
+    catch (err) {
+        newErrorBox("putFilesToInput", err);
+    }
+}
+
+// 附件栏增加项目
+function addItemToFileBar(id, info, HTML) {
+    mtid = gTime();
+    document.getElementById(id).getElementsByClassName("mediasBox")[0].innerHTML += `<div class="m" m="` + info + `" mtid="` + mtid + `"><button class="delButton" title="删除这个媒体" onclick="delItemInFileBar(` + mtid + `)"></button>` + HTML + `</div>`;
+    writeLog("i", "addItemToFileBar", "id: " + id + ", mtid: " + mtid);
+}
+
+// 附件栏删除项目
+function delItemInFileBar(mtid) {
+    $("*[mtid=" + mtid + "]").remove();
+    writeLog("i", "delItemInFileBar", "mtid: " + mtid);
+
+}
+
+// 转换单引号双引号
+function switchMarks(t) {
+    return t.replace(/'/g, "{{double}}").replace(/"/g, "'").replace(/{{double}}/g, '"');
+}
+
+// 自动保存
+function autoSaveCraft(ele, type) {
+    if (localStorage.autoSaveCraft == "true") {
+        saveCraft(ele, type, false);
+    }
+}

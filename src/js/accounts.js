@@ -1,6 +1,6 @@
 logScript = document.createElement("script");
 logScript.setAttribute("src", accountClient + "/src/js/getinfo.js");
-logScript.setAttribute("onerror", "newMsgBox('无法连接到账号服务器。')");
+logScript.setAttribute("onerror", "newMsgBox('无法连接到账号服务器。');writeLog('e', 'accounts.js', 'log js load fail');");
 document.body.appendChild(logScript);
 
 // 登录账户
@@ -22,6 +22,7 @@ function setHeaderLog() {
                 accountBox.setAttribute("onclick", "myMenu(true);");
                 myUid = accountInfo['uid'];
                 myInfos = accountInfo;
+                writeLog("i", "setHeaderLog", "log success, sessionid " + localStorage.sessionid + ", " + JSON.stringify(accountInfo));
             }
         });
     }
@@ -29,6 +30,7 @@ function setHeaderLog() {
         console.error("getInfo 执行错误，返回错误信息" + err);
         userName.innerHTML = "错误";
         accountBox.setAttribute("onclick", "newMsgBox('无法连接到登录服务器，因此无法打开此上下文菜单。');");
+        writeLog("i", "setHeaderLog", "log fail: sessionid " + localStorage.sessionid + ", " + err);
     }
 }
 
@@ -36,12 +38,14 @@ function showLogFrame() {
     logPop.setAttribute("open", "true");
     logCover.setAttribute("open", "");
     logIframe.setAttribute("src", accountClient + "/?name=nmFun&msg=登录nmFun，一起看乐子&returnto=" + siteURL + "/logverify.html");
+    writeLog("i", "showLogFrame");
 }
 
 function closeLogFrame() {
     logPop.setAttribute("open", "false");
     logCover.removeAttribute("open");
     logIframe.setAttribute("src", "about:blank");
+    writeLog("i", "closeLogFrame");
 }
 
 // "我的"菜单
@@ -59,6 +63,7 @@ function logOut() {
     localStorage.sessionid = "";
     document.cookie = "PHPSESSID=;expires=01-Dec-2006 01:14:26 GMT;domain=" + siteURL.split("/")[2];
     document.cookie = "PHPSESSID=;expires=01-Dec-2006 01:14:26 GMT;domain=" + accountClient.split("/")[2];
+    writeLog("i", "logOut", "success");
 }
 
 $("*").click(function () { if (myMenuOpe) myMenu(false) });

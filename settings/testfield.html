@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Test Field</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='format-detection' content='telephone=no'>
+    <link rel="stylesheet" type="text/css" href="../src/css/page.css">
+    <link rel="stylesheet" type="text/css" href="../src/css/settings.css">
+    <script src="../src/js/info.js"></script>
+</head>
+
+<body class="settings radius">
+    <script>parent.writeLog("i", "Test Field", "enabled");</script>
+    <h1>Test Field</h1>
+    <p class="listName">MODULES TEST</p>
+    <div class="lists">
+        <div class="but" onclick="parent.alert('Here is a test of alert.')">
+            <t>Show alert demo</t>
+        </div>
+        <div class="but" onclick="parent.newMsgBox('Here is a test of msgBox.')">
+            <t>Show msgBox demo</t>
+        </div>
+        <div class="but" onclick="parent.newBrowser('https://nmteam.xyz')">
+            <t>Show browser demo</t>
+        </div>
+        <div class="but" onclick="parent.newLegacyBrowser('/settings/', false, false)">
+            <t>Show settings</t>
+        </div>
+    </div>
+    <p class="listName">TOOLS</p>
+    <div class="lists">
+        <div class="but" onclick="localStorage.started='false'; parent.window.location.reload()">
+            <t>Reopen introductive pop page (will refresh)</t>
+        </div>
+    </div>
+    <p class="listName">RUN JAVASCRIPT</p>
+    <div class="lists">
+        <textarea class="searchBox" id="errorCheckInputBox" oninput="" placeholder="JavaScript"
+            style="resize: vertical;"></textarea>
+        <div class="but" onclick="errorChecker()">
+            <t>Run</t>
+        </div>
+        <p class="tip" id="errorCheckResultBox"
+            style="user-select: text; -webkit-user-select: text; -moz-user-select: text;"></p>
+    </div>
+    <p class="listName">CLIENT NAVIGATOR</p>
+    <div class="lists">
+        <div class="but" onclick="copyToClipboard(navigatorB.innerHTML)">
+            <t>Copy to clipboard</t>
+        </div>
+        <p class="tip" id="navigatorB" style="user-select: text; -webkit-user-select: text; -moz-user-select: text;">
+        </p>
+    </div>
+    <script>
+        for (var propname in navigator)
+            navigatorB.innerHTML += "<b>" + propname + "</b>: " + JSON.stringify(navigator[propname]) + "<br>";
+    </script>
+    <p class="listName">ACCOUNT</p>
+    <div class="lists">
+        <p class="tip"><b>Session ID: </b><span id="sidB"
+                style="user-select: text; -webkit-user-select: text; -moz-user-select: text;"></span></p>
+        <script>sidB.innerHTML = localStorage.sessionid;</script>
+        <p class="tip" id="aci"> </p>
+        <script>
+            for (var propname in parent.myInfos)
+                aci.innerHTML += "<b>" + propname + "</b>: " + JSON.stringify(parent.myInfos[propname]) + "<br>";
+        </script>
+    </div>
+    <p class="listName">NMFUN LOG</p>
+    <div class="lists">
+        <div class="but" onclick="copyToClipboard(logB.innerHTML)">
+            <t>Copy to clipboard</t>
+        </div>
+        <div class="but" onclick="parent.newMsgBox('This function is developing.')">
+            <t>Upload to nmFun</t>
+        </div>
+        <p class="tip" id="logB"
+            style="user-select: text; -webkit-user-select: text; -moz-user-select: text; max-height: 100vh; overflow: scroll;">
+        </p>
+    </div>
+    <script>
+        logB.innerHTML = localStorage.systemLog.replace(/\\n/g, "<br>");
+    </script>
+    <p class="listName">LOCALSTORAGE</p>
+    <div class="lists">
+        <div class="but" onclick="copyToClipboard(lsB.innerHTML)">
+            <t>Copy to clipboard</t>
+        </div>
+        <div class="but" onclick="localStorage.clear();parent.window.location.reload()">
+            <t>Clear localStorage and refresh</t>
+        </div>
+        <p class="tip" id="lsB"
+            style="user-select: text; -webkit-user-select: text; -moz-user-select: text; max-height: 100vh; overflow: scroll;">
+        </p>
+        <script>
+            for (var propname in localStorage)
+                if (propname != "systemLog") lsB.innerHTML += "<b>" + propname + "</b>: " + JSON.stringify(localStorage[propname]) + "<br>";
+        </script>
+    </div>
+    <script src="../src/js/jquery.min.js"></script>
+    <script src="../src/js/i18next-1.6.3.min.js"></script>
+    <script src="../src/js/language.js"></script>
+    <script src="../src/js/functions.js"></script>
+    <script src="../src/js/settings.js"></script>
+    <script>
+        function errorChecker() {
+            errorCheckResultBox.innerHTML = "Running...";
+            parent.runChecker = new Function(errorCheckInputBox.value);
+            try {
+                errorCheckResultBox.innerHTML = parent.runChecker();
+            } catch (err) {
+                errorCheckResultBox.innerHTML += `<br>---------<br>` + err;
+            }
+        }
+    </script>
+</body>
+
+</html>

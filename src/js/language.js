@@ -34,6 +34,7 @@ function changeLanguage(lang) {
             $('html').i18n();
         }
     );
+    writeLog("i", "i18n", "translate start, lan is " + language);
 }
 changeLanguage();
 

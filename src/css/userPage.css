@@ -24,16 +24,16 @@ body[theme=dark]{
 }
 .userHeader, .uHeaderMain{
     position: relative;
-    height: 220px;
+    height: 220rem;
     overflow: hidden;
-    border-radius: 6px;
+    border-radius: 6rem;
     flex-shrink: 0;
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
 }
 .uHeaderMain{
-    margin: 10px 10px 0 10px!important;
+    margin: 10rem 10rem 0 10rem!important;
     background: url(https://ci.cncn3.cn/58ccf2b22ffbaf266b966d387519825a.png) center center no-repeat;
     background-size: cover;
 }
@@ -42,7 +42,7 @@ body[theme=dark]{
     bottom: 0;
     left: 0;
     right: 0;
-    height: 220px;
+    height: 220rem;
 }
 .userHeader .lin{
     z-index: 1;
@@ -57,25 +57,26 @@ body[theme=dark]{
     align-items: center;
     align-content: center;
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 15rem;
     color: var(--uInfo-header-text);
 }
 .uHeaderMain button.avatar{
-    width: 50px;
-    height: 50px;
+    width: 50rem;
+    height: 50rem;
     background-image: url(https://static.hdslb.com/images/akari.jpg);
-    background-size: 50px 50px;
-    border-radius: 25px;
+    background-size: 50rem 50rem;
+    border-radius: 25rem;
 }
 .uHeaderInfos .name{
-    font-size: 21px;
-    margin: 10px 30px;
-    width: calc(100% - 60px);
+    font-size: 21rem;
+    margin: 10rem 30rem;
+    max-width: calc(100% - 60rem);
     font-weight: bold;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     word-break: break-all;
+    align-items: center;
     user-select: all;
     -webkit-user-select: all;
     -moz-user-select: all;
@@ -83,45 +84,46 @@ body[theme=dark]{
 .uHeaderMain .uHeaderInfos .data{
     display: flex;
     flex-flow: wrap;
-    margin: 0 20px;
+    margin: 0 20rem;
 }
 .uHeaderMain .uHeaderInfos .data button{
     color: var(--uInfo-header-text-grey);
     background: none;
     border: none;
     border-radius: 0;
-    font-size: 14px;
-    padding: 0px 7px;
+    font-size: 14rem;
+    padding: 0rem 7rem;
     flex-shrink: 0;
     word-break: keep-all;
 }
 .uHeaderMain .uHeaderInfos .data button span{
-    padding-left: 5px;
+    padding-left: 5rem;
     /* font-weight: bold; */
     color: var(--uInfo-header-text);
 }
 .uHeaderMain .uHeaderInfos .data button:not(:first-child){
-    border-left: 1px solid var(--uInfo-header-data-sepa);
+    border-left: 1rem solid var(--uInfo-header-data-sepa);
 }
 .uHeaderMain .uHeaderInfos .interaction{
-    margin: 8px 20px 0 20px;
+    margin: 8rem 20rem 0 20rem;
     text-align: center;
 }
 .uHeaderMain .uHeaderInfos .interaction button{
-    border: 1px solid #00000000;
-    border-radius: 500px;
-    font-size: 14px;
-    padding: 5px 11px;
+    border: 1rem solid #00000000;
+    border-radius: 500rem;
+    font-size: 14rem;
+    margin: 0 2rem;
+    padding: 5rem 11rem;
     flex-shrink: 0;
     word-break: keep-all;
 }
 .uHeaderMain .uHeaderInfos .interaction button i{
     display: inline-block;
     position: relative;
-    top: 4px;
-    margin: 0 0 0 -2px;
-    font-size: 18px;
-    height: 12px;
+    top: 4rem;
+    margin: 0 0 0 -2rem;
+    font-size: 18rem;
+    height: 12rem;
     line-height: 0;
 }
 .uHeaderMain .uHeaderInfos .interaction button.posi{
@@ -135,7 +137,7 @@ body[theme=dark]{
     border-color: var(--uInfo-header-interaction-button-negative-border);
 }
 .userMainCards{
-    overflow: auto;
-    border-radius: 6px 6px 0 0;
-    padding-top: 0px;
+    overflow-y: overlay;
+    border-radius: 6rem 6rem 0 0;
+    padding-top: 0rem;
 }
