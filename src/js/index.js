@@ -86,7 +86,7 @@ inv = setInterval(() => {
 }, 10);
 
 // 预定义的选项表
-settingsPreDefineList = [["region", "China Standard Time (UTC + 8:00)"], ["zone", -8], ["usebrowser", "false"], ["thinMode", "true"], ["autoSaveCraft", "false"], ["bigText", "false"]];
+settingsPreDefineList = [["region", "China Standard Time (UTC + 8:00)"], ["zone", -8], ["usebrowser", "true"], ["thinMode", "true"], ["autoSaveCraft", "false"], ["bigText", "false"]];
 
 for (settingsPDT = 0; settingsPDT < settingsPreDefineList.length; settingsPDT++) {
     if (!localStorage.getItem(settingsPreDefineList[settingsPDT][0])) {
@@ -130,15 +130,15 @@ welcomeFrameHTML = `
             <div class="intro_item">
                 <i style="background-image: url(./src/img/welcome/laugh.svg);" title="大笑"></i>
                 <div class="intro">
-                    <h2>让人开心的乐子，开了又开</h2>
-                    <p>在 nmFun 社区的努力下，nmFun 将源源不断地更新新的高质量乐子。</p>
+                    <h2>让读者开心的乐子。开了又开</h2>
+                    <p>有用户的大力支持，nmFun 将源源不断地更新新的高质量乐子。</p>
                 </div>
             </div>
             <div class="intro_item">
                 <i style="background-image: url(./src/img/welcome/act.svg);" title="用户在 nmFun 愉快的互动"></i>
                 <div class="intro">
                     <h2>独乐乐不如众乐乐</h2>
-                    <p>精彩的评论也是乐子的一部分。<br />nmFun 包含的丰富互动功能使乐子更上一层楼。</p>
+                    <p>精彩的评论也是乐子的一部分。<br />nmFun 包含的丰富互动功能使乐子画龙点睛，更上一层楼。</p>
                 </div>
             </div>
             <div class="intro_item">
