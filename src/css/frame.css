@@ -112,7 +112,8 @@ body{
     transform: translate(calc(100% + 20rem),0);
 }
 .rightBox[con=none], .leftBox[con=none]{
-    visibility: visible;
+    visibility: hidden;
+    display: none;
     animation: toLeft 0.4s!important;
     transform: translate(0,0);
 }
@@ -297,10 +298,14 @@ body{
 @keyframes toLeft {
     0%{
         transform: unset;
+        visibility: visible;
+        display: block;
     }
     100%{
         transform: translate(-25%, 0);
         filter: brightness(0.8);
+        visibility: visible;
+        display: block;
     }
 }
 @keyframes returnRight {

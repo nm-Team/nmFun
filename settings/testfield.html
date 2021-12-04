@@ -98,7 +98,7 @@
         </p>
         <script>
             for (var propname in localStorage)
-                lsB.innerHTML += "<b>" + propname + "</b>: " + JSON.stringify(localStorage[propname]) + "<br>";
+                if (propname != "systemLog") lsB.innerHTML += "<b>" + propname + "</b>: " + JSON.stringify(localStorage[propname]) + "<br>";
         </script>
     </div>
     <script src="../src/js/jquery.min.js"></script>

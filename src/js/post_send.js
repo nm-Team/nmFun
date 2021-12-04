@@ -6,6 +6,7 @@ function setPostInputArea(ele, type) {
     }
     ele.innerHTML = sendBoxTemplate.replace(/{{cg}}/g, cgOptions).replace(/{{id}}/g, ele.id).replace(/{{type}}/g, type);
     ele.className += " inputArea " + type;
+    writeLog("i", "setPostInputArea", ele.id);
 }
 
 // 展示/关闭发帖
@@ -16,18 +17,21 @@ function showPostInput(which, toS) {
         document.getElementById("" + which + "EditBox").getElementsByClassName("sendBoxInput")[0].value = localStorage.getItem("sendCraft" + "_" + "" + which + "EditBox");
     }
     else document.getElementById("" + which + "EditBoxCover").removeAttribute("open");
+    writeLog("i", "showPostInput", which + " to " + toS);
 }
 
 // 保存到草稿箱
 function saveCraft(ele, type, noti = true) {
     localStorage.setItem("sendCraft" + "_" + ele.id, ele.getElementsByClassName("sendBoxInput")[0].value);
     if (noti) newMsgBox("当前内容已保存到草稿箱。");
+    writeLog("i", "saveCraft", ele.id + ", content is " + ele.getElementsByClassName("sendBoxInput")[0].value);
 }
 
 // 清空草稿箱和输入框
 function dropCraft(ele, type) {
     localStorage.removeItem("sendCraft" + "_" + ele.id);
     ele.getElementsByClassName("sendBoxInput")[0].value = "";
+    writeLog("i", "dropCraft", ele.id);
 }
 
 errorCode = {
@@ -94,11 +98,14 @@ function putFilesToInput(fileInput, type, id) {
 function addItemToFileBar(id, info, HTML) {
     mtid = gTime();
     document.getElementById(id).getElementsByClassName("mediasBox")[0].innerHTML += `<div class="m" m="` + info + `" mtid="` + mtid + `"><button class="delButton" title="删除这个媒体" onclick="delItemInFileBar(` + mtid + `)"></button>` + HTML + `</div>`;
+    writeLog("i", "addItemToFileBar", "id: " + id + ", mtid: " + mtid);
 }
 
 // 附件栏删除项目
 function delItemInFileBar(mtid) {
     $("*[mtid=" + mtid + "]").remove();
+    writeLog("i", "delItemInFileBar", "mtid: " + mtid);
+
 }
 
 // 转换单引号双引号

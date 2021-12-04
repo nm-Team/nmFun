@@ -112,6 +112,7 @@ body[theme=dark]{
     border: 1rem solid #00000000;
     border-radius: 500rem;
     font-size: 14rem;
+    margin: 0 2rem;
     padding: 5rem 11rem;
     flex-shrink: 0;
     word-break: keep-all;
