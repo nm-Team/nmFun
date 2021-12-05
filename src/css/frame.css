@@ -113,7 +113,6 @@ body{
 }
 .rightBox[con=none], .leftBox[con=none]{
     visibility: hidden;
-    display: none;
     animation: toLeft 0.4s!important;
     transform: translate(0,0);
 }
