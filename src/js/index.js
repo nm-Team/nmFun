@@ -165,7 +165,12 @@ welcomeFrameHTML = `
             <button class="welcome_knowMore" title="转到 nmTeam 官方网站上对 nmFun 的介绍" onclick="welcomeFrame_close(); newBrowser('https://nmteam.xyz/products/nmFun', false, false, true)">了解更多<svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2323"><path d="M247.168 776.832a42.666667 42.666667 0 0 1 0-60.330667l388.544-388.544h-277.333333a42.666667 42.666667 0 1 1 0-85.333333h384a42.666667 42.666667 0 0 1 42.666666 42.666667v384a42.666667 42.666667 0 1 1-85.333333 0V384.64L307.498667 776.832a42.666667 42.666667 0 0 1-60.330667 0z"></path></svg></div>
     </div>
 </div>
-<div class="coverWithColor pop" id="welcomeFramePop" hidden open="true"></div>
+<div class="coverWithColor pop sendCover" id="welcomeFramePop" hidden open="true">
+    <div class="content">
+        <i></i>
+        <p>正在加载</p>
+    </div>
+</div>
 `;
 
 if (localStorage.getItem("started") != "true") {

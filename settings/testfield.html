@@ -75,8 +75,9 @@
         <div class="but" onclick="copyToClipboard(logB.innerHTML)">
             <t>Copy to clipboard</t>
         </div>
-        <div class="but" onclick="parent.newMsgBox('This function is developing.')">
-            <t>Upload to nmFun</t>
+        <div class="but"
+            onclick="parent.window.open('mailto:support@nmnm.fun?subject=[nmFun Log] '+encodeURI(/*(myInfos)?myInfos.nick:'UnloggedUser')*/)+' '+new Date()+'&body='+encodeURI(localStorage.systemLog))">
+            <t>Upload to nmFun by E-Mail (Alpha)</t>
         </div>
         <p class="tip" id="logB"
             style="user-select: text; -webkit-user-select: text; -moz-user-select: text; max-height: 100vh; overflow: scroll;">

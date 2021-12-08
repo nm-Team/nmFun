@@ -500,7 +500,7 @@ body[theme=dark]{
 #sendCover[open=true]{
     visibility: visible;
 }
-#sendCover .content{
+.sendCover .content{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -513,7 +513,7 @@ body[theme=dark]{
     color: #fff;
     border-radius: 8rem;
 }
-#sendCover .content i{
+.sendCover .content i{
     display: block;
     width: 20rem;
     height: 20rem;
@@ -523,7 +523,7 @@ body[theme=dark]{
     background-repeat: no-repeat;
     padding: 0 0 15rem 0;
 }
-#sendCover .content p{
+.sendCover .content p{
     text-align: center;
     font-size: 14rem;
     padding-bottom: 4rem;

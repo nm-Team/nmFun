@@ -1,12 +1,22 @@
 {
-    "name": "nmTeam 乐子站",
-    "short_name": "nmTeam 乐子站",
-    "description": "nmTeam 乐子站，快乐每一天。",
+    "name": "nmFun",
+    "short_name": "nmFun",
+    "description": "看乐子，乐不可支。",
     "icons": [
         {
-            "src": "/src/img/logo.svg",
-            "type": "image/svg",
-            "sizes": "150x150"
+            "src": "/src/img/icon-files/pwa_icon@512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        },
+        {
+            "src": "/src/img/icon-files/pwa_icon@256.png",
+            "type": "image/png",
+            "sizes": "256x256"
+        },
+        {
+            "src": "/src/img/icon-files/pwa_icon@128.png",
+            "type": "image/png",
+            "sizes": "128x128"
         }
     ],
     "start_url": "/",
