@@ -202,7 +202,8 @@ function quickBack(div, ele) {
 $(function () {
     window.addEventListener("popstate", function (e) {
         console.log("返回");
-        if (getOpenBoxes("pageRight").length > 0)
+        if ($(".popFrame[open=true]").length>0) $(".popFrame[open=true]")[$(".popFrame[open=true]").length - 1].getElementsByClassName("backButton")[0].click();
+        else if (getOpenBoxes("pageRight").length > 0)
             closeBox("pageRight", getOpenBoxes("pageRight")[0][1], false, "system");
         else if (getOpenBoxes("pageLeft").length > 0)
             closeBox("pageLeft", getOpenBoxes("pageLeft")[0][1], false, "system");
@@ -213,6 +214,7 @@ $(function () {
 // pop
 function openPop(ele) {
     ele.setAttribute("open", "true");
+    pushHistory("");
 }
 
 function closePop(ele, totally = false) {
@@ -222,6 +224,7 @@ function closePop(ele, totally = false) {
             ele.outerHTML = "";
         }, 1000);
     }
+    pushHistory("");
 }
 
 // scale

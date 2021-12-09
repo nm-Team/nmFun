@@ -13,11 +13,20 @@ body[theme=dark]{
     --type-selecter: rgb(224, 224, 224);
     --real-bg: #000;
 }
-body[scale=true]{
+body .scaleArea{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transition: all 0.4s;
+    overflow: hidden;
+}
+body[scale=true] .scaleArea{
     transform: scale(var(--scalePercent));
     border-radius: 17px;
 }
-@media (min-width: 800px) {
+/* @media (min-width: 800px) {
     body[scale=true] #pageHeader{
         border-top-left-radius: 17px;
         border-top-right-radius: 17px;
@@ -40,7 +49,7 @@ body[scale=true]{
         box-shadow: none;
         transition: all 0.4s;
     }
-}
+} */
 @keyframes brts{
     0%{
         transition: all 0.4s;
@@ -162,22 +171,22 @@ body{
     width: min(100%, 600rem);
     height: min(95%, 870rem);
     z-index: 902;
-    transform: translate(-50%, 100vh)scale(calc(1 / var(--scalePercent)));
+    transform: translate(-50%, 100vh);
     overflow: hidden;
     border-radius: 10rem 10rem 0 0;
     transition: all 0.15s cubic-bezier(0.37, 0.37, 1, 0.91);
 }
 .popFrame[open=true]{
     visibility: visible;
-    transform: translate(-50%, 0)scale(calc(1 / var(--scalePercent)));
+    transform: translate(-50%, 0);
     animation: popCome 0.5s cubic-bezier(0.28, 0.97, 0.54, 0.99);
 }
 @keyframes popCome {
     0%{
-        transform: translate(-50%, 100vh)scale(1);        
+        transform: translate(-50%, 100vh);        
     }
     100%{
-        transform: translate(-50%, 0)scale(calc(1 / var(--scalePercent)));
+        transform: translate(-50%, 0);
     }
 }
 .popFrame .content{

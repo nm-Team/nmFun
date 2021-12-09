@@ -27,7 +27,7 @@ function createContextMenu(items, customX = false, customY = false, element = un
                 new_element.setAttribute('icon', 'true');
             }
         }
-        document.body.appendChild(new_element);
+        document.getElementById("hoverArea").appendChild(new_element);
         // 判断位置
         // 获取div宽高
         menuWidth = document.getElementById('contextMenu' + time).clientWidth;
@@ -102,14 +102,14 @@ function createContextMenu(items, customX = false, customY = false, element = un
                 max-height: `+ menuHeight + `px;
             }
         }`;
-        document.body.appendChild(new_element);
+        document.getElementById("hoverArea").appendChild(new_element);
         document.getElementById('contextMenu' + time).style.animation = "contextMenu 0.35s";
         new_element = document.createElement('div');
         new_element.setAttribute('id', 'commonCover' + time);
         new_element.setAttribute('class', 'commonCover');
         new_element.setAttribute('onclick', 'closeContextMenu(' + time + ')');
         new_element.setAttribute('oncontextmenu', 'closeContextMenu(' + time + ')');
-        document.body.appendChild(new_element);
+        document.getElementById("hoverArea").appendChild(new_element);
         document.getElementById('contextMenu' + time).getElementsByTagName("button")[0].focus();
         hasCreatedContextMenu = true;
         writeLog("i", "createContextMenu", "time: " + time + ", content: " + items + ", x: " + menuX + " " + positionX + " " + menuWidth + ", y: " + menuY + " " + positionY + " " + menuHeight);
@@ -142,12 +142,12 @@ function alert(msg, title = "提示", positive = "好", positiveEvent, negative 
         <button class="positive" onclick="closeAlert(`+ time + `);` + positiveEvent + `;">` + positive + `</button>
         `+ (negative ? '<button onclick="closeAlert(' + time + ');' + negativeEvent + ';">' + negative + '</button>' : '') + `
     </div> `;
-    document.body.appendChild(new_element);
+    document.getElementById("hoverArea").appendChild(new_element);
     new_element = document.createElement('div');
     new_element.setAttribute('id', 'coverWithColor' + time);
     new_element.setAttribute('class', 'coverWithColor');
     new_element.setAttribute('open', 'true');
-    document.body.appendChild(new_element);
+    document.getElementById("hoverArea").appendChild(new_element);
     document.getElementById('alertBox' + time).getElementsByClassName("buttons")[0].getElementsByClassName("positive")[0].focus();
     writeLog("i", "alert", "time: " + time + ", content: " + document.getElementById('alertBox' + time).innerHTML);
 }
@@ -169,7 +169,7 @@ function newMsgBox(msg) {
     new_element.setAttribute('id', 'msgBox' + time);
     new_element.setAttribute('class', 'msgBox');
     new_element.innerHTML = msg;
-    document.body.appendChild(new_element);
+    document.getElementById("hoverArea").appendChild(new_element);
     setTimeout(() => {
         document.getElementById('msgBox' + time).outerHTML = "";
     }, 10000);
@@ -608,12 +608,18 @@ function writeLog(logType, funName, content) {
     logTime.setTime(logTime.getTime() + 60000 * logTime.getTimezoneOffset());
     logTime = JSON.parse(splitTime(logTime));
     ltime = logTime.year + "-" + logTime.month + "-" + logTime.date + " " + logTime.hour + ":" + logTime.sMinute + ":" + logTime.sSecond;
-    logWord = `[` + logType + `] ` + ltime + " " + funName + `: ` + content + ` \\n`;
+    logWord = `[` + logType + `] ` + ltime + " " + funName + `: ` + content + ` \n`;
     localStorage.systemLog += logWord;
     console.log(logWord);
 }
 
 writeLog("i", "Page", "found page loading...");
+
+navigatorItems = '';
+for (var propname in navigator)
+    navigatorItems += "" + propname + ": " + JSON.stringify(navigator[propname]) + ", ";
+writeLog('i', 'navigator', navigatorItems);
+
 lsItems = '';
 for (var propname in localStorage)
     if (propname != "systemLog") lsItems += propname + ": " + JSON.stringify(localStorage[propname]) + "; ";

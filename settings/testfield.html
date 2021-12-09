@@ -79,12 +79,12 @@
             onclick="parent.window.open('mailto:support@nmnm.fun?subject=[nmFun Log] '+encodeURI(/*(myInfos)?myInfos.nick:'UnloggedUser')*/)+' '+new Date()+'&body='+encodeURI(localStorage.systemLog))">
             <t>Upload to nmFun by E-Mail (Alpha)</t>
         </div>
-        <p class="tip" id="logB"
+        <pre><p class="tip" id="logB"
             style="user-select: text; -webkit-user-select: text; -moz-user-select: text; max-height: 100vh; overflow: scroll;">
-        </p>
+        </p></pre>
     </div>
     <script>
-        logB.innerHTML = localStorage.systemLog.replace(/\\n/g, "<br>");
+        logB.innerHTML = localStorage.systemLog.replace(/</g,"%lt").replace(/>/g,"%rt");
     </script>
     <p class="listName">LOCALSTORAGE</p>
     <div class="lists">
@@ -94,9 +94,9 @@
         <div class="but" onclick="localStorage.clear();parent.window.location.reload()">
             <t>Clear localStorage and refresh</t>
         </div>
-        <p class="tip" id="lsB"
+        <code><p class="tip" id="lsB"
             style="user-select: text; -webkit-user-select: text; -moz-user-select: text; max-height: 100vh; overflow: scroll;">
-        </p>
+        </p></code>
         <script>
             for (var propname in localStorage)
                 if (propname != "systemLog") lsB.innerHTML += "<b>" + propname + "</b>: " + JSON.stringify(localStorage[propname]) + "<br>";

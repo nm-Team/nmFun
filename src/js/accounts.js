@@ -39,6 +39,7 @@ function showLogFrame() {
     logCover.setAttribute("open", "");
     logIframe.setAttribute("src", accountClient + "/?name=nmFun&msg=登录nmFun，一起看乐子&returnto=" + siteURL + "/logverify.html");
     writeLog("i", "showLogFrame");
+    pushHistory("");
 }
 
 function closeLogFrame() {
@@ -46,6 +47,7 @@ function closeLogFrame() {
     logCover.removeAttribute("open");
     logIframe.setAttribute("src", "about:blank");
     writeLog("i", "closeLogFrame");
+    pushHistory("");
 }
 
 // "我的"菜单

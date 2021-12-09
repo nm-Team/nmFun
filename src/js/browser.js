@@ -21,6 +21,7 @@ function newBrowser(URL, className = "", withTip = true, showOpenInBrowser = tru
     document.getElementById("browserFrame" + browserId).setAttribute('open', 'true');
     iframeScript = script;
     iframeScript(browserId);
+    pushHistory("");
     writeLog("i", "newBrowser", "URL: " + URL + ", className: " + className + ", withTip: " + withTip + ", showOpenInBrowser: " + showOpenInBrowser);
 }
 
