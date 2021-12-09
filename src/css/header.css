@@ -147,6 +147,7 @@ body[theme=dark]{
     }
     #hcont .header[open] .right{
         overflow-y: auto;
+        overflow-x: overlay;
     }
     #hcont .header.hidden:not(*[open]){
         background: none;

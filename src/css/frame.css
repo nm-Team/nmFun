@@ -163,11 +163,11 @@ body{
     background-color: var(--header-bgcolor);
 }
 .popFrame{
+    top: 27rem;
     background-color: var(--page-bgcolor);
     visibility: hidden;
     position: fixed;
-    top: 27rem;
-    bottom: 0rem;
+    bottom: 0;
     left: 50%;
     width: min(100%, 800px);
     height: calc(100vh - 28rem);
@@ -180,9 +180,10 @@ body{
 @media (min-width: 800px) {
     .popFrame{
         width: 600px;
-        top: 15rem;
-        /* bottom: 60rem; */
-        border-radius: 6rem;
+        top: 51rem;
+        bottom: 0;
+        height: calc(100vh - 80rem);
+        border-radius: 10rem;
     }
 }
 .popFrame[open=true]{

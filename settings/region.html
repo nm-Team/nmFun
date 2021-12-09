@@ -16,7 +16,7 @@
 <body class="settings radius">
     <h1 data-i18n="settings.region.title"></h1>
     <p class="listName" data-i18n="settings.region.select"></p>
-    <input class="searchBox" id="sRI" oninput="searchSetting(this, 'regionSelectionDiv');">
+    <input class="searchBox" id="sRI" oninput="searchSetting(this, 'regionSelectionDiv');" placeholder="搜索">
     <div class="lists" id="regionSelectionDiv">
         <div class="loading"></div>
     </div>
@@ -278,14 +278,14 @@
         }
         regionSelectionDiv.innerHTML += `<p class="tip" data-i18n="settings.region.tip.region"></p>`;
         changeLanguage();
-        changeCheckInSeries('regionSelectionDiv', 'regionButton_' + parent.mySettings.region, true);
+        changeCheckInSeries('regionSelectionDiv', 'regionButton_' + localStorage.region, true);
         function changeRegion(toWord, toNum) {
             parent.localStorage.region = toWord;
             parent.localStorage.zone = toNum;
-            // 更新设置到服务器的代码
+            writeLog("i", "changeRegion", toWord + ", " + toNum);
         }
         // 设置input placeholder
-        setSearchBoxPlaceHolder("sRI","settings.region.search");
+        setSearchBoxPlaceHolder("sRI", "settings.region.search");
     </script>
 </body>
 

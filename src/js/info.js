@@ -4,7 +4,7 @@ categoryList = [];
 debugMode = true;
 version = {
     version: "0.2_dev",
-    versionNum: "4",
+    versionNum: "7",
     branch: "co_refresh",
     betaVersion: true
 }
