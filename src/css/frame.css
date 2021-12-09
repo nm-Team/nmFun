@@ -166,15 +166,24 @@ body{
     background-color: var(--page-bgcolor);
     visibility: hidden;
     position: fixed;
-    bottom: 0;
+    top: 27rem;
+    bottom: 0rem;
     left: 50%;
-    width: min(100%, 600rem);
-    height: min(95%, 870rem);
+    width: min(100%, 800px);
+    height: calc(100vh - 28rem);
     z-index: 902;
     transform: translate(-50%, 100vh);
     overflow: hidden;
     border-radius: 10rem 10rem 0 0;
     transition: all 0.15s cubic-bezier(0.37, 0.37, 1, 0.91);
+}
+@media (min-width: 800px) {
+    .popFrame{
+        width: 600px;
+        top: 15rem;
+        /* bottom: 60rem; */
+        border-radius: 6rem;
+    }
 }
 .popFrame[open=true]{
     visibility: visible;
@@ -325,7 +334,6 @@ body{
         filter: brightness(0.8);
     }
 }
-/* 对于窄栏模式 */
 @media (min-width: 800px) {
     .bodyMain{
         justify-content: center;

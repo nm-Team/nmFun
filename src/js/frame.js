@@ -72,13 +72,12 @@ function closeBox(div, boxId, totally = false, origin = "") {
     openBoxes = getOpenBoxes(div);
     if (openBoxes.length > 1) {
         document.getElementById(openBoxes[1][1]).setAttribute("con", "on");
-        if (!((navigator.userAgent.indexOf("ios") > 0 || navigator.userAgent.indexOf("iPhone") > 0 || navigator.userAgent.indexOf("iPad") > 0) && isPwa()) || origin != "system")
+        if (!(((navigator.userAgent.indexOf("ios") > 0 || navigator.userAgent.indexOf("iPhone") > 0 || navigator.userAgent.indexOf("iPad") > 0) && isPwa()) && origin != "system"))
             document.getElementById(openBoxes[1][1]).setAttribute("from", "none");
     }
     document.getElementById(boxId).removeAttribute("nownoani");
-    if (!((navigator.userAgent.indexOf("ios") > 0 || navigator.userAgent.indexOf("iPhone") > 0 || navigator.userAgent.indexOf("iPad") > 0) && isPwa()) && origin == "system") {
+    if ((((navigator.userAgent.indexOf("ios") > 0 || navigator.userAgent.indexOf("iPhone") > 0 || navigator.userAgent.indexOf("iPad") > 0) && isPwa()) && origin != "system"))
         document.getElementById(boxId).setAttribute("noani", "true");
-    }
     document.getElementById(boxId).setAttribute("con", "gone");
     setTimeout(() => {
         if (totally | document.getElementById(boxId).getAttribute("totallyclose") == "true") {
@@ -202,7 +201,7 @@ function quickBack(div, ele) {
 $(function () {
     window.addEventListener("popstate", function (e) {
         console.log("返回");
-        if ($(".popFrame[open=true]").length>0) $(".popFrame[open=true]")[$(".popFrame[open=true]").length - 1].getElementsByClassName("backButton")[0].click();
+        if ($(".popFrame[open=true]").length > 0) $(".popFrame[open=true]")[$(".popFrame[open=true]").length - 1].getElementsByClassName("backButton")[0].click();
         else if (getOpenBoxes("pageRight").length > 0)
             closeBox("pageRight", getOpenBoxes("pageRight")[0][1], false, "system");
         else if (getOpenBoxes("pageLeft").length > 0)
