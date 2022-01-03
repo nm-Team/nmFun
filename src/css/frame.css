@@ -183,7 +183,7 @@ body{
         top: 51rem;
         bottom: 0;
         height: calc(100vh - 80rem);
-        border-radius: 10rem;
+        border-radius: 6rem;
     }
 }
 .popFrame[open=true]{

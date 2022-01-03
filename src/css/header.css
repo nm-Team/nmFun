@@ -1,12 +1,14 @@
 body{
     --jianbian-color: rgba(255,255,255,0.72);
     --header-text: #000;
+    --header-name: #000;
     --header-a: rgb(82, 82, 82);
     --header-a-hover: rgb(49, 49, 49);
 }
 body[theme=dark]{
     --jianbian-color: rgba(52,50,50,0.7);
     --header-text: rgb(250, 250, 250);
+    --header-name: #fff;
     --header-a: rgb(231, 231, 231);
     --header-a-hover: rgb(241, 241, 241);
 }
@@ -15,7 +17,22 @@ body[theme=dark]{
     height: 78rem;
 }
 #hcont .header{
-    transition: background-color 0.3s, backdrop-filter 0.1s 0.1s, -webkit-backdrop-filter 0.1s 0.1s, height 0.7s, overflow-y 0s 0.7s;
+    transition: background-color 0.1s, backdrop-filter 0.05s 0.05s, -webkit-backdrop-filter 0.05s 0.05s, height 0.7s, overflow-y 0s 0.7s;
+}
+#hcont .header:not([open]).hidden{
+    transition: background-color 0.1s 0.5s, backdrop-filter 0.05s 0.55s, -webkit-backdrop-filter 0.05s 0.55s, height 0.7s, overflow-y 0s 0.7s;
+}
+#hcont .header:not([open]).hidden *{
+    transition: color 0.1s 0.5s, visibility 0.1s 0.5s!important;
+}
+#hcont .header:not([open]).hidden .left, #hcont .header:not([open]).hidden .left *{
+    transition: color 0.1s 0.2s, visibility 0.1s 0.5s, opacity 0.1s 0.5s!important;
+}
+#hcont .header:not([open]) *{
+    transition: color 0.1s , visibility 0.1s 0.5s, opacity 0.1s!important;
+}
+#hcont .header.hidetitle:not([open]) .left{
+    opacity: 0;
 }
 #hcont .header .right .links button{
     background: none;
@@ -46,6 +63,11 @@ body[theme=dark]{
         padding: 0;
     }
     #hcont .header .left{
+        border: none;
+        background: none;
+        border-radius: 4rem;
+        color: var(--header-a);
+        font-weight: normal;
         flex-grow: 0;
         flex-shrink: 0;
         cursor: pointer;
@@ -147,7 +169,6 @@ body[theme=dark]{
     }
     #hcont .header[open] .right{
         overflow-y: auto;
-        overflow-x: overlay;
     }
     #hcont .header.hidden:not(*[open]){
         background: none;
@@ -165,27 +186,40 @@ body[theme=dark]{
         margin-bottom: 20rem;
         cursor: pointer;
         text-align: center;
+        border: none;
+        background: none;
+        color: var(--header-a);
+        border-radius: 4rem;
+        font-weight: normal;
     }
     #hcont .header .left .logo{
         display: inline-block;
         width: 26rem;
-        height: 26rem;       
+        height: 26rem;
+        background-image: url('https://logos.nmteam.agou.im/nmTeam/logo@32.png');
         background-size: 26rem;
     }
     #hcont .header .left .name{
-        display: inline;
+        display: inline-block;
         position: relative;
         top: -8rem;
         font-size: 18rem;
         font-weight: bold;
         color: var(--header-name);
+        /* width: 0; */
+        /* overflow-y: hidden; */
     }
     #hcont .header .right{
         display: flex;
         flex-direction: column;
+        /* justify-content: end;   */
         align-items: center;
         flex-grow: 1;
         flex-shrink: 1;
+        visibility: hidden;
+    }
+    #hcont .header[open] .right{
+        visibility: visible;
     }
     #hcont .header .right *{
         font-size: 15rem;

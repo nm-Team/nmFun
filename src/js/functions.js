@@ -583,7 +583,7 @@ setInterval(() => {
     else {
         document.getElementsByTagName("html")[0].style.fontSize = "var(--fontSize)";
     }
-}, 1000);
+}, 300);
 
 // TestField
 function showTestField() {
