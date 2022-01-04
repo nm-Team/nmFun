@@ -1,0 +1,14 @@
+html{
+    --fontSize: 1.09px;
+}
+body{
+    overflow-y: auto;
+    overflow-y: overlay;
+}
+.nts.card{
+    line-height: 1.5;
+    margin-bottom: 20rem;
+}
+.nts img, .nts video{
+    border-radius: 6rem;
+}

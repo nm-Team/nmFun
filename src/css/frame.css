@@ -180,9 +180,9 @@ body{
 @media (min-width: 800px) {
     .popFrame{
         width: 600px;
-        top: 51rem;
+        top: 40rem;
         bottom: 0;
-        height: calc(100vh - 80rem);
+        height: calc(100vh - 70rem);
         border-radius: 6rem;
     }
 }

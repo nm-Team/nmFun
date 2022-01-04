@@ -34,6 +34,29 @@ function dropCraft(ele, type) {
     writeLog("i", "dropCraft", ele.id);
 }
 
+// 缩放底栏更多
+function changebottomBoxMoreStatus(areaId, className, toFalse = false) {
+    inputDiv = document.getElementById(areaId).getElementsByClassName("bottomBox")[0];
+    opeDiv = inputDiv.getElementsByClassName(className)[0];
+    for (cIBM = 0; cIBM < inputDiv.getElementsByClassName("more").length; cIBM++) {
+        if (inputDiv.getElementsByClassName("more")[cIBM] === opeDiv) {
+            if (opeDiv.getAttribute("open") || toFalse) {
+                opeDiv.removeAttribute("open");
+            }
+            else {
+                opeDiv.setAttribute("open", "true");
+            }
+        }
+        else {
+            inputDiv.getElementsByClassName("more")[cIBM].removeAttribute("open");
+        }
+    }
+    // if (inputDiv.getElementsByClassName("inputDrawer")[0].getAttribute("open") != "true") inputDiv.getElementsByClassName("more")[0].removeAttribute("open");
+    // else inputDiv.getElementsByClassName("more")[0].setAttribute("open", "true");
+}
+
+
+
 errorCode = {
     "403": "内容已被封锁，您无权查看",
     "404": "内容可能去了另一个星球",
@@ -44,10 +67,11 @@ biliVideoTemplate = `<iframe class="biliVideo" frameborder="no" scrolling="no" s
 
 sendBoxTemplate = `
 <select hideincomment class="categoryS" placeholder="请选择分区…" title="请选择分区…">{{cg}}</select>
-<textarea class="sendBoxInput" title="说点什么吧……" oninput="autoSaveCraft({{id}},'{{type}}')"></textarea>
+<textarea class="sendBoxInput" title="说点什么吧……" placeholder="说点什么吧……" oninput="autoSaveCraft({{id}},'{{type}}')"></textarea>
+<div class="noticeBox"><button onclick="openNotice('nmfun_post_rule')">nmFun发帖守则</button></div>
 <div class="mediasBox" noselect></div>
-<div class="inputBox">
-    <div class="inputSurface">
+<div class="bottomBox">
+    <div class="bottomSurface">
     <button onclick="{{id}}_imageInput.click();" title="插入图片"><input type="file" multiple="" title="" id="{{id}}_imageInput" accept="image/*" onchange="putFilesToInput(this,'image','{{id}}')"><i class="material-icons">insert_photo</i></button>
     <button onclick="{{id}}_videoInput.click();" title="插入视频"><input type="file" multiple="" title="" id="{{id}}_videoInput" accept="video/*" onchange="putFilesToInput(this,'video','{{id}}')"><i class="material-icons">videocam</i></button>
     <button onclick="newMsgBox('开发中，敬请期待~')" title="添加表情"><i class="material-icons">tag_faces</i></button>

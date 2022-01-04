@@ -39,7 +39,7 @@
     </div>
     <p class="listName">RUN JAVASCRIPT</p>
     <div class="lists">
-        <textarea class="searchBox" id="errorCheckInputBox" oninput="" placeholder="JavaScript"
+        <textarea class="searchBox" id="errorCheckbottomBox" oninput="" placeholder="JavaScript"
             style="resize: vertical;"></textarea>
         <div class="but" onclick="errorChecker()">
             <t>Run</t>
@@ -110,7 +110,7 @@
     <script>
         function errorChecker() {
             errorCheckResultBox.innerHTML = "Running...";
-            parent.runChecker = new Function(errorCheckInputBox.value);
+            parent.runChecker = new Function(errorCheckbottomBox.value);
             try {
                 errorCheckResultBox.innerHTML = parent.runChecker();
             } catch (err) {

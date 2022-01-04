@@ -512,6 +512,12 @@ function fileConversion(size) {
         return size.toFixed(2) + "GB";
 }
 
+// 社区公告模块
+function openNotice(name) {
+    newBrowser(siteURL + "/notice.html?name=" + name, " noticeFrame ", false, false);
+}
+
+
 // 更新图集
 setInterval(() => {
     $("ui.medias").each(function (index, domEle) {
@@ -577,11 +583,13 @@ function getUrlParam(name) {
 
 // 大号字体
 setInterval(() => {
-    if (localStorage.bigText == "true") {
-        document.getElementsByTagName("html")[0].style.fontSize = "1.35px";
-    }
-    else {
-        document.getElementsByTagName("html")[0].style.fontSize = "var(--fontSize)";
+    if (!debugMode) {
+        if (localStorage.bigText == "true") {
+            document.getElementsByTagName("html")[0].style.fontSize = "1.35px";
+        }
+        else {
+            document.getElementsByTagName("html")[0].style.fontSize = "var(--fontSize)";
+        }
     }
 }, 300);
 
