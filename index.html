@@ -28,11 +28,14 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.cncn3.cn/webstatic/0b179cec2c0ed/swiper-bundle.min.css">
     <link rel="stylesheet" type="text/css" href="src/css/viewer.min.css">
     <link rel="stylesheet" type="text/css" href="src/css/search.css">
-    <script src="src/js/info.js"></script>
 </head>
 
 <body>
     <div class="scaleArea">
+        <div id="startHover">
+            <i class="icon"></i>
+            <div class="progressBar"></div>
+        </div>
         <div id="hcont" noselect>
             <div class="placeHolder"></div>
             <div class="header" id="pageHeader">
@@ -78,10 +81,8 @@
                             <!-- Swiper，即轮播图 -->
                             <div class="swiper-container indexSwiper floatFrame-header">
                                 <!-- 此处若设置关闭滚动图display为none agou 211113 -->
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide" onclick="alert('诶嘿，这个不可以点哦')"
-                                        style="background-image: url(https://i.zerodream.net/652a55e4761d0422555a878c8b9a7c1d.png); background-position: 50% 50%; width: 780px;">
-                                    </div>
+                                <div class="swiper-wrapper" id="indexSwiperBox">
+
                                 </div>
                                 <div class="swiper-pagination"></div>
                                 <div class="swiper-button-prev" title="前一张轮播图"></div>
@@ -92,18 +93,10 @@
                             <div class="typeSelecter" id="indexTypeSelecter">
                                 <label for="indexType_focused"><input id="indexType_focused"
                                         onclick="indexSwitchType(`focused`);" type="radio"
-                                        name="indexType"><span>关注</span></label><label for="indexType_all"><input
-                                        id="indexType_all" onclick="indexSwitchType(`all`);" type="radio"
-                                        name="indexType"><span>全部</span></label><label for="indexType_selected"><input
-                                        id="indexType_selected" onclick="indexSwitchType(`selected`);" type="radio"
-                                        name="indexType"><span>精选</span></label><label
-                                    for="indexType_special_hot"><input id="indexType_special_hot"
-                                        onclick="indexSwitchType(`special_hot`);" type="radio"
-                                        name="indexType"><span>热榜</span></label><label for="indexType_network"><input
-                                        id="indexType_network" onclick="indexSwitchType(`network`);" type="radio"
-                                        name="indexType"><span>网络</span></label><label for="indexType_live"><input
-                                        id="indexType_live" onclick="indexSwitchType(`live`);" type="radio"
-                                        name="indexType"><span>生活</span></label>
+                                        name="indexType"><span>关注</span></label>
+                                <label for="indexType_all"><input id="indexType_all" onclick="indexSwitchType(`all`);"
+                                        type="radio" name="indexType"><span>全部</span></label>
+                                <nm id="indexMoreTypes"></nm>
                             </div>
                         </div>
                         <div id="indexMainCards" class="equalPages floatFrame-content">
@@ -531,6 +524,7 @@
     <script src="src/js/jquery.min.js"></script>
     <script src="src/js/i18next-1.6.3.min.js"></script>
     <script src="src/js/functions.js"></script>
+    <script src="src/js/info.js"></script>
     <script src="src/js/language.js"></script>
     <script src="https://cdn.cncn3.cn/webstatic/d1e2b36ce909e/swiper-bundle.min.js"></script>
     <script src="src/js/post_send.js"></script>

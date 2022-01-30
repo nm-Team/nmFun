@@ -1,3 +1,9 @@
+body{
+    --startHover-bgcolor: #fff;
+}
+body[theme=dark]{
+    --startHover-bgcolor: #262626;
+}
 .indexFrame{
     display: flex;
     flex-direction: column;
@@ -8,6 +14,40 @@
 }
 .mobileHolder{
     display: block;
+}
+#startHover{
+    z-index: 902;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--startHover-bgcolor);
+}
+#startHover[data-closed=true]{
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+#startHover .icon{
+    width: min(30vw, 200rem);
+    height: min(30vw, 200rem);
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: url('../img/logo.svg') 100% 100% no-repeat;
+}
+#startHover .progressBar{
+    width: min(60vw, 250rem);
+    height: 6rem;
+    border-radius: 4rem;
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: linear-gradient(270deg, rgba(145, 145, 145, 0.5), rgba(145, 145, 145, 0.1), rgba(145, 145, 145, 0.1), rgba(145, 145, 145, 0.5))!important;
+    background-size: 400% 100%!important;
+    animation: skeleton-loading 6s ease-in-out infinite!important;
 }
 @media (max-width: 800px) {
     :root{

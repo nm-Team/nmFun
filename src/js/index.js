@@ -80,7 +80,7 @@ inv = setInterval(() => {
 }, 10);
 
 // 预定义的选项表
-settingsPreDefineList = [["region", "China Standard Time (UTC + 8:00)"], ["zone", -8], ["usebrowser", "true"], ["thinMode", "true"], ["autoSaveCraft", "false"], ["bigText", "false"], ["noAni", "false"], ];
+settingsPreDefineList = [["region", "China Standard Time (UTC + 8:00)"], ["zone", -8], ["usebrowser", "true"], ["thinMode", "true"], ["autoSaveCraft", "false"], ["bigText", "false"], ["noAni", "false"],];
 
 for (settingsPDT = 0; settingsPDT < settingsPreDefineList.length; settingsPDT++) {
     if (!localStorage.getItem(settingsPreDefineList[settingsPDT][0])) {
@@ -173,22 +173,24 @@ welcomeFrameHTML = `
 </div>
 `;
 
-if (localStorage.getItem("started") != "true") {
-    startPage = document.createElement("div");
-    startPage.innerHTML = welcomeFrameHTML;
-    document.body.appendChild(startPage);
-    writeLog("i", "welcomeFrame", "shown");
-    welcomeFrame_main.onscroll = function () {
-        if (welcomeFrame_main.scrollTop > welcome_icon.offsetHeight + 40)
-            welcomeFrame_frameHeader.setAttribute("hidden", "false");
-        else welcomeFrame_frameHeader.setAttribute("hidden", "true");
-        if (welcomeFrame_main.scrollTop < welcome_icon.offsetHeight * 0.63)
-            welcome_icon.setAttribute("hidden", "false");
-        else welcome_icon.setAttribute("hidden", "true");
-    }
-    welcomeFrame_close = function () {
-        document.getElementById('welcomeFramePop').removeAttribute('open');
-        welcomeFrame.setAttribute('open', 'false');
-        localStorage.started = 'true';
+function loadWelcomePage() {
+    if (localStorage.getItem("started") != "true") {
+        startPage = document.createElement("div");
+        startPage.innerHTML = welcomeFrameHTML;
+        document.body.appendChild(startPage);
+        writeLog("i", "welcomeFrame", "shown");
+        welcomeFrame_main.onscroll = function () {
+            if (welcomeFrame_main.scrollTop > welcome_icon.offsetHeight + 40)
+                welcomeFrame_frameHeader.setAttribute("hidden", "false");
+            else welcomeFrame_frameHeader.setAttribute("hidden", "true");
+            if (welcomeFrame_main.scrollTop < welcome_icon.offsetHeight * 0.63)
+                welcome_icon.setAttribute("hidden", "false");
+            else welcome_icon.setAttribute("hidden", "true");
+        }
+        welcomeFrame_close = function () {
+            document.getElementById('welcomeFramePop').removeAttribute('open');
+            welcomeFrame.setAttribute('open', 'false');
+            localStorage.started = 'true';
+        }
     }
 }

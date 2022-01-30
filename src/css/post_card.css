@@ -396,7 +396,7 @@ body[theme=dark]{
     outline: var(--outline);
 }
 .inputArea select option{
-    padding: 11rem ​15rem;
+    padding: 11rem 15rem;
     font-size: 15rem;
     appearance: none;
     color: var(--inputArea-select);
