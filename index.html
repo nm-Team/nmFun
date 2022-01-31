@@ -91,11 +91,26 @@
                         </div>
                         <div class="typeContainer" noselect>
                             <div class="typeSelecter" id="indexTypeSelecter">
-                                <label for="indexType_focused"><input id="indexType_focused"
-                                        onclick="indexSwitchType(`focused`);" type="radio"
-                                        name="indexType"><span>关注</span></label>
-                                <label for="indexType_all"><input id="indexType_all" onclick="indexSwitchType(`all`);"
-                                        type="radio" name="indexType"><span>全部</span></label>
+                                <label for="indexType_focused">
+                                    <input id="indexType_focused" onclick="indexSwitchType(`focused`);" type="radio"
+                                        name="indexType">
+                                    <span>关注</span>
+                                </label>
+                                <label for="indexType_all">
+                                    <input id="indexType_all" onclick="indexSwitchType(`all`);" type="radio"
+                                        name="indexType">
+                                    <span>全部</span>
+                                </label>
+                                <label for="indexType_more_jingxuan">
+                                    <input id="indexType_more_jingxuan" onclick="indexSwitchType('jingxuan');"
+                                        type="radio" name="indexType">
+                                    <span>精选</span>
+                                </label>
+                                <label for="indexType_more_rebang">
+                                    <input id="indexType_more_rebang" onclick="indexSwitchType('rebang');" type="radio"
+                                        name="indexType">
+                                    <span>热榜</span>
+                                </label>
                                 <nm id="indexMoreTypes"></nm>
                             </div>
                         </div>
@@ -440,7 +455,7 @@
         </div>
     </div>
     <div class="coverWithColor pop" id="logCover" hidden></div>
-    <div id="logPop" style="z-index: 1004;" class="popFrame browserFrame specialBrowserFrame" open="false">
+    <div id="logPop" class="popFrame browserFrame specialBrowserFrame" open="false">
         <header>
             <div class="left">
                 <div class="nameDiv">

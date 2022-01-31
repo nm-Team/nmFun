@@ -2,7 +2,7 @@
 function setPostInputArea(ele, type) {
     cgOptions = '';
     for (i = 0; i < categoryList.length; i++) {
-        cgOptions += `<option cgid="` + categoryList[i][0] + `">` + categoryList[i][1] + `</option>`;
+        cgOptions += `<option cgid="` + categoryList[i]['id'] + `">` + categoryList[i]['name'] + `</option>`;
     }
     ele.innerHTML = sendBoxTemplate.replace(/{{cg}}/g, cgOptions).replace(/{{id}}/g, ele.id).replace(/{{type}}/g, type);
     ele.className += " inputArea " + type;
@@ -82,9 +82,10 @@ sendBoxTemplate = `
     </div>
 </div>
 `;
-
-setPostInputArea(commentEditBox, "comment");
-setPostInputArea(sendEditBox, "post");
+function postInputInit() {
+    setPostInputArea(commentEditBox, "comment");
+    setPostInputArea(sendEditBox, "post");
+}
 
 // 插入文件
 function putFilesToInput(fileInput, type, id) {

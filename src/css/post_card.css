@@ -437,6 +437,7 @@ body[theme=dark]{
 .inputArea .noticeBox button{
     border: none;
     background: none;
+    color: var(--textarea);
 }
 .inputArea .bottomBox{
     position: relative;

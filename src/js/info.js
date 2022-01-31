@@ -4,7 +4,7 @@ backEndURL = "https://funapi.nmteam.xyz";
 debugMode = true;
 version = {
     version: "0.2_dev",
-    versionNum: "20",
+    versionNum: "25",
     branch: "co_refresh",
     betaVersion: true
 }
@@ -24,7 +24,7 @@ $.ajax({
             // 首页分类
             categoryList = eval(response['info']['category']);
             categoryList.forEach(element => {
-                indexMoreTypes.innerHTML += `<label for="indexType_more_` + element + `"><input id="indexType_more_` + element + `" onclick="indexSwitchType('` + element + `');" type="radio" name="indexType"><span>` + element + `</span></label>`;
+                indexMoreTypes.innerHTML += `<label for="indexType_more_` + element['id'] + `"><input id="indexType_more_` + element['id'] + `" onclick="indexSwitchType('` + element['id'] + `');" type="radio" name="indexType"><span>` + element['name'] + `</span></label>`;
             });
             closeHover();
         }
@@ -35,31 +35,33 @@ $.ajax({
     },
     error: function () {
         writeLog("e", "get backend site info", "ajax error");
-        alert("抱歉，与 nmFun 的连接出现问题。请尝试刷新页面，或检查您的网络状况。若问题持续存在，请联系 nmFun 支持。", "哦哟，崩溃了", "刷新", "window.location.href=''", "查看高级菜单(开发者)", "showTestField()");
+        alert("抱歉，与 nmFun 的连接出现问题。请尝试刷新页面，或检查您的网络状况。若问题持续存在，请联系 nmFun 支持。", "nm，出错了", "刷新", "window.location.href=''", "查看高级菜单(开发者)", "showTestField()");
     }
 });
 
 startInv = null;
 
 function closeHover() {
-    if (document.readyState == "complete") {
+    // if (document.readyState == "complete") {
         try {
             $(startHover).attr("data-closed", "true");
             writeLog("i", "closeHover", "done");
             loadWelcomePage();
+            $("body").attr("data-loadover", "true");
             setTimeout(() => {
                 startHover.outerHTML = "";
             }, 400);
             clearInterval(startInv);
             startInv = null;
             console.log("startInv closed");
+            postInputInit();
         }
         catch (err) { }
-    }
-    else {
-        startInv = setInterval(() => {
-            closeHover();
-        }, 500);
-    }
+    // }
+    // else {
+    //     startInv = setInterval(() => {
+    //         closeHover();
+    //     }, 400);
+    // }
 }
 

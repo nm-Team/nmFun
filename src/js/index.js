@@ -7,10 +7,14 @@ window.onkeydown = function (event) {
     enter = event.keyCode == 13;
     // ESC 侧栏
     if (esc) {
-        console.log("Esc");
+        writeLog("i","Keyboad Event","ESC");
         // 如果有右键菜单，关闭
         if (document.getElementsByClassName("contextMenu").length > 0) {
             document.getElementsByClassName("contextMenu")[document.getElementsByClassName("contextMenu").length - 1].click();
+        }
+        // 如果有popFrame，关闭
+        if ($(".popFrame[open=true]").length > 0) {
+            $(".popFrame[open=true]")[$(".popFrame[open=true]").length - 1].getElementsByClassName("backButton")[0].click();
         }
         // 否则，删除顶栏的open参数
         pageHeader.removeAttribute("open");

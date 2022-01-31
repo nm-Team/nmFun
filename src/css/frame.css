@@ -175,6 +175,8 @@ body{
     transform: translate(-50%, 100vh);
     overflow: hidden;
     border-radius: 10rem 10rem 0 0;
+}
+body[data-loadover=true] .popFrame{
     transition: all 0.15s cubic-bezier(0.37, 0.37, 1, 0.91);
 }
 @media (min-width: 800px) {
