@@ -48,6 +48,13 @@
     <div class="lists">
         <div class="but about" onclick="parent.newMsgBox('别戳了，这里真没有彩蛋')"><i></i>
             <t class="appName" data-i18n="settings.about.appName"></t>
+            <t class="webVer">
+                <l data-i18n="settings.about.webVer"></l>: <l id="webVerFriB"></l><br />(<l id="webVerInnerB"></l>)
+            </t>
+            <script>
+                webVerFriB.innerHTML = version.version;
+                webVerInnerB.innerHTML = version.versionNum + "_" + version.branch + (version.betaVersion ? " Beta Version" : "");
+            </script>
         </div>
     </div>
     <div class="lists">
@@ -56,17 +63,18 @@
         </div>
     </div>
     <div class="lists">
-        <div class="but" onclick="parent.newBrowser('https://nmteam.ml?from=nmFun', undefined, false, true)">
+        <div class="but" onclick="parent.newBrowser('https://nmteam.xyz?from=nmFun', undefined, false, true)">
             <t data-i18n="settings.about.nmteam">
         </div>
     </div>
     <p class="listName" data-i18n="settings.about.knowledge"></p>
     <div class="lists">
         <div class="but"
-            onclick="parent.newBrowser('https://nmteam.ml/legal/network-service-protocol.html', undefined, false, true)">
+            onclick="parent.newBrowser('https://nmteam.xyz/legal/network-service-protocol.html', undefined, false, true)">
             <t data-i18n="settings.about.network-service-protocol">
         </div>
-        <div class="but" onclick="parent.newBrowser('https://nmteam.ml/legal/privacy-policy.html', undefined, false, true)">
+        <div class="but"
+            onclick="parent.newBrowser('https://nmteam.xyz/legal/privacy-policy.html', undefined, false, true)">
             <t data-i18n="settings.privacy.know">
         </div>
     </div>

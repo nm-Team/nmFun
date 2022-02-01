@@ -378,9 +378,19 @@ body[theme=dark]{
 .inputArea.comment *[hideincomment]{
     display: none;
 }
-.inputArea select{
-    padding: 7rem 12rem 7rem 12rem;
+.inputArea .categoryAndTitle{
+    padding: 0;
     margin: 8rem 10rem 0 10rem;
+    font-size: 15rem;
+    display: flex;
+    color: var(--inputArea-select);
+    background-color: var(--type-selecter-bgcolor);
+    border-radius: 6rem;
+}
+.inputArea select{
+    padding: 8rem 0rem 8rem 12rem;
+    margin: 0 4rem 0 0;
+    width: 4em;
     font-size: 15rem;
     appearance: none;
     -webkit-appearance: none;
@@ -388,7 +398,7 @@ body[theme=dark]{
     color: var(--inputArea-select);
     background-color: var(--type-selecter-bgcolor);
     border: none;
-    border-radius: 6rem;
+    border-radius: 6rem 0 0 6rem;
     outline: none;
     box-shadow: none;
 }
@@ -402,7 +412,19 @@ body[theme=dark]{
     color: var(--inputArea-select);
     background-color: var(--inputArea-select-bgcolor);
     border: none;
-    outline: none;
+    box-shadow: none;
+}
+.inputArea .titleInput{
+    padding: 9rem 10rem 8rem 5rem;
+    font-size: 15rem;
+    flex-grow: 1;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    color: var(--inputArea-select);
+    background-color: var(--type-selecter-bgcolor);
+    border: none;
+    border-radius: 0 6rem 6rem 0;
     box-shadow: none;
 }
 .inputArea textarea{

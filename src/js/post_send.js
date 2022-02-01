@@ -1,8 +1,8 @@
 // 设置发帖回帖区域
 function setPostInputArea(ele, type) {
     cgOptions = '';
-    for (i = 0; i < categoryList.length; i++) {
-        cgOptions += `<option cgid="` + categoryList[i]['id'] + `">` + categoryList[i]['name'] + `</option>`;
+    for (i = 0; i < moreCategoryList.length; i++) {
+        cgOptions += `<option cgid="` + moreCategoryList[i]['id'] + `">` + moreCategoryList[i]['name'] + `</option>`;
     }
     ele.innerHTML = sendBoxTemplate.replace(/{{cg}}/g, cgOptions).replace(/{{id}}/g, ele.id).replace(/{{type}}/g, type);
     ele.className += " inputArea " + type;
@@ -66,8 +66,11 @@ errorCode = {
 biliVideoTemplate = `<iframe class="biliVideo" frameborder="no" scrolling="no" src="https://player.bilibili.com/player.html?bvid={{bvid}}&page={{page}}&as_wide=1&high_quality=1" allowfullscreen=""></iframe>`;
 
 sendBoxTemplate = `
-<select hideincomment class="categoryS" placeholder="请选择分区…" title="请选择分区…">{{cg}}</select>
-<textarea class="sendBoxInput" title="说点什么吧……" placeholder="说点什么吧……" oninput="autoSaveCraft({{id}},'{{type}}')"></textarea>
+<div class="categoryAndTitle" hideincomment>
+    <select hideincomment class="categoryS" placeholder="分区" title="请选择分区…">{{cg}}</select>
+    <input hideincomment class="titleInput" title="取个标题" placeholder="取个标题">
+</div>
+    <textarea class="sendBoxInput" title="说点什么吧……" placeholder="说点什么吧……" oninput="autoSaveCraft({{id}},'{{type}}')"></textarea>
 <div class="noticeBox"><button onclick="openNotice('nmfun_post_rule')">nmFun发帖守则</button></div>
 <div class="mediasBox" noselect></div>
 <div class="bottomBox">
