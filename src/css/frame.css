@@ -4,7 +4,7 @@ body{
     --type-selecter-hover-bgcolor: rgb(240, 240, 240);
     --type-selecter: rgb(17, 17, 17);
     --scalePercent: 0.96;
-    --real-bg: #fff;
+    --real-bg: rgb(161, 161, 161);
 }
 body[theme=dark]{
     --swiper-button: #EAD050;
@@ -26,30 +26,6 @@ body[scale=true] .scaleArea{
     transform: scale(var(--scalePercent));
     border-radius: 17px;
 }
-/* @media (min-width: 800px) {
-    body[scale=true] #pageHeader{
-        border-top-left-radius: 17px;
-        border-top-right-radius: 17px;
-        transition: all 0.4s;
-    }
-}
-@media (max-width: 800px) {
-    body[scale=true] #pageHeader{
-        border-top-left-radius: 17px;
-        border-top-right-radius: 17px;
-        transition: all 0.4s;
-    }
-    body[scale=true] .box{
-        border-radius: 17px;
-        transition: border-radius 0.4s;
-    }
-    body[scale=true] .box header{
-        border-top-left-radius: 17px;
-        border-top-right-radius: 17px;
-        box-shadow: none;
-        transition: all 0.4s;
-    }
-} */
 @keyframes brts{
     0%{
         transition: all 0.4s;
@@ -175,6 +151,10 @@ body{
     transform: translate(-50%, 100vh);
     overflow: hidden;
     border-radius: 10rem 10rem 0 0;
+}
+.popFrame[open=true][data-behind=true]{
+    transform: translate(-50%, 0)scale(0.96);
+    filter: brightness(0.6);
 }
 body[data-loadover=true] .popFrame{
     transition: all 0.15s cubic-bezier(0.37, 0.37, 1, 0.91);

@@ -230,6 +230,8 @@ function closePop(ele, totally = false) {
 setInterval(() => {
     if ($(".popFrame[open=true]").length > 0) {
         document.body.setAttribute("scale", "true");
+        if ($(".popFrame[open=true]").length > 1) $(".popFrame[open=true]").attr("data-behind", "true");
+        $(".popFrame[open=true]")[$(".popFrame[open=true]").length - 1].setAttribute("data-behind", "false");
     }
     else {
         document.body.setAttribute("scale", "false");

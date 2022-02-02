@@ -14,7 +14,10 @@ function showPostInput(which, toS) {
     document.getElementById("" + which + "Edit").setAttribute("open", toS);
     if (toS) {
         document.getElementById("" + which + "EditBoxCover").setAttribute("open", "true");
+        if( localStorage.getItem("sendCategoryCraft" + "_" + "" + which + "EditBox")) document.getElementById("" + which + "EditBox").getElementsByClassName("categoryS")[0].value = localStorage.getItem("sendCategoryCraft" + "_" + "" + which + "EditBox");
+        document.getElementById("" + which + "EditBox").getElementsByClassName("titleInput")[0].value = localStorage.getItem("sendTitleCraft" + "_" + "" + which + "EditBox");
         document.getElementById("" + which + "EditBox").getElementsByClassName("sendBoxInput")[0].value = localStorage.getItem("sendCraft" + "_" + "" + which + "EditBox");
+        document.getElementById("" + which + "EditBox").getElementsByClassName("mediasBox")[0].innerHTML = localStorage.getItem("sendMediaCraft" + "_" + "" + which + "EditBox");
     }
     else document.getElementById("" + which + "EditBoxCover").removeAttribute("open");
     writeLog("i", "showPostInput", which + " to " + toS);
@@ -22,15 +25,24 @@ function showPostInput(which, toS) {
 
 // 保存到草稿箱
 function saveCraft(ele, type, noti = true) {
+    localStorage.setItem("sendCategoryCraft" + "_" + ele.id, ele.getElementsByClassName("categoryS")[0].value);
+    localStorage.setItem("sendTitleCraft" + "_" + ele.id, ele.getElementsByClassName("titleInput")[0].value);
     localStorage.setItem("sendCraft" + "_" + ele.id, ele.getElementsByClassName("sendBoxInput")[0].value);
+    localStorage.setItem("sendMediaCraft" + "_" + ele.id, ele.getElementsByClassName("mediasBox")[0].innerHTML);
     if (noti) newMsgBox("当前内容已保存到草稿箱。");
-    writeLog("i", "saveCraft", ele.id + ", content is " + ele.getElementsByClassName("sendBoxInput")[0].value);
+    writeLog("i", "saveCraft", ele.id);
 }
 
 // 清空草稿箱和输入框
 function dropCraft(ele, type) {
+    localStorage.removeItem("sendCategoryCraft" + "_" + ele.id);
+    localStorage.removeItem("sendTitleCraft" + "_" + ele.id);
     localStorage.removeItem("sendCraft" + "_" + ele.id);
+    localStorage.removeItem("sendMediaCraft" + "_" + ele.id);
+    ele.getElementsByClassName("categoryS")[0].value = "";
+    ele.getElementsByClassName("titleInput")[0].value = "";
     ele.getElementsByClassName("sendBoxInput")[0].value = "";
+    ele.getElementsByClassName("mediasBox")[0].innerHTML = "";
     writeLog("i", "dropCraft", ele.id);
 }
 

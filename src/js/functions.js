@@ -598,11 +598,11 @@ function showTestField() {
     newBrowser("settings/testfield.html", "", false, false);
 }
 
-ClickTestField = 0;
+clickTestField = 0;
 pageHeader.getElementsByClassName("logo")[0].onclick = function () {
-    if (++ClickTestField >= 7) showTestField();
+    if (++clickTestField >= 7) showTestField();
     setTimeout(() => {
-        ClickTestField = 0;
+        clickTestField = 0;
     }, 10000);
 }
 
