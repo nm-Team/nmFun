@@ -5,10 +5,22 @@ body{
     overflow-y: auto;
     overflow-y: overlay;
 }
+body{
+    --a-color: rgb(0, 153, 255);
+}
 .nts.card{
-    line-height: 1.5;
+    line-height: 1.8;
     margin-bottom: 20rem;
 }
 .nts img, .nts video{
     border-radius: 6rem;
+}
+h1{
+    font-size: 2em;
+}
+h2{
+    font-size: 1.5em;
+}
+a{
+    color: var(--a-color);
 }

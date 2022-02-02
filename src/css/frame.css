@@ -152,13 +152,6 @@ body{
     overflow: hidden;
     border-radius: 10rem 10rem 0 0;
 }
-.popFrame[open=true][data-behind=true]{
-    transform: translate(-50%, 0)scale(0.96);
-    filter: brightness(0.6);
-}
-body[data-loadover=true] .popFrame{
-    transition: all 0.15s cubic-bezier(0.37, 0.37, 1, 0.91);
-}
 @media (min-width: 800px) {
     .popFrame{
         width: 600px;
@@ -168,9 +161,18 @@ body[data-loadover=true] .popFrame{
         border-radius: 6rem;
     }
 }
+.popFrame[open=true][data-behind=true]{
+    transform: translate(-50%, 0)scale(0.92);
+    filter: brightness(0.6);
+    transition: all 0.5s;
+}
+body[data-loadover=true] .popFrame[open=false]{
+    transition: all 0.14s cubic-bezier(0.37, 0.37, 1, 0.91);
+}
 .popFrame[open=true]{
     visibility: visible;
     transform: translate(-50%, 0);
+    transition: all 0.5s;
     animation: popCome 0.5s cubic-bezier(0.28, 0.97, 0.54, 0.99);
 }
 @keyframes popCome {

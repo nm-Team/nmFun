@@ -63,7 +63,8 @@ body{
     padding: 0;
     border: none;
     word-break: break-word;
-    -webkit-tap-highlight-color:rgba(0,0,0,0)
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+    font-family: PingFang SC,Microsoft Yahei,HanHei SC,Arial;
 }
 *[scroll=true], *[scroll=true] *{
     scroll-behavior: smooth;
@@ -98,7 +99,6 @@ html{
     max-height: 100%;
 }
 body{
-    font-family: PingFangSC-Regular;
     background-color: var(--page-bgcolor);
     overflow: hidden;
     width: 100%;
@@ -134,11 +134,20 @@ body[select=false] *{
     visibility: hidden;
     opacity: 0;
     background-color: var(--cover);
-    transition: all 0.15s;
+    transition: all 0.25s;
 }
 .coverWithColor[open]{
     visibility: visible;
     opacity: 1;
+    animation: coverWithColorCome 0.3s;
+}
+@keyframes coverWithColorCome {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
 }
 .coverWithColor.pop{
     z-index: 900;

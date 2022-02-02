@@ -81,15 +81,15 @@ window.onkeydown = function (event) {
     if (esc) {
         writeLog("i", "Keyboad Event", "ESC");
         // 如果有右键菜单，关闭
-        if (document.getElementsByClassName("contextMenu").length > 0) {
-            document.getElementsByClassName("contextMenu")[document.getElementsByClassName("contextMenu").length - 1].click();
+        if (hoverArea.getElementsByClassName("contextMenu").length > 0) {
+            hoverArea.getElementsByClassName("contextMenu")[hoverArea.getElementsByClassName("contextMenu").length - 1].click();
         }
         // 如果有popFrame，关闭
-        if ($(".popFrame[open=true]").length > 0) {
+        else if ($(".popFrame[open=true]").length > 0) {
             $(".popFrame[open=true]")[$(".popFrame[open=true]").length - 1].getElementsByClassName("backButton")[0].click();
         }
         // 否则，删除顶栏的open参数
-        pageHeader.removeAttribute("open");
+        else pageHeader.removeAttribute("open");
         return false;
     }
     // Enter 关闭 alert

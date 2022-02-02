@@ -8,31 +8,27 @@ function initPostsList(box, attr) {
 
 // postsList 滚动事件
 
-$(".postsListScrollMonitor").on('scroll', function () {
-    postsListOnScroll($(this).children("data-focus"));
-    console.log("000");
+$(".postsListScrollMonitor").on('scroll', function (event) {
+    postsListOnScroll($(this).find("[data-focus=true]"));
 })
 
 $(".postsList").on('scroll', function () {
     postsListOnScroll($(this));
-    console.log("111");
-
 })
 
 function postsListOnScroll(box) {
     attr = JSON.parse(box.attr("data-config"));
     // 如果more的位置在屏幕上，则要继续加载
     if (box.children(".more")[0].getBoundingClientRect().top < window.outerWidth) {
-        console.log("We should load more posts in " + box[0].id);
         loadPostsList(box);
     }
 }
 
-
 // 通用帖子加载函数desu
 function loadPostsList(box) {
     attr = JSON.parse(box.attr("data-config"));
-    lastPid = box.children(".main .card:last-child").attr("data-postid");
+    lastPid = box.find(".main .postMainReal:last-child").attr("data-postid");
+
     writeLog("i", "loadPostsList", "start, attr " + JSON.stringify(attr) + ",detected last pid is " + lastPid + "");
     $.ajax({
         type: "GET",

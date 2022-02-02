@@ -236,4 +236,4 @@ setInterval(() => {
     else {
         document.body.setAttribute("scale", "false");
     }
-}, 40);
+}, 10);
