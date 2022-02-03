@@ -15,9 +15,6 @@ body[theme=dark]{
 .mobileHolder{
     display: block;
 }
-#indexMainLists .postsList:not(*[data-focus=true]){
-    display: none;
-}
 #startHover{
     z-index: 902;
     position: fixed;

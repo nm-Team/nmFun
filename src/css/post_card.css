@@ -27,6 +27,15 @@ body[theme=dark]{
 #indexMainCards .cardBox .card:not(*:hover):not(*:active){
     transition: margin-left 0.4s, margin-right 0.4s, transform 0.2s;
 }
+.cardsListsContainer .postsList:not(*[data-focus=true]){
+    display: none;
+}
+.postsList [spe]{
+    display: none;
+}
+.postsList[data-status=loading] .loading, .postsList[data-status=undefined] .loading, .postsList[data-status=error] .error, .postsList[data-status=nomore] .nomore{
+    display: block;
+} 
 .avatarBox .name{
     display: flex;
     flex-direction: row;

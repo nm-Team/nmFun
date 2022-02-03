@@ -2,7 +2,8 @@
 function initPostsList(box, attr) {
     box[0].className += " postsList cardBox postCardBox ";
     box.attr("data-config", JSON.stringify(attr));
-    box.append(`<div class="main"></div><div class="more">${postSkeleton}</div>`);
+    box.attr("data-status", "undefined");
+    box.append(`<div class="main"></div><div class="mark"></div><div spe class="loading">${postSkeleton}</div><div spe class="card error">${postsErrorBoxHTML}</div><div spe class="card nomore">${postsNoMoreBoxHTML}</div>`);
     writeLog("i", "initPostsList", `box id: ${box[0].id},attr: ${JSON.stringify(attr)}`);
 }
 
@@ -19,7 +20,7 @@ $(".postsList").on('scroll', function () {
 function postsListOnScroll(box) {
     attr = JSON.parse(box.attr("data-config"));
     // 如果more的位置在屏幕上，则要继续加载
-    if (box.children(".more")[0].getBoundingClientRect().top < window.outerWidth) {
+    if (box.children(".mark")[0].getBoundingClientRect().top < window.outerWidth) {
         loadPostsList(box);
     }
 }
@@ -27,12 +28,13 @@ function postsListOnScroll(box) {
 // 通用帖子加载函数desu
 function loadPostsList(box) {
     attr = JSON.parse(box.attr("data-config"));
-    lastPid = box.find(".main .postMainReal:last-child").attr("data-postid");
-
+    lastPid = box.find(".main .postMainReal:last").attr("data-postid");
+    if (box.attr("data-status") != "undefined") return -1;
     writeLog("i", "loadPostsList", "start, attr " + JSON.stringify(attr) + ",detected last pid is " + lastPid + "");
+    box.attr("data-status", "loading");
     $.ajax({
         type: "GET",
-        url: backEndURL + "/post/getpost.php?pid=" + lastPid + "&",
+        url: backEndURL + "/post/getpost.php?pid=" + (lastPid ? lastPid : "") + "&",
         async: true,
         dataType: "json",
         success: function (response, status, request) {
@@ -45,7 +47,7 @@ function loadPostsList(box) {
     <div class="header">
         <a class="name" tabindex="0" onclick="newUserInfoPage('uid');"
             onkeydown="divClick(this, event)"><i
-                style="background-image:url('avatar')"></i>
+                style="background-image:url('${avatarURL.replace(/{id}/g, info.uid)}"></i>
             <div>
                 <p class="unick">${info.nick}<!-- <span class="usertag border"></span> --> </p>
                 <p class="time" time="true" timestamp="${info.time}" timestyle="relative"
@@ -100,16 +102,20 @@ function loadPostsList(box) {
     </div>
 </div>`;
                     box.children(".main").append(new_element);
+                    box.attr("data-status", "undefined");
+                    if (response['data'] == []) box.attr("data-status", "nomore");
                 });
             }
             catch (err) {
                 writeLog("e", "loadPostsList", err);
                 newMsgBox("抱歉，加载帖子时出现问题。<br>" + err);
+                box.attr("data-status", "error");
             }
         },
         error: function () {
             writeLog("e", "loadPostsList", "ajax error");
             newMsgBox("抱歉，加载帖子时出现问题。");
+            box.attr("data-status", "error");
         }
     });
 }
@@ -142,3 +148,8 @@ postSkeleton = `
         </div>
     </div>
 </div>`;
+
+postsNoMoreBoxHTML = `
+<div class="unavaliable" noselect=""><i></i><p>没有了，怎么想都没有了吧！</p></div>`;
+postsErrorBoxHTML = `
+<div class="unavaliable search-not-start" noselect=""><i></i><p>坏掉了啦，载不出来了！</p></div>`;
