@@ -204,6 +204,9 @@ body[theme=dark]{
     align-items: stretch;
     padding: 10vh 0;
 }
+.card .unavaliable.small{
+    padding: 7rem 0;
+}
 .card .unavaliable i{
     display: block;
     background-image: url(../img/notfound.png);
@@ -217,6 +220,13 @@ body[theme=dark]{
     display: block;
     padding: 10rem 0;
     text-align: center;
+}
+.card .unavaliable button{
+    margin-top: 9rem;
+    padding: 7rem 20rem;
+    background: var(--card-bgcolor);
+    font-size: 14rem;
+    border-radius: 4rem;
 }
 .postBox{
     padding-bottom: 60rem;
