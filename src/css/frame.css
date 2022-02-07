@@ -166,7 +166,7 @@ body{
     filter: brightness(0.6);
     transition: all 0.5s;
 }
-body[data-loadover=true] .popFrame[open=false]{
+body[data-loadover=true] .popFrame{
     transition: all 0.14s cubic-bezier(0.37, 0.37, 1, 0.91);
 }
 .popFrame[open=true]{
@@ -358,6 +358,9 @@ body[data-loadover=true] .popFrame[open=false]{
     height: calc(100% - 45rem);
     opacity: 1;
     animation: iframe 3s;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
 }
 .browserFrame iframe[loaded]{
     opacity: 1;
@@ -407,6 +410,9 @@ body[theme=dark]{
     opacity: 1;
     background-color: var(--iframe-bgcolor);
     animation: iframe 3s;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
 }
 .legacyBrowserFrame iframe[loaded]{
     opacity: 1;

@@ -3,7 +3,7 @@ function initPostsList(box, attr) {
     box[0].className += " postsList cardBox postCardBox ";
     box.attr("data-config", JSON.stringify(attr));
     box.attr("data-status", "undefined");
-    box.append(`<div class="main"></div><div class="mark"></div><div spe class="loading">${postSkeleton}</div><div spe class="card error">${postsErrorBoxHTML.replace(/{boxid}/g,box[0].id)}</div><div spe class="card nomore">${postsNoMoreBoxHTML}</div>`);
+    box.append(`<div class="main"></div><div class="mark"></div><div spe class="loading">${postSkeleton}</div><div spe class="card error">${postsErrorBoxHTML.replace(/{boxid}/g, box[0].id)}</div><div spe class="card nomore">${postsNoMoreBoxHTML}</div>`);
     writeLog("i", "initPostsList", `box id: ${box[0].id},attr: ${JSON.stringify(attr)}`);
 }
 
@@ -34,7 +34,7 @@ function loadPostsList(box) {
     box.attr("data-status", "loading");
     $.ajax({
         type: "GET",
-        url: backEndURL + "/post/getpost.php?pid=" + (lastPid ? lastPid : "") + "&",
+        url: backEndURL + "/post/listpost.php?pid=" + (lastPid ? lastPid : "") + "&",
         async: true,
         dataType: "json",
         success: function (response, status, request) {
@@ -63,7 +63,7 @@ function loadPostsList(box) {
         <p class="status">status</p>
         <a href="" target="_blank" onclick="" class="text" title="点击来进入帖子详情"><object class="slug">
             <p class="title"><b>${info.title}</b></p>
-            <p>${info.description}</p>
+            <p>${info.content}</p>
             </object></a>
         <div class="media">
             <ui class="medias" id="tes" type="xmediatype">medias</ui>

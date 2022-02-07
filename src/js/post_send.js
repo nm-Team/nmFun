@@ -9,15 +9,63 @@ function setPostInputArea(ele, type) {
     writeLog("i", "setPostInputArea", ele.id);
 }
 
+// 发帖
+function sendPost(div, postType, onSuccess) {
+    if (logRequire()) {
+        // 通用：是否填写内容
+        if (div.getElementsByClassName("sendBoxInput")[0].value.replace(/ /g, "").replace(/\\n/g, "") == "") {
+            return newMsgBox("你总得写点什么再发表吧……");
+        }
+        // 通用：设置参数
+        textToSend = cleanHTMLTag(div.getElementsByClassName("sendBoxInput")[0].value);
+        mediaToSend = '{"medias": [';
+        for (i = 0; i < div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m").length; i++) {
+            try {
+                mediaInfo = cleanHTMLTag(div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m")[i].getAttribute("m")).replace(/\'/g, '"');
+                // 转换解析mediaInfo
+                // mInfoParsed = JSON.parse(switchMarks(mediaInfo));
+                // // 对部分类型进行操作
+                // if (mInfoParsed[0] == "img" || mInfoParsed[0] == "video") {
+                //     // 以后可能会在这里做一些事情
+                // }
+                mediaToSend += mediaInfo;
+                if (i < div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m").length - 1) {
+                    mediaToSend += ",";
+                }
+            }
+            catch (err) { }
+        }
+        mediaToSend += "]}";
+        tagsToSend = ""; // 开发中
+        // 发送参数：帖子
+        if (postType == "post") {
+            titleToSend = div.getElementsByClassName("titleInput")[0].value;
+            categoryToSend = div.getElementsByClassName("categoryS")[0].getElementsByTagName("option")[div.getElementsByClassName("categoryS")[0].selectedIndex].getAttribute("cgid");
+            sendData = { type: "post", title: titleToSend, content: textToSend, media: mediaToSend, category: categoryToSend, tags: tagsToSend };
+        }
+        if (postType == "comment") {
+            // 发送参数：评论
+            if (!div.getAttribute("inpost")) return newMsgBox("啊哦，nmFun 内部出现错误");
+            inpost = div.getAttribute("inpost");
+            tocomment = div.getAttribute("tocomment");
+            sendData = { type: "comment", inpost: inpost, tocomment: tocomment, content: textToSend, media: mediaToSend };
+        }
+        sendCover.setAttribute("open", "true");
+        newAjax("POST", backEndURL + "/post/newpost.php", true, "", sendData, function () { sendCover.setAttribute("open", "false"); onSuccess(); }, function (err) { sendCover.setAttribute("open", "false"); newMsgBox("出现错误，发送失败。<br>服务器返回错误 " + err['info']) });
+    }
+}
+
 // 展示/关闭发帖
 function showPostInput(which, toS) {
     document.getElementById("" + which + "Edit").setAttribute("open", toS);
     if (toS) {
         document.getElementById("" + which + "EditBoxCover").setAttribute("open", "true");
-        if( localStorage.getItem("sendCategoryCraft" + "_" + "" + which + "EditBox")) document.getElementById("" + which + "EditBox").getElementsByClassName("categoryS")[0].value = localStorage.getItem("sendCategoryCraft" + "_" + "" + which + "EditBox");
-        document.getElementById("" + which + "EditBox").getElementsByClassName("titleInput")[0].value = localStorage.getItem("sendTitleCraft" + "_" + "" + which + "EditBox");
-        document.getElementById("" + which + "EditBox").getElementsByClassName("sendBoxInput")[0].value = localStorage.getItem("sendCraft" + "_" + "" + which + "EditBox");
-        document.getElementById("" + which + "EditBox").getElementsByClassName("mediasBox")[0].innerHTML = localStorage.getItem("sendMediaCraft" + "_" + "" + which + "EditBox");
+        try {
+            if (localStorage.getItem("sendCategoryCraft" + "_" + "" + which + "EditBox")) document.getElementById("" + which + "EditBox").getElementsByClassName("categoryS")[0].value = localStorage.getItem("sendCategoryCraft" + "_" + "" + which + "EditBox");
+            document.getElementById("" + which + "EditBox").getElementsByClassName("titleInput")[0].value = localStorage.getItem("sendTitleCraft" + "_" + "" + which + "EditBox");
+            document.getElementById("" + which + "EditBox").getElementsByClassName("sendBoxInput")[0].value = localStorage.getItem("sendCraft" + "_" + "" + which + "EditBox");
+            document.getElementById("" + which + "EditBox").getElementsByClassName("mediasBox")[0].innerHTML = localStorage.getItem("sendMediaCraft" + "_" + "" + which + "EditBox");
+        } catch (err) { console.error(err); }
     }
     else document.getElementById("" + which + "EditBoxCover").removeAttribute("open");
     writeLog("i", "showPostInput", which + " to " + toS);

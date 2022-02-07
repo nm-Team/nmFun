@@ -6,7 +6,19 @@ debugMode = true;
 systemCategoryList = [{ "id": "focus", "name": "关注" }, { "id": "all", "name": "全部" }, { "id": "selected", "name": "精选" }, { "id": "hot", "name": "热榜" }]
 version = {
     version: "0.2_dev",
-    versionNum: "52",
+    versionNum: "55",
     branch: "co_refresh",
     betaVersion: true
+}
+
+// 自定义 API 地址
+if (localStorage.debugBackEndURL) {
+    backEndURL = localStorage.debugBackEndURL;
+    writeLog("d", "Set debug API", backEndURL);
+    debugInfo.innerHTML += "debug API enabled ";
+}
+if (localStorage.debugAccountClient) {
+    accountClient = localStorage.debugAccountClient;
+    writeLog("d", "Set debug account client", accountClient);
+    debugInfo.innerHTML += "debug accounts client enabled ";
 }

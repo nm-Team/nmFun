@@ -1,5 +1,6 @@
 html{
     --fontSize: 1.02px;
+    font-size: var(--fontSize);
 }
 body{
     color: #000;

@@ -34,6 +34,24 @@ function setHeaderLog() {
     }
 }
 
+function logInit() {
+    $.ajax({
+        type: "GET",
+        url: backEndURL + "/user/init.php?CodySESSION=" + localStorage.sessionid,
+        async: false,
+        data: {},
+        dataType: "json",
+        success: function (response, status, request) {
+            console.log("Log init to BE Succeed");
+            if (response['status'] == "error" && response['info'] != "Already login.") {
+                newMsgBox("登录验证失败，因为：" + response['info']);
+                writeLog("e", "logInit", JSON.stringify(response));
+            } else
+                writeLog("i", "logInit", JSON.stringify(response));
+        }
+    });
+}
+
 function showLogFrame() {
     logPop.setAttribute("open", "true");
     logCover.setAttribute("open", "");

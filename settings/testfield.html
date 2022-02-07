@@ -16,6 +16,12 @@
 <body class="settings radius">
     <script>parent.writeLog("i", "Test Field", "enabled");</script>
     <h1>Test Field</h1>
+    <div class="lists">
+        <p class="tip">(c) nmTeam 2021-2022.</p>
+        <p class="tip">nmFun system test module web edition.</p>
+        <p class="tip">WARNING: You should only operate if you're nmTeam developer or under nmTeam support team's
+            guidence.</p>
+    </div>
     <p class="listName">MODULES TEST</p>
     <div class="lists">
         <div class="but" onclick="parent.alert('Here is a test of alert.')">
@@ -36,6 +42,25 @@
         <div class="but" onclick="localStorage.started='false'; parent.window.location.reload()">
             <t>Reopen introductive pop page (will refresh)</t>
         </div>
+    </div>
+    <p class="listName">SET TEST API ADDRESS</p>
+    <div class="lists">
+        <input class="searchBox" id="debugBackEndURLDiv" oninput="localStorage.debugBackEndURL=this.value;"
+            placeholder="nmFun API">
+        <input class="searchBox" id="debugAccountClientDiv" oninput="localStorage.debugAccountClient=this.value;"
+            placeholder="nmTeam Log API">
+        <p class="tip">
+            This will disable the bulit-in APIs and replace them with the links filled above. The page will remind you
+            of that. <br>
+            <b>WARNING: DO NOT CHANGE unless you know what you are doing. </b><br>
+            URL address must starts with "https://". <br>
+            After changing, <a href="javascript:" onclick="parent.window.location.href=parent.window.location.href;">reload the page. </a><br>
+            To rollback, simply clear the inputs above and refresh.
+        </p>
+        <script>
+            debugBackEndURLDiv.value = localStorage.debugBackEndURL;
+            debugAccountClientDiv.value = localStorage.debugAccountClient;
+        </script>
     </div>
     <p class="listName">RUN JAVASCRIPT</p>
     <div class="lists">
@@ -84,7 +109,7 @@
         </p></pre>
     </div>
     <script>
-        logB.innerHTML = localStorage.systemLog.replace(/</g,"%lt").replace(/>/g,"%rt");
+        logB.innerHTML = localStorage.systemLog.replace(/</g, "%lt").replace(/>/g, "%rt");
     </script>
     <p class="listName">LOCALSTORAGE</p>
     <div class="lists">

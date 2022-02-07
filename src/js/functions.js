@@ -242,7 +242,11 @@ document.documentElement.addEventListener('touchend', function (event) {
 window.onmousemove = function (event) {
     mouseX = event.pageX;
     mouseY = event.pageY;
-    // console.log("Now mouse at" + mouseX + mouseY);
+    try {
+        if (mouseY > window.outerHeight - 200) debugInfo.setAttribute("data-align", "top");
+        else debugInfo.setAttribute("data-align", "bottom");
+    }
+    catch (err) { }
 };
 
 // 禁用F12
@@ -617,7 +621,13 @@ function writeLog(logType, funName, content) {
     logTime = JSON.parse(splitTime(logTime));
     ltime = logTime.year + "-" + logTime.month + "-" + logTime.date + " " + logTime.hour + ":" + logTime.sMinute + ":" + logTime.sSecond;
     logWord = `[` + logType + `] ` + ltime + " " + funName + `: ` + content + ` \n`;
-    localStorage.systemLog += logWord;
+    try { localStorage.systemLog += logWord; }
+    catch (err) {
+        localStorage.removeItem("systemLog");
+        writeLog("e", "writeLog", "Write to localStorage error "
+            + err + ". Has rebulit the log.");
+        writeLog(logType, funName, content);
+    }
     console.log(logWord);
 }
 
@@ -632,3 +642,34 @@ lsItems = '';
 for (var propname in localStorage)
     if (propname != "systemLog") lsItems += propname + ": " + JSON.stringify(localStorage[propname]) + "; ";
 writeLog("i", "localStorage", lsItems);
+
+function newAjax(type, url, session, getParam, postParam, succeedF = function () { }, faliureF = function () { }) {
+    sessionid = localStorage.sessionid;
+    writeLog("i", "newAjax", (type + ", " + url + ", " + session + ", " + getParam + ", " + JSON.stringify(postParam) + ", " + succeedF + ", " + faliureF));
+    $.ajax(url + "?" + (session ? "CodySESSION=" + sessionid + "&" : "") + getParam, {
+        type: type,
+        async: true,
+        data: postParam,
+        crossDomain: true,
+        datatype: "jsonp",
+        success: function (data) {
+            let status = data['status'];
+            if (status == "successful" || status == "success") {
+                console.log("ajax接收数据成功");
+                writeLog("i", "newAjax", "ok");
+                succeedF(data);
+            } else if (status == "error") {
+                console.log("ajax接收数据失败");
+                writeLog("e", "newAjax", "error");
+                faliureF(data);
+            }
+            return data;
+        },
+        error: function () {
+            newMsgBox("服务器故障，请重试。");
+            writeLog("e", "newAjax", "error(network)");
+            faliureF("Something wrong with the server");
+            return null;
+        }
+    });
+}
