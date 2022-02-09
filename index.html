@@ -401,7 +401,7 @@
                 <button onclick="alert('确定要清空草稿箱并清空当前键入内容吗？','提示','好','dropCraft(sendEditBox,`post`)','取消')"
                     title="清空输入内容并清空草稿箱"><i class="material-icons">delete_forever</i></button>
                 <button
-                    onclick="sendPost(sendEditBox,'post',function(){showPostInput('send',false);newMsgBox('帖子发送成功！');setPostInputArea(sendEditBox, 'post');})"
+                    onclick="sendPost(sendEditBox,'post',function(){showPostInput('send',false);newMsgBox('帖子发送成功！');setPostInputArea(sendEditBox, 'post');newPostDetailPage(data['pid'])})"
                     title="发送"><i class="material-icons">send</i></button>
             </div>
         </header>

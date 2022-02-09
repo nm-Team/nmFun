@@ -88,7 +88,7 @@ body[theme=dark]{
     color: var(--red);
 }
 .cardBox.postCardBox .content a{
-    outline: none;
+    /* outline: none; */
 }
 .cardBox.postCardBox .content a:focus-visible object{
     outline: var(--outline);
@@ -254,6 +254,9 @@ body[theme=dark]{
 }
 .viewer-toolbar{
     display: none;
+}
+.card .content .title{
+    font-weight: bold;
 }
 .card .content a.linkInPost{
     color: var(--content-link);

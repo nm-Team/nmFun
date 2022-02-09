@@ -39,6 +39,9 @@
     </div>
     <p class="listName">TOOLS</p>
     <div class="lists">
+        <div class="but" onclick="parent.startHover.style.display='none';">
+            <t>Force close start hover</t>
+        </div>
         <div class="but" onclick="localStorage.started='false'; parent.window.location.reload()">
             <t>Reopen introductive pop page (will refresh)</t>
         </div>
@@ -54,7 +57,8 @@
             of that. <br>
             <b>WARNING: DO NOT CHANGE unless you know what you are doing. </b><br>
             URL address must starts with "https://". <br>
-            After changing, <a href="javascript:" onclick="parent.window.location.href=parent.window.location.href;">reload the page. </a><br>
+            After changing, <a href="javascript:"
+                onclick="parent.window.location.href=parent.window.location.href;">reload the page. </a><br>
             To rollback, simply clear the inputs above and refresh.
         </p>
         <script>
