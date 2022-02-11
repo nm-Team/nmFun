@@ -7,6 +7,7 @@ function newBrowser(URL, className = "", withTip = true, showOpenInBrowser = tru
     else fakeURL = URL;
     new_element = document.createElement('div');
     new_element.setAttribute('id', "browserFrame" + browserId);
+    new_element.setAttribute('data-browser-id', browserId);
     new_element.setAttribute('class', 'popFrame browserFrame ' + className);
     new_element.setAttribute('name', URL);
     new_element.setAttribute('totallyClose', 'true');

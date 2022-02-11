@@ -654,7 +654,7 @@ function newAjax(type, url, session, getParam, postParam, succeedF = function ()
                 console.log("ajax接收数据成功");
                 writeLog("i", "newAjax", "ok");
                 succeedF(data);
-            } else if (status == "error") {
+            } else {
                 console.log("ajax接收数据失败");
                 writeLog("e", "newAjax", "error");
                 faliureF(data);
@@ -666,6 +666,53 @@ function newAjax(type, url, session, getParam, postParam, succeedF = function ()
             writeLog("e", "newAjax", "error(network)");
             faliureF("Something wrong with the server");
             return null;
+        }
+    });
+}
+
+function getStickersJSON(fun) {
+    try {
+        stickersJSON;
+        fun();
+    }
+    catch (err) {
+        $.ajax({
+            type: "GET",
+            url: "/src/json/stickers.json",
+            async: true,
+            dataType: "json",
+            success: function (response, status, request) {
+                writeLog("i", "get stickers set", JSON.stringify(response));
+                stickersJSON = response;
+                fun();
+            },
+            error: function () {
+                writeLog("e", "get stickers", "ajax error");
+            }
+        });
+    }
+}
+
+function setStickersSelBox(div) {
+    getStickersJSON(function () {
+        try {
+            div.innerHTML = "<div class='stks'></div><div class='bar'></div>";
+            stksDiv = div.getElementsByClassName("stks")[0];
+            sbarDiv = div.getElementsByClassName("bar")[0];
+            stickersJSON['stickers'].forEach(function (val) {
+                stksListHTML = "";
+                pakId = val['id'];
+                val['stickers'].forEach(function (val) {
+                    stksListHTML += `<button title="${val['name']}" onclick="addStickerToEditBox('${pakId}','${val['id']}')"><i style="background-image:url(/src/img/stickers/${pakId}/${val['src']})"></i></button>`;
+                });
+                stksDiv.innerHTML += `<div class="set" data-setid="${val['id']}"><div class="name">${val['name']}</div><div class="list">${stksListHTML}</div></div>`;
+                sbarDiv.innerHTML += `<button data-setid="${val['id']}" title="${val['name']}" style="background-image:url(/src/img/stickers/${val['id']}/${val['icon']})" onclick="jumpStickers('${div.id}','${val['id']}')"></button>`;
+            });
+        }
+        catch (err) {
+            writeLog("e", "set stickers", err);
+            console.error(err);
+            newMsgBox("加载表情面板出错，试着不发龙图吧");
         }
     });
 }

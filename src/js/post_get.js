@@ -44,7 +44,7 @@ function loadPostsList(box) {
                     medias = setMedia(info.attachment, info.pid);
                     new_element = document.createElement('object');
                     new_element.innerHTML = `
-<div class="postMainReal card avatarBox" data-postid="${info.pid}">
+<div class="postMainReal card avatarBox" data-type="post" data-postid="${info.pid}">
     <div class="header">
         <a class="name" tabindex="0" onclick="newUserInfoPage('uid');"
             onkeydown="divClick(this, event)"><i
@@ -56,7 +56,7 @@ function loadPostsList(box) {
             </div>
         </a>
         <div class="buttons">
-            <button onclick="postContextMenu('post', '${info.pid}', ${(info.uid == myUid ? true : false)}, this);" title="选项"><i
+            <button onclick="postContextMenu('post', '${info.pid}', '${info.title}', ${info.uid}, this);" title="选项"><i
                     class="material-icons">more_vert</i></button>
         </div>
     </div>
@@ -76,14 +76,14 @@ function loadPostsList(box) {
             <p>浏览<span class="viewNum">${info.view}</span>次</p>
         </div>
         <div class="buttons">
-            <button onclick="" class="likeButton" title="点赞">
+            <button onclick="likePost($(this),'${info.pid}')" class="likeButton" data-like-post-id="${info.pid}" data-status="${(info.i ? "yes" : "no")}" title="点赞">
                 <svg class="no" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
                     <path d="M757.76 852.906667c36.906667-0.021333 72.832-30.208 79.296-66.56l51.093333-287.04c10.069333-56.469333-27.093333-100.522667-84.373333-100.096l-10.261333 0.085333a19972.266667 19972.266667 0 0 1-52.842667 0.362667 3552.853333 3552.853333 0 0 1-56.746667 0l-30.997333-0.426667 11.498667-28.8c10.24-25.642667 21.76-95.744 21.504-128.021333-0.618667-73.045333-31.36-114.858667-69.290667-114.410667-46.613333 0.554667-69.461333 23.466667-69.333333 91.136 0.213333 112.661333-102.144 226.112-225.130667 225.109333a1214.08 1214.08 0 0 0-20.629333 0l-3.52 0.042667c-0.192 0 0.64 409.109333 0.64 409.109333 0-0.085333 459.093333-0.490667 459.093333-0.490666z m-17.301333-495.914667a15332.288 15332.288 0 0 0 52.693333-0.362667l10.282667-0.085333c84.010667-0.618667 141.44 67.52 126.72 150.250667L879.061333 793.813333c-10.090667 56.661333-63.68 101.696-121.258666 101.76l-458.922667 0.384A42.666667 42.666667 0 0 1 256 853.546667l-0.853333-409.173334a42.624 42.624 0 0 1 42.346666-42.730666l3.669334-0.042667c5.909333-0.064 13.12-0.064 21.333333 0 98.176 0.789333 182.293333-92.437333 182.144-182.378667C504.469333 128.021333 546.24 86.186667 616.106667 85.333333c65.173333-0.768 111.68 62.506667 112.448 156.714667 0.256 28.48-6.848 78.826667-15.701334 115.050667 8.021333 0 17.28-0.042667 27.584-0.106667zM170.666667 448v405.333333h23.466666a21.333333 21.333333 0 0 1 0 42.666667H154.837333A26.709333 26.709333 0 0 1 128 869.333333v-437.333333c0-14.784 12.074667-26.666667 26.773333-26.666667h38.912a21.333333 21.333333 0 0 1 0 42.666667H170.666667z"></path>
                 </svg>
                 <svg class="yes" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
                     <path d="M710.549333 384.810667a12409.045333 12409.045333 0 0 0 47.466667-0.32l8.746667-0.085334c83.989333-0.618667 141.44 67.584 126.72 150.229334L847.296 794.026667c-10.026667 56.448-63.914667 101.546667-121.130667 101.589333L298.624 896a42.730667 42.730667 0 0 1-42.666667-42.410667l-0.810666-383.978666a42.666667 42.666667 0 0 1 42.026666-42.666667l3.157334-0.064c5.226667-0.042667 11.797333-0.042667 19.626666 0 91.946667 0.768 170.88-86.698667 170.709334-170.944-0.149333-86.741333 39.786667-126.762667 106.453333-127.573333 62.250667-0.746667 106.602667 59.605333 107.349333 149.12 0.213333 26.602667-6.293333 73.237333-14.506666 107.434666 6.186667 0 13.077333-0.042667 20.586666-0.085333z m-497.706666 63.232L213.333333 874.624A21.312 21.312 0 0 1 191.786667 896H149.525333A21.333333 21.333333 0 0 1 128 874.624l0.042667-426.581333A21.269333 21.269333 0 0 1 149.44 426.666667h41.984c11.669333 0 21.418667 9.578667 21.418667 21.376z" p-id="4969"></path>
                 </svg>
-                <span class="likeNum">${info.like}</span>
+                <span class="likeNum" data-like-num-post-id="${info.pid}">${info.like}</span>
             </button>
             <button onclick="" class="unlikeButton" title="不喜欢">
                 <svg class="no" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -97,7 +97,7 @@ function loadPostsList(box) {
                 <svg class="comment" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
                     <path d="M853.333333 768c35.413333 0 64-20.650667 64-55.978667V170.581333A63.978667 63.978667 0 0 0 853.333333 106.666667H170.666667C135.253333 106.666667 106.666667 135.253333 106.666667 170.581333v541.44C106.666667 747.285333 135.338667 768 170.666667 768h201.173333l110.016 117.44a42.752 42.752 0 0 0 60.586667 0.042667L651.904 768H853.333333z m-219.029333-42.666667h-6.250667l-115.797333 129.962667c-0.106667 0.106667-116.010667-129.962667-116.010667-129.962667H170.666667c-11.776 0-21.333333-1.621333-21.333334-13.312V170.581333A21.205333 21.205333 0 0 1 170.666667 149.333333h682.666666c11.776 0 21.333333 9.536 21.333334 21.248v541.44c0 11.754667-9.472 13.312-21.333334 13.312H634.304zM341.333333 490.666667a42.666667 42.666667 0 1 0 0-85.333334 42.666667 42.666667 0 0 0 0 85.333334z m170.666667 0a42.666667 42.666667 0 1 0 0-85.333334 42.666667 42.666667 0 0 0 0 85.333334z m170.666667 0a42.666667 42.666667 0 1 0 0-85.333334 42.666667 42.666667 0 0 0 0 85.333334z" p-id="5116"></path>
                 </svg>
-                <span class="commentNum">${info.comment}</span>
+                <span class="commentNum"data-comment-num-post-id="${info.pid}">${info.comment}</span>
             </button>
         </div>
     </div>
@@ -155,7 +155,7 @@ function refreshPostArea(pid) {
         // setPostArea(document.getElementById('postFrame' + pid).getElementsByClassName("postMainReal")[0], data['data'], { slug: false, click: false, fullmedia: false });
         if (data['status'] == "successful") {
             pData = data['data'];
-            $("#postFrameMenuButton" + pid).attr("onclick", `postContextMenu('post', '${pid}', ${(pData['uid'] == myUid ? true : false)}, this)`);
+            $("#postFrameMenuButton" + pid).attr("onclick", `postContextMenu('post', '${pid}', '${pData['title']}', ${(pData['uid'])}, this)`);
             // 处理内容中的特殊项
             contentHandled = cleanHTMLTag(pData['content']).replace(/\n/g, "<br>").replace(/((((ht|f)tps?):\/\/)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&:/~+#-\(\)]*[\w@?^=%&/~+#-\(\)])?$)/g, `<a class="linkInPost" href="` + siteURL + `/jumpurl.php?$1" target="_blank" onclick="newBrowser('$1', 'postOutBrowser', true, true); return false;"><svg class="icon link" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M618.24 439.381333a152.746667 152.746667 0 0 1 0 216l-135.893333 135.893334a163.370667 163.370667 0 1 1-231.04-231.04l66.922666-66.944 45.269334 45.269333-66.944 66.944a99.370667 99.370667 0 1 0 140.522666 140.522667l135.893334-135.893334a88.746667 88.746667 0 0 0 0-125.482666z m182.528-197.589333a163.370667 163.370667 0 0 1 0 231.04L733.866667 539.776l-45.269334-45.248 66.944-66.944a99.370667 99.370667 0 1 0-140.522666-140.522667l-135.893334 135.893334a88.746667 88.746667 0 0 0 0 125.482666l-45.269333 45.269334a152.746667 152.746667 0 0 1 0-216l135.893333-135.893334a163.370667 163.370667 0 0 1 231.04 0z"</path></svg>$1</a>`);
             // 识别话题
@@ -172,13 +172,13 @@ function refreshPostArea(pid) {
             // 基本
             $("#postFrame" + pid + " .postMainReal").html(`
             <div class="header">
-                <a class="name" tabindex="0" onclick="newUserInfoPage('${pData['uid']}');" onkeydown="divClick(this, event)"><i style="background-image:url('https://api.nmteam.xyz/avatar/${pData['uid']}.png"></i>
+                <a class="name" tabindex="0" onclick="newUserInfoPage('${pData['uid']}');" onkeydown="divClick(this, event)"><i style="background-image:url('${avatarURL.replace(/{{id}}/g, pData['uid'])}"></i>
                     <div>
                         <p class="unick">${pData['nick']}<!-- <span class="usertag border"></span> --> </p>
                         <p class="time" time="true" timestamp="${pData['time']}" timestyle="relative" timesec="false" timefull="false"></p>
                     </div>
                 </a>
-                <div class="buttons"><button hidden onclick="postContextMenu('post', '${pData['pid']}', this);" title="选项"><i class="material-icons">more_vert</i></button></div>
+                <div class="buttons"><button hidden onclick="postContextMenu('post', '${pid}', '', false, this);" title="选项"><i class="material-icons">more_vert</i></button></div>
             </div>
             <div class="content">
                 <p class="status">[DEBUG] 为作者显示帖子已审核状态</p>
@@ -196,7 +196,7 @@ function refreshPostArea(pid) {
                     <p>浏览<span class="viewNum">${pData['view']}</span>次</p>
                 </div>
                 <div class="buttons">
-                    <button onclick="" class="likeButton" title="点赞">
+                    <button onclick="likePost($(this),'${pid}')" data-like-post-id="${pid}" class="likeButton" title="点赞">
                         <svg class="no" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
                             <path d="M757.76 852.906667c36.906667-0.021333 72.832-30.208 79.296-66.56l51.093333-287.04c10.069333-56.469333-27.093333-100.522667-84.373333-100.096l-10.261333 0.085333a19972.266667 19972.266667 0 0 1-52.842667 0.362667 3552.853333 3552.853333 0 0 1-56.746667 0l-30.997333-0.426667 11.498667-28.8c10.24-25.642667 21.76-95.744 21.504-128.021333-0.618667-73.045333-31.36-114.858667-69.290667-114.410667-46.613333 0.554667-69.461333 23.466667-69.333333 91.136 0.213333 112.661333-102.144 226.112-225.130667 225.109333a1214.08 1214.08 0 0 0-20.629333 0l-3.52 0.042667c-0.192 0 0.64 409.109333 0.64 409.109333 0-0.085333 459.093333-0.490667 459.093333-0.490666z m-17.301333-495.914667a15332.288 15332.288 0 0 0 52.693333-0.362667l10.282667-0.085333c84.010667-0.618667 141.44 67.52 126.72 150.250667L879.061333 793.813333c-10.090667 56.661333-63.68 101.696-121.258666 101.76l-458.922667 0.384A42.666667 42.666667 0 0 1 256 853.546667l-0.853333-409.173334a42.624 42.624 0 0 1 42.346666-42.730666l3.669334-0.042667c5.909333-0.064 13.12-0.064 21.333333 0 98.176 0.789333 182.293333-92.437333 182.144-182.378667C504.469333 128.021333 546.24 86.186667 616.106667 85.333333c65.173333-0.768 111.68 62.506667 112.448 156.714667 0.256 28.48-6.848 78.826667-15.701334 115.050667 8.021333 0 17.28-0.042667 27.584-0.106667zM170.666667 448v405.333333h23.466666a21.333333 21.333333 0 0 1 0 42.666667H154.837333A26.709333 26.709333 0 0 1 128 869.333333v-437.333333c0-14.784 12.074667-26.666667 26.773333-26.666667h38.912a21.333333 21.333333 0 0 1 0 42.666667H170.666667z"></path>
                         </svg>
@@ -229,7 +229,7 @@ function refreshPostArea(pid) {
             document.getElementById('postFrame' + pid).getElementsByClassName("postRelated")[0].innerHTML = `
             <div class="card tagCard"><div class="content"><a class="ca" href="javascript:" onclick="newMsgBox('开发中')" >`+ pData['categoryName'] + `</a>
             <div class="tags">`+ tagsHTML + `</div> </div>
-            </div><div class="card interactionBar"><button onclick="newMsgBox('开发中')">评论 <span class="commentNum">`+ pData['comment'] + `</span></button><button onclick="newMsgBox('开发中')">赞 <span class="likeNum">` + pData['like'] + `</span></button> </div>
+            </div><div class="card interactionBar"><button onclick="newMsgBox('开发中')">评论 <span class="commentNum" data-comment-num-post-id="${pid}">` + pData['comment'] + `</span></button><button onclick="newMsgBox('开发中')">赞 <span class="likeNum" data-like-num-post-id="${pid}">` + pData['like'] + `</span></button> </div>
             `;
             document.getElementById('postFrame' + pid).getElementsByClassName("bottomBox")[0].style.display = "block";
 
@@ -256,7 +256,7 @@ postTemplate = `
     </div>
 </div>
 <div class="right">
-    <button id="postFrameMenuButton{{pid}}" onclick="postContextMenu('post', '{{pid}}', false, this);"><i class="material-icons">&#xe5d3;</i></button>
+    <button id="postFrameMenuButton{{pid}}" onclick="postContextMenu('post', '{{pid}}', '', false, this);"><i class="material-icons">&#xe5d3;</i></button>
 </div>
 </header>
 <div class="postBox cardBox postCardBox main">
@@ -357,15 +357,68 @@ function setMedia(mediaJson, pid = 0) {
     return { "mediasHTML": mediasHTML, "specialMediasHTML": specialMediasHTML, "mNum": mNum, };
 }
 
-function postContextMenu(type, id, mine, ele) {
-    if (mine) {
-        createContextMenu([["刷新", "refreshPostArea(`" + id + "`)", "refresh"], ["编辑", "editMyPost(`" + id + "`)", "edit"], ["删除", "alert('开发中')", "delete"],], true, undefined, ele);
+function postContextMenu(type, id, poName, uid, ele) {
+    if (isNaN(myUid)) {
+        createContextMenu([["登录后执行更多操作", "showLogFrame()", ""]], true, undefined, ele);
+    }
+    else if (uid == myUid) {
+        createContextMenu([["编辑", "editMyPost(`" + id + "`)", "edit"], ["删除", "deleteMyPostAlert(`" + id + "`, `" + poName + "`)", "delete"],], true, undefined, ele);
     }
     else {
-        createContextMenu([["刷新", "refreshPostArea(`" + id + "`)", "refresh"], ["举报", "alert(`开发中`)", "edit"],], true, undefined, ele);
+        createContextMenu([["举报", "alert(`开发中`)", "warning"], ["屏蔽", "alert(`开发中`)", "block"]], true, undefined, ele);
     }
 }
 
 function editMyPost(pid) {
+    logRequire();
     alert("nm，编辑功能写起来好麻烦，请您删除后重新发布，谢谢", "", "好", "", "nm", "");
+}
+
+function deleteMyPostAlert(pid, poName) {
+    logRequire();
+    alert("确定要删除帖子<b>《" + poName + "》</b>吗？", "删除帖子", "删除", "deleteMyPost('" + pid + "')", "取消", "");
+}
+
+function deleteMyPost(pid) {
+    logRequire();
+    $("body").append(`
+        <div id="delCoverForPost${pid}" class="sendCover unscaleArea" noselect open="true">
+            <div class="content">
+                <i></i>
+                <p>正在删除</p>
+            </div>
+        </div>`);
+    newAjax("POST", backEndURL + "/post/delpost.php", true, "pid=" + pid, "", function () {
+        newMsgBox("删除帖子成功！");
+        document.getElementById(`delCoverForPost${pid}`).outerHTML = "";
+        writeLog("i", "deleteMyPost(" + pid + ")", "success");
+        $("[data-postid=" + pid + "]").remove();
+        closeBox('pageRight', 'postFrame' + pid);
+    },
+        function () {
+            newMsgBox("删除帖子失败");
+            document.getElementById(`delCoverForPost${pid}`).outerHTML = "";
+            writeLog("i", "deleteMyPost(" + pid + ")", "error");
+        })
+}
+
+// 点赞
+function likePost(ele, pid) {
+    logRequire();
+    if ($("[data-like-post-id=" + pid + "]").attr("data-ignore") == "true") {
+        return;
+    }
+    if (ele.attr("data-status") == "yes") {
+        likeOpe = "unlike";
+    }
+    else likeOpe = "like";
+    $("[data-like-post-id=" + pid + "]").attr("data-ignore", "true");
+    $("[data-like-post-id=" + pid + "]").attr("data-status", (likeOpe == "like" ? "yes" : "no"));
+    $("[data-like-num-post-id=" + pid + "]").html((Number($("[data-like-num-post-id=" + pid + "]")[0].innerHTML) + (likeOpe == "like" ? 1 : -1)));
+    newAjax("POST", backEndURL + "/post/like.php", true, "pid=" + pid, "", function () { writeLog("i", "likePost", "like post " + pid + " success"); $("[data-like-post-id=" + pid + "]").attr("data-ignore", "true"); }, function () { $("[data-like-post-id=" + pid + "]").attr("data-status", (likeOpe != "like" ? "yes" : "no")); writeLog("i", "likePost", "like post " + pid + " error"); $("[data-like-post-id=" + pid + "]").attr("data-ignore", "false"); $("[data-like-num-post-id=" + pid + "]").html((Number($("[data-like-num-post-id=" + pid + "]")[0].innerHTML) + (likeOpe != "like" ? 1 : -1))); });
+}
+
+// 点踩
+function unlikePost(pid) {
+    newMsgBox("收到反馈");
 }

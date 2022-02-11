@@ -1,12 +1,12 @@
 siteURL = "https://fun.nmteam.xyz";
 accountClient = "https://accounts.nmteam.xyz";
 backEndURL = "https://funapi.nmteam.xyz";
-avatarURL = "https://api.nmteam.xyz/avatar/{id}.png";
+avatarURL = "https://api.nmteam.xyz/avatar/?id={id}";
 debugMode = true;
 systemCategoryList = [{ "id": "focus", "name": "关注" }, { "id": "", "name": "全部" }, { "id": "selected", "name": "精选" }, { "id": "hot", "name": "热榜" }]
 version = {
     version: "0.2_dev",
-    versionNum: "60",
+    versionNum: "66",
     branch: "co_refresh",
     betaVersion: true
 }

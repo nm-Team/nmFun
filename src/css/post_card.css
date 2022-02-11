@@ -190,7 +190,7 @@ body[theme=dark]{
     width: 19rem;
     height: 19rem;
 }
-.cardBox.postCardBox .bottom .buttons button:not(*[yes]) .yes, .cardBox.postCardBox .bottom .buttons button[yes] no{
+.cardBox.postCardBox .bottom .buttons button:not(*[data-status=yes]) .yes, .cardBox.postCardBox .bottom .buttons button[data-status=yes] .no{
     display: none;
 }
 .cardBox.postCardBox .bottom .buttons button span{
@@ -337,12 +337,12 @@ body[theme=dark]{
     align-items: flex-end;
     color: var(--input-item);
 }
-.bottomBox .bottomSurface .more{
+/* .bottomBox .bottomSurface .{
     transition: transform 0.3s;
 }
 .bottomBox .bottomSurface .more[open]{
     transform: rotate(45deg);
-}
+} */
 .bottomBox .bottomSurface .fakeInput{
     border: none;
     padding: 8rem 16rem;
@@ -386,6 +386,15 @@ body[theme=dark]{
 .bottomBox .bottomSurface button.starButton[starred=true] i.star{
     display: none;
 }
+.bottomBox .bottomDrawer .more{
+    transition: height 0.4s;
+    height: 0;
+    visibility: hidden;
+}
+.bottomBox .bottomDrawer .more[open]{
+    height: 200rem;
+    visibility: visible;
+}
 .sendButton[status=false]{
     color: rgba(0,0,0,0);
     background-image: url(../img/loading.gif);
@@ -396,6 +405,7 @@ body[theme=dark]{
 .inputArea{
     display: flex;
     flex-direction: column;
+    overflow: hidden!important;
 }
 .inputArea.comment *[hideincomment]{
     display: none;
@@ -410,7 +420,7 @@ body[theme=dark]{
     border-radius: 6rem;
 }
 .inputArea select{
-    padding: 8rem 0rem 8rem 12rem;
+    padding: 8rem 0rem 8rem 15rem;
     margin: 0 4rem 0 0;
     width: 4em;
     font-size: 15rem;
@@ -449,7 +459,7 @@ body[theme=dark]{
     border-radius: 0 6rem 6rem 0;
     box-shadow: none;
 }
-.inputArea textarea{
+.inputArea .textarea{
     width: calc(100% - 50rem);
     font-size: 15rem;
     line-height: 1.5;
@@ -463,6 +473,9 @@ body[theme=dark]{
     border-radius: 6rem 6rem 0 0;
     overflow-y: auto;
     padding: 14rem 15rem 0 15rem;
+}
+.inputArea .textarea img{
+    display: none;
 }
 .inputArea .noticeBox{
     font-size: 14rem;
@@ -550,7 +563,7 @@ body[theme=dark]{
     background-position: center center;
     background-repeat: no-repeat;
 }
-#sendCover{
+.sendCover{
     position: fixed;
     top: 0;
     bottom: 0;
@@ -560,7 +573,7 @@ body[theme=dark]{
     background-color: #00000066;   
     visibility: hidden; 
 }
-#sendCover[open=true]{
+.sendCover[open=true]{
     visibility: visible;
 }
 .sendCover .content{

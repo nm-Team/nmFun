@@ -108,6 +108,9 @@ body[theme=dark]{
     margin: 8rem 20rem 0 20rem;
     text-align: center;
 }
+.uHeaderMain .uHeaderInfos .interaction[data-focus=false] .nega, .uHeaderMain .uHeaderInfos .interaction[data-focus=true] .posi{
+    display: none;
+} 
 .uHeaderMain .uHeaderInfos .interaction button{
     border: 1rem solid #00000000;
     border-radius: 500rem;

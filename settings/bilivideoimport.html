@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='format-detection' content='telephone=no'>
+    <link rel="stylesheet" type="text/css" href="../src/css/page.css">
+    <link rel="stylesheet" type="text/css" href="../src/css/settings.css">
+    <script src="../src/js/info.js"></script>
+</head>
+
+<body class="settings radius">
+    <h1>插入 Bilibili 视频</h1>
+    <p class="listName"></p>
+    <input class="searchBox" id="biliBvid" placeholder="BV 号">
+    <input class="searchBox" id="biliPid" type="number" placeholder="分 P (选填)">
+    <div class="lists">
+        <div class="but" onclick="confirmImport();">
+            <t>插入</t>
+        </div>
+        <p class="tip" id="tipWord">请填写视频的 BV 号并确认插入。</p>
+        <p class="tip"><a href="javascript:" onclick="parent.openNotice('bilivideohelp')">关于如何在 nmFun 帖子中嵌入 Bilibili
+                视频，请参阅帮助文档。</a></p>
+    </div>
+    <script src="../src/js/jquery.min.js"></script>
+    <script src="../src/js/i18next-1.6.3.min.js"></script>
+    <script src="../src/js/language.js"></script>
+    <script src="../src/js/functions.js"></script>
+    <script src="../src/js/settings.js"></script>
+    <script>
+        function confirmImport() {
+            try {
+                if (!biliBvid.value) return tipWord.innerHTML = "请填写 BV 号！";
+                backDiv = getUrlParam("ret");
+                parent.addItemToFileBar(backDiv, new Date().getTime(), "<center>" + biliBvid.value + "</center>", "['bilivideo','" + biliBvid.value + "','" + biliPid.value + "']");
+                parent.closeBrowser(parent.document.getElementsByClassName("biliImportFrame")[parent.document.getElementsByClassName("biliImportFrame").length - 1].getAttribute("data-browser-id"));
+            }
+            catch (err) {
+                writeLog("e", "bilivideoimport.confirmImport", "err");
+            }
+        }
+    </script>
+</body>
+
+</html>
