@@ -34,7 +34,7 @@ function loadPostsList(box) {
     box.attr("data-status", "loading");
     $.ajax({
         type: "GET",
-        url: backEndURL + "/post/listpost.php?pid=" + (lastPid ? lastPid : "") + "&category=" + attr.search.category,
+        url: backEndURL + "/post/listpost.php?pid=" + (lastPid ? lastPid : "") + "&category=" + attr.search.category + "&CodySESSION=" + localStorage.sessionid + "&uid=" + myUid,
         async: true,
         dataType: "json",
         success: function (response, status, request) {
@@ -61,8 +61,8 @@ function loadPostsList(box) {
         </div>
     </div>
     <div class="content">
-        <p class="status">status</p>
-        <a href="${siteURL + "/post/" + info.pid}" target="_blank" onclick="newPostDetailPage('${info.pid}'); return false;" class="text" title="点击来进入帖子详情"><object class="slug">
+        <p class="status"></p>
+        <a href="${siteURL + "/post/" + info.pid}" target="_blank" onclick="newPostDetailPage('${info.pid}',${attr.noOther}); return false;" class="text" title="点击来进入帖子详情"><object class="slug">
             <p class="title"><b>${cleanHTMLTag(info.title)}</b></p>
             <p>${cleanHTMLTag(info.content)}</p>
             </object></a>
@@ -73,7 +73,7 @@ function loadPostsList(box) {
     </div>
     <div class="bottom">
         <div class="word">
-            <p>浏览<span class="viewNum">${info.view}</span>次</p>
+            <p>浏览<span class="viewNum" data-view-num-post-id="${info.pid}">${info.view}</span>次</p>
         </div>
         <div class="buttons">
             <button onclick="likePost($(this),'${info.pid}')" class="likeButton" data-like-post-id="${info.pid}" data-status="${(info.i ? "yes" : "no")}" title="点赞">
@@ -97,12 +97,16 @@ function loadPostsList(box) {
                 <svg class="comment" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
                     <path d="M853.333333 768c35.413333 0 64-20.650667 64-55.978667V170.581333A63.978667 63.978667 0 0 0 853.333333 106.666667H170.666667C135.253333 106.666667 106.666667 135.253333 106.666667 170.581333v541.44C106.666667 747.285333 135.338667 768 170.666667 768h201.173333l110.016 117.44a42.752 42.752 0 0 0 60.586667 0.042667L651.904 768H853.333333z m-219.029333-42.666667h-6.250667l-115.797333 129.962667c-0.106667 0.106667-116.010667-129.962667-116.010667-129.962667H170.666667c-11.776 0-21.333333-1.621333-21.333334-13.312V170.581333A21.205333 21.205333 0 0 1 170.666667 149.333333h682.666666c11.776 0 21.333333 9.536 21.333334 21.248v541.44c0 11.754667-9.472 13.312-21.333334 13.312H634.304zM341.333333 490.666667a42.666667 42.666667 0 1 0 0-85.333334 42.666667 42.666667 0 0 0 0 85.333334z m170.666667 0a42.666667 42.666667 0 1 0 0-85.333334 42.666667 42.666667 0 0 0 0 85.333334z m170.666667 0a42.666667 42.666667 0 1 0 0-85.333334 42.666667 42.666667 0 0 0 0 85.333334z" p-id="5116"></path>
                 </svg>
-                <span class="commentNum"data-comment-num-post-id="${info.pid}">${info.comment}</span>
+                <span class="commentNum" data-comment-num-post-id="${info.pid}">${info.comment}</span>
             </button>
         </div>
     </div>
 </div>`;
                     box.children(".main").append(new_element);
+                    $("[data-view-num-post-id=" + info.pid + "]").html(info['view']);
+                    $(":not([data-ignore=true]) [data-like-num-post-id=" + info.pid + "]").html(info['like']);
+                    $("[data-like-post-id=" + info.pid + "]:not([data-ignore=true])").attr("data-status", (info['liked'] ? "yes" : "no"));
+                    $("[data-comment-num-post-id=" + info.pid + "]").html(info['comment']);
                 });
                 if (response['data'].length == 0) box.attr("data-status", "nomore");
                 else box.attr("data-status", "undefined");
@@ -152,7 +156,6 @@ function newPostDetailPage(pid, noOther = false, aheadTo = "") {
 function refreshPostArea(pid) {
     newAjax("POST", backEndURL + "/post/getpost.php", true, "pid=" + pid, {}, function (data) {
         document.getElementById('postFrame' + pid).getElementsByClassName("postMainSke")[0].style.display = "none";
-        // setPostArea(document.getElementById('postFrame' + pid).getElementsByClassName("postMainReal")[0], data['data'], { slug: false, click: false, fullmedia: false });
         if (data['status'] == "successful") {
             pData = data['data'];
             $("#postFrameMenuButton" + pid).attr("onclick", `postContextMenu('post', '${pid}', '${pData['title']}', ${(pData['uid'])}, this)`);
@@ -181,7 +184,7 @@ function refreshPostArea(pid) {
                 <div class="buttons"><button hidden onclick="postContextMenu('post', '${pid}', '', false, this);" title="选项"><i class="material-icons">more_vert</i></button></div>
             </div>
             <div class="content">
-                <p class="status">[DEBUG] 为作者显示帖子已审核状态</p>
+                <p class="status"></p>
                 <object class="">
                     <p class="title">${cleanHTMLTag(pData['title'])}</p>
                     <p>${contentHandled}</p>
@@ -193,7 +196,7 @@ function refreshPostArea(pid) {
             </div>
             <div class="bottom">
                 <div class="word">
-                    <p>浏览<span class="viewNum">${pData['view']}</span>次</p>
+                    <p>浏览<span class="viewNum" data-view-num-post-id="${pid}"></span>次</p>
                 </div>
                 <div class="buttons">
                     <button onclick="likePost($(this),'${pid}')" data-like-post-id="${pid}" class="likeButton" title="点赞">
@@ -231,6 +234,10 @@ function refreshPostArea(pid) {
             <div class="tags">`+ tagsHTML + `</div> </div>
             </div><div class="card interactionBar"><button onclick="newMsgBox('开发中')">评论 <span class="commentNum" data-comment-num-post-id="${pid}">` + pData['comment'] + `</span></button><button onclick="newMsgBox('开发中')">赞 <span class="likeNum" data-like-num-post-id="${pid}">` + pData['like'] + `</span></button> </div>
             `;
+            $("[data-view-num-post-id=" + pid + "]").html(pData['view']);
+            $(":not([data-ignore=true]) [data-like-num-post-id=" + pid + "]").html(pData['like']);
+            $("[data-like-post-id=" + pid + "]:not([data-ignore=true])").attr("data-status", (pData['liked'] ? "yes" : "no"));
+            $("[data-comment-num-post-id=" + pid + "]").html(pData['comment']);
             document.getElementById('postFrame' + pid).getElementsByClassName("bottomBox")[0].style.display = "block";
 
         }
@@ -370,52 +377,58 @@ function postContextMenu(type, id, poName, uid, ele) {
 }
 
 function editMyPost(pid) {
-    logRequire();
-    alert("nm，编辑功能写起来好麻烦，请您删除后重新发布，谢谢", "", "好", "", "nm", "");
+    if (logRequire()) {
+        alert("nm，编辑功能写起来好麻烦，请您删除后重新发布，谢谢", "", "好", "", "nm", "");
+    }
 }
 
 function deleteMyPostAlert(pid, poName) {
-    logRequire();
-    alert("确定要删除帖子<b>《" + poName + "》</b>吗？", "删除帖子", "删除", "deleteMyPost('" + pid + "')", "取消", "");
+    if (logRequire()) {
+        alert("确定要删除帖子<b>" + (poName ? "《" + poName + "》" : "") + "</b>吗？<br><b style='color:var(--red)'>警告：此操作无法撤销。</b>", "删除帖子", "删除", "deleteMyPost('" + pid + "','" + poName + "')", "取消", "");
+    }
 }
 
-function deleteMyPost(pid) {
-    logRequire();
-    $("body").append(`
+function deleteMyPost(pid, poName) {
+    if (logRequire()) {
+        $("body").append(`
         <div id="delCoverForPost${pid}" class="sendCover unscaleArea" noselect open="true">
             <div class="content">
                 <i></i>
                 <p>正在删除</p>
             </div>
         </div>`);
-    newAjax("POST", backEndURL + "/post/delpost.php", true, "pid=" + pid, "", function () {
-        newMsgBox("删除帖子成功！");
-        document.getElementById(`delCoverForPost${pid}`).outerHTML = "";
-        writeLog("i", "deleteMyPost(" + pid + ")", "success");
-        $("[data-postid=" + pid + "]").remove();
-        closeBox('pageRight', 'postFrame' + pid);
-    },
-        function () {
-            newMsgBox("删除帖子失败");
+        newAjax("POST", backEndURL + "/post/delpost.php", true, "pid=" + pid, "", function () {
+            newMsgBox("删除帖子成功！");
             document.getElementById(`delCoverForPost${pid}`).outerHTML = "";
-            writeLog("i", "deleteMyPost(" + pid + ")", "error");
-        })
+            writeLog("i", "deleteMyPost(" + pid + ")", "success");
+            $("[data-postid=" + pid + "]").remove();
+            closeBox('pageRight', 'postFrame' + pid);
+        },
+            function () {
+                newMsgBox("删除帖子失败");
+                document.getElementById(`delCoverForPost${pid}`).outerHTML = "";
+                writeLog("i", "deleteMyPost(" + pid + ")", "error");
+            });
+    }
 }
 
 // 点赞
 function likePost(ele, pid) {
-    logRequire();
-    if ($("[data-like-post-id=" + pid + "]").attr("data-ignore") == "true") {
-        return;
+    if (logRequire()) {
+        if ($("[data-like-post-id=" + pid + "]").attr("data-ignore") == "true") {
+            newMsgBox("点赞冷却中，请稍后再试");
+            return;
+        }
+        if (ele.attr("data-status") == "yes") {
+            likeOpe = "unlike";
+        }
+        else likeOpe = "like";
+        $("[data-like-post-id=" + pid + "]").attr("data-ignore", "true");
+        $("[data-like-post-id=" + pid + "]").attr("data-status", (likeOpe == "like" ? "yes" : "no"));
+        newLikeNum = (Number($(":not([data-ignore=true]) [data-like-num-post-id=" + pid + "]")[0].innerHTML) + (likeOpe == "like" ? 1 : -1));
+        $(":not([data-ignore=true]) [data-like-num-post-id=" + pid + "]").html(newLikeNum);
+        newAjax("POST", backEndURL + "/post/like.php", true, "pid=" + pid + (likeOpe == "unlike" ? "&unlike=unlike" : ""), "", function () { writeLog("i", "likePost", "like post " + pid + " success"); $("[data-like-num-post-id=" + pid + "]").html(newLikeNum); $("[data-like-post-id=" + pid + "]").attr("data-status", (likeOpe == "like" ? "yes" : "no")); $("[data-like-post-id=" + pid + "]").attr("data-ignore", "false"); }, function () { $("[data-like-post-id=" + pid + "]").attr("data-status", (likeOpe != "like" ? "yes" : "no")); writeLog("i", "likePost", "like post " + pid + " error"); $("[data-like-post-id=" + pid + "]").attr("data-ignore", "false"); $(":not([data-ignore=true]) [data-like-num-post-id=" + pid + "]").html((Number($(":not([data-ignore=true]) [data-like-num-post-id=" + pid + "]")[0].innerHTML) + (likeOpe != "like" ? 1 : -1))); });
     }
-    if (ele.attr("data-status") == "yes") {
-        likeOpe = "unlike";
-    }
-    else likeOpe = "like";
-    $("[data-like-post-id=" + pid + "]").attr("data-ignore", "true");
-    $("[data-like-post-id=" + pid + "]").attr("data-status", (likeOpe == "like" ? "yes" : "no"));
-    $("[data-like-num-post-id=" + pid + "]").html((Number($("[data-like-num-post-id=" + pid + "]")[0].innerHTML) + (likeOpe == "like" ? 1 : -1)));
-    newAjax("POST", backEndURL + "/post/like.php", true, "pid=" + pid, "", function () { writeLog("i", "likePost", "like post " + pid + " success"); $("[data-like-post-id=" + pid + "]").attr("data-ignore", "true"); }, function () { $("[data-like-post-id=" + pid + "]").attr("data-status", (likeOpe != "like" ? "yes" : "no")); writeLog("i", "likePost", "like post " + pid + " error"); $("[data-like-post-id=" + pid + "]").attr("data-ignore", "false"); $("[data-like-num-post-id=" + pid + "]").html((Number($("[data-like-num-post-id=" + pid + "]")[0].innerHTML) + (likeOpe != "like" ? 1 : -1))); });
 }
 
 // 点踩

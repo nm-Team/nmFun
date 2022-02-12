@@ -45,8 +45,8 @@ uPageTemp = `
                 <button class="avatar" style="background-color: url('');" onclick="localStorage.imgSrc='https://img.cncn3.cn/timg'; newBrowser('imgviewer.html',false,false,false)"></button>
                 <div class="name">XYZ1024</div>
                 <div class="data">
-                    <button>关注<span class="num" data-following-num-uid="{{uid}}"><span class="skeleton" style="width: 2em"></span></span></button>
-                    <button>粉丝<span class="num" data-followers-num-uid="{{uid}}"><span class="skeleton" style="width: 2em"></span></span></button>
+                    <button>关注<span class="num" data-following-num-uid="{{uid}}"><span class="skeleton" style="width: 10em"></span></span></button>
+                    <button>粉丝<span class="num" data-followers-num-uid="{{uid}}"><span class="skeleton" style="width: 10em"></span></span></button>
                 </div>
                 <div class="interaction" data-my-following-to-uid="{{uid}}" data-follow="false true">
                     <button class="followButton nega" title="关注"><i class="material-icons">add</i><span>关注</span></button>

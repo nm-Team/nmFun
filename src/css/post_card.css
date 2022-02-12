@@ -225,6 +225,7 @@ body[theme=dark]{
     margin-top: 9rem;
     padding: 7rem 20rem;
     background: var(--card-bgcolor);
+    color: var(--card);
     font-size: 14rem;
     border-radius: 4rem;
 }
@@ -387,7 +388,7 @@ body[theme=dark]{
     display: none;
 }
 .bottomBox .bottomDrawer .more{
-    transition: height 0.4s;
+    transition: all 0.4s;
     height: 0;
     visibility: hidden;
 }

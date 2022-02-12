@@ -716,3 +716,12 @@ function setStickersSelBox(div) {
         }
     });
 }
+
+function jumpStickers(divId, setId) {
+    div = $("#" + divId);
+    setDivPlace = div.find("[data-setid=" + setId + "]")[0].getBoundingClientRect().top - div.find(".stks")[0].getBoundingClientRect().top;
+    console.log(setDivPlace);
+    div.find(".stks").animate({
+        scrollTop: div.find(".stks").scrollTop() + setDivPlace
+    }, { duration: 300, easing: "swing" });
+}

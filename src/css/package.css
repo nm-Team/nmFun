@@ -124,7 +124,7 @@ body[theme=dark]{
 }
 .stickersChoose .stks{
     flex-grow: 1;
-    padding: 10rem 20rem;
+    padding: 0rem 20rem;
     overflow-y: auto;
     overflow-y: overlay;
 }

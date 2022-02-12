@@ -17,7 +17,7 @@ $.ajax({
             categoryList.forEach(element => {
                 indexMoreTypes.innerHTML += `<label for="indexType_${element['id']}"><input id="indexType_${element['id']}" onclick="indexSwitchType('${element['id']}');" type="radio" name="indexType"><span>${element['name']}</span></label>`;
                 indexMainLists.innerHTML += `<div id="indexPostsList_${element['id']}"></div>`;
-                initPostsList($("#indexPostsList_" + element['id']), { "type": "post", "search": { "category": element['id'] } });
+                initPostsList($("#indexPostsList_" + element['id']), { "type": "post", "search": { "category": element['id'] }, "noOther": true });
             });
             // 选择默认分类
             if (!document.getElementById(localStorage.typeSelected))
