@@ -108,7 +108,7 @@ body[theme=dark]{
     margin: 8rem 20rem 0 20rem;
     text-align: center;
 }
-.uHeaderMain .uHeaderInfos .interaction[data-focus=false] .nega, .uHeaderMain .uHeaderInfos .interaction[data-focus=true] .posi{
+.uHeaderMain .uHeaderInfos .interaction[data-follow=false] .nega, .uHeaderMain .uHeaderInfos .interaction[data-follow=true] .posi{
     display: none;
 } 
 .uHeaderMain .uHeaderInfos .interaction button{

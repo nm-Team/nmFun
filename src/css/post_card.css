@@ -1,4 +1,7 @@
 body{
+    --postsListBar-bgcolor: #fff;
+    --postsListBar-hover-bgcolor: #eee;
+    --postsListBar: #222;
     --content-link: rgb(0, 112, 218);
     --bottomBox-shadow: #1414150f 0rem 8rem 16rem;
     --bottomBox-fakeinput-bgcolor: #fcfcfc;
@@ -12,6 +15,9 @@ body{
     --usertag: #e3bc0c;
 }
 body[theme=dark]{
+    --postsListBar-bgcolor: #262626;
+    --postsListBar-hover-bgcolor: #222;
+    --postsListBar: #eee;
     --content-link: rgb(47, 148, 243);
     --bottomBox-shadow: #00000066 0rem 8rem 14rem;
     --bottomBox-fakeinput-bgcolor: #272727;
@@ -36,6 +42,34 @@ body[theme=dark]{
 .postsList[data-status=loading] .loading, .postsList[data-status=undefined] .loading, .postsList[data-status=error] .error, .postsList[data-status=nomore] .nomore{
     display: block;
 } 
+.postsListBar{
+    position: absolute;
+    bottom: 12rem;
+    right: 10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+.postsListBar button{
+    width: 35rem;
+    height: 0;
+    padding-bottom: 35rem;
+    margin: 3rem 0rem;
+    border-radius: 20rem;
+    background-color: var(--postsListBar-bgcolor);
+    box-shadow: #00000033 1rem 1rem 5rem;
+}
+.postsListBar button:hover, .postsListBar button:focus-visible{
+    background-color: var(--postsListBar-hover-bgcolor);
+}
+.postsListBar button i{
+    font-size: 24rem;
+    position: absolute;
+    left: 5.5rem;
+    top: 8rem;
+    bottom: 79rem;
+    color: var(--postsListBar);
+}
 .avatarBox .name{
     display: flex;
     flex-direction: row;

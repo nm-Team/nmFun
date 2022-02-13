@@ -14,6 +14,7 @@ $.ajax({
             // 首页分类
             moreCategoryList = eval(response['info']['category']);
             categoryList = systemCategoryList.concat(moreCategoryList);
+            initPostsListMonitor($(".postsListScrollMonitor"));
             categoryList.forEach(element => {
                 indexMoreTypes.innerHTML += `<label for="indexType_${element['id']}"><input id="indexType_${element['id']}" onclick="indexSwitchType('${element['id']}');" type="radio" name="indexType"><span>${element['name']}</span></label>`;
                 indexMainLists.innerHTML += `<div id="indexPostsList_${element['id']}"></div>`;
