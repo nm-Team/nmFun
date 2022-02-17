@@ -541,7 +541,11 @@ function logRequire() {
 }
 
 function cleanHTMLTag(text) {
-    text = text.replace(/\</g, "&lt;").replace(/\>/g, "&gt;");
+    text = text.replace(/<[\/\s]*(?:(?!div|br)[^>]*)>/g, '');
+    text = text.replace(/<\s*div[^>]*>/g, '<div>');
+    text = text.replace(/<\s*div[^>]*>/g, '<div>');
+    text = text.replace(/<[\/\s]*div[^>]*>/g, '<br>');
+    text = text.replace(/<br><br>/g, '<br>');
     return text;
 }
 
@@ -647,6 +651,39 @@ function newAjax(type, url, session, getParam, postParam, succeedF = function ()
         async: true,
         data: postParam,
         crossDomain: true,
+        datatype: "jsonp",
+        success: function (data) {
+            let status = data['status'];
+            if (status == "successful" || status == "success") {
+                console.log("ajax接收数据成功");
+                writeLog("i", "newAjax", "ok");
+                succeedF(data);
+            } else {
+                console.log("ajax接收数据失败");
+                writeLog("e", "newAjax", "error");
+                faliureF(data);
+            }
+            return data;
+        },
+        error: function () {
+            newMsgBox("服务器故障，请重试。");
+            writeLog("e", "newAjax", "error(network)");
+            faliureF("Something wrong with the server");
+            return null;
+        }
+    });
+}
+
+function newFileAjax(type, url, session, getParam, postParam, succeedF = function () { }, faliureF = function () { }) {
+    sessionid = localStorage.sessionid;
+    writeLog("i", "newAjax", (type + ", " + url + ", " + session + ", " + getParam + ", " + JSON.stringify(postParam) + ", " + succeedF + ", " + faliureF));
+    $.ajax(url + "?" + (session ? "CodySESSION=" + sessionid + "&" : "") + getParam, {
+        type: type,
+        async: true,
+        data: postParam,
+        crossDomain: true,
+        contentType: false,
+        processData: false,
         datatype: "jsonp",
         success: function (data) {
             let status = data['status'];

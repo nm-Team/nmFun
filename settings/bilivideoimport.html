@@ -36,7 +36,7 @@
             try {
                 if (!biliBvid.value) return tipWord.innerHTML = "请填写 BV 号！";
                 backDiv = getUrlParam("ret");
-                parent.addItemToFileBar(backDiv, new Date().getTime(), "<center>" + biliBvid.value + "</center>", "['bilivideo','" + biliBvid.value + "','" + biliPid.value + "']");
+                parent.addItemToFileBar(backDiv, { "type": "bilivideo", "bvid": biliBvid.value, "p": biliPid.value }, "<center>" + biliBvid.value + "</center>");
                 parent.closeBrowser(parent.document.getElementsByClassName("biliImportFrame")[parent.document.getElementsByClassName("biliImportFrame").length - 1].getAttribute("data-browser-id"));
             }
             catch (err) {

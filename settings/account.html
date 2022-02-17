@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title data-i18n="settings.account.title"></title>
+    <title>账号</title>
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
     <meta name='apple-mobile-web-app-capable' content='yes'>
     <meta name='apple-mobile-web-app-status-bar-style' content='black'>
@@ -14,7 +14,7 @@
 </head>
 
 <body class="settings radius">
-    <h1 data-i18n="settings.account.title"></h1>
+    <h1>账号</h1>
     <div class="accountBox">
         <i id="settingAvatar"></i>
         <div class="right">
@@ -22,27 +22,28 @@
             <p class="uid" id="settingUid" tabindex="1"></p>
         </div>
     </div>
-    <p class="listName" data-i18n="settings.account.account"></p>
+    <p class="listName">管理账号</p>
     <div class="lists">
-        <div class="but" onclick="parent.alert('确定要注销账号吗？','注销','是','localStorage.sessionid=``;window.location.href=``;','取消')">
-            <t data-i18n="settings.account.logout"></t>
+        <div class="but"
+            onclick="parent.alert('确定要注销账号吗？','注销','是','localStorage.sessionid=``;window.location.href=``;','取消')">
+            <t>注销账号</t>
         </div>
         <div class="but" onclick="goToPage('account_editinfo.html')">
-            <t data-i18n="settings.account.editInfo"></t>
+            <t>编辑账号信息</t>
         </div>
     </div>
-    <p class="listName" data-i18n="settings.account.jumpt"></p>
+    <p class="listName">NMTEAM ACCOUNTS CENTER</p>
     <div class="lists">
         <div class="but"
             onclick="parent.newBrowser('https://accounts.nmteam.xyz/info.html?sessionid='+getCookie('sessionid'), undefined, false, true)">
-            <t data-i18n="settings.account.jump"></t>
+            <t>到 nmTeam Accounts Center 管理账号信息</t>
         </div>
-        <p class="tip" data-i18n="settings.account.tip.jump"></p>
-        <p class="tip" data-i18n="settings.account.tip.noLogOut"></p>
+        <p class="tip">nmFun 使用 nmTeam Account 作为登录凭据。因此，要编辑您的昵称、头像或修改您的密码，请转到
+            nmTeam Accounts Center 管理账号信息。</p>
+        <p class="tip">说明：在跳转到的 nmTeam Account Center 登出账号后需重新加载 nmFun 页面才能在
+            nmFun 彻底登出账号。在 nmTeam Account Center 登录的其它账号不会同步到 nmFun，要使用其他账号登录，请使用“切换账号”。</p>
     </div>
     <script src="../src/js/jquery.min.js"></script>
-    <script src="../src/js/i18next-1.6.3.min.js"></script>
-    <script src="../src/js/language.js"></script>
     <script src="../src/js/functions.js"></script>
     <script src="../src/js/settings.js"></script>
     <script>

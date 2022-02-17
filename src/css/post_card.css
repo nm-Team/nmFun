@@ -51,6 +51,7 @@ body[theme=dark]{
     justify-content: end;
 }
 .postsListBar button{
+    position: relative;
     width: 35rem;
     height: 0;
     padding-bottom: 35rem;
@@ -58,6 +59,16 @@ body[theme=dark]{
     border-radius: 20rem;
     background-color: var(--postsListBar-bgcolor);
     box-shadow: #00000033 1rem 1rem 5rem;
+    transition: all 0.5s;
+}
+.postsListBar button[data-hidden=true]{
+    visibility: hidden;
+    width: 0;
+    height: 0;
+    padding-bottom: 0;
+    margin-left: 17.5rem;
+    box-shadow: none;
+    overflow: hidden;
 }
 .postsListBar button:hover, .postsListBar button:focus-visible{
     background-color: var(--postsListBar-hover-bgcolor);
@@ -66,9 +77,15 @@ body[theme=dark]{
     font-size: 24rem;
     position: absolute;
     left: 5.5rem;
-    top: 8rem;
+    top: 5.5rem;
     bottom: 79rem;
     color: var(--postsListBar);
+    transition: all 0.5s;
+}
+.postsListBar button[data-hidden=true] i{
+    visibility: hidden;
+    transform: scale(0)translate(-50%, -50%);
+    opacity: 0;
 }
 .avatarBox .name{
     display: flex;
@@ -205,6 +222,42 @@ body[theme=dark]{
 .cardBox.postCardBox .content .media .medias[type=x3] li, .cardBox.postCardBox .content .media .medias[type=x3]:after{
     width: calc(33.3333333% - 3rem);
     padding-bottom: calc(33.3333333% - 3rem);
+}
+.biliVideoCon{
+    position: relative;
+    width: 100%;
+    height: 30rem;
+    padding-top: 56%;
+}
+.biliVideo{
+    position: absolute;
+    top: 0;
+    bottom: 30rem;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: calc(100% - 30rem);
+}
+.biliVideoNote{
+    position: absolute;
+    bottom: 0rem;
+    left: 0;
+    right: 0;
+    margin: 0rem;
+}
+.biliVideoNote span{
+    color: var(--card-bottom);
+    font-size: 12rem;
+    padding: 4rem 0;
+}
+.biliVideoNote button{
+    float: right;
+    color: var(--card-bottom);
+    font-size: 12rem;
+    padding: 4rem;
+    border-radius: 4rem;
+    background: none;
+    border: 1rem solid var(--card-bottom);
 }
 .cardBox.postCardBox .bottom{
     align-items: center;
@@ -352,6 +405,97 @@ body[theme=dark]{
 }
 .card.comments .comment .content{
     padding-left: 36rem;
+}
+.likeAni{
+    display: block;
+    visibility: hidden;
+    width: 20rem;
+    height: 20rem;
+    overflow: visible;
+    position: fixed;
+    z-index: 1003;
+}
+.likeAni .f{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url(../img/nmFun_like_main.svg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    animation: likeAni_f 2s;
+}
+.likeAni .b{
+    position: fixed;
+    visibility: hidden;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url(../img/nmFun_like_background.svg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    animation: likeAni_b 2s;
+}
+@keyframes likeAni_f {
+    0%{
+        visibility: visible;
+        opacity: 0;
+        width: 20rem;
+        height: 20rem;
+        transform: translate(-50%, -50%);
+    }
+    10%{
+        opacity: 1;
+    }
+    50%{
+        width: 100rem;
+        height: 100rem;
+    }
+    60%{
+        transform: translate(-50%, -50%)rotate(-20deg);
+    }
+    70%{
+        transform: translate(-50%, -50%)rotate(6deg);
+    }
+    80%{
+        opacity: 1;
+        width: 100rem;
+        height: 100rem;
+        transform: translate(-50%, -50%);
+        visibility: visible;
+    }
+    100%{
+        opacity: 0;
+        width: 100rem;
+        height: 100rem;
+        visibility: hidden;
+    }
+}
+@keyframes likeAni_b {
+    0%{
+       visibility: hidden;
+       opacity: 0;
+    }
+    63%{
+        visibility: visible;
+        opacity: 0;
+        width: 200rem;
+        height: 200rem;
+    }
+    67%{
+        opacity: 0.8;
+    }
+    80%{
+        opacity: 0.8;
+    }
+    100%{
+        opacity: 0;
+        visibility: hidden;
+        width: 250rem;
+        height: 250rem;
+    }
 }
 .bottomBox{
     position: absolute;

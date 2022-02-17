@@ -2,11 +2,12 @@ siteURL = "https://fun.nmteam.xyz";
 accountClient = "https://accounts.nmteam.xyz";
 backEndURL = "https://funapi.nmteam.xyz";
 avatarURL = "https://api.nmteam.xyz/avatar/?id={id}";
+attachURL = backEndURL + "/attachment/";
 debugMode = true;
 systemCategoryList = [{ "id": "focus", "name": "关注" }, { "id": "", "name": "全部" }, { "id": "selected", "name": "精选" }, { "id": "hot", "name": "热榜" }]
 version = {
     version: "0.2_dev",
-    versionNum: "75",
+    versionNum: "88",
     branch: "co_refresh",
     betaVersion: true
 }
@@ -16,6 +17,7 @@ if (localStorage.debugBackEndURL) {
     backEndURL = localStorage.debugBackEndURL;
     writeLog("d", "Set debug API", backEndURL);
     debugInfo.innerHTML += "debug API enabled ";
+    attachURL = backEndURL + "/attachment/";
 }
 if (localStorage.debugAccountClient) {
     accountClient = localStorage.debugAccountClient;

@@ -7,7 +7,7 @@ function newUserInfoPage(uid, uNick, noOther = false) {
         }
         catch (error) { // 没有则创建
             new_element = document.createElement('div');
-            new_element.setAttribute('id', "userInfoFrame" + uid);
+            new_element.setAttribute('id', "userInfoFrame_" + uid);
             new_element.setAttribute('class', 'userFrame box rightBox');
             new_element.setAttribute('con', 'none');
             new_element.setAttribute('totallyclose', 'true');
@@ -16,7 +16,7 @@ function newUserInfoPage(uid, uNick, noOther = false) {
             new_element.setAttribute('noother', noOther);
             new_element.innerHTML = uPageTemp.replace(/{{uid}}/g, uid).replace(/{{nick}}/g, uNick).replace(/{{avatar}}/g, avatarURL.replace(/{id}/g, uid));
             pageRight.appendChild(new_element);
-            focusBox("pageRight", "userInfoFrame" + uid, noOther);
+            focusBox("pageRight", "userInfoFrame_" + uid, noOther);
         };
     }
     catch (err) {
@@ -27,7 +27,7 @@ function newUserInfoPage(uid, uNick, noOther = false) {
 uPageTemp = `
 <header>
     <div class="left">
-        <button class="backButton" title="返回" onclick="closeBox('pageRight','userPage_{{uid}}')" oncontextmenu="quickBack('pageRight',this)" ontouchstart="longPressToDo(function(){quickBack('pageRight')})" ontouchend="longPressStop()"><i class="material-icons"></i></button>
+        <button class="backButton" title="返回" onclick="closeBox('pageRight','userInfoFrame_{{uid}}')" oncontextmenu="quickBack('pageRight',this)" ontouchstart="longPressToDo(function(){quickBack('pageRight')})" ontouchend="longPressStop()"><i class="material-icons"></i></button>
         <div class="nameDiv">
             <p class="title">{{nick}}</p>
             <p class="little"></p>

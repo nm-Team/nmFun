@@ -11,8 +11,14 @@ function initPostsList(box, attr) {
 function initPostsListMonitor(box) {
     new_element = document.createElement("div");
     new_element.className = "postsListBar";
-    new_element.innerHTML = `<button class="refresh" onclick="refreshPostsList(getActivePostsList($('#${box[0].id}')))"><i class="material-icons">refresh</i></button><button class="top" onclick="getActivePostsList($('#${box[0].id}')).scrollTop=0"><i class="material-icons">top</i></button>`;
+    new_element.innerHTML = `<button class="refresh" onclick="refreshPostsList(getActivePostsList($('#${box[0].id}')))"><i class="material-icons">refresh</i></button><button class="top" onclick="($('#${box[0].id}')).animate({scrollTop: 0}, 500);" data-hidden="true"><i class="material-icons">arrow_upward</i></button>`;
     box.append(new_element);
+}
+
+function refreshPostsList(box) {
+    newMsgBox("正在刷新...");
+    box.find(".main").empty();
+    loadPostsList(box);
 }
 
 function getActivePostsList(d) {
@@ -21,7 +27,9 @@ function getActivePostsList(d) {
 
 // postsList 滚动事件
 $(".postsListScrollMonitor").on('scroll', function (event) {
-    postsListOnScroll(getActivePostsList($this));
+    postsListOnScroll(getActivePostsList($(this)));
+    if ($(this).scrollTop() < $(this).outerHeight()) $(this).find(".postsListBar .top").attr("data-hidden", "true");
+    else $(this).find(".postsListBar .top").attr("data-hidden", "false");
 })
 
 function postsListOnScroll(box) {
@@ -237,7 +245,7 @@ function refreshPostArea(pid) {
                 tagsHTML += `<a href="javascript:" onclick="newMsgBox('开发中')">` + currentValue + `</a>`;
             });
             document.getElementById('postFrame' + pid).getElementsByClassName("postRelated")[0].innerHTML = `
-            <div class="card tagCard"><div class="content"><a class="ca" href="javascript:" onclick="newMsgBox('开发中')" >`+ pData['categoryName'] + `</a>
+            <div class="card tagCard"><div class="content"><a class="ca" href="javascript:" onclick="newMsgBox('开发中')" >`+ pData['category'] + `</a>
             <div class="tags">`+ tagsHTML + `</div> </div>
             </div><div class="card interactionBar"><button onclick="newMsgBox('开发中')">评论 <span class="commentNum" data-comment-num-post-id="${pid}">` + pData['comment'] + `</span></button><button onclick="newMsgBox('开发中')">赞 <span class="likeNum" data-like-num-post-id="${pid}">` + pData['like'] + `</span></button> </div>
             `;
@@ -342,21 +350,23 @@ postsErrorBoxHTML = `
 function setMedia(mediaJson, pid = 0) {
     try {
         // 设置media
-        mediasO = eval(mediaJson);
+        mediasO = mediaJson;
         mediasHTML = "";
         specialMediasHTML = "";
         mNum = 0;
         mediasO.forEach(function (currentValue, index, arr) {
             mType = currentValue['type'];
-            mContent = currentValue['src'];
-            if (mType == "img") {
+            if (mType == "image") {
+                mContent = attachURL + currentValue['src'];
                 mediasHTML += `<li style="background-image:url('` + mContent + `')"><img src="` + mContent + `" tabindex="0" onkeydown="divClick(this, event)"><outline></outline></li>`;
                 ++mNum;
             } else if (mType == "video") {
                 mediasHTML += `<li style="background-image:url('')"><video src="` + mContent + `" tabindex="0" controls="controls" onkeydown="divClick(this, event)">请更新你的浏览器，这样才可以查看视频。</video><outline></outline></li>`;
                 ++mNum;
-            } else if (mType == "biliVideo")
-                specialMediasHTML += biliVideoTemplate.replace(/{{bvid}}/g, mContent.split(",")[0]).replace(/{{page}}/g, mContent.split(",")[1].replace(",", ""));
+            } else if (mType == "bili") {
+                mContent = currentValue['src'];
+                specialMediasHTML += biliVideoTemplate.replace(/{{bvid}}/g, mContent.bvid).replace(/{{page}}/g, mContent.p);
+            }
         });
         if (mNum == 0) mediaType = 0;
         else if (mNum == 1) mediaType = 1;
@@ -368,8 +378,10 @@ function setMedia(mediaJson, pid = 0) {
         writeLog("e", "load post media in " + pid + "error", err);
         mediasHTML = specialMediasHTML = mNum = "";
     };
-    return { "mediasHTML": mediasHTML, "specialMediasHTML": specialMediasHTML, "mNum": mNum, };
+    return { "mediasHTML": mediasHTML, "specialMediasHTML": specialMediasHTML, "mNum": mediaType, };
 }
+
+biliVideoTemplate = `<div class="biliVideoCon" noselect><iframe class="biliVideo" frameborder="no" scrolling="no" src="https://player.bilibili.com/player.html?bvid={{bvid}}&page={{page}}&as_wide=1&high_quality=1" allowfullscreen=""></iframe><div class="biliVideoNote"><span>视频来自 Bilibili</span><button onclick="window.open('https://www.bilibili.com/video/{{bvid}}?p={{page}}&ref=nmfun')" title="在 bilibili.com 查看视频">转到</button></div></div>`;
 
 function postContextMenu(type, id, poName, uid, ele) {
     if (isNaN(myUid)) {
@@ -395,7 +407,7 @@ function deleteMyPostAlert(pid, poName) {
     }
 }
 
-function deleteMyPost(pid, poName) {
+function deleteMyPost(pid, poName, withMsg = true) {
     if (logRequire()) {
         $("body").append(`
         <div id="delCoverForPost${pid}" class="sendCover unscaleArea" noselect open="true">
@@ -405,7 +417,7 @@ function deleteMyPost(pid, poName) {
             </div>
         </div>`);
         newAjax("POST", backEndURL + "/post/delpost.php", true, "pid=" + pid, "", function () {
-            newMsgBox("删除帖子成功！");
+            if (withMsg) newMsgBox("删除帖子" + (poName ? " <b>《" + poName + "》</b> " : "") + "成功！");
             document.getElementById(`delCoverForPost${pid}`).outerHTML = "";
             writeLog("i", "deleteMyPost(" + pid + ")", "success");
             $("[data-postid=" + pid + "]").remove();
@@ -422,7 +434,7 @@ function deleteMyPost(pid, poName) {
 // 点赞
 function likePost(ele, pid) {
     if (logRequire()) {
-        if ($("[data-like-post-id=" + pid + "]").attr("data-ignore") == "true") {
+        if (ele.attr("data-ignore") == "true") {
             newMsgBox("点赞冷却中，请稍后再试");
             return;
         }
@@ -432,7 +444,33 @@ function likePost(ele, pid) {
         else {
             likeOpe = "like";
             // 展示点赞动画
-            
+            if (localStorage.showLikeAni == "true") {
+                $("body .scaleArea").append(`<div class="likeAni" data-like-ani-pid-${pid}>
+                <div class="f"></div>
+                <div class="b"></div>
+            </div>
+            <style>
+            .likeAni[data-like-ani-pid-${pid}]{
+                animation: data-like-ani-${pid} 2s;
+            }
+            @keyframes data-like-ani-${pid}{
+                0%{
+                    top: ${ele.find("svg")[0].getBoundingClientRect().top}px;
+                    left: ${ele.find("svg")[0].getBoundingClientRect().left}px;
+                }
+                60%{
+                    top: 50vh;
+                    left: 50vw;
+                    transform: translate(-50%, -50%);
+                }
+                100%{
+                    top: 50vh;
+                    left: 50vw;
+                    transform: translate(-50%, -50%);
+                }
+            }
+            </style>`);
+            }
         }
         $("[data-like-post-id=" + pid + "]").attr("data-ignore", "true");
         $("[data-like-post-id=" + pid + "]").attr("data-status", (likeOpe == "like" ? "yes" : "no"));

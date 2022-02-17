@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title data-i18n="settings.personally.title"></title>
+    <title>个性化</title>
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
     <meta name='apple-mobile-web-app-capable' content='yes'>
     <meta name='apple-mobile-web-app-status-bar-style' content='black'>
@@ -14,11 +14,11 @@
 </head>
 
 <body class="settings radius">
-    <h1 data-i18n="settings.personally.title"></h1>
-    <p class="listName" data-i18n="settings.personally.display.title"></p>
+    <h1>个性化</h1>
+    <p class="listName">显示偏好</p>
     <div class="lists">
         <div class="but">
-            <t data-i18n="settings.personally.display.thinMode"></t>
+            <t>宽屏视图中启用单屏</t>
             <t2 class="right" id="">
                 <div class="select-radio-box">
                     <input type="checkbox" id="thinMode">
@@ -39,12 +39,37 @@
                 else { localStorage.setItem("thinMode", "true"); }
             }, 1000);
         </script>
-        <p class="tip" data-i18n="settings.personally.tip.thin1"></p>
-        <p class="tip" data-i18n="settings.personally.tip.thin2"></p>
+        <p class="tip">开启此选项后，在宽屏视图下未查看详情页时，原左侧的页面内容将被扩大并居中。</p>
+        <p class="tip">更改此选项后，请重新加载页面以使修改生效。</p>
     </div>
     <div class="lists">
         <div class="but">
-            <t data-i18n="settings.personally.autoSaveCraft"></t>
+            <t>启用点赞</t>
+            <t2 class="right" id="">
+                <div class="select-radio-box">
+                    <input type="checkbox" id="likeAniInput">
+                    <div class="select-switch">
+                        <div class="select-cursor"></div>
+                        <div class="select-label select-label-on"></div>
+                        <div class="select-label select-label-off"></div>
+                    </div>
+                </div>
+            </t2>
+        </div>
+        <script>
+            if (localStorage.getItem("showLikeAni") == "false")
+            likeAniInput.checked = false;
+            else likeAniInput.checked = true;
+            setInterval(() => {
+                if (!likeAniInput.checked) { localStorage.setItem("showLikeAni", "false"); }
+                else { localStorage.setItem("showLikeAni", "true"); }
+            }, 1000);
+        </script>
+        <p class="tip">在点赞时展示 nmFun 精心制作的动画。</p>
+    </div>
+    <div class="lists">
+        <div class="but">
+            <t>自动保存到草稿箱</t>
             <t2 class="right" id="">
                 <div class="select-radio-box">
                     <input type="checkbox" id="autoSaveCraft">
@@ -65,14 +90,16 @@
                 else { localStorage.setItem("autoSaveCraft", "true"); }
             }, 1000);
         </script>
-        <p class="tip" data-i18n="settings.personally.tip.autoSaveCraft1"></p>
-        <p class="tip" data-i18n="settings.personally.tip.autoSaveCraft2"></p>
-        <p class="tip" data-i18n="settings.personally.tip.autoSaveCraft3"></p>
+        <p class="tip">
+            键入文本或设置选项时，自动保存内容到草稿箱。这样在重新加载页面后，之前输入的内容将被自动保存。</p>
+        <p class="tip">当此选项启用时，发帖窗口中的“保存到草稿箱”按钮不会显示。</p>
+        <p class="tip">更改此选项后，请重新加载页面以使修改生效。</p>
+        <p class="tip">请注意，此选项仅在更改部分帖子内容时生效。</p>
     </div>
-    <p class="listName" data-i18n="settings.personally.accessibility.title"></p>
+    <p class="listName">辅助功能</p>
     <div class="lists">
         <div class="but">
-            <t data-i18n="settings.personally.accessibility.bigText"></t>
+            <t>更大字体</t>
             <t2 class="right" id="">
                 <div class="select-radio-box">
                     <input type="checkbox" id="bigText">
@@ -84,7 +111,8 @@
                 </div>
             </t2>
         </div>
-        <p class="tip" data-i18n="settings.personally.tip.bigText"></p>
+        <p class="tip">实验性功能。开启此选项以在浏览 nmFun 时使用更大字体。部分使用浏览器宽高判定的页面元素可能出现异常。
+        </p>
         <script>
             if (localStorage.getItem("bigText") == "false")
                 bigText.checked = false;
@@ -97,13 +125,8 @@
     </div>
 
     <script src="../src/js/jquery.min.js"></script>
-    <script src="../src/js/i18next-1.6.3.min.js"></script>
-    <script src="../src/js/language.js">
-    </script>
     <script src="../src/js/functions.js"></script>
     <script src="../src/js/settings.js"></script>
-    <script>
-    </script>
 </body>
 
 </html>
