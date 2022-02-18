@@ -22,7 +22,7 @@ $.ajax({
             });
             // 选择默认分类
             if (!document.getElementById(localStorage.typeSelected))
-                localStorage.typeSelected = "indexType_all";
+                localStorage.typeSelected = "indexType_";
             document.getElementById(localStorage.typeSelected).click();
             closeHover();
         }
@@ -157,7 +157,7 @@ inv = setInterval(() => {
 }, 10);
 
 // 预定义的选项表
-settingsPreDefineList = [["region", "China Standard Time (UTC + 8:00)"], ["zone", -8], ["usebrowser", "true"], ["thinMode", "true"], ["autoSaveCraft", "false"], ["bigText", "false"], ["noAni", "false"],["showLikeAni","true"]];
+settingsPreDefineList = [["region", "China Standard Time (UTC + 8:00)"], ["zone", 8], ["usebrowser", "true"], ["thinMode", "true"], ["autoSaveCraft", "false"], ["bigText", "false"], ["noAni", "false"],["showLikeAni","true"]];
 
 for (settingsPDT = 0; settingsPDT < settingsPreDefineList.length; settingsPDT++) {
     if (!localStorage.getItem(settingsPreDefineList[settingsPDT][0])) {

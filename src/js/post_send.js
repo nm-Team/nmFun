@@ -17,7 +17,7 @@ function sendPost(div, postType, onSuccess) {
             return newMsgBox("你总得写点什么再发表吧……");
         }
         // 通用：设置参数
-        textToSend = cleanHTMLTag(div.getElementsByClassName("sendBoxInput")[0].innerHTML);
+        textToSend = cleanHTMLTag(div.getElementsByClassName("sendBoxInput")[0].innerHTML.replace(/<b>(.*)<\/b>/g, "[b]$1[/b]").replace(/<i>(.*)<\/i>/g, "[i]$1[/i]").replace(/<u>(.*)<\/u>/g, "[u]$1[/u]")).replace(/<br>/g, "[br]");
         tagsToSend = ""; // 开发中
         // 发送参数：帖子
         if (postType == "post") {
@@ -68,7 +68,7 @@ function attachmentUpload(div, pid, postType, onSuc, onErr) {
     }
 }
 
-function verifyPostAttachmentUploadStatus(div, pid, onSuc,onErr) {
+function verifyPostAttachmentUploadStatus(div, pid, onSuc, onErr) {
     if (mediaUploadSta == false) {
         deleteMyPost(pid, "", false);
         newMsgBox("有附件上传失败，已为您删除帖子，请确认无误后重试。<br>若仍有问题，可联系 nmTeam 支持。");

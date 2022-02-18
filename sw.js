@@ -63,11 +63,11 @@ routing.registerRoute(/.*cdn\.jsdelivr\.net/, new CacheFirst({
 }));
 
 /*
-//  * 跨域静态资源
-//  * 规则类型: cacheFirst
-//  * 缓存名: cache-static-img
-//  */
-// routing.registerRoute(/.*img\.noy\.asia.*/, new CacheFirst({
+ * 跨域静态资源
+ * 规则类型: cacheFirst
+ * 缓存名: cache-static-img
+ */
+// routing.registerRoute(/.*a\.b\.c.*/, new CacheFirst({
 //     cacheName: "cache-static-img" + cacheSuffixVersion,
 //     fetchOptions: {
 //         mode: "cors",
@@ -79,22 +79,22 @@ routing.registerRoute(/.*cdn\.jsdelivr\.net/, new CacheFirst({
 //     })]
 // }));
 
-// /*
-//  * 跨域API资源
-//  * 规则类型: cacheFirst
-//  * 缓存名: cache-static-img
-//  */
-// routing.registerRoute(/.*api\.noy\.asia/, new CacheFirst({
-//     cacheName: "cache-static-api" + cacheSuffixVersion,
-//     fetchOptions: {
-//         mode: "cors",
-//         credentials: "omit"
-//     },
-//     plugins: [new ExpirationPlugin({
-//         maxAgeSeconds: 30 * 24 * 60 * 60,
-//         purgeOnQuotaError: true
-//     })]
-// }));
+/*
+ * 跨域API资源
+ * 规则类型: cacheFirst
+ * 缓存名: cache-static-img
+ */
+routing.registerRoute(/.*funapi\.nmteam\.xyz.*/, new CacheFirst({
+    cacheName: "cache-static-api" + cacheSuffixVersion,
+    fetchOptions: {
+        mode: "cors",
+        credentials: "omit"
+    },
+    plugins: [new ExpirationPlugin({
+        maxAgeSeconds: 30 * 24 * 60 * 60,
+        purgeOnQuotaError: true
+    })]
+}));
 
 
 // 不强制缓存配置文件,以免翻车

@@ -79,7 +79,7 @@ function loadPostsList(box) {
         <p class="status"></p>
         <a href="${siteURL + "/post/" + info.pid}" target="_blank" onclick="newPostDetailPage('${info.pid}',${attr.noOther}); return false;" class="text" title="点击来进入帖子详情"><object class="slug">
             <p class="title"><b>${cleanHTMLTag(info.title)}</b></p>
-            <p>${cleanHTMLTag(info.content)}</p>
+            <p>${contentFormat(info.content)}</p>
             </object></a>
         <div class="media">
         <ui class="medias" id="tes" type="x${medias.mNum}">${medias.mediasHTML}</ui>
@@ -128,7 +128,7 @@ function loadPostsList(box) {
             }
             catch (err) {
                 writeLog("e", "loadPostsList", err);
-                newMsgBox("抱歉，加载帖子时出现问题。<br>" + err);
+                newMsgBox("抱歉，加载帖子时出现问题。<br />" + err);
                 box.attr("data-status", "error");
             }
         },
@@ -175,14 +175,17 @@ function refreshPostArea(pid) {
             pData = data['data'];
             $("#postFrameMenuButton" + pid).attr("onclick", `postContextMenu('post', '${pid}', '${pData['title']}', ${(pData['uid'])}, this)`);
             // 处理内容中的特殊项
-            contentHandled = cleanHTMLTag(pData['content']).replace(/\n/g, "<br>").replace(/((((ht|f)tps?):\/\/)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&:/~+#-\(\)]*[\w@?^=%&/~+#-\(\)])?$)/g, `<a class="linkInPost" href="` + siteURL + `/jumpurl.php?$1" target="_blank" onclick="newBrowser('$1', 'postOutBrowser', true, true); return false;"><svg class="icon link" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M618.24 439.381333a152.746667 152.746667 0 0 1 0 216l-135.893333 135.893334a163.370667 163.370667 0 1 1-231.04-231.04l66.922666-66.944 45.269334 45.269333-66.944 66.944a99.370667 99.370667 0 1 0 140.522666 140.522667l135.893334-135.893334a88.746667 88.746667 0 0 0 0-125.482666z m182.528-197.589333a163.370667 163.370667 0 0 1 0 231.04L733.866667 539.776l-45.269334-45.248 66.944-66.944a99.370667 99.370667 0 1 0-140.522666-140.522667l-135.893334 135.893334a88.746667 88.746667 0 0 0 0 125.482666l-45.269333 45.269334a152.746667 152.746667 0 0 1 0-216l135.893333-135.893334a163.370667 163.370667 0 0 1 231.04 0z"</path></svg>$1</a>`);
+            contentHandled = contentFormat(pData['content']).replace(/((((ht|f)tps?):\/\/)?([^!@#$%^&*?.\s-]([^!@#$%^&*?.\s]{0,63}[^!@#$%^&*?.\s])?\.)+[a-z]{2,6}\/?)/g, `<a class="linkInPost" href="` + siteURL + `/jumpurl.php?$1" target="_blank" onclick="newBrowser('$1', 'postOutBrowser', true, true); return false;"><svg class="icon link" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M618.24 439.381333a152.746667 152.746667 0 0 1 0 216l-135.893333 135.893334a163.370667 163.370667 0 1 1-231.04-231.04l66.922666-66.944 45.269334 45.269333-66.944 66.944a99.370667 99.370667 0 1 0 140.522666 140.522667l135.893334-135.893334a88.746667 88.746667 0 0 0 0-125.482666z m182.528-197.589333a163.370667 163.370667 0 0 1 0 231.04L733.866667 539.776l-45.269334-45.248 66.944-66.944a99.370667 99.370667 0 1 0-140.522666-140.522667l-135.893334 135.893334a88.746667 88.746667 0 0 0 0 125.482666l-45.269333 45.269334a152.746667 152.746667 0 0 1 0-216l135.893333-135.893334a163.370667 163.370667 0 0 1 231.04 0z"</path></svg>$1</a>`);
             // 识别话题
             tagsIn = [];
             // 抓取每个#至空格和#至换行，并视作话题
-            numbersignCaught = pData['content'].split("#");
+            numbersignCaught = contentHandled.split("#");
             for (p = 0; p < numbersignCaught.length; p++) {
-                tagCaught = numbersignCaught[p].split("\n")[0].split(" ")[0];
-                if (!tagCaught || (p == 0 && pData['content'].indexOf("#") != 0) || (numbersignCaught[p - 1].split("\n")[numbersignCaught[p - 1].split("\n").length - 1].split(" ")[numbersignCaught[p - 1].split("\n")[numbersignCaught[p - 1].split("\n").length - 1].split(" ").length - 1])) continue;
+                tagCaught = numbersignCaught[p].split("<br />")[0].split(" ")[0];
+                if (!tagCaught || (p == 0 && contentHandled.indexOf("#") != 0)
+                    || (numbersignCaught[p - 1].split("<br />")[numbersignCaught[p - 1].split("<br />").length - 1].split(" ")[numbersignCaught[p - 1].split("<br />")[numbersignCaught[p - 1].split("<br />").length - 1].split(" ").length - 1])
+                    )
+                    continue;
                 contentHandled = contentHandled.replace("#" + tagCaught, '<a class="linkInPost" href="" target="_blank" onclick="return false;" title="查看话题 #' + tagCaught + '">#' + tagCaught + '</a>');
                 tagsIn.push(tagCaught);
             };
@@ -345,7 +348,7 @@ postSkeleton = `
 postsNoMoreBoxHTML = `
 <div class="unavaliable small" noselect=""><i></i><p>没有了，怎么想都没有了吧！</p></div>`;
 postsErrorBoxHTML = `
-<div class="unavaliable small search-not-start" noselect=""><i></i><p>坏掉了啦，载不出来了！<br><button onclick="$('#{boxid}').attr('data-status','undefined');loadPostsList($('#{boxid}'));">重试</button></p></div>`;
+<div class="unavaliable small search-not-start" noselect=""><i></i><p>坏掉了啦，载不出来了！<br /><button onclick="$('#{boxid}').attr('data-status','undefined');loadPostsList($('#{boxid}'));">重试</button></p></div>`;
 
 function setMedia(mediaJson, pid = 0) {
     try {
@@ -381,6 +384,15 @@ function setMedia(mediaJson, pid = 0) {
     return { "mediasHTML": mediasHTML, "specialMediasHTML": specialMediasHTML, "mNum": mediaType, };
 }
 
+// 消息格式处理
+function contentFormat(msg) {
+    msg = cleanHTMLTag(msg);
+    msg = msg.replace(/\\/g, "");
+    msg = msg.replace(/\n/g, "<br />");
+    msg = msg.replace(/\[b\](.*)\[\/b\]/g, "<b>$1</b>").replace(/\[i\](.*)\[\/i\]/g, "<i>$1</i>").replace(/\[u\](.*)\[\/u\]/g, "<u>$1</u>").replace(/\[br\]/g, "<br />");
+    return msg;
+}
+
 biliVideoTemplate = `<div class="biliVideoCon" noselect><iframe class="biliVideo" frameborder="no" scrolling="no" src="https://player.bilibili.com/player.html?bvid={{bvid}}&page={{page}}&as_wide=1&high_quality=1" allowfullscreen=""></iframe><div class="biliVideoNote"><span>视频来自 Bilibili</span><button onclick="window.open('https://www.bilibili.com/video/{{bvid}}?p={{page}}&ref=nmfun')" title="在 bilibili.com 查看视频">转到</button></div></div>`;
 
 function postContextMenu(type, id, poName, uid, ele) {
@@ -403,7 +415,7 @@ function editMyPost(pid) {
 
 function deleteMyPostAlert(pid, poName) {
     if (logRequire()) {
-        alert("确定要删除帖子<b>" + (poName ? "《" + poName + "》" : "") + "</b>吗？<br><b style='color:var(--red)'>警告：此操作无法撤销。</b>", "删除帖子", "删除", "deleteMyPost('" + pid + "','" + poName + "')", "取消", "");
+        alert("确定要删除帖子<b>" + (poName ? "《" + poName + "》" : "") + "</b>吗？<br /><b style='color:var(--red)'>警告：此操作无法撤销。</b>", "删除帖子", "删除", "deleteMyPost('" + pid + "','" + poName + "')", "取消", "");
     }
 }
 

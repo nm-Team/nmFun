@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title data-i18n="settings.region.title"></title>
+    <title>时间和地区</title>
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
     <meta name='apple-mobile-web-app-capable' content='yes'>
     <meta name='apple-mobile-web-app-status-bar-style' content='black'>
@@ -14,15 +14,13 @@
 </head>
 
 <body class="settings radius">
-    <h1 data-i18n="settings.region.title"></h1>
-    <p class="listName" data-i18n="settings.region.select"></p>
+    <h1>时间和地区</h1>
+    <p class="listName">选择您的地区</p>
     <input class="searchBox" id="sRI" oninput="searchSetting(this, 'regionSelectionDiv');" placeholder="搜索">
     <div class="lists" id="regionSelectionDiv">
         <div class="loading"></div>
     </div>
     <script src="../src/js/jquery.min.js"></script>
-    <script src="../src/js/i18next-1.6.3.min.js"></script>
-    <script src="../src/js/language.js"></script>
     <script src="../src/js/functions.js"></script>
     <script src="../src/js/settings.js"></script>
     <script>
@@ -276,7 +274,7 @@
         for (regionSDFor = 0; regionSDFor < regionList.length; regionSDFor++) {
             regionSelectionDiv.innerHTML += `<div class="but" id="regionButton_` + regionList[regionSDFor][0] + `" onclick="changeRegion('` + regionList[regionSDFor][0] + `','` + regionList[regionSDFor][1] + `');changeCheckInSeries('regionSelectionDiv','regionButton_` + regionList[regionSDFor][0] + `',true)"><t >` + regionList[regionSDFor][0] + `</t></div>`;
         }
-        regionSelectionDiv.innerHTML += `<p class="tip" data-i18n="settings.region.tip.region"></p>`;
+        regionSelectionDiv.innerHTML += `<p class="tip">请选择您所在的时区，则 nmFun 中的时间将会被换算成此时区显示。</p>`;
         changeLanguage();
         changeCheckInSeries('regionSelectionDiv', 'regionButton_' + localStorage.region, true);
         function changeRegion(toWord, toNum) {

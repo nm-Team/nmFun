@@ -587,13 +587,11 @@ function getUrlParam(name) {
 
 // 大号字体
 setInterval(() => {
-    if (!debugMode) {
-        if (localStorage.bigText == "true") {
-            document.getElementsByTagName("html")[0].style.fontSize = "1.35px";
-        }
-        else {
-            document.getElementsByTagName("html")[0].style.fontSize = "var(--fontSize)";
-        }
+    if (localStorage.bigText == "true") {
+        $("html").css("cssText", "font-size: 1.35px!important");
+    }
+    else {
+        $("html").css("cssText", "font-size: var(--fontSize)");
     }
 }, 300);
 

@@ -32,7 +32,7 @@
 
 <body>
     <div class="scaleArea">
-        <div id="startHover">
+        <div id="startHover" noselect>
             <i class="icon"></i>
             <div class="progressBar"></div>
         </div>
@@ -45,9 +45,8 @@
                 </button>
                 <div class="right" onclick='pageHeader.removeAttribute("open");'>
                     <div class="links">
-                        <button onclick="focusBox('pageLeft','searchFrame')" title="搜索">搜索</button><button
-                            onclick="showPostInput('send',true)" title="投稿">投稿</button>
-                        <button onclick="window.open('https://nmteam.xyz?from=nmfun')" title="nmTeam">nmTeam</button>
+                        <button onclick="focusBox('pageLeft','searchFrame')" title="搜索">搜索</button>
+                        <button onclick="showPostInput('send',true)" title="投稿">投稿</button>
                     </div>
                     <div class="accountBox" id="accountBox" tabindex="0" title="点击来登录或管理您的账号"
                         onmouseover="myMenu(true);" onkeydown="divClick(this, event)">
@@ -280,24 +279,6 @@
             </div>
         </div>
     </div>
-    <div class="coverWithColor pop" id="logCover" hidden></div>
-    <div id="logPop" class="popFrame browserFrame specialBrowserFrame" open="false">
-        <header>
-            <div class="left">
-                <div class="nameDiv">
-                    <p class="title">登录</p>
-                    <p class="little">通过 nmTeam Account Center</p>
-                </div>
-            </div>
-            <div class="right">
-                <button onclick="closeLogFrame()" title="关闭登录窗口" class="backButton"><i
-                        class="material-icons">keyboard_arrow_down</i></button>
-            </div>
-        </header>
-        <div class="main">
-            <iframe id="logIframe"></iframe>
-        </div>
-    </div>
     <div class="coverWithColor pop" id="sendEditBoxCover" hidden></div>
     <div id="sendEdit" class="popFrame" open="false">
         <header>
@@ -348,6 +329,24 @@
         <div class="content">
             <i></i>
             <p>正在发送</p>
+        </div>
+    </div>
+    <div class="coverWithColor pop" id="logCover" hidden></div>
+    <div id="logPop" class="popFrame browserFrame specialBrowserFrame" open="false">
+        <header>
+            <div class="left">
+                <div class="nameDiv">
+                    <p class="title">登录</p>
+                    <p class="little">通过 nmTeam Account Center</p>
+                </div>
+            </div>
+            <div class="right">
+                <button onclick="closeLogFrame()" title="关闭登录窗口" class="backButton"><i
+                        class="material-icons">keyboard_arrow_down</i></button>
+            </div>
+        </header>
+        <div class="main">
+            <iframe id="logIframe"></iframe>
         </div>
     </div>
     <div id="hoverArea" class="unscaleArea"></div>
