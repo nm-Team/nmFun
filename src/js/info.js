@@ -8,7 +8,7 @@ systemCategoryList = [{ "id": "focus", "name": "关注" }, { "id": "", "name": "
 version = {
     version: "0.2_dev",
     versionNum: "91.1",
-    branch: "siteURL_",
+    branch: "co_refresh",
     betaVersion: true
 }
 
