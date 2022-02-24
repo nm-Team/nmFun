@@ -173,6 +173,19 @@ body.settings{
     border-bottom-right-radius: 6rem;
     border-width: 0;
 }
+.settings .lists .but icon{
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-right: 7rem;
+    width: 19rem;
+    height: 19rem;
+    overflow: hidden;
+    transform: scale(1.1);
+    border-radius: 3rem;
+    position: relative;
+    font-size: 14rem;
+    text-align: center;
+}
 .settings .lists .but t{
     flex-grow: 1;
     flex-shrink: 1;

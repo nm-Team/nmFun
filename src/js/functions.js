@@ -550,12 +550,13 @@ function cleanHTMLTag(text) {
 }
 
 function headerClick() {
-    if (window.offsetWidth > 800) {
-        window.location.href = "";
-    }
-    else if (pageHeader.getAttribute("open") == "true")
-        pageHeader.removeAttribute("open");
-    else pageHeader.setAttribute("open", "true");
+    // 被底栏取代
+    // if (window.offsetWidth > 800) {
+    //     window.location.href = "";
+    // }
+    // else if (pageHeader.getAttribute("open") == "true")
+    //     pageHeader.removeAttribute("open");
+    // else pageHeader.setAttribute("open", "true");
 }
 
 // PWA-BETA

@@ -680,6 +680,7 @@ body[theme=dark]{
 }
 .inputArea .mediasBox{
     display: flex;
+    flex-shrink: 0;
     flex-direction: row;
     overflow-x: overlay;
     max-height: 150rem;

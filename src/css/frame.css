@@ -4,6 +4,12 @@ body{
     --type-selecter-hover-bgcolor: rgb(240, 240, 240);
     --type-selecter: rgb(17, 17, 17);
     --scalePercent: 0.96;
+    --bottombar-bgcolor: rgb(250, 250, 250);
+    --bottombar-button-hover-bgcolor: rgb(236, 236, 236);
+    --bottombar-button-active-bgcolor: rgb(236, 236, 236);
+    --bottombar-icon: rgb(56, 56, 56);
+    --bottombar-icon-active: rgb(218, 185, 0);
+    --bottombar-text: rgb(44, 44, 44);
     --real-bg: rgb(161, 161, 161);
 }
 body[theme=dark]{
@@ -11,7 +17,16 @@ body[theme=dark]{
     --type-selecter-bgcolor: rgb(28, 28, 29);
     --type-selecter-hover-bgcolor: rgb(58, 58, 58);
     --type-selecter: rgb(224, 224, 224);
+    --bottombar-bgcolor: rgb(43, 43, 43);
+    --bottombar-button-hover-bgcolor: rgb(80, 80, 80);
+    --bottombar-button-active-bgcolor: rgb(73, 73, 73);
+    --bottombar-icon: rgb(231, 231, 231);
+    --bottombar-icon-active: rgb(218, 185, 0);
+    --bottombar-text: rgb(197, 197, 197);
     --real-bg: #000;
+}
+:root{
+    --fontSize: 1.07px;
 }
 body .scaleArea{
     position: fixed;
@@ -45,6 +60,9 @@ body{
     overflow: hidden!important;
     transition: all 0.4s;
 }
+.box[data-hidden=true]{
+    display: none!important;
+}
 .pageLeft, .pageRight{
     position: fixed;
     top: 0;
@@ -68,6 +86,72 @@ body{
 }
 .pageLeft[show]{
     z-index: 102;
+}
+.bottomBar{
+    display: none;
+}
+@media (max-width: 800px) {
+    .showBottomBar .pageLeft{
+        bottom: 50rem;
+    }
+    .showBottomBar .bottomBar{
+        display: flex;
+        justify-content: space-around;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 50rem;
+        z-index: 105;
+        box-shadow: #11111177 0rem 3rem 4rem;
+        background: var(--bottombar-bgcolor);
+    }
+    .showBottomBar .bottomBar .item{
+        position: relative;
+        width: 48rem;
+        height: 48rem;
+        margin: 1rem 10rem;
+        border-radius: 50%;
+        transition: all 0.5s;
+        overflow: hidden;
+        background: none;
+    }
+    .showBottomBar .bottomBar .item:hover{
+        background: var(--bottombar-button-hover-bgcolor);
+    }
+    .showBottomBar .bottomBar .item i{
+        position: absolute;
+        width: 20rem;
+        height: 20rem;
+        top: 5rem;
+        left: 14rem;
+        font-size: 20rem;
+        color: var(--bottombar-icon);
+    }
+    .showBottomBar .bottomBar .item[data-active=true] i{
+        color: var(--bottombar-icon-active);
+    }
+    .showBottomBar .bottomBar .item span{
+        position: absolute;
+        top: 27rem;
+        left: 10rem;
+        right: 10rem;
+        font-size: 12rem;
+        color: var(--bottombar-text);
+    }
+    .showBottomBar .bottomBar .item[data-active=true] span{
+        color: var(--bottombar-icon-active);
+    }
+    .showBottomBar .bottomBarTarget, .showBottomBar .bottomBarTarget.box.leftBox[con=none]{
+        animation: none!important;
+        transition: none!important;
+    }
+    .showBottomBar .bottomBarTarget.box.leftBox:not([con=on]){
+        display: none!important;
+    }
+    .showBottomBar .bottomBarTarget .backButton{
+        display: none;
+    }
 }
 .widthChanger{
     width: 6rem;
@@ -115,7 +199,7 @@ body{
     background-color: var(--page-bgcolor);
     overflow-y: auto;
 }
-*[noani], *[nownoani]{
+*[noani], *[nownoani], *[childnoani] *{
     animation: none!important;
     transition: none!important;
 }

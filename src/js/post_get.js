@@ -11,6 +11,7 @@ function initPostsList(box, attr) {
 function initPostsListMonitor(box) {
     new_element = document.createElement("div");
     new_element.className = "postsListBar";
+    new_element.setAttribute("noselect","");
     new_element.innerHTML = `<button class="refresh" onclick="refreshPostsList(getActivePostsList($('#${box[0].id}')))"><i class="material-icons">refresh</i></button><button class="top" onclick="($('#${box[0].id}')).animate({scrollTop: 0}, 500);" data-hidden="true"><i class="material-icons">arrow_upward</i></button>`;
     box.append(new_element);
 }

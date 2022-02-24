@@ -56,11 +56,16 @@ function focusBox(div, boxId, noOther) {
         thinPageRight(false);
     }
     else thinPageRight(true);
+    document.getElementById(div).removeAttribute("childnoani");
+    $("#" + div + " .box").attr("data-hidden", "false");
+    // 更新底栏
+    lightBottomBar();
     writeLog("i", "focusBox", "div: " + div + ", boxId: " + boxId + ", noOther: " + noOther + ", allBoxes: " + getAllBoxes(div));
 }
 
 function closeBox(div, boxId, totally = false, origin = "") {
     document.getElementById("bodyMain").setAttribute("trans", true);
+    document.getElementById(div).removeAttribute("childnoani");
     setTimeout(() => {
         document.getElementById("bodyMain").setAttribute("trans", false);
     }, 500);
@@ -91,6 +96,9 @@ function closeBox(div, boxId, totally = false, origin = "") {
         thinPageRight(false);
     }
     else thinPageRight(true);
+    $("#" + div + " .box").attr("data-hidden", "false");
+    // 更新底栏
+    lightBottomBar();
     writeLog("i", "closeBox", "div: " + div + ", boxId: " + boxId + ", totally: " + totally + ", origin: " + origin + ", allBoxes: " + getAllBoxes(div));
 }
 
@@ -103,6 +111,12 @@ function thinPageRight(to) {
     }
     mySwiper.updateSize();
 }
+
+// 检测pageRight有没有多窗口，没有就关闭
+if (getOpenBoxes("pageRight").length > 0) {
+    thinPageRight(false);
+}
+else thinPageRight(true);
 
 function checkBoxOpen(div) {
     div = document.getElementById(div);
@@ -148,7 +162,7 @@ function getAllBoxes(div) {
     return allBoxes;
 }
 
-// 修正右侧窗口切单屏动画
+// 修正窗口切屏动画
 fixIndexAni = function () {
     if (window.innerWidth < 800) {
         $(".pageRight .rightBox[pcnoani]").each(function (index, domEle) {
@@ -161,8 +175,16 @@ fixIndexAni = function () {
         }, 500);
     }
     else {
-        pageLeft.setAttribute("noani", "true");
+        // 若有左侧前置窗口，修复切屏时前排窗口干扰
+        if ($("#pageLeft .box[con=on]").length == 0) {
+            $("#pageLeft .box").attr("data-hidden", "true");
+        }
+        else {
+            pageLeft.setAttribute("noani", "true");
+            pageLeft.setAttribute("childnoani", "true");
+        }
         pageRight.setAttribute("noani", "true");
+        pageRight.setAttribute("childnoani", "true");
         bodyMain.setAttribute("noani", "true");
         setTimeout(() => {
             pageLeft.removeAttribute("noani");
@@ -172,9 +194,32 @@ fixIndexAni = function () {
     }
 }
 
-window.onresize = fixIndexAni();
+$(window).on("resize", function () { fixIndexAni(); })
 
 fixIndexAni();
+
+// barPage逻辑
+function showBarPage(pageId) {
+    if (getOpenBoxes("pageLeft").length == 0) {
+        focusBox("pageLeft", $("[data-bar-page-id=" + pageId + "]")[0].id, true);
+        $("[data-bar-page-id]:not([data-bar-page-id=" + pageId + "]):not([data-bar-page-id=home])").attr("data-hidden", "true");
+    } else {
+        focusBox("pageLeft", $("[data-bar-page-id=" + pageId + "]")[0].id, true);
+        $("[data-bar-page-id]:not([data-bar-page-id=" + pageId + "]):not([data-bar-page-id=home])").attr("con", "none");
+        setTimeout(() => {
+            $("[data-bar-page-id]:not([data-bar-page-id=" + pageId + "]):not([data-bar-page-id=home])").attr("con", "gone");
+            $("[data-bar-page-id]:not([data-bar-page-id=" + pageId + "]):not([data-bar-page-id=home])").attr("data-hidden", "true");
+        }, 500);
+    }
+    lightBottomBar(pageId);
+}
+
+// bottomBar 高亮
+function lightBottomBar(id = undefined) {
+    if (!id && $("#pageLeft .box[con=on]").length == 0) id = "home";
+    $(".bottomBar .item").attr("data-active", "false");
+    $(".bottomBar .item[data-bar-id=" + id + "]").attr("data-active", "true");
+}
 
 // 返回事件
 function quickBack(div, ele) {

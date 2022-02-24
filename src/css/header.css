@@ -276,27 +276,3 @@ body[theme=dark]{
         margin: 0 37rem;
     }
 }
-/* header 上下文菜单 */
-#myContextMenu{
-    display: none;
-    position: fixed;
-    top: 50rem;
-    right: 16rem;
-    z-index: 999;
-}
-#myMenuContainer.open #myContextMenu{
-    display: block;
-    animation: 0.35s ease 0s 1 normal none running myContextMenu;
-}
-@media (max-width: 800px) {
-    #myContextMenu{
-        position: absolute;
-        top: 60rem;
-        left: 50%;
-        z-index: 999999;
-        transform: translateX(-50%);
-    }
-    #myMenuContainer.open #myContextMenu{
-        animation: 0.35s ease 0s 1 normal none running myContextMenu;
-    }
-}

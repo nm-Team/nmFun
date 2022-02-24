@@ -45,35 +45,23 @@
                 </button>
                 <div class="right" onclick='pageHeader.removeAttribute("open");'>
                     <div class="links">
-                        <button onclick="focusBox('pageLeft','searchFrame')" title="搜索">搜索</button>
-                        <button onclick="showPostInput('send',true)" title="投稿">投稿</button>
+                        <button onclick="showBarPage('search');" title="搜索">搜索</button>
+                        <button onclick="showPostInput('send',true)" title="发帖">发帖</button>
+                        <button onclick="showBarPage('message');" title="消息">消息</button>
                     </div>
                     <div class="accountBox" id="accountBox" tabindex="0" title="点击来登录或管理您的账号"
-                        onmouseover="myMenu(true);" onkeydown="divClick(this, event)">
+                        onclick="showBarPage('me');" onkeydown="divClick(this, event)">
                         <i id="avatarBox"></i>
                         <p id="userName">正在加载</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="myMenuContainer">
-            <div id="myContextMenu" class="contextMenu" onclick="myMenu(false)" icon="true">
-                <button onclick="userInfo(myUid)"><i class="material-icons">account_circle</i>个人页面</button>
-                <div class="line"></div> <button onclick="newLegacyBrowser('/settings/', false, false)"><i
-                        class="material-icons">settings</i>设置</button><button
-                    onclick="myMenu(true);showMainPageThemeContextMenu(accountBox);"><i
-                        class="material-icons">color_lens</i>主题</button>
-                <div class="line"></div><button
-                    onclick="newBrowser(accountClient+'/info.html?sessionid='+localStorage.sessionid, false, false);"><i
-                        class="material-icons"></i>nmTeam Account Center</button>
-                <button onclick="alert('确定要注销账号吗？','注销','是','logOut();window.location.href=``;','取消')"><i
-                        class="material-icons"></i>注销账号</button>
-            </div>
-        </div>
-        <div class="bodyMain" id="bodyMain">
+        <div class="bodyMain showBottomBar" id="bodyMain">
             <!-- 此处thin控制右栏是否展示 agou 211113 -->
             <div class="pageLeft" id="pageLeft" noani="true">
-                <div class="indexFrame leftBox" id="indexFrame" con="on" noani>
+                <div class="indexFrame leftBox indexBox bottomBarTarget" data-bar-page-id="home" id="indexFrame"
+                    con="on" noani>
                     <div class="mobileHolder"></div>
                     <div class="floatFrame">
                         <div class="floatFrame-header">
@@ -93,7 +81,7 @@
                                 <nm id="indexMoreTypes"></nm>
                             </div>
                         </div>
-                        <div id="indexMainCards" class="equalPages floatFrame-content postsListScrollMonitor">
+                        <div id="indexMainCards" class="equalPages floatFrame-content postsListScrollMonitor " scroll>
                             <div class="placeHolder"></div>
                             <div id="indexMainLists" class="cardsListsContainer"></div>
                             <div class="postBox cardBox postCardBox cardsListArea">
@@ -101,12 +89,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="searchFrame leftBox box" id="searchFrame" name="搜索" totallyclose="false">
+                <div class="searchFrame leftBox box bottomBarTarget" id="searchFrame" data-bar-page-id="search"
+                    name="搜索" totallyclose="false" con="gone">
                     <header>
                         <div class="left">
-                            <button class="backButton" title="返回" onclick="closeBox('pageLeft','searchFrame',false)"
-                                oncontextmenu="quickBack('pageLeft')"
-                                ontouchstart="longPressToDo(function(){quickBack('pageLeft')})"
+                            <button class="backButton" title="返回" onclick="closeBox('pageLeft','searchFrame',false);"
+                                oncontextmenu="quickBack('pageLeft',this)"
+                                ontouchstart="longPressToDo(function(){quickBack('pageLeft',this)})"
                                 ontouchend="longPressStop()"><i class="material-icons"></i></button>
                             <input id="searchFrame_input" placeholder="搜索..." title="搜索">
                         </div>
@@ -128,13 +117,135 @@
                                     <p></p>
                                 </div>
                             </div>
-                            <!-- <post></post>
-                            <post></post>
-                            <post></post>
-                            <post></post> -->
                         </div>
                     </div>
                 </div>
+                <div class="messageFrame leftBox box bottomBarTarget" id="messageFrame" data-bar-page-id="message"
+                    name="消息" totallyclose="false" con="gone">
+                    <header>
+                        <div class="left">
+                            <button class="backButton" title="返回" onclick="closeBox('pageLeft','messageFrame',false);"
+                                oncontextmenu="quickBack('pageLeft',this)"
+                                ontouchstart="longPressToDo(function(){quickBack('pageLeft',this)})"
+                                ontouchend="longPressStop()"><i class="material-icons"></i></button>
+                            <div class="nameDiv">
+                                <p class="title">消息</p>
+                                <p class="little"></p>
+                            </div>
+                        </div>
+                        <div class="right">
+                        </div>
+                    </header>
+                    <div class="cardBox postCardBox main">
+                        
+                    </div>
+                </div>
+                <div class="meFrame leftBox box bottomBarTarget" id="meFrame" data-bar-page-id="me" name="我的"
+                    totallyclose="false" con="gone">
+                    <header>
+                        <div class="left">
+                            <button class="backButton" title="返回" onclick="closeBox('pageLeft','meFrame',false);"
+                                oncontextmenu="quickBack('pageLeft',this)"
+                                ontouchstart="longPressToDo(function(){quickBack('pageLeft',this)})"
+                                ontouchend="longPressStop()"><i class="material-icons"></i></button>
+                            <div class="nameDiv">
+                                <p class="title">我的</p>
+                                <p class="little"></p>
+                            </div>
+                        </div>
+                        <div class="right">
+                        </div>
+                    </header>
+                    <div class="cardBox postCardBox main">
+                        <div class="settings radius">
+                            <div class="accountBox" id="myPageAcc" style="margin-top: 17rem;">
+                                <div id="accMain">
+                                    <div class="infoArea" id="toUserPageBut" tabindex="0"
+                                        onkeydown="divClick(this, event)">
+                                        <i id="myPageAvatar"
+                                            style="background-image: url(https://static.hdslb.com/images/akari.jpg);"></i>
+                                        <div class="right">
+                                            <p class="nick" id="myPageNick">正在加载</p>
+                                            <p class="uid" id="myPageInfoPTag">站娘 nm 中…</p>
+                                        </div>
+                                    </div>
+                                    <button class="editBut" id="myPageAccounteditBut"
+                                        onclick="newLegacyBrowser('/settings/account.html', false, false)">管理</button>
+                                </div>
+                                <div id="myPageMoreTags">
+                                    <button class="myPageMoreButton">
+                                        <p class="top">50</p>
+                                        <p class="bottom">帖子</p>
+                                    </button>
+                                    <button class="myPageMoreButton">
+                                        <p class="top">10</p>
+                                        <p class="bottom">关注</p>
+                                    </button>
+                                    <button class="myPageMoreButton">
+                                        <p class="top">233</p>
+                                        <p class="bottom">粉丝</p>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="lists">
+                                <div class="but" onclick="newMsgBox('开发中')" tabindex="0"
+                                    onkeydown="divClick(this, event)">
+                                    <icon class="material-icons" style="color: #000000; background: #eee">comment</icon>
+                                    <t>评论</t>
+                                </div>
+                                <div class="but" onclick="newMsgBox('开发中')" tabindex="0"
+                                    onkeydown="divClick(this, event)">
+                                    <icon class="material-icons" style="color: #c9aa0f; background: #eee">star</icon>
+                                    <t>收藏</t>
+                                </div>
+                            </div>
+                            <div class="lists">
+                                <div class="but" onclick="newBrowser('/settings/theme.html', '', false, false)" tabindex="0"
+                                    onkeydown="divClick(this, event)">
+                                    <icon class="material-icons" style="color: rgb(234, 255, 211); background: #01cf2e">color_lens
+                                    </icon>
+                                    <t>主题</t>
+                                </div>
+                                <div class="but" onclick="newLegacyBrowser('/settings/', false, false)" tabindex="0"
+                                    onkeydown="divClick(this, event)">
+                                    <icon class="material-icons" style="color: #fff; background: #0187cf">settings
+                                    </icon>
+                                    <t>设置</t>
+                                </div>
+                            </div>
+                            <div class="lists">
+                                <div class="but" onclick="newBrowser('/settings/about.html', '', false, false)" tabindex="0"
+                                    onkeydown="divClick(this, event)">
+                                    <icon class="material-icons" style="color: #000; background: #EAD050">info_outline
+                                    </icon>
+                                    <t>关于 nmFun</t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottomBar" noselect>
+                <button class="item" title="主页" data-bar-id="home" onclick="showBarPage('home');">
+                    <i class="material-icons">home</i>
+                    <span>主页</span>
+                </button>
+                <button class="item" title="搜索" data-bar-id="search" onclick="showBarPage('search');">
+                    <i class="material-icons">search</i>
+                    <span>搜索</span>
+                </button>
+                <button class="item" title="发帖" data-bar-id="post" onclick="showPostInput('send',true)">
+                    <i class="material-icons">add_circle</i>
+                    <span>发帖</span>
+                </button>
+                <button class="item" title="消息" data-bar-id="message" onclick="showBarPage('message');">
+                    <i class="material-icons">message</i>
+                    <span>消息</span>
+                </button>
+                <button class="item" title="我的" data-bar-id="me" onclick="showBarPage('me');">
+                    <i class="material-icons">account_circle</i>
+                    <span>我的</span>
+                </button>
             </div>
             <div class="widthChanger" id="widthChanger" draggable="true"></div>
             <div class="pageRight" id="pageRight" open noani="true">

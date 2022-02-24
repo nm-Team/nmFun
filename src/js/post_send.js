@@ -13,7 +13,7 @@ function setPostInputArea(ele, type) {
 function sendPost(div, postType, onSuccess) {
     if (logRequire()) {
         // 通用：是否填写内容
-        if (div.getElementsByClassName("sendBoxInput")[0].innerHTML.replace(/ /g, "").replace(/\\n/g, "") == "") {
+        if (cleanHTMLTag(div.getElementsByClassName("sendBoxInput")[0].innerHTML).replace(/ /g, "").replace(/\\n/g, "") == "") {
             return newMsgBox("你总得写点什么再发表吧……");
         }
         // 通用：设置参数

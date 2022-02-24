@@ -11,17 +11,24 @@ function setHeaderLog() {
     try {
         getInfo(function () {
             accountInfo = returnWord;
-            accountBox.setAttribute("onclick", "showLogFrame()");
             if (accountInfo == -1 || accountInfo == -2) {
                 userName.innerHTML = "登录";
-                accountBox.setAttribute("onclick", "showLogFrame()");
+                myPageNick.innerHTML = "点击登录";
+                toUserPageBut.setAttribute("onclick", "showLogFrame()");
+                myPageMoreTags.setAttribute("data-show", "false");
+                myPageAccounteditBut.setAttribute("data-show", "false");
             }
             else {
                 avatarBox.setAttribute("style", "background-image:url(" + accountInfo['avatar'] + ")");
+                myPageAvatar.setAttribute("style", "background-image:url(" + accountInfo['avatar'] + ")");
                 userName.innerHTML = accountInfo['nick'];
-                accountBox.setAttribute("onclick", "myMenu(true);");
+                myPageNick.innerHTML = accountInfo['nick'];
+                myPageInfoPTag.innerHTML = "@" + accountInfo['user'] + "&nbsp;&nbsp;UID: " + accountInfo['uid'];
                 myUid = accountInfo['uid'];
                 myInfos = accountInfo;
+                toUserPageBut.setAttribute("onclick", "newUserInfoPage('" + accountInfo['uid'] + "', '" + accountInfo['nick'] + "');");
+                myPageMoreTags.setAttribute("data-show", "true");
+                myPageAccounteditBut.setAttribute("data-show", "true");
                 writeLog("i", "setHeaderLog", "log success, sessionid " + localStorage.sessionid + ", " + JSON.stringify(accountInfo));
             }
         });
@@ -29,7 +36,9 @@ function setHeaderLog() {
     catch (err) {
         console.error("getInfo 执行错误，返回错误信息" + err);
         userName.innerHTML = "错误";
-        accountBox.setAttribute("onclick", "newMsgBox('无法连接到登录服务器，因此无法打开此上下文菜单。');");
+        myPageNick.innerHTML = "无法连接服务器";
+        myPageInfoPTag.innerHTML = "请刷新后重试";
+        accMain.setAttribute("onclick", "alert('无法连接到服务器，请刷新页面后重试。');");
         writeLog("i", "setHeaderLog", "log fail: sessionid " + localStorage.sessionid + ", " + err);
     }
 }
@@ -68,22 +77,9 @@ function closeLogFrame() {
     pushHistory("");
 }
 
-// "我的"菜单
-myMenuOpe = false;
-function myMenu(to) {
-    if (to == true && !isNaN(myUid)) myMenuContainer.className = " open";
-    else myMenuContainer.className = "";
-    myMenuOpe = false;
-    setTimeout(() => {
-        myMenuOpe = to;
-    }, 500);
-}
-
 function logOut() {
     localStorage.sessionid = "";
     document.cookie = "PHPSESSID=;expires=01-Dec-2006 01:14:26 GMT;domain=" + siteURL.split("/")[2];
     document.cookie = "PHPSESSID=;expires=01-Dec-2006 01:14:26 GMT;domain=" + accountClient.split("/")[2];
     writeLog("i", "logOut", "success");
 }
-
-$("*").click(function () { if (myMenuOpe) myMenu(false) });

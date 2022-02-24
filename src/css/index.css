@@ -58,9 +58,6 @@ body[theme=dark]{
     }  
 }
 @media (min-width: 800px) {
-    :root{
-        --fontSize: 1.02px;
-    }
     .mobileHolder{
         height: 0;
     }  
