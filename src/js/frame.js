@@ -59,7 +59,7 @@ function focusBox(div, boxId, noOther) {
     document.getElementById(div).removeAttribute("childnoani");
     $("#" + div + " .box").attr("data-hidden", "false");
     // 更新底栏
-    lightBottomBar();
+    if (div == "pageLeft") lightBottomBar();
     writeLog("i", "focusBox", "div: " + div + ", boxId: " + boxId + ", noOther: " + noOther + ", allBoxes: " + getAllBoxes(div));
 }
 
@@ -98,7 +98,7 @@ function closeBox(div, boxId, totally = false, origin = "") {
     else thinPageRight(true);
     $("#" + div + " .box").attr("data-hidden", "false");
     // 更新底栏
-    lightBottomBar();
+    if (div == "pageLeft") lightBottomBar();
     writeLog("i", "closeBox", "div: " + div + ", boxId: " + boxId + ", totally: " + totally + ", origin: " + origin + ", allBoxes: " + getAllBoxes(div));
 }
 
