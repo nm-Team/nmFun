@@ -8,6 +8,7 @@ body[theme=dark]{
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    background: var(--page-bgcolor);
 }
 .indexFrame .mobileHolder{
     flex-shrink: 0;

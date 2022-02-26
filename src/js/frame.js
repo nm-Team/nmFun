@@ -52,10 +52,15 @@ function focusBox(div, boxId, noOther) {
     }
     checkBoxOpen(div);
     // 检测pageRight有没有多窗口，没有就关闭
-    if (getOpenBoxes("pageRight").length > 0) {
-        thinPageRight(false);
-    }
-    else thinPageRight(true);
+    if (div == "pageRight")
+        if (getOpenBoxes("pageRight").length > 0) {
+            thinPageRight(false);
+            pageLeft.setAttribute("behind", "true");
+        }
+        else {
+            thinPageRight(true);
+            pageLeft.setAttribute("behind", "false");
+        }
     document.getElementById(div).removeAttribute("childnoani");
     $("#" + div + " .box").attr("data-hidden", "false");
     // 更新底栏
@@ -92,10 +97,15 @@ function closeBox(div, boxId, totally = false, origin = "") {
     boxOprTime++;
     checkBoxOpen(div);
     // 检测pageRight有没有多窗口，没有就关闭
-    if (getOpenBoxes("pageRight").length > 0) {
-        thinPageRight(false);
-    }
-    else thinPageRight(true);
+    if (div == "pageRight")
+        if (getOpenBoxes("pageRight").length > 0) {
+            thinPageRight(false);
+            pageLeft.setAttribute("behind", "true");
+        }
+        else {
+            thinPageRight(true);
+            pageLeft.setAttribute("behind", "false");
+        }
     $("#" + div + " .box").attr("data-hidden", "false");
     // 更新底栏
     if (div == "pageLeft") lightBottomBar();

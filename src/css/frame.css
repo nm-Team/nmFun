@@ -152,6 +152,16 @@ body{
     .showBottomBar .bottomBarTarget .backButton{
         display: none;
     }
+    .pageLeft[behind=true]{
+        visibility: hidden;
+        animation: toLeft 0.4s!important;
+        transform: translate(0,0);    
+    }
+    .pageLeft[behind=false]{  
+        visibility: visible;
+        animation: returnRight 0.4s!important;   
+        transform: translate(0,0);
+    }
 }
 .widthChanger{
     width: 6rem;

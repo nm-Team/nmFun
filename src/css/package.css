@@ -94,6 +94,11 @@ body[theme=dark]{
     font-size: 15rem;
     color: var(--type-selecter);
 }
+.typeSelecter label n{
+    font-size: 80%;
+    margin-left: 5rem;
+    opacity: 0.8;
+}
 .typeSelecter label input:checked + span{
     font-weight: bold;
 }
@@ -143,6 +148,95 @@ body[theme=dark]{
 }
 .editBut[data-show=true]{
     display: block;
+}
+.buttonAni{
+    display: block;
+    visibility: hidden;
+    width: 20rem;
+    height: 20rem;
+    overflow: visible;
+    position: fixed;
+    z-index: 1003;
+}
+.buttonAni .f{
+    position: absolute;
+    top: calc(50% - 50rem);
+    left: calc(50% - 50rem);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    animation: buttonAni_f 2s;
+}
+.buttonAni .b{
+    position: fixed;
+    visibility: hidden;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url(../img/nmFun_like_background.svg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    animation: buttonAni_b 2s;
+}
+@keyframes buttonAni_f {
+    0%{
+        visibility: visible;
+        opacity: 0;
+        width: 20rem;
+        height: 20rem;
+        top: calc(50% - 10rem);
+        left: calc(50% - 10rem);
+    }
+    10%{
+        opacity: 1;
+    }
+    50%{
+        width: 100rem;
+        height: 100rem;
+    }
+    60%{
+        transform: rotate(-20deg);
+    }
+    70%{
+        transform: rotate(6deg);
+    }
+    80%{
+        opacity: 1;
+        width: 100rem;
+        height: 100rem;
+        visibility: visible;
+    }
+    100%{
+        opacity: 0;
+        width: 100rem;
+        height: 100rem;
+        visibility: hidden;
+    }
+}
+@keyframes buttonAni_b {
+    0%{
+       visibility: hidden;
+       opacity: 0;
+    }
+    63%{
+        visibility: visible;
+        opacity: 0;
+        width: 200rem;
+        height: 200rem;
+    }
+    67%{
+        opacity: 0.8;
+    }
+    80%{
+        opacity: 0.8;
+    }
+    100%{
+        opacity: 0;
+        visibility: hidden;
+        width: 250rem;
+        height: 250rem;
+    }
 }
 #myPageMoreTags{
     display: flex;

@@ -106,12 +106,14 @@ body[theme=dark]{
 }
 .uHeaderMain .uHeaderInfos .interaction{
     margin: 8rem 20rem 0 20rem;
+    height: 32rem;
     text-align: center;
 }
-.uHeaderMain .uHeaderInfos .interaction[data-follow=false] .nega, .uHeaderMain .uHeaderInfos .interaction[data-follow=true] .posi{
-    display: none;
-} 
+.uHeaderMain .uHeaderInfos .interaction[data-follow=false] [data-stat=false], .uHeaderMain .uHeaderInfos .interaction[data-follow=both] [data-stat=both], .uHeaderMain .uHeaderInfos .interaction[data-follow=true] [data-stat=true], .uHeaderMain .uHeaderInfos .interaction[data-follow=followedme] [data-stat=followedme], .uHeaderMain .uHeaderInfos .interaction[data-follow=edit] [data-stat=edit], .uHeaderMain .uHeaderInfos .interaction[data-follow=loading] [data-stat=loading]{
+    display: block;
+}
 .uHeaderMain .uHeaderInfos .interaction button{
+    display: none;
     border: 1rem solid #00000000;
     border-radius: 500rem;
     font-size: 14rem;
@@ -143,4 +145,7 @@ body[theme=dark]{
     overflow-y: overlay;
     border-radius: 6rem 6rem 0 0;
     padding-top: 0rem;
+}
+.followAni .f{
+    background-image: url(../img/nmFun_follow_main.svg);
 }

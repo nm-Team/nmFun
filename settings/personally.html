@@ -44,10 +44,10 @@
     </div>
     <div class="lists">
         <div class="but">
-            <t>启用点赞</t>
+            <t>启用页面动效</t>
             <t2 class="right" id="">
                 <div class="select-radio-box">
-                    <input type="checkbox" id="likeAniInput">
+                    <input type="checkbox" id="buttonAniInput">
                     <div class="select-switch">
                         <div class="select-cursor"></div>
                         <div class="select-label select-label-on"></div>
@@ -57,15 +57,15 @@
             </t2>
         </div>
         <script>
-            if (localStorage.getItem("showLikeAni") == "false")
-            likeAniInput.checked = false;
-            else likeAniInput.checked = true;
+            if (localStorage.getItem("showbuttonAni") == "false")
+            buttonAniInput.checked = false;
+            else buttonAniInput.checked = true;
             setInterval(() => {
-                if (!likeAniInput.checked) { localStorage.setItem("showLikeAni", "false"); }
-                else { localStorage.setItem("showLikeAni", "true"); }
+                if (!buttonAniInput.checked) { localStorage.setItem("showbuttonAni", "false"); }
+                else { localStorage.setItem("showbuttonAni", "true"); }
             }, 1000);
         </script>
-        <p class="tip">在点赞时展示 nmFun 精心制作的动画。</p>
+        <p class="tip">在点赞、关注用户或执行其它操作时展示 nmFun 精心制作的动画。</p>
     </div>
     <div class="lists">
         <div class="but">
