@@ -5,7 +5,7 @@ workbox.setConfig({
 });
 
 // 设定缓存版本号,若有重大更新请务必更新此版本号
-const cacheSuffixVersion = '-ver-0000-0000-0099-0000',
+const cacheSuffixVersion = '-ver-0000-0000-0099-0010',
     // 最大缓存文件数目,防止写爆缓存
     maxEntries = 100;
 

@@ -71,9 +71,9 @@ uPageTemp = `
                 </div>
                 <div class="interaction" data-my-following-to-uid="{{uid}}" data-follow="loading">
                 <button class="followButton nega" onclick="followUser('{{uid}}',false, $(this));" data-stat="false" title="关注"><i class="material-icons">add</i><span>关注</span></button>
-                <button class="followButton posi" onclick="followUser('{{uid}}',true, $(this));" data-stat="true" title="取消关注"><i class="material-icons">check</i><span>已关注</span></button>
+                <button class="followButton posi" onclick="alert('确认要取消关注 <b>{{nick}}</b> 吗？','取消关注','取消关注','followUser(\`{{uid}}\`,true, $(this));','再想想');" data-stat="true" title="取消关注"><i class="material-icons">check</i><span>已关注</span></button>
                 <button class="followButton nega" onclick="followUser('{{uid}}',false, $(this));" data-stat="followedme" title="关注"><i class="material-icons">check</i><span>关注了我</span></button>
-                <button class="followButton nega" onclick="followUser('{{uid}}',true, $(this));" data-stat="both" title="取消关注"><i class="material-icons">check</i><span>互相关注</span></button>
+                <button class="followButton posi" onclick="alert('确认要取消关注 <b>{{nick}}</b> 吗？','取消关注','取消关注','followUser(\`{{uid}}\`,true, $(this));','再想想');" data-stat="both" title="取消关注"><i class="material-icons">done_all</i><span>互相关注</span></button>
                 <button class="followButton nega" onclick="newLegacyBrowser('/settings/account.html', false, false);" data-stat="edit" title="编辑个人资料"><i class="material-icons">edit</i><span>编辑资料</span></button>
                 <button class="followButton nega" data-stat="loading" title="加载中"><span>加载中</span></button>
         </div>
