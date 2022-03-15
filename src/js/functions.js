@@ -729,7 +729,7 @@ function getStickersJSON(fun) {
     }
 }
 
-function setStickersSelBox(div) {
+function setStickersSelBox(div, targetInput) {
     getStickersJSON(function () {
         try {
             div.innerHTML = "<div class='stks'></div><div class='bar'></div>";
@@ -739,7 +739,7 @@ function setStickersSelBox(div) {
                 stksListHTML = "";
                 pakId = val['id'];
                 val['stickers'].forEach(function (val) {
-                    stksListHTML += `<button title="${val['name']}" onclick="addStickerToEditBox('${pakId}','${val['id']}')"><i style="background-image:url(/src/img/stickers/${pakId}/${val['src']})"></i></button>`;
+                    stksListHTML += `<button title="${val['name']}" onclick="addStickerToEditBox('${targetInput}','${pakId}','${val['id']}','${`/src/img/stickers/${pakId}/${val['src']}`}')"><i style="background-image:url(/src/img/stickers/${pakId}/${val['src']})"></i></button>`;
                 });
                 stksDiv.innerHTML += `<div class="set" data-setid="${val['id']}"><div class="name">${val['name']}</div><div class="list">${stksListHTML}</div></div>`;
                 sbarDiv.innerHTML += `<button data-setid="${val['id']}" title="${val['name']}" style="background-image:url(/src/img/stickers/${val['id']}/${val['icon']})" onclick="jumpStickers('${div.id}','${val['id']}')"></button>`;
@@ -760,4 +760,8 @@ function jumpStickers(divId, setId) {
     div.find(".stks").animate({
         scrollTop: div.find(".stks").scrollTop() + setDivPlace
     }, { duration: 300, easing: "swing" });
+}
+
+function addStickerToEditBox(targetInput, pakId, stkId, src) {
+    $(`#${targetInput} .sendBoxInput`).append(`<sticker data-setname="${pakId}" data-stkname="${stkId}" style="background-image:url(${src})">`);
 }

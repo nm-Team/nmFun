@@ -125,6 +125,7 @@ body[theme=dark]{
 #myPageAcc{
     display: flex;
     flex-direction: column;
+    margin-top: 17rem;
 }
 #accMain, .infoArea{
     display: flex;
@@ -325,5 +326,4 @@ body[theme=dark]{
 }
 sticker{
     display: inline-block;
-
 }

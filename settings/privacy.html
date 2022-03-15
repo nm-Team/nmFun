@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title data-i18n="settings.privacy.title"></title>
+    <title>隐私</title>
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
     <meta name='apple-mobile-web-app-capable' content='yes'>
     <meta name='apple-mobile-web-app-status-bar-style' content='black'>
@@ -14,11 +14,11 @@
 </head>
 
 <body class="settings radius">
-    <h1 data-i18n="settings.privacy.title"></h1>
+    <h1>隐私</h1>
     <div class="lists">
         <!-- 关注按钮和粉丝按钮等，就请后端来做对接了 -->
         <div class="but" tabindex="0" onkeydown="divClick(this, event)">
-            <t data-i18n="settings.privacy.showfollow"></t>
+            <t>公开显示我的关注</t>
             <t2 class="right" id="">
                 <div class="select-radio-box">
                     <input type="checkbox" id="showfollow">
@@ -30,34 +30,18 @@
                 </div>
             </t2>
         </div>
-        <div class="but" tabindex="0" onkeydown="divClick(this, event)">
-            <t data-i18n="settings.privacy.showfans"></t>
-            <t2 class="right" id="">
-                <div class="select-radio-box">
-                    <input type="checkbox" id="showfans">
-                    <div class="select-switch">
-                        <div class="select-cursor"></div>
-                        <div class="select-label select-label-on"></div>
-                        <div class="select-label select-label-off"></div>
-                    </div>
-                </div>
-            </t2>
-        </div>
-        <div class="but" onclick="goToPage('privacy_myinfo.html')">
-            <t data-i18n="settings.privacy.myinfo"></t>
-        </div>
     </div>
     <div class="lists">
         <div class="but" onclick="goToPage('privacy_blocklist.html')">
-            <t data-i18n="settings.privacy.blocklist"></t>
+            <t>黑名单</t>
         </div>
-        <p class="tip" data-i18n="settings.privacy.tip.blocklist"></p>
+        <p class="tip">被添加到黑名单的用户将无法关注您或与您互动，您也不会看到他们的帖子或回复。</p>
     </div>
     <div class="lists">
-        <div class="but" onclick="parent.newBrowser('https://nmteam.xyz/legal/privacy-policy.html', undefined, false, true)">
-            <t data-i18n="settings.privacy.know">
+        <div class="but"
+            onclick="parent.newBrowser('https://nmteam.xyz/legal/privacy-policy.html?noheader=true', undefined, false, true)">
+            <t>nmTeam 隐私政策</t>
         </div>
-        <p class="tip" data-i18n="settings.privacy.tip.know"></p>
     </div>
     <script src="../src/js/jquery.min.js"></script>
     <script src="../src/js/i18next-1.6.3.min.js"></script>

@@ -84,10 +84,9 @@ uPageTemp = `
         <div class="typeSelecter">
             <label for="uPage_{{uid}}_s_posts"><input id="uPage_{{uid}}_s_posts" type="radio" name="uPage_{{uid}}_s"><span>帖子<n data-posts-num-uid="{{uid}}"></n></span></label>
             <label for="uPage_{{uid}}_s_replies"><input id="uPage_{{uid}}_s_replies" type="radio" name="uPage_{{uid}}_s"><span>回复<n data-replies-num-uid="{{uid}}"></n></span></label>
-            <label for="uPage_{{uid}}_s_posts"><input id="uPage_{{uid}}_s_posts" type="radio" name="uPage_{{uid}}_s"><span>更多</span></label>
         </div>
     </div>
-    <div class="userMainCards equalPages floatFrame-content">
+    <div class="userMainCards equalPages floatFrame-content postsListScrollMonitor" id="userPage_{{uid}}_postsListScrollMonitor">
         <div class="placeHolder"></div>
         
         </div>
@@ -143,7 +142,7 @@ function followUser(uid, unfollow = false, ele) {
                 break;
         }
         $("[data-my-following-to-uid=" + uid + "]").attr("data-follow", "loading");
-        newAjax("POST", backEndURL + "/user/follow.php", true, "uid=" + uid + (unfollow ? "&unfollow" : ""), "", function () { writeLog("i", "followUser", "follow user " + uid + " success, unfollow=" + unfollow); refreshUserInfoArea(uid); }, function () { writeLog("i", "followUser", "follow user " + uid + " error, unfollow=" + unfollow); refreshUserInfoArea(uid); });
+        newAjax("POST", backEndURL + "/user/follow.php", true, "uid=" + uid + (unfollow ? "&unfollow" : ""), "", function () { writeLog("i", "followUser", "follow user " + uid + " success, unfollow=" + unfollow); refreshUserInfoArea(uid); refreshUserInfoArea(myUid) }, function () { writeLog("i", "followUser", "follow user " + uid + " error, unfollow=" + unfollow); refreshUserInfoArea(uid); });
     }
 }
 

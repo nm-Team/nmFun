@@ -29,8 +29,23 @@ function setHeaderLog() {
                 toUserPageBut.setAttribute("onclick", "newUserInfoPage('" + accountInfo['uid'] + "', '" + accountInfo['nick'] + "');");
                 myPageMoreTags.setAttribute("data-show", "true");
                 myPageAccounteditBut.setAttribute("data-show", "true");
+                myPageMoreTags.innerHTML = `
+                <button class="myPageMoreButton">
+                    <p class="top"><span data-posts-num-uid="${myUid}"><span class="skeleton" style="padding-right: 1em"></span></span></p>
+                    <p class="bottom">帖子</p>
+                </button>
+                <button class="myPageMoreButton">
+                    <p class="top"><span data-following-num-uid="${myUid}"><span class="skeleton" style="padding-right: 1em"></span></span></p>
+                    <p class="bottom">关注</p>
+                </button>
+                <button class="myPageMoreButton">
+                    <p class="top"><span data-followers-num-uid="${myUid}"><span class="skeleton" style="padding-right: 1em"></span></span></p>
+                    <p class="bottom">粉丝</p>
+                </button>
+                `;
                 writeLog("i", "setHeaderLog", "log success, sessionid " + localStorage.sessionid + ", " + JSON.stringify(accountInfo));
-            }
+            };
+            refreshUserInfoArea(myUid);
         });
     }
     catch (err) {

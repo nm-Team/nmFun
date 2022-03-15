@@ -113,7 +113,7 @@ function showPostInput(which, toS) {
         } catch (err) { console.error(err); }
     }
     else document.getElementById("" + which + "EditBoxCover").removeAttribute("open");
-    try { setStickersSelBox(document.getElementById("" + which + "EditBox").getElementsByClassName("stickersChoose")[0]); }
+    try { setStickersSelBox(document.getElementById("" + which + "EditBox").getElementsByClassName("stickersChoose")[0], ("" + which + "EditBox")); }
     catch (err) { console.error(err) };
     writeLog("i", "showPostInput", which + " to " + toS);
 }

@@ -11,7 +11,7 @@ function initPostsList(box, attr) {
 function initPostsListMonitor(box) {
     new_element = document.createElement("div");
     new_element.className = "postsListBar";
-    new_element.setAttribute("noselect","");
+    new_element.setAttribute("noselect", "");
     new_element.innerHTML = `<button class="refresh" onclick="refreshPostsList(getActivePostsList($('#${box[0].id}')))"><i class="material-icons">refresh</i></button><button class="top" onclick="($('#${box[0].id}')).animate({scrollTop: 0}, 500);" data-hidden="true"><i class="material-icons">arrow_upward</i></button>`;
     box.append(new_element);
 }
@@ -185,7 +185,7 @@ function refreshPostArea(pid) {
                 tagCaught = numbersignCaught[p].split("<br />")[0].split(" ")[0];
                 if (!tagCaught || (p == 0 && contentHandled.indexOf("#") != 0)
                     || (numbersignCaught[p - 1].split("<br />")[numbersignCaught[p - 1].split("<br />").length - 1].split(" ")[numbersignCaught[p - 1].split("<br />")[numbersignCaught[p - 1].split("<br />").length - 1].split(" ").length - 1])
-                    )
+                )
                     continue;
                 contentHandled = contentHandled.replace("#" + tagCaught, '<a class="linkInPost" href="" target="_blank" onclick="return false;" title="查看话题 #' + tagCaught + '">#' + tagCaught + '</a>');
                 tagsIn.push(tagCaught);
@@ -249,7 +249,7 @@ function refreshPostArea(pid) {
                 tagsHTML += `<a href="javascript:" onclick="newMsgBox('开发中')">` + currentValue + `</a>`;
             });
             document.getElementById('postFrame' + pid).getElementsByClassName("postRelated")[0].innerHTML = `
-            <div class="card tagCard"><div class="content"><a class="ca" href="javascript:" onclick="newMsgBox('开发中')" >`+ pData['category'] + `</a>
+            <div class="card tagCard"><div class="content"><a class="ca" href="javascript:" onclick="newMsgBox('开发中')" >`+ moreCategoryList.filter(function (_data) { return _data.id = pData['category'] }).name + `</a>
             <div class="tags">`+ tagsHTML + `</div> </div>
             </div><div class="card interactionBar"><button onclick="newMsgBox('开发中')">评论 <span class="commentNum" data-comment-num-post-id="${pid}">` + pData['comment'] + `</span></button><button onclick="newMsgBox('开发中')">赞 <span class="likeNum" data-like-num-post-id="${pid}">` + pData['like'] + `</span></button> </div>
             `;
