@@ -45,6 +45,10 @@
         <div class="but" onclick="localStorage.started='false'; parent.window.location.reload()">
             <t>Reopen introductive pop page (will refresh)</t>
         </div>
+        <div class="but"
+            onclick="if(localStorage.disableStickers=='true') localStorage.disableStickers='false'; else localStorage.disableStickers='true';">
+            <t>Disable/Enable Stickers Function</t>
+        </div>
     </div>
     <p class="listName">SET TEST API ADDRESS</p>
     <div class="lists">

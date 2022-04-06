@@ -31,6 +31,7 @@ function newUserInfoPage(uid, uNick, noOther = false) {
 }
 
 function refreshUserInfoArea(uid) {
+    if(isNaN(uid)) return;
     newAjax("POST", backEndURL + "/user/getuser.php", true, "uid=" + uid, {}, function (data) {
         if (data['status'] == "successful") {
             pData = data['data'];
@@ -41,7 +42,8 @@ function refreshUserInfoArea(uid) {
             $("[data-replies-num-uid=" + uid + "]").html(pData['publish_comment']);
             $("[data-my-following-to-uid=" + uid + "]").attr("data-follow", (pData['is_myself'] ? "edit" : (pData['i_followed'] ? (pData['followed_me'] ? "both" : "true") : (pData['followed_me'] ? "followedme" : "false"))));
         }
-        else {
+        else 
+        {
             newMsgBox("用户信息加载失败");
             writeLog("e", "refreshUserInfoArea", `uid${uid}信息加载失败: ${data['info']}`);
         }

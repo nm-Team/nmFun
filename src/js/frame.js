@@ -209,7 +209,10 @@ $(window).on("resize", function () { fixIndexAni(); })
 fixIndexAni();
 
 // barPage逻辑
+barPageCD = false;
 function showBarPage(pageId) {
+    if (barPageCD) return newMsgBox("切换冷却中");
+    barPageCD = true;
     if (getOpenBoxes("pageLeft").length == 0) {
         focusBox("pageLeft", $("[data-bar-page-id=" + pageId + "]")[0].id, true);
         $("[data-bar-page-id]:not([data-bar-page-id=" + pageId + "]):not([data-bar-page-id=home])").attr("data-hidden", "true");
@@ -221,6 +224,9 @@ function showBarPage(pageId) {
             $("[data-bar-page-id]:not([data-bar-page-id=" + pageId + "]):not([data-bar-page-id=home])").attr("data-hidden", "true");
         }, 500);
     }
+    setTimeout(() => {
+        barPageCD = false;
+    }, 500);
     lightBottomBar(pageId);
 }
 

@@ -733,6 +733,10 @@ function getStickersJSON(fun) {
 }
 
 function setStickersSelBox(div, targetInput) {
+    if (localStorage.disableStickers == "true") {
+        div.innerHTML = "已经在 Test Field 禁用了表情功能";
+        return;
+    }
     getStickersJSON(function () {
         try {
             div.innerHTML = "<div class='stks'></div><div class='bar'></div>";

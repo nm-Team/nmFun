@@ -20,6 +20,7 @@ function initPostsListMonitor(box) {
 function refreshPostsList(box, config = { "notify": true }) {
     if (config.notify) newMsgBox("正在刷新...");
     box.find(".main").empty();
+    box.attr("data-status", "undefined");
     loadPostsList(box);
 }
 
@@ -260,7 +261,7 @@ function refreshPostArea(pid) {
                 tagsHTML += `<a href="javascript:" onclick="newMsgBox('开发中')">` + currentValue + `</a>`;
             });
             document.getElementById('postFrame' + pid).getElementsByClassName("postRelated")[0].innerHTML = `
-            <div class="card tagCard"><div class="content"><a class="ca" href="javascript:" onclick="newMsgBox('开发中')" >`+ moreCategoryList.filter(function (_data) { return _data.id = pData['category'] }).name + `</a>
+            <div class="card tagCard"><div class="content"><a class="ca" href="javascript:" onclick="newMsgBox('开发中')" >`+ moreCategoryList.filter(function (_data) { return _data.id == pData['category'] })[0].name + `</a>
             <div class="tags">`+ tagsHTML + `</div> </div>
             </div><div class="card interactionBar"><button onclick="newMsgBox('开发中')">评论 <span class="commentNum" data-comment-num-post-id="${pid}">` + pData['comment'] + `</span></button><button onclick="newMsgBox('开发中')">赞 <span class="likeNum" data-like-num-post-id="${pid}">` + pData['like'] + `</span></button> </div>
             `;
