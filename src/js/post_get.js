@@ -37,12 +37,12 @@ function focusInPostsList(box, id) {
 
 // postsList 滚动事件
 refreshPostsListOnScroll();
-function refreshPostsListOnScroll(){
-$(".postsListScrollMonitor").on('scroll', function (event) {
-    postsListOnScroll(getActivePostsList($(this)));
-    if ($(this).scrollTop() < $(this).outerHeight()) $(this).find(".postsListBar .top").attr("data-hidden", "true");
-    else $(this).find(".postsListBar .top").attr("data-hidden", "false");
-})
+function refreshPostsListOnScroll() {
+    $(".postsListScrollMonitor").on('scroll', function (event) {
+        postsListOnScroll(getActivePostsList($(this)));
+        if ($(this).scrollTop() < $(this).outerHeight()) $(this).find(".postsListBar .top").attr("data-hidden", "true");
+        else $(this).find(".postsListBar .top").attr("data-hidden", "false");
+    })
 }
 
 function postsListOnScroll(box) {
@@ -446,6 +446,7 @@ function deleteMyPost(pid, poName, withMsg = true) {
             document.getElementById(`delCoverForPost${pid}`).outerHTML = "";
             writeLog("i", "deleteMyPost(" + pid + ")", "success");
             $("[data-postid=" + pid + "]").remove();
+            $("[data-posts-num-uid=" + myUid + "]").html($("[data-posts-num-uid=" + myUid + "]")[0].innerHTML - 1);
             closeBox('pageRight', 'postFrame' + pid);
         },
             function () {

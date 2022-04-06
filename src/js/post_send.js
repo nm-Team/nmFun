@@ -33,7 +33,7 @@ function sendPost(div, postType, onSuccess) {
             sendData = { type: "comment", inpost: inpost, tocomment: tocomment, content: textToSend };
         }
         sendCover.setAttribute("open", "true");
-        newAjax("POST", backEndURL + "/post/newpost.php", true, "", sendData, function (data) { attachmentUpload(div, data['pid'], postType, function () { sendCover.setAttribute("open", "false"); onSuccess(); }); }, function (err) { sendCover.setAttribute("open", "false"); newMsgBox("出现错误，发送失败。<br>服务器返回错误 " + err['info']) });
+        newAjax("POST", backEndURL + "/post/newpost.php", true, "", sendData, function (data) { $("[data-posts-num-uid=" + myUid + "]").html(data['post_num']); attachmentUpload(div, data['pid'], postType, function () { sendCover.setAttribute("open", "false"); onSuccess(); }); }, function (err) { sendCover.setAttribute("open", "false"); newMsgBox("出现错误，发送失败。<br>服务器返回错误 " + err['info']) });
     }
 }
 

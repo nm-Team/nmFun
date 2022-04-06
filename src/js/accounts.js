@@ -30,7 +30,7 @@ function setHeaderLog() {
                 myPageMoreTags.setAttribute("data-show", "true");
                 myPageAccounteditBut.setAttribute("data-show", "true");
                 myPageMoreTags.innerHTML = `
-                <button class="myPageMoreButton">
+                <button class="myPageMoreButton" onclick="toUserPageBut.click();">
                     <p class="top"><span data-posts-num-uid="${myUid}"><span class="skeleton" style="padding-right: 1em"></span></span></p>
                     <p class="bottom">帖子</p>
                 </button>
