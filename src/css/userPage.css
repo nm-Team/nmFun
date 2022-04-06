@@ -22,6 +22,10 @@ body[theme=dark]{
     --uInfo-header-interaction-button-negative-background: #46464636;
     --uInfo-header-interaction-button-negative-border: rgb(255, 208, 0);
 }
+.userFrame.box .main:not(.main *){
+    height: calc(100% - 45rem);
+    overflow: hidden;
+}
 .userHeader, .uHeaderMain{
     position: relative;
     height: 220rem;

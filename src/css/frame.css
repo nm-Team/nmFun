@@ -200,7 +200,7 @@ body{
     animation: returnRight 0.4s!important;    transform: translate(0,0);
     transform: translate(0,0);
 }
-.box .main{
+.box .main:not(.main .main){
     position: absolute;
     top: 45rem;
     bottom: 0;
@@ -256,7 +256,7 @@ body{
     }
 }
 .popFrame[open=true][data-behind=true]{
-    transform: translate(-50%, 0)scale(0.92);
+    transform: translate(-50%, 0) scale(0.92);
     filter: brightness(0.6);
     transition: all 0.5s;
 }

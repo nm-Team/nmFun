@@ -373,16 +373,19 @@ function pushHistory(what) {
 }
 
 // Header动画
-$(".floatFrame-content").scroll(function (e) {
-    if (!this.getAttribute("oriheight")) this.setAttribute("oriheight", this.parentNode.getElementsByClassName("floatFrame-header")[0].getBoundingClientRect().height);
-    userFrameHeaderHeight = this.getAttribute("oriheight");
-    userFrameStrollPercent = (this.scrollTop / userFrameHeaderHeight > 1 ? 1 : this.scrollTop / userFrameHeaderHeight);
-    if (userFrameStrollPercent == 1) this.parentNode.getElementsByClassName("typeSelecter")[0].setAttribute("fly", "true");
-    else this.parentNode.getElementsByClassName("typeSelecter")[0].setAttribute("fly", "false");
-    this.getElementsByClassName("placeHolder")[0].style.height = ((userFrameStrollPercent < 0 ? 0 : userFrameStrollPercent) * userFrameHeaderHeight) + "px";
-    for (y = 0; y < this.parentNode.getElementsByClassName("floatFrame-header").length; y++)
-        this.parentNode.getElementsByClassName("floatFrame-header")[y].style.height = ((1 - userFrameStrollPercent) * userFrameHeaderHeight) + "px";
-});
+refreshFloatFrameOnScroll();
+function refreshFloatFrameOnScroll() {
+    $(".floatFrame-content").on("scroll", (function (e) {
+        if (!this.getAttribute("oriheight")) this.setAttribute("oriheight", this.parentNode.getElementsByClassName("floatFrame-header")[0].getBoundingClientRect().height);
+        userFrameHeaderHeight = this.getAttribute("oriheight");
+        userFrameStrollPercent = (this.scrollTop / userFrameHeaderHeight > 1 ? 1 : this.scrollTop / userFrameHeaderHeight);
+        if (userFrameStrollPercent == 1) this.parentNode.getElementsByClassName("typeSelecter")[0].setAttribute("fly", "true");
+        else this.parentNode.getElementsByClassName("typeSelecter")[0].setAttribute("fly", "false");
+        this.getElementsByClassName("placeHolder")[0].style.height = ((userFrameStrollPercent < 0 ? 0 : userFrameStrollPercent) * userFrameHeaderHeight) + "px";
+        for (y = 0; y < this.parentNode.getElementsByClassName("floatFrame-header").length; y++)
+            this.parentNode.getElementsByClassName("floatFrame-header")[y].style.height = ((1 - userFrameStrollPercent) * userFrameHeaderHeight) + "px";
+    }));
+}
 
 // 时间
 setInterval(() => {

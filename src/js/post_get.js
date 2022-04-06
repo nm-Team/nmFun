@@ -14,10 +14,11 @@ function initPostsListMonitor(box) {
     new_element.setAttribute("noselect", "");
     new_element.innerHTML = `<button class="refresh" onclick="refreshPostsList(getActivePostsList($('#${box[0].id}')))"><i class="material-icons">refresh</i></button><button class="top" onclick="($('#${box[0].id}')).animate({scrollTop: 0}, 500);" data-hidden="true"><i class="material-icons">arrow_upward</i></button>`;
     box.append(new_element);
+    refreshPostsListOnScroll();
 }
 
-function refreshPostsList(box) {
-    newMsgBox("正在刷新...");
+function refreshPostsList(box, config = { "notify": true }) {
+    if (config.notify) newMsgBox("正在刷新...");
     box.find(".main").empty();
     loadPostsList(box);
 }
@@ -26,12 +27,22 @@ function getActivePostsList(d) {
     return $(d).find("[data-focus=true]");
 }
 
+function focusInPostsList(box, id) {
+    loadPostsList(id);
+    box.find(".postsList").attr("data-focus", "false");
+    id.attr("data-focus", "true");
+    writeLog("i", "focusInPostsList", "focused box id: " + id[0].id + "in " + box[0].id);
+}
+
 // postsList 滚动事件
+refreshPostsListOnScroll();
+function refreshPostsListOnScroll(){
 $(".postsListScrollMonitor").on('scroll', function (event) {
     postsListOnScroll(getActivePostsList($(this)));
     if ($(this).scrollTop() < $(this).outerHeight()) $(this).find(".postsListBar .top").attr("data-hidden", "true");
     else $(this).find(".postsListBar .top").attr("data-hidden", "false");
 })
+}
 
 function postsListOnScroll(box) {
     attr = JSON.parse(box.attr("data-config"));
@@ -50,7 +61,7 @@ function loadPostsList(box) {
     box.attr("data-status", "loading");
     $.ajax({
         type: "GET",
-        url: backEndURL + "/post/listpost.php?pid=" + (lastPid ? lastPid : "") + "&category=" + attr.search.category + "&CodySESSION=" + localStorage.sessionid + "&uid=" + myUid,
+        url: backEndURL + "/post/listpost.php?pid=" + (lastPid ? lastPid : "") + "&category=" + (attr.search.category ? attr.search.category : "") + "&user=" + (attr.search.uid ? attr.search.uid : "") + "&CodySESSION=" + localStorage.sessionid,
         async: true,
         dataType: "json",
         success: function (response, status, request) {

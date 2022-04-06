@@ -17,7 +17,12 @@ function newUserInfoPage(uid, uNick, noOther = false) {
             new_element.innerHTML = uPageTemp.replace(/{{uid}}/g, uid).replace(/{{nick}}/g, uNick).replace(/{{avatar}}/g, avatarURL.replace(/{id}/g, uid));
             pageRight.appendChild(new_element);
             focusBox("pageRight", "userInfoFrame_" + uid, noOther);
+            initPostsListMonitor($(`#userPage_${uid}_postsListScrollMonitor`));
+            initPostsList($(`#userPage_${uid}_postsList_posts`), { "type": "post", "search": { "uid": uid }, "noOther": "false" });
             refreshUserInfoArea(uid);
+            focusInPostsList($(`#userPage_${uid}_postsListScrollMonitor`), $(`#userPage_${uid}_postsList_posts`));
+            loadPostsList($(`#userPage_${uid}_postsList_posts`));
+            refreshFloatFrameOnScroll();
         };
     }
     catch (err) {
@@ -38,9 +43,11 @@ function refreshUserInfoArea(uid) {
         }
         else {
             newMsgBox("用户信息加载失败");
+            writeLog("e", "refreshUserInfoArea", `uid${uid}信息加载失败: ${data['info']}`);
         }
     }, function () {
         newMsgBox("用户信息加载失败");
+        writeLog("e", "refreshUserInfoArea", `uid${uid}信息加载失败: JSON未解析`);
     });
 }
 
@@ -82,13 +89,15 @@ uPageTemp = `
     </div>
     <div class="typeContainer" noselect>
         <div class="typeSelecter">
-            <label for="uPage_{{uid}}_s_posts"><input id="uPage_{{uid}}_s_posts" type="radio" name="uPage_{{uid}}_s"><span>帖子<n data-posts-num-uid="{{uid}}"></n></span></label>
-            <label for="uPage_{{uid}}_s_replies"><input id="uPage_{{uid}}_s_replies" type="radio" name="uPage_{{uid}}_s"><span>回复<n data-replies-num-uid="{{uid}}"></n></span></label>
+            <label for="uPage_{{uid}}_s_posts"><input id="uPage_{{uid}}_s_posts" type="radio" name="uPage_{{uid}}_s" checked onclick="loadPostsList($(\'#userPage_{{uid}}_postsList_posts\`));"><span>帖子<n data-posts-num-uid="{{uid}}"></n></span></label>
+            <label for="uPage_{{uid}}_s_replies"><input id="uPage_{{uid}}_s_replies" type="radio" name="uPage_{{uid}}_s" onclick="loadPostsList($(\`#userPage_{{uid}}_postsList_comments\`));"><span>回复<n data-replies-num-uid="{{uid}}"></n></span></label>
         </div>
     </div>
     <div class="userMainCards equalPages floatFrame-content postsListScrollMonitor" id="userPage_{{uid}}_postsListScrollMonitor">
-        <div class="placeHolder"></div>
-        
+    <div class="placeHolder"></div>
+    <div id="userPage_{{uid}}_postsListContainer" class="cardsListsContainer">
+            <div id="userPage_{{uid}}_postsList_posts"></div>
+            <div id="userPage_{{uid}}_postsList_comments"></div>
         </div>
     </div>
 </div>
