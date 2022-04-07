@@ -112,6 +112,9 @@
             onclick="parent.window.open('mailto:support@nmnm.fun?subject=[nmFun Log] '+encodeURI(/*(myInfos)?myInfos.nick:'UnloggedUser')*/)+' '+new Date()+'&body='+encodeURI(localStorage.systemLog))">
             <t>Upload to nmFun by E-Mail (Alpha)</t>
         </div>
+        <div class="but" onclick="localStorage.systemLog='';writeLog('i','log cleard')">
+            <t>Clear Log</t>
+        </div>
         <pre><p class="tip" id="logB"
             style="user-select: text; -webkit-user-select: text; -moz-user-select: text; max-height: 100vh; overflow: scroll;">
         </p></pre>

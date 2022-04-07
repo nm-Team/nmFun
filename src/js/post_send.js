@@ -1,9 +1,11 @@
 // 设置发帖回帖区域
 function setPostInputArea(ele, type) {
+    writeLog("d", "setPostInputArea_" + ele + "_" + type, "start");
     cgOptions = '';
     for (i = 0; i < moreCategoryList.length; i++) {
         cgOptions += `<option cgid="` + moreCategoryList[i]['id'] + `">` + moreCategoryList[i]['name'] + `</option>`;
     }
+    writeLog("d", "setPostInputArea_" + ele + "_" + type, "successfully set category list");
     ele.innerHTML = sendBoxTemplate.replace(/{{cg}}/g, cgOptions).replace(/{{id}}/g, ele.id).replace(/{{type}}/g, type);
     ele.className += " inputArea " + type;
     writeLog("i", "setPostInputArea", ele.id);

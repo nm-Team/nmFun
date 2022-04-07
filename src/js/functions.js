@@ -618,6 +618,7 @@ function writeLog(logType, funName, content) {
     logTypeList.forEach(en => {
         if (en[0].toLowerCase() == logType.toLowerCase()) logType = en;
     });
+    if (logType == "DEBUG" && !debugMode) return;
     logTime = new Date();
     logTime.setTime(logTime.getTime() + 60000 * logTime.getTimezoneOffset());
     logTime = JSON.parse(splitTime(logTime));

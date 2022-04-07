@@ -84,7 +84,7 @@ body[theme=dark]{
 }
 .postsListBar button[data-hidden=true] i{
     visibility: hidden;
-    transform: scale(0)translate(-50%, -50%);
+    transform: scale(0) translate(-50%, -50%);
     opacity: 0;
 }
 .avatarBox .name{
@@ -181,7 +181,7 @@ body[theme=dark]{
     background-size: cover;
     background-repeat: no-repeat;
     cursor: zoom-in;
-    border-radius: 2rem;
+    border-radius: 3rem;
 }
 .cardBox.postCardBox .content .media .medias li::marker{
     content: '';
@@ -214,6 +214,7 @@ body[theme=dark]{
 .cardBox.postCardBox .content .media .medias[type=x1] li{
     width: 100%;
     padding-bottom: 100%;
+    border-radius: 6rem;
 }
 .cardBox.postCardBox .content .media .medias[type=x2] li{
     width: calc(50% - 3rem);
@@ -229,6 +230,9 @@ body[theme=dark]{
     height: 30rem;
     padding-top: 56%;
 }
+.medias:not(:empty)+.biliVideoCon{
+    margin-top: 5rem;
+}
 .biliVideo{
     position: absolute;
     top: 0;
@@ -236,6 +240,7 @@ body[theme=dark]{
     left: 0;
     right: 0;
     width: 100%;
+    border-radius: 6rem;
     height: calc(100% - 30rem);
 }
 .biliVideoNote{

@@ -26,13 +26,13 @@
         <div class="but" onclick="confirmLog();">
             <t data-i18n="logverify.confirm"></t>
         </div>
-    <p class="tip" data-i18n="logverify.tip.goas"></p>
+        <p class="tip" data-i18n="logverify.tip.goas"></p>
     </div>
     <div class="lists">
         <div class="but" onclick="confirmLog();parent.window.location.reload();">
             <t data-i18n="logverify.confirm&refresh"></t>
         </div>
-    <p class="tip" data-i18n="logverify.tip.refresh"></p>
+        <p class="tip" data-i18n="logverify.tip.refresh"></p>
     </div>
     <script src="./src/js/jquery.min.js"></script>
     <script src="./src/js/i18next-1.6.3.min.js"></script>
@@ -42,6 +42,7 @@
     <script src="./src/js/settings.js"></script>
     <script>
         sessionid = getUrlParam("sessionid");
+        writeLog("d", "logVerifyPage", "successfully get sessionid");
         returnWord = "";
         document.cookie = "PHPSESSID=" + sessionid + ";domain=" + siteURL.split("/")[2];
         loginv = setInterval(() => {
@@ -57,15 +58,21 @@
                     settingNick.innerHTML = myInfos.nick;
                     settingUid.innerHTML = "UID: " + myInfos.uid;
                     settingAvatar.style.backgroundImage = "url(" + myInfos.avatar + ")";
+                    writeLog("d", "logVerifyPage", "successfully get user info: " + JSON.stringify(myInfos));
                 }
             });
         }, 100);
 
         function confirmLog() {
+            writeLog("d", "confirmLog", "work start");
             parent.closeLogFrame();
+            writeLog("d", "confirmLog", "successfully close log frame");
             localStorage.setItem('sessionid', sessionid);
+            writeLog("d", "confirmLog", "successfully set sessionid " + sessionid);
             parent.logInit();
+            writeLog("d", "confirmLog", "successfully sent logInit request");
             parent.setHeaderLog();
+            writeLog("d", "confirmLog", "successfully sent setHeaderLog request");
         }
     </script>
 </body>
