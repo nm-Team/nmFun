@@ -1,13 +1,24 @@
 // 设置发帖回帖区域
 function setPostInputArea(ele, type) {
-    writeLog("d", "setPostInputArea_" + ele + "_" + type, "start");
+    writeLog("d", "setPostInputArea_" + ele.id + "_" + type, "start");
     cgOptions = '';
     for (i = 0; i < moreCategoryList.length; i++) {
-        cgOptions += `<option cgid="` + moreCategoryList[i]['id'] + `">` + moreCategoryList[i]['name'] + `</option>`;
+        try {
+            cgOptions += `<option cgid="` + moreCategoryList[i]['id'] + `">` + moreCategoryList[i]['name'] + `</option>`;
+        }
+        catch (err) {
+            writeLog("e", "setPostInputArea_" + ele.id + "_" + type, err);
+        }
     }
-    writeLog("d", "setPostInputArea_" + ele + "_" + type, "successfully set category list");
-    ele.innerHTML = sendBoxTemplate.replace(/{{cg}}/g, cgOptions).replace(/{{id}}/g, ele.id).replace(/{{type}}/g, type);
-    ele.className += " inputArea " + type;
+    writeLog("d", "setPostInputArea_" + ele.id + "_" + type, "successfully set category list");
+    try {
+        ele.innerHTML = sendBoxTemplate.replace(/{{cg}}/g, cgOptions).replace(/{{id}}/g, ele.id).replace(/{{type}}/g, type);
+        ele.className += " inputArea " + type + " ";
+
+    }
+    catch (err) {
+        writeLog("e", "setPostInputArea_" + ele.id + "_" + type, err);
+    }
     writeLog("i", "setPostInputArea", ele.id);
 }
 
@@ -48,8 +59,8 @@ function attachmentUpload(div, pid, postType, onSuc, onErr) {
     }
     mediaUploadSta = Array(0);
     for (i = 0; i < div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m").length; i++) {
-    $("#sendCover p").html("正在上传附件 " +0 + "/" + div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m").length);
-    try {
+        $("#sendCover p").html("正在上传附件 " + 0 + "/" + div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m").length);
+        try {
             mediaInfo = (div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m")[i].getAttribute("m"));
             mInfoParsed = JSON.parse(mediaInfo.replace(/'/g, '"'));
             // 对部分类型进行操作
@@ -60,7 +71,7 @@ function attachmentUpload(div, pid, postType, onSuc, onErr) {
                 var formData = new FormData();
                 formData.append(mInfoParsed.type, file, mInfoParsed.name);
                 console.log(file);
-                 newFileAjax("POST", backEndURL + "/attachment/attachment.php", true, `action=add&type=${mInfoParsed.type}&pid=${pid}`, formData, function () { mediaUploadSta.push(true); verifyPostAttachmentUploadStatus(div, pid, onSuc); }, function () { newMsgBox("附件上传失败"); mediaUploadSta = false; verifyPostAttachmentUploadStatus(div, pid, onSuc); onErr() });
+                newFileAjax("POST", backEndURL + "/attachment/attachment.php", true, `action=add&type=${mInfoParsed.type}&pid=${pid}`, formData, function () { mediaUploadSta.push(true); verifyPostAttachmentUploadStatus(div, pid, onSuc); }, function () { newMsgBox("附件上传失败"); mediaUploadSta = false; verifyPostAttachmentUploadStatus(div, pid, onSuc); onErr() });
             }
             else if (mInfoParsed.type = "biliVideo") {
                 newAjax("POST", backEndURL + "/attachment/attachment.php", true, `action=add&type=bili&pid=${pid}&bvid=${mInfoParsed.bvid}&p=${mInfoParsed.p}`, undefined, function () { mediaUploadSta.push(true); verifyPostAttachmentUploadStatus(div, pid, onSuc); }, function () { newMsgBox("Bilibili 视频上传失败"); mediaUploadSta = false; verifyPostAttachmentUploadStatus(div, pid, onSuc); onErr() });
@@ -79,7 +90,7 @@ function verifyPostAttachmentUploadStatus(div, pid, onSuc, onErr) {
         newMsgBox("有附件上传失败，已为您删除帖子，请确认无误后重试。<br>若仍有问题，可联系 nmTeam 支持。");
         onErr();
     }
-    $("#sendCover p").html("正在上传附件 " +mediaUploadSta.length + "/" + div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m").length);
+    $("#sendCover p").html("正在上传附件 " + mediaUploadSta.length + "/" + div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m").length);
     if (mediaUploadSta.length == div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m").length) {
         onSuc(pid);
         newPostDetailPage(pid);

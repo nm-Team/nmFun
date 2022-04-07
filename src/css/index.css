@@ -4,9 +4,6 @@ body{
 body[theme=dark]{
     --startHover-bgcolor: #262626;
 }
-.fakeArea{
-    height: 200vh;
-}
 .indexFrame{
     display: flex;
     flex-direction: column;
