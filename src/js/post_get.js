@@ -40,7 +40,7 @@ refreshPostsListOnScroll();
 function refreshPostsListOnScroll() {
     $(".postsListScrollMonitor").on('scroll', function (event) {
         postsListOnScroll(getActivePostsList($(this)));
-        if ($(this).scrollTop() < $(this).outerHeight()) $(this).find(".postsListBar .top").attr("data-hidden", "true");
+        if ($(this).scrollTop() < $(this).outerHeight() / 2) $(this).find(".postsListBar .top").attr("data-hidden", "true");
         else $(this).find(".postsListBar .top").attr("data-hidden", "false");
     })
 }

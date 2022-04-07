@@ -105,6 +105,11 @@ body[theme=dark] .cardBox .card.clickable:hover, .cardBox .card.clickable:focus-
     background: none;
     border-radius: 99rem;
 }
+.cardBox .card .header .buttons button i{
+    width: 12rem;
+    height: 12rem;
+    font-size: 12rem;
+}
 .cardBox .card .header .buttons button:hover, .cardBox .card .header .buttons button:focus-visible{
     background-color: var(--card-button-bgcolor);
 }
