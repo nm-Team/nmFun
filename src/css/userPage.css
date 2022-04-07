@@ -85,6 +85,9 @@ body[theme=dark]{
     -webkit-user-select: all;
     -moz-user-select: all;
 }
+.uHeaderInfos .urole:not(:empty){
+    margin: -5rem 0 7rem 0;
+}
 .uHeaderMain .uHeaderInfos .data{
     display: flex;
     flex-flow: wrap;

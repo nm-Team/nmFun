@@ -130,6 +130,15 @@ body[theme=dark]{
 .usertag.border{
     border: 1px solid var(--usertag);
 }
+.usertag.icon {
+    margin-bottom: -2rem;
+    width: 12rem;
+    height: 12rem;
+    background-size: 17rem 17rem;
+}
+.usertag.nmTeam{
+    background-image: url(https://websiteres.nmteam.xyz/producticon/nmTeam/logo@32.png);
+}
 .avatarBox .name div .time{
     font-weight: normal;
     font-size: 12rem;

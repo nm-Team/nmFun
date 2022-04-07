@@ -74,17 +74,17 @@ function loadPostsList(box) {
                     new_element.innerHTML = `
 <div class="postMainReal card avatarBox" data-type="post" data-postid="${info.pid}">
     <div class="header">
-        <a class="name" tabindex="0" onclick="newUserInfoPage('${info.uid}', '${info.nick}');"
+        <a class="name" tabindex="0" onclick="newUserInfoPage('${info.user.uid}', '${info.user.nick}');"
             onkeydown="divClick(this, event)"><i
-                style="background-image:url('${avatarURL.replace(/{id}/g, info.uid)}"></i>
+                style="background-image:url('${avatarURL.replace(/{id}/g, info.user.uid)}"></i>
             <div>
-                <p class="unick">${info.nick}<!-- <span class="usertag border"></span> --> </p>
+                <p class="unick">${getNickHTML(info.user)}</p>
                 <p class="time" time="true" timestamp="${info.time}" timestyle="relative"
                     timesec="false" timefull="false"></p>
             </div>
         </a>
         <div class="buttons">
-            <button onclick="postContextMenu('post', '${info.pid}', '${info.title}', ${info.uid}, this);" title="选项"><i
+            <button onclick="postContextMenu('post', '${info.pid}', '${info.title}', ${info.user.uid}, this);" title="选项"><i
                     class="material-icons">more_vert</i></button>
         </div>
     </div>
@@ -206,9 +206,9 @@ function refreshPostArea(pid) {
             // 基本
             $("#postFrame" + pid + " .postMainReal").html(`
             <div class="header">
-                <a class="name" tabindex="0" onclick="newUserInfoPage('${pData['uid']}','${pData['nick']}');" onkeydown="divClick(this, event)"><i style="background-image:url('${avatarURL.replace(/{id}/g, pData['uid'])}"></i>
+                <a class="name" tabindex="0" onclick="newUserInfoPage('${pData['user']['uid']}','${pData['user']['nick']}');" onkeydown="divClick(this, event)"><i style="background-image:url('${avatarURL.replace(/{id}/g, pData['uid'])}"></i>
                     <div>
-                        <p class="unick">${pData['nick']}<!-- <span class="usertag border"></span> --> </p>
+                        <p class="unick">${getNickHTML(pData['user'])}</p>
                         <p class="time" time="true" timestamp="${pData['time']}" timestyle="relative" timesec="false" timefull="false"></p>
                     </div>
                 </a>
@@ -287,7 +287,7 @@ function refreshPostArea(pid) {
 postTemplate = `
 <header>
 <div class="left">
-    <button class="backButton" onclick="closeBox('pageRight','postFrame{{pid}}')" oncontextmenu="quickBack('pageRight',this)" ontouchstart="longPressToDo(function(){quickBack('pageRight',this)})" ontouchend="longPressStop()"><i class="material-icons">&#xe5c4;</i></button>
+    <button class="backButton" onclick="closeBox('pageRight','postFrame{{pid}}')" oncontextmenu="quickBack('pageRight',this)" ontouchstart="longPressToDo(function(){quickBack('pageRight')})" ontouchend="longPressStop()"><i class="material-icons">&#xe5c4;</i></button>
     <div class="nameDiv">
         <p class="title">详情</p>
         <p class="little"></p>
@@ -395,6 +395,10 @@ function setMedia(mediaJson, pid = 0) {
         mediasHTML = specialMediasHTML = mNum = "";
     };
     return { "mediasHTML": mediasHTML, "specialMediasHTML": specialMediasHTML, "mNum": mediaType, };
+}
+
+function getNickHTML(userJSON, config = { "nick": true }) {
+    return (config.nick ? `<span class="unick">` + userJSON['nick'] + `</span>` : "") + (userJSON['role'] != "user" ? `<span class="usertag border">` + roleList.filter(function (_data) { return _data.id == userJSON['role'] })[0].name + `</span>` : "") + (userJSON['is_nmteam'] == "1" ? `<span class="usertag icon nmTeam" title="nmTeam 成员"></span>` : "");
 }
 
 // 消息格式处理

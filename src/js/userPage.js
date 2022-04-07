@@ -31,10 +31,11 @@ function newUserInfoPage(uid, uNick, noOther = false) {
 }
 
 function refreshUserInfoArea(uid) {
-    if(isNaN(uid)) return;
+    if (isNaN(uid)) return;
     newAjax("POST", backEndURL + "/user/getuser.php", true, "uid=" + uid, {}, function (data) {
         if (data['status'] == "successful") {
             pData = data['data'];
+            $(`#userInfoFrame_${uid} .urole`).html(getNickHTML(pData, { "nick": false }));
             $("[data-following-num-uid=" + uid + "]").html(pData['followings_num']);
             $("[data-followers-num-uid=" + uid + "]").html(pData['followers_num']);
             $("[data-gain-likes-num-uid=" + uid + "]").html(pData['receive_like']);
@@ -42,8 +43,7 @@ function refreshUserInfoArea(uid) {
             $("[data-replies-num-uid=" + uid + "]").html(pData['publish_comment']);
             $("[data-my-following-to-uid=" + uid + "]").attr("data-follow", (pData['is_myself'] ? "edit" : (pData['i_followed'] ? (pData['followed_me'] ? "both" : "true") : (pData['followed_me'] ? "followedme" : "false"))));
         }
-        else 
-        {
+        else {
             newMsgBox("用户信息加载失败");
             writeLog("e", "refreshUserInfoArea", `uid${uid}信息加载失败: ${data['info']}`);
         }
@@ -73,6 +73,7 @@ uPageTemp = `
             <div class="uHeaderInfos">
                 <button class="avatar" style="background-image: url('{{avatar}}');" onclick="localStorage.imgSrc='{{avatar}}'; newBrowser('imgviewer.html',false,false,false)"></button>
                 <div class="name">{{nick}}</div>
+                <div class="urole"></div>
                 <div class="data">
                     <button>关注<span class="num" data-following-num-uid="{{uid}}"><span class="skeleton" style="padding-right: 2em"></span></span></button>
                     <button>粉丝<span class="num" data-followers-num-uid="{{uid}}"><span class="skeleton" style="padding-right: 2em"></span></span></button>
