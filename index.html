@@ -31,6 +31,8 @@
 </head>
 
 <body>
+    <div class="fakeArea"></div>
+    <script>window.scrollTo(0, 1);</script>
     <div class="scaleArea">
         <div id="startHover" noselect>
             <i class="icon"></i>
@@ -135,7 +137,7 @@
                         </div>
                     </header>
                     <div class="cardBox postCardBox main">
-                        
+
                     </div>
                 </div>
                 <div class="meFrame leftBox box bottomBarTarget" id="meFrame" data-bar-page-id="me" name="我的"
@@ -185,9 +187,10 @@
                                 </div>
                             </div>
                             <div class="lists">
-                                <div class="but" onclick="newBrowser('/settings/theme.html', '', false, false)" tabindex="0"
-                                    onkeydown="divClick(this, event)">
-                                    <icon class="material-icons" style="color: rgb(234, 255, 211); background: #01cf2e">color_lens
+                                <div class="but" onclick="newBrowser('/settings/theme.html', '', false, false)"
+                                    tabindex="0" onkeydown="divClick(this, event)">
+                                    <icon class="material-icons" style="color: rgb(234, 255, 211); background: #01cf2e">
+                                        color_lens
                                     </icon>
                                     <t>主题</t>
                                 </div>
@@ -199,8 +202,8 @@
                                 </div>
                             </div>
                             <div class="lists">
-                                <div class="but" onclick="newBrowser('/settings/about.html', '', false, false)" tabindex="0"
-                                    onkeydown="divClick(this, event)">
+                                <div class="but" onclick="newBrowser('/settings/about.html', '', false, false)"
+                                    tabindex="0" onkeydown="divClick(this, event)">
                                     <icon class="material-icons" style="color: #000; background: #EAD050">info_outline
                                     </icon>
                                     <t>关于 nmFun</t>
