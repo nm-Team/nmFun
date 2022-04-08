@@ -75,8 +75,16 @@ window.onkeydown = function (event) {
     // ESC 侧栏
     if (esc) {
         writeLog("i", "Keyboad Event", "ESC");
+        // 如果有alert，关闭
+        if (hoverArea.getElementsByClassName("alertBox").length > 0) {
+            $(".alertBox:last button:last").click();
+        }
+        // 如果有viewer，关闭
+        else if (document.body.getElementsByClassName("viewer-in").length > 0) {
+            $(".viewer-button.viewer-close:last").click();
+        }
         // 如果有右键菜单，关闭
-        if (hoverArea.getElementsByClassName("contextMenu").length > 0) {
+        else if (hoverArea.getElementsByClassName("contextMenu").length > 0) {
             hoverArea.getElementsByClassName("contextMenu")[hoverArea.getElementsByClassName("contextMenu").length - 1].click();
         }
         // 如果有popFrame，关闭

@@ -394,6 +394,7 @@ function setMedia(mediaJson, pid = 0) {
         writeLog("e", "load post media in " + pid + "error", err);
         mediasHTML = specialMediasHTML = mNum = "";
     };
+    $(".medias img").on("click",function(){pushHistory("img");})
     return { "mediasHTML": mediasHTML, "specialMediasHTML": specialMediasHTML, "mNum": mediaType, };
 }
 

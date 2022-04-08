@@ -45,7 +45,7 @@ function focusBox(div, boxId, noOther) {
         for (dt = 0; dt < boxDelTime; dt++)
             divToDel[dt].outerHTML = "";
     }, 600);
-    pushHistory("");
+    pushHistory(div + "_" + boxId);
     if (div == "pageRight" && noOther) {
         document.getElementById(boxId).setAttribute("pcnoani", "true");
         document.getElementById(boxId).setAttribute("back", "no");
@@ -108,6 +108,7 @@ function closeBox(div, boxId, totally = false, origin = "") {
         }
     $("#" + div + " .box").attr("data-hidden", "false");
     // 更新底栏
+    pushHistory("");
     if (div == "pageLeft") lightBottomBar();
     writeLog("i", "closeBox", "div: " + div + ", boxId: " + boxId + ", totally: " + totally + ", origin: " + origin + ", allBoxes: " + getAllBoxes(div));
 }
@@ -262,19 +263,34 @@ function quickBack(div, ele) {
 $(function () {
     window.addEventListener("popstate", function (e) {
         console.log("返回");
-        if ($(".popFrame[open=true]").length > 0) $(".popFrame[open=true]")[$(".popFrame[open=true]").length - 1].getElementsByClassName("backButton")[0].click();
+        // 如果有alert，关闭
+        if (hoverArea.getElementsByClassName("alertBox").length > 0) {
+            $(".alertBox:last button:last").click();
+        }
+        // 如果有viewer，关闭
+        else if (document.body.getElementsByClassName("viewer-in").length > 0) {
+            $(".viewer-button.viewer-close:last").click();
+        }
+        // 如果有右键菜单，关闭
+        else if (hoverArea.getElementsByClassName("contextMenu").length > 0) {
+            hoverArea.getElementsByClassName("contextMenu")[hoverArea.getElementsByClassName("contextMenu").length - 1].click();
+        }
+        // 如果有popFrame，关闭
+        else if ($(".popFrame[open=true]").length > 0) {
+            $(".popFrame[open=true]")[$(".popFrame[open=true]").length - 1].getElementsByClassName("backButton")[0].click();
+        }
         else if (getOpenBoxes("pageRight").length > 0)
             closeBox("pageRight", getOpenBoxes("pageRight")[0][1], false, "system");
         else if (getOpenBoxes("pageLeft").length > 0)
             closeBox("pageLeft", getOpenBoxes("pageLeft")[0][1], false, "system");
-        else openSideBar();
+        // else openSideBar();
     }, false);
 });
 
 // pop
 function openPop(ele) {
     ele.setAttribute("open", "true");
-    pushHistory("");
+    pushHistory("pop_" + ele);
 }
 
 function closePop(ele, totally = false) {

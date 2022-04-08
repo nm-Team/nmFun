@@ -14,7 +14,14 @@ function setPostInputArea(ele, type) {
     try {
         ele.innerHTML = sendBoxTemplate.replace(/{{cg}}/g, cgOptions).replace(/{{id}}/g, ele.id).replace(/{{type}}/g, type);
         ele.className += " inputArea " + type + " ";
-
+        try {
+            if (localStorage.getItem("sendCategoryCraft" + "_" + ele.id)) document.getElementById(ele.id).getElementsByClassName("categoryS")[0].value = localStorage.getItem("sendCategoryCraft" + "_" + ele.id);
+            try {
+                document.getElementById(ele.id).getElementsByClassName("titleInput")[0].value = localStorage.getItem("sendTitleCraft" + "_" + ele.id);
+            } catch (err) { }
+            document.getElementById(ele.id).getElementsByClassName("sendBoxInput")[0].innerHTML = localStorage.getItem("sendCraft" + "_" + ele.id);
+            document.getElementById(ele.id).getElementsByClassName("mediasBox")[0].innerHTML = localStorage.getItem("sendMediaCraft" + "_" + ele.id);
+        } catch (err) { console.error(err); }
     }
     catch (err) {
         writeLog("e", "setPostInputArea_" + ele.id + "_" + type, err);
@@ -122,12 +129,7 @@ function showPostInput(which, toS) {
     document.getElementById("" + which + "Edit").setAttribute("open", toS);
     if (toS) {
         document.getElementById("" + which + "EditBoxCover").setAttribute("open", "true");
-        try {
-            if (localStorage.getItem("sendCategoryCraft" + "_" + "" + which + "EditBox")) document.getElementById("" + which + "EditBox").getElementsByClassName("categoryS")[0].value = localStorage.getItem("sendCategoryCraft" + "_" + "" + which + "EditBox");
-            document.getElementById("" + which + "EditBox").getElementsByClassName("titleInput")[0].value = localStorage.getItem("sendTitleCraft" + "_" + "" + which + "EditBox");
-            document.getElementById("" + which + "EditBox").getElementsByClassName("sendBoxInput")[0].innerHTML = localStorage.getItem("sendCraft" + "_" + "" + which + "EditBox");
-            document.getElementById("" + which + "EditBox").getElementsByClassName("mediasBox")[0].innerHTML = localStorage.getItem("sendMediaCraft" + "_" + "" + which + "EditBox");
-        } catch (err) { console.error(err); }
+
     }
     else document.getElementById("" + which + "EditBoxCover").removeAttribute("open");
     try { setStickersSelBox(document.getElementById("" + which + "EditBox").getElementsByClassName("stickersChoose")[0], ("" + which + "EditBox")); }
