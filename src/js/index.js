@@ -24,7 +24,7 @@ $.ajax({
             if (!document.getElementById(localStorage.typeSelected))
                 localStorage.typeSelected = "indexType_";
             document.getElementById(localStorage.typeSelected).click();
-            closeHover();
+            // closeHover();
             roleList = response['info']['role'];
         }
         catch (err) {
@@ -40,6 +40,10 @@ $.ajax({
 });
 
 startInv = null;
+
+$(window).on('load', function () {
+    closeHover();
+})
 
 function closeHover() {
     try {
