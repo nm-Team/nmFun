@@ -146,7 +146,6 @@ body[theme=dark]{
     border: 1px solid var(--usertag);
 }
 .usertag.icon {
-    margin-bottom: -2rem;
     width: 12rem;
     height: 12rem;
     background-size: 17rem 17rem;
@@ -155,6 +154,7 @@ body[theme=dark]{
     background-image: url(https://websiteres.nmteam.xyz/producticon/nmTeam/logo@32.png);
 }
 .avatarBox .name div .time{
+    height: 19rem;
     font-weight: normal;
     font-size: 12rem;
     opacity: 0.6;
@@ -163,7 +163,7 @@ body[theme=dark]{
     color: var(--red);
 }
 .cardBox.postCardBox .content a{
-    /* outline: none; */
+    display: block;
 }
 .cardBox.postCardBox .content a:focus-visible object{
     outline: var(--outline);

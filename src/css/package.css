@@ -59,6 +59,7 @@ body[theme=dark]{
     word-break: keep-all;
     white-space: nowrap;
     overflow-x: auto;
+    overflow-x: overlay;
     overflow-y: initial;
     text-align: center;
     padding: 0 10rem;
