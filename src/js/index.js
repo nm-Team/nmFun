@@ -24,7 +24,7 @@ $.ajax({
             if (!document.getElementById(localStorage.typeSelected))
                 localStorage.typeSelected = "indexType_";
             document.getElementById(localStorage.typeSelected).click();
-            // closeHover();
+            closeHover();
             roleList = response['info']['role'];
         }
         catch (err) {
@@ -41,23 +41,17 @@ $.ajax({
 
 startInv = null;
 
-$(window).on('load', function () {
-    closeHover();
-})
-
 function closeHover() {
     try {
         $(startHover).attr("data-closed", "true");
         writeLog("i", "closeHover", "done");
-        loadWelcomePage();
         $("body").attr("data-loadover", "true");
         setTimeout(() => {
             startHover.outerHTML = "";
         }, 400);
-        clearInterval(startInv);
-        startInv = null;
-        console.log("startInv closed");
+        console.log("closeHover closed");
         postInputInit();
+        loadWelcomePage();
     }
     catch (err) {
         writeLog("e", "closeHover", err);
