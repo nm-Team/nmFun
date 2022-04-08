@@ -92,7 +92,7 @@ function loadPostsList(box) {
         <p class="status"></p>
         <a href="${siteURL + "/post/" + info.pid}" target="_blank" onclick="newPostDetailPage('${info.pid}',${attr.noOther}); return false;" class="text" title="点击来进入帖子详情"><object class="slug">
             <p class="title"><b>${cleanHTMLTag(info.title)}</b></p>
-            <p>${contentFormat(info.content)}</p>
+            <p class="slugWord">${contentFormat(info.content)}</p>
             </object></a>
         <div class="media">
         <ui class="medias" id="tes" type="x${medias.mNum}">${medias.mediasHTML}</ui>

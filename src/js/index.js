@@ -42,7 +42,6 @@ $.ajax({
 startInv = null;
 
 function closeHover() {
-    // if (document.readyState == "complete") {
     try {
         $(startHover).attr("data-closed", "true");
         writeLog("i", "closeHover", "done");
@@ -56,13 +55,9 @@ function closeHover() {
         console.log("startInv closed");
         postInputInit();
     }
-    catch (err) { }
-    // }
-    // else {
-    //     startInv = setInterval(() => {
-    //         closeHover();
-    //     }, 400);
-    // }
+    catch (err) {
+        writeLog("e", "closeHover", err);
+    }
 }
 
 function indexSwitchType(typeName) {

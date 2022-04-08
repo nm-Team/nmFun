@@ -105,6 +105,7 @@ body{
         z-index: 105;
         box-shadow: #11111177 0rem 3rem 4rem;
         background: var(--bottombar-bgcolor);
+        padding-bottom: constant(safe-area-inset-bottom);
     }
     .showBottomBar .bottomBar .item{
         position: relative;
