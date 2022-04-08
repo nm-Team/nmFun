@@ -36,6 +36,8 @@ function refreshUserInfoArea(uid) {
         if (data['status'] == "successful") {
             pData = data['data'];
             $(`#userInfoFrame_${uid} .urole`).html(getNickHTML(pData, { "nick": false }));
+            $("[data-disabled-uid=" + uid + "]").attr("data-show", pData['disabled'] == 1 ? "true" : "false");
+            $("[data-disabled-time-uid=" + uid + "]").attr("timestamp", pData['disabled_time']);
             $("[data-following-num-uid=" + uid + "]").html(pData['followings_num']);
             $("[data-followers-num-uid=" + uid + "]").html(pData['followers_num']);
             $("[data-gain-likes-num-uid=" + uid + "]").html(pData['receive_like']);
@@ -71,6 +73,7 @@ uPageTemp = `
         <div class="uHeaderMain floatFrame-header">
             <div class="lin"></div>
             <div class="uHeaderInfos">
+                <div class="disabled" title="此用户封禁中" data-disabled-uid="{{uid}}"></div>
                 <button class="avatar" style="background-image: url('{{avatar}}');" onclick="localStorage.imgSrc='{{avatar}}'; newBrowser('imgviewer.html',false,false,false)"></button>
                 <div class="name">{{nick}}</div>
                 <div class="urole"></div>
@@ -154,7 +157,7 @@ function followUser(uid, unfollow = false, ele) {
                 break;
         }
         $("[data-my-following-to-uid=" + uid + "]").attr("data-follow", "loading");
-        newAjax("POST", backEndURL + "/user/follow.php", true, "uid=" + uid + (unfollow ? "&unfollow" : ""), "", function () { writeLog("i", "followUser", "follow user " + uid + " success, unfollow=" + unfollow); refreshUserInfoArea(uid); refreshUserInfoArea(myUid) }, function () { writeLog("i", "followUser", "follow user " + uid + " error, unfollow=" + unfollow); refreshUserInfoArea(uid); });
+        newAjax("POST", backEndURL + "/user/follow.php", true, "uid=" + uid + (unfollow ? "&unfollow" : ""), "", function () { writeLog("i", "followUser", "follow user " + uid + " success, unfollow=" + unfollow); refreshUserInfoArea(uid); refreshUserInfoArea(myUid) }, function (data) { writeLog("i", "followUser", "follow user " + uid + " error, unfollow=" + unfollow); newMsgBox((unfollow ? "取消" : "") + "关注失败，因为" + data['info']); refreshUserInfoArea(uid); });
     }
 }
 
@@ -168,3 +171,5 @@ function showUserPageContextMenu(uid, ele) {
     }
     createContextMenu(cMenuItems, undefined, undefined, ele);
 }
+
+// 关注列表/粉丝列表

@@ -90,6 +90,7 @@ body[theme=dark]{
 .avatarBox .name{
     display: flex;
     flex-direction: row;
+    min-height: 40rem;
     cursor: pointer;
     padding-right: 3rem;
     border-radius: 2rem;
@@ -109,6 +110,7 @@ body[theme=dark]{
 .avatarBox .name div{
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 .usertag{
     display: inline-block;

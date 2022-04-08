@@ -172,6 +172,13 @@
                                 </div>
                                 <div id="myPageMoreTags"></div>
                             </div>
+                            <div class="lists" id="myBlockDisplay">
+                                <div class="but" onclick="alert(`由于您违反了社区规定，nmFun 团队已暂时或永久封禁了您的账号。<br><br><b>预计解封时间：</b>` + myBlockTime.innerHTML)" tabindex="0"
+                                    onkeydown="divClick(this, event)">
+                                    <icon class="material-icons" style="color: rgba(0, 0, 0, 0); background: rgba(0, 0, 0, 0)"></icon>
+                                    <t>您已被封禁至 <span id="myBlockTime" class="time" time="true" timestyle="fixed" timesec="false" timefull="false"></span> </t>
+                                </div>
+                            </div>
                             <div class="lists">
                                 <div class="but" onclick="newMsgBox('开发中')" tabindex="0"
                                     onkeydown="divClick(this, event)">

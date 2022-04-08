@@ -43,6 +43,8 @@ function setHeaderLog() {
                     <p class="bottom">粉丝</p>
                 </button>
                 `;
+                $("#myBlockDisplay").attr("data-disabled-uid", myUid);
+                $("#myBlockTime").attr("data-disabled-time-uid", myUid);
                 writeLog("i", "setHeaderLog", "log success, sessionid " + localStorage.sessionid + ", " + JSON.stringify(accountInfo));
             };
             refreshUserInfoArea(myUid);

@@ -47,7 +47,7 @@ function sendPost(div, postType, onSuccess) {
         }
         sendCover.setAttribute("open", "true");
         $("#sendCover p").html("正在发送");
-        newAjax("POST", backEndURL + "/post/newpost.php", true, "", sendData, function (data) { $("[data-posts-num-uid=" + myUid + "]").html(data['post_num']); attachmentUpload(div, data['pid'], postType, function () { sendCover.setAttribute("open", "false"); onSuccess(); }); }, function (err) { sendCover.setAttribute("open", "false"); newMsgBox("出现错误，发送失败。<br>服务器返回错误 " + err['info']) });
+        newAjax("POST", backEndURL + "/post/newpost.php", true, "", sendData, function (data) { $("[data-posts-num-uid=" + myUid + "]").html(data['post_num']); attachmentUpload(div, data['pid'], postType, function () { sendCover.setAttribute("open", "false"); onSuccess(); }); }, function (err) { sendCover.setAttribute("open", "false"); newMsgBox("抱歉，发送失败。<br>" + err['info']) });
     }
 }
 
@@ -71,10 +71,10 @@ function attachmentUpload(div, pid, postType, onSuc, onErr) {
                 var formData = new FormData();
                 formData.append(mInfoParsed.type, file, mInfoParsed.name);
                 console.log(file);
-                newFileAjax("POST", backEndURL + "/attachment/attachment.php", true, `action=add&type=${mInfoParsed.type}&pid=${pid}`, formData, function () { mediaUploadSta.push(true); verifyPostAttachmentUploadStatus(div, pid, onSuc); }, function () { newMsgBox("附件上传失败"); mediaUploadSta = false; verifyPostAttachmentUploadStatus(div, pid, onSuc); onErr() });
+                newFileAjax("POST", backEndURL + "/attachment/attachment.php", true, `action=add&type=${mInfoParsed.type}&pid=${pid}`, formData, function () { mediaUploadSta.push(true); verifyPostAttachmentUploadStatus(div, pid, onSuc); }, function (data) { mediaUploadSta = false; verifyPostAttachmentUploadStatus(div, pid, onSuc, onErr, msg); onSuc(); onErr(), "附件上传失败，因为" + data['info'] });
             }
             else if (mInfoParsed.type = "biliVideo") {
-                newAjax("POST", backEndURL + "/attachment/attachment.php", true, `action=add&type=bili&pid=${pid}&bvid=${mInfoParsed.bvid}&p=${mInfoParsed.p}`, undefined, function () { mediaUploadSta.push(true); verifyPostAttachmentUploadStatus(div, pid, onSuc); }, function () { newMsgBox("Bilibili 视频上传失败"); mediaUploadSta = false; verifyPostAttachmentUploadStatus(div, pid, onSuc); onErr() });
+                newAjax("POST", backEndURL + "/attachment/attachment.php", true, `action=add&type=bili&pid=${pid}&bvid=${mInfoParsed.bvid}&p=${mInfoParsed.p}`, undefined, function () { mediaUploadSta.push(true); verifyPostAttachmentUploadStatus(div, pid, onSuc); }, function (data) { mediaUploadSta = false; verifyPostAttachmentUploadStatus(div, pid, onSuc, onErr, "Bilibili 视频上传失败，因为" + data['info']);; onErr() });
             }
             if (i < div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m").length - 1) {
             }
@@ -83,11 +83,11 @@ function attachmentUpload(div, pid, postType, onSuc, onErr) {
     }
 }
 
-function verifyPostAttachmentUploadStatus(div, pid, onSuc, onErr) {
+function verifyPostAttachmentUploadStatus(div, pid, onSuc, onErr, msg = "") {
     if (mediaUploadSta == false) {
         deleteMyPost(pid, "", false);
         $("#sendCover").attr("open", "false");
-        newMsgBox("有附件上传失败，已为您删除帖子，请确认无误后重试。<br>若仍有问题，可联系 nmTeam 支持。");
+        newMsgBox("有附件上传失败，已为您删除帖子，请确认无误后重试。<br>若仍有问题，可联系 nmTeam 支持。<br>具体问题：" + msg);
         onErr();
     }
     $("#sendCover p").html("正在上传附件 " + mediaUploadSta.length + "/" + div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m").length);

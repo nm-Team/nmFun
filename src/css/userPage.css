@@ -64,6 +64,23 @@ body[theme=dark]{
     margin-bottom: 15rem;
     color: var(--uInfo-header-text);
 }
+.uHeaderInfos .disabled{
+    z-index: -1;
+    position: absolute;
+    top: 20rem;
+    right: 10rem;
+    width: min(30%, 120rem);
+    height: 100%;
+    background-image: url(../img/disabled.png);
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: none;
+    opacity: .7;
+}
+.uHeaderInfos .disabled[data-show=true]{
+    display: block;
+}
 .uHeaderMain button.avatar{
     width: 50rem;
     height: 50rem;
@@ -155,4 +172,13 @@ body[theme=dark]{
 }
 .followAni .f{
     background-image: url(../img/nmFun_follow_main.svg);
+}
+.usersList{
+    margin: 0 10rem;
+}
+.usersList .user{
+    display: flex;
+    flex-direction: row;
+    padding: 0 10rem;
+    margin-bottom: 10rem;
 }

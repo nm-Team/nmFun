@@ -679,7 +679,7 @@ function newAjax(type, url, session, getParam, postParam, succeedF = function ()
 
 function newFileAjax(type, url, session, getParam, postParam, succeedF = function () { }, faliureF = function () { }) {
     sessionid = localStorage.sessionid;
-    writeLog("i", "newAjax", (type + ", " + url + ", " + session + ", " + getParam + ", " + JSON.stringify(postParam) + ", " + succeedF + ", " + faliureF));
+    writeLog("i", "newFileAjax", (type + ", " + url + ", " + session + ", " + getParam + ", " + JSON.stringify(postParam) + ", " + succeedF + ", " + faliureF));
     $.ajax(url + "?" + (session ? "CodySESSION=" + sessionid + "&" : "") + getParam, {
         type: type,
         async: true,
@@ -692,11 +692,11 @@ function newFileAjax(type, url, session, getParam, postParam, succeedF = functio
             let status = data['status'];
             if (status == "successful" || status == "success") {
                 console.log("ajax接收数据成功");
-                writeLog("i", "newAjax", "ok");
+                writeLog("i", "newFileAjax", "ok");
                 succeedF(data);
             } else {
                 console.log("ajax接收数据失败");
-                writeLog("e", "newAjax", "error");
+                writeLog("e", "newFileAjax", "error");
                 faliureF(data);
             }
             return data;
