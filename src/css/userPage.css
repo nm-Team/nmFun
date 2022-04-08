@@ -102,7 +102,9 @@ body[theme=dark]{
     -webkit-user-select: all;
     -moz-user-select: all;
 }
-.uHeaderInfos .urole:not(:empty){
+.uHeaderInfos .urole:not(:empty) {
+    display: flex;
+    align-items: center;
     margin: -5rem 0 7rem 0;
 }
 .uHeaderMain .uHeaderInfos .data{

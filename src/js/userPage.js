@@ -78,8 +78,8 @@ uPageTemp = `
                 <div class="name">{{nick}}</div>
                 <div class="urole"></div>
                 <div class="data">
-                    <button>关注<span class="num" data-following-num-uid="{{uid}}"><span class="skeleton" style="padding-right: 2em"></span></span></button>
-                    <button>粉丝<span class="num" data-followers-num-uid="{{uid}}"><span class="skeleton" style="padding-right: 2em"></span></span></button>
+                    <button onclick="showUserFollowListPage({{uid}},'{{nick}}','followings');">关注<span class="num" data-following-num-uid="{{uid}}"><span class="skeleton" style="padding-right: 2em"></span></span></button>
+                    <button onclick="showUserFollowListPage({{uid}},'{{nick}}','followers' );">粉丝<span class="num" data-followers-num-uid="{{uid}}"><span class="skeleton" style="padding-right: 2em"></span></span></button>
                     <button>获赞<span class="num" data-gain-likes-num-uid="{{uid}}"><span class="skeleton" style="padding-right: 2em"></span></span></button>
                 </div>
                 <div class="interaction" data-my-following-to-uid="{{uid}}" data-follow="loading">
@@ -100,9 +100,9 @@ uPageTemp = `
         </div>
     </div>
     <div class="userMainCards equalPages floatFrame-content postsListScrollMonitor" id="userPage_{{uid}}_postsListScrollMonitor">
-    <div class="placeHolder"></div>
-    <div id="userPage_{{uid}}_postsListContainer" class="cardsListsContainer">
-            <div id="userPage_{{uid}}_postsList_posts"></div>
+        <div class="placeHolder"></div>
+        <div id="userPage_{{uid}}_postsListContainer" class="cardsListsContainer">
+                <div id="userPage_{{uid}}_postsList_posts"></div>
             <div id="userPage_{{uid}}_postsList_comments"></div>
         </div>
     </div>
@@ -173,3 +173,64 @@ function showUserPageContextMenu(uid, ele) {
 }
 
 // 关注列表/粉丝列表
+function showUserFollowListPage(uid, uNick, type) {
+    try {
+        //如果有则定位
+        try {
+            focusBox("pageRight", 'followListFrame_' + uid, noOther);
+        }
+        catch (error) { // 没有则创建
+            new_element = document.createElement('div');
+            new_element.setAttribute('id', "followListFrame_" + uid);
+            new_element.setAttribute('class', 'followListFrame box rightBox');
+            new_element.setAttribute('con', 'none');
+            new_element.setAttribute('totallyclose', 'true');
+            new_element.setAttribute('uid', uid);
+            new_element.setAttribute('name', uNick);
+            new_element.setAttribute('noother', 'false');
+            new_element.innerHTML = followListTemplate.replace(/{{uid}}/g, uid).replace(/{{nick}}/g, uNick).replace(/{{avatar}}/g, avatarURL.replace(/{id}/g, uid));
+            pageRight.appendChild(new_element);
+            focusBox("pageRight", "followListFrame_" + uid, false);
+            initPostsListMonitor($(`#followListFrame_${uid}_lScrollMonitor`));
+            initPostsList($(`#followListFrame_${uid}_l_followings`), { "type": "follow", "search": { "uid": uid, "type": "followings" }, "noOther": "false" });
+            initPostsList($(`#followListFrame_${uid}_l_followers`), { "type": "follow", "search": { "uid": uid, "type": "followers" }, "noOther": "false" });
+            focusInPostsList($(`#followListFrame_${uid}_lScrollMonitor`), $(`#followListFrame_${uid}_l_${type}`));
+            $(`#followListFrame_${uid}_${type}`).click();
+            // loadPostsList($(`#followListFrame_${uid}_l_${type}`));
+        };
+    }
+    catch (err) {
+        console.error(err);
+    }
+}
+
+
+
+followListTemplate = `
+<header>
+    <div class="left">
+        <button class="backButton" title="返回" onclick="closeBox('pageRight','followListFrame_{{uid}}',false);"
+            oncontextmenu="quickBack('pageRight',this)"
+            ontouchstart="longPressToDo(function(){quickBack('pageRight',this)})"
+            ontouchend="longPressStop()"><i class="material-icons"></i></button>
+            <div class="nameDiv">
+            <p class="title">{{nick}}</p>
+            <p class="little"></p>
+        </div>
+    </div>
+    <div class="right"></div>
+</header>
+<div class="cardBox postCardBox main" style="height: calc(100% - 46rem); overflow: hidden; display: flex; flex-direction: column;">
+    <div class="" >
+        <div class="typeSelecter" fly="true" noselect>
+            <label for="followListFrame_{{uid}}_followings"><input type="radio" id="followListFrame_{{uid}}_followings" name="followListFrame_{{uid}}_f" onclick="focusInPostsList($('#followListFrame_{{uid}}_lScrollMonitor'), $('#followListFrame_{{uid}}_l_followings'));"><span>关注</span></label>
+            <label for="followListFrame_{{uid}}_followers" ><input type="radio" id="followListFrame_{{uid}}_followers"  name="followListFrame_{{uid}}_f" onclick="focusInPostsList($('#followListFrame_{{uid}}_lScrollMonitor'), $('#followListFrame_{{uid}}_l_followers'));"><span>粉丝</span></label>
+        </div>
+    </div>
+    <div class="userMainCards equalPages floatFrame-content postsListScrollMonitor" id="followListFrame_{{uid}}_lScrollMonitor">
+        <div id="followListFrame_{{uid}}_lContainer" class="cardsListsContainer">
+                <div id="followListFrame_{{uid}}_l_followings"></div>
+                <div id="followListFrame_{{uid}}_l_followers" ></div>
+        </div>
+    </div>
+</div>`;

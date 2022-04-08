@@ -137,19 +137,6 @@ if (localStorage.thinMode == "true") {
 }
 else bodyMain.removeAttribute("thinable");
 
-// 首窗口的Theme按钮事件
-function showMainPageThemeContextMenu(ele) {
-    msgContextMenuItems = [];
-    if (localStorage.usebrowser == "true") msgContextMenuItems = [[i18n.t("theme.usebrowser"), "newLegacyBrowser('/settings/theme.html', false, false)"]];
-    else {
-        msgContextMenuItems = ["line"];
-        for (themeFor = 0; themeFor < themeList.length; themeFor++)
-            msgContextMenuItems[themeFor] = [i18n.t("theme." + themeList[themeFor] + ""), "switchTheme('" + themeList[themeFor] + "')"];
-        msgContextMenuItems[themeFor] = ["line"];
-        msgContextMenuItems[themeFor + 1] = [i18n.t("theme.more"), "newLegacyBrowser('/settings/theme.html', false, false)", "&#xe8b8;"];
-    } createContextMenu(msgContextMenuItems, undefined, undefined, ele);
-}
-
 // 登录 
 inv = setInterval(() => {
     if (getInfo) {

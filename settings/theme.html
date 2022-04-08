@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title data-i18n="settings.theme.title"></title>
+    <title>主题</title>
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
     <meta name='apple-mobile-web-app-capable' content='yes'>
     <meta name='apple-mobile-web-app-status-bar-style' content='black'>
@@ -14,15 +14,15 @@
 </head>
 
 <body class="settings radius">
-    <h1 data-i18n="settings.theme.title"></h1>
-    <p class="listName" data-i18n="settings.theme.system"></p>
+    <h1>主题</h1>
+    <p class="listName">系统主题</p>
     <input class="searchBox" id="sTI" oninput="searchSetting(this, 'themeSelectionDiv');">
     <div class="lists" id="themeSelectionDiv">
         <div class="loading"></div>
     </div>
     <div class="lists">
         <div class="but" tabindex="0">
-            <t data-i18n="settings.theme.usebrowser"></t>
+            <t>使用浏览器主题色</t>
             <t2 class="right" id="">
                 <div class="select-radio-box">
                     <input type="checkbox" id="usebrowser">
@@ -44,8 +44,8 @@
             }, 1000);
         </script>
 
-        <p class="tip" data-i18n="settings.theme.tip.usebrowser1"></p>
-        <p class="tip" data-i18n="settings.theme.tip.usebrowser2"></p>
+        <p class="tip">nmFun 会检测您的浏览器主题色，并在您更改颜色时作出切换。更换浏览器主题色后，请重新加载 nmFun 页面。</p>
+        <p class="tip">若是开启了此选项，您将不能自定义 nmFun 的主题色。若在此设置页面中更改了颜色，下次加载 nmFun 时将继续使用浏览器主题色。</p>
     </div>
     <script src="../src/js/jquery.min.js"></script>
     <script src="../src/js/i18next-1.6.3.min.js"></script>

@@ -3,7 +3,14 @@ function initPostsList(box, attr) {
     box[0].className += " postsList cardBox postCardBox ";
     box.attr("data-config", JSON.stringify(attr));
     box.attr("data-status", "undefined");
-    box.append(`<div class="main"></div><div class="mark"></div><div spe class="loading">${postSkeleton}</div><div spe class="card error">${postsErrorBoxHTML.replace(/{boxid}/g, box[0].id)}</div><div spe class="card nomore">${postsNoMoreBoxHTML}</div>`);
+    switch (attr.type) {
+        case "post":
+            box.append(`<div class="main"></div><div class="mark"></div><div spe class="loading">${postSkeleton}</div><div spe class="card error">${postsErrorBoxHTML.replace(/{boxid}/g, box[0].id)}</div><div spe class="card nomore">${postsNoMoreBoxHTML}</div>`);
+            break;
+        case "follow":
+            box.append(`<div class="card avatarBox"><div class="main"></div><div class="mark"></div><div spe class="loading">${uListSkeleton}</div><div spe class="error">${postsErrorBoxHTML.replace(/{boxid}/g, box[0].id)}</div><div spe class="nomore">${postsNoMoreBoxHTML}</div></div>`);
+            break;
+    }
     writeLog("i", "initPostsList", `box id: ${box[0].id},attr: ${JSON.stringify(attr)}`);
 }
 
@@ -45,33 +52,47 @@ function refreshPostsListOnScroll() {
     })
 }
 
+// 定时任务防止列表因项目过少卡死
+setInterval(() => {
+    for (element in $(".postsListScrollMonitor")) {
+        postsListOnScroll(getActivePostsList("#" + $(".postsListScrollMonitor")[element]['id']));
+    }
+}, 3000);
+
 function postsListOnScroll(box) {
-    attr = JSON.parse(box.attr("data-config"));
-    // 如果more的位置在屏幕上，则要继续加载
-    if (box.children(".mark")[0].getBoundingClientRect().top < window.outerWidth) {
-        loadPostsList(box);
+    try {
+        attr = JSON.parse(box.attr("data-config"));
+        // 如果more的位置在屏幕上，则要继续加载
+        if (box.find(".mark")[0].getBoundingClientRect().top < window.outerHeight) {
+            loadPostsList(box);
+        }
+    }
+    catch (err) {
+        // console.error(err);
     }
 }
 
 // 通用帖子加载函数desu
 function loadPostsList(box) {
     attr = JSON.parse(box.attr("data-config"));
-    lastPid = box.find(".main .postMainReal:last").attr("data-postid");
-    if (box.attr("data-status") != "undefined") return -1;
-    writeLog("i", "loadPostsList", "start, attr " + JSON.stringify(attr) + ",detected last pid is " + lastPid + "");
-    box.attr("data-status", "loading");
-    $.ajax({
-        type: "GET",
-        url: backEndURL + "/post/listpost.php?pid=" + (lastPid ? lastPid : "") + "&category=" + (attr.search.category ? attr.search.category : "") + "&user=" + (attr.search.uid ? attr.search.uid : "") + "&CodySESSION=" + localStorage.sessionid,
-        async: true,
-        dataType: "json",
-        success: function (response, status, request) {
-            writeLog("i", "loadPostsList get backend response", JSON.stringify(response));
-            try {
-                response['data'].forEach(info => {
-                    medias = setMedia(info.attachment, info.pid);
-                    new_element = document.createElement('object');
-                    new_element.innerHTML = `
+    switch (attr.type) {
+        case "post":
+            lastPid = box.find(".main .postMainReal:last").attr("data-postid");
+            if (box.attr("data-status") != "undefined") return -1;
+            writeLog("i", "loadPostsList", "start, attr " + JSON.stringify(attr) + ",detected last pid is " + lastPid + "");
+            box.attr("data-status", "loading");
+            $.ajax({
+                type: "GET",
+                url: backEndURL + "/post/listpost.php?pid=" + (lastPid ? lastPid : "") + "&category=" + (attr.search.category ? attr.search.category : "") + "&user=" + (attr.search.uid ? attr.search.uid : "") + "&CodySESSION=" + localStorage.sessionid,
+                async: true,
+                dataType: "json",
+                success: function (response, status, request) {
+                    writeLog("i", "loadPostsList get backend response", JSON.stringify(response));
+                    try {
+                        response['data'].forEach(info => {
+                            medias = setMedia(info.attachment, info.pid);
+                            new_element = document.createElement('object');
+                            new_element.innerHTML = `
 <div class="postMainReal card avatarBox" data-type="post" data-postid="${info.pid}">
     <div class="header">
         <a class="name" tabindex="0" onclick="newUserInfoPage('${info.user.uid}', '${info.user.nick}');"
@@ -130,27 +151,71 @@ function loadPostsList(box) {
         </div>
     </div>
 </div>`;
-                    box.children(".main").append(new_element);
-                    $("[data-view-num-post-id=" + info.pid + "]").html(info['view']);
-                    $(":not([data-ignore=true]) [data-like-num-post-id=" + info.pid + "]").html(info['like']);
-                    $("[data-like-post-id=" + info.pid + "]:not([data-ignore=true])").attr("data-status", (info['liked'] ? "yes" : "no"));
-                    $("[data-comment-num-post-id=" + info.pid + "]").html(info['comment']);
-                });
-                if (response['data'].length == 0) box.attr("data-status", "nomore");
-                else box.attr("data-status", "undefined");
-            }
-            catch (err) {
-                writeLog("e", "loadPostsList", err);
-                newMsgBox("抱歉，加载帖子时出现问题。<br />" + err);
-                box.attr("data-status", "error");
-            }
-        },
-        error: function () {
-            writeLog("e", "loadPostsList", "ajax error");
-            newMsgBox("抱歉，加载帖子时出现问题。");
-            box.attr("data-status", "error");
-        }
-    });
+                            box.children(".main").append(new_element);
+                            $("[data-view-num-post-id=" + info.pid + "]").html(info['view']);
+                            $(":not([data-ignore=true]) [data-like-num-post-id=" + info.pid + "]").html(info['like']);
+                            $("[data-like-post-id=" + info.pid + "]:not([data-ignore=true])").attr("data-status", (info['liked'] ? "yes" : "no"));
+                            $("[data-comment-num-post-id=" + info.pid + "]").html(info['comment']);
+                        });
+                        if (response['data'].length == 0) box.attr("data-status", "nomore");
+                        else box.attr("data-status", "undefined");
+                    }
+                    catch (err) {
+                        writeLog("e", "loadPostsList", err);
+                        newMsgBox("抱歉，加载帖子时出现问题。<br />" + err);
+                        box.attr("data-status", "error");
+                    }
+                },
+                error: function () {
+                    writeLog("e", "loadPostsList", "ajax error");
+                    newMsgBox("抱歉，加载帖子时出现问题。");
+                    box.attr("data-status", "error");
+                }
+            });
+            break;
+        case "follow":
+            lastUid = box.find(".main span .uListItem:last").attr("data-uid");
+            if (box.attr("data-status") != "undefined") return -1;
+            writeLog("i", "loadPostsList", "start, attr " + JSON.stringify(attr) + ",detected last uid is " + lastUid + "");
+            box.attr("data-status", "loading");
+            $.ajax({
+                type: "GET",
+                url: backEndURL + "/user/getfollowlist.php?from=" + (lastUid ? lastUid : "") + "&uid=" + (attr.search.uid ? attr.search.uid : "") + "&follow_type=" + (attr.search.type ? attr.search.type : "") + "&CodySESSION=" + localStorage.sessionid,
+                async: true,
+                dataType: "json",
+                success: function (response, status, request) {
+                    writeLog("i", "loadPostsList get backend response", JSON.stringify(response));
+                    if (response['status'] == "error") {
+                        newMsgBox("抱歉，加载列表时出现问题。<br />" + response['info']);
+                    }
+                    try {
+                        response['data'].forEach(info => {
+                            new_element = document.createElement('span');
+                            new_element.innerHTML = `<a class="name uListItem" data-uid="${Number(info.user.uid)}" tabindex="0" onclick="newUserInfoPage('${Number(info.user.uid)}', '${info.user.nick}');" onkeydown="divClick(this, event)"><i style="background-image:url('https://api.nmteam.xyz/avatar/?id=${Number(info.user.uid)}"></i>
+                            <div>
+                                <p class="unick">${info.user.nick}</p>
+                                <p></p>
+                            </div>
+                        </a>`;
+                            box.find(".main").append(new_element);
+                        });
+                        if (response['data'].length == 0) box.attr("data-status", "nomore");
+                        else box.attr("data-status", "undefined");
+                    }
+                    catch (err) {
+                        writeLog("e", "loadPostsList", err);
+                        newMsgBox("抱歉，加载列表时出现问题。<br />" + err);
+                        box.attr("data-status", "error");
+                    }
+                },
+                error: function () {
+                    writeLog("e", "loadPostsList", "ajax error");
+                    newMsgBox("抱歉，加载列表时出现问题。");
+                    box.attr("data-status", "error");
+                }
+            });
+            break;
+    }
 }
 
 function newPostDetailPage(pid, noOther = false, aheadTo = "") {
@@ -358,6 +423,34 @@ postSkeleton = `
     </div>
 </div>`;
 
+uListSkeleton = `<div class="uSke avatarBox">
+    <a class="name uListItem"><i class="skeleton noscale"></i>
+        <div>
+            <p class="unick skeleton" style="width: 4em">.</p>
+        </div>
+    </a>
+    <a class="name uListItem"><i class="skeleton noscale"></i>
+        <div>
+            <p class="unick skeleton" style="width: 4em">.</p>
+        </div>
+    </a>
+    <a class="name uListItem"><i class="skeleton noscale"></i>
+        <div>
+            <p class="unick skeleton" style="width: 4em">.</p>
+        </div>
+    </a>
+    <a class="name uListItem"><i class="skeleton noscale"></i>
+        <div>
+            <p class="unick skeleton" style="width: 4em">.</p>
+        </div>
+    </a>
+    <a class="name uListItem"><i class="skeleton noscale"></i>
+        <div>
+            <p class="unick skeleton" style="width: 4em">.</p>
+        </div>
+    </a>
+</div>`;
+
 postsNoMoreBoxHTML = `
 <div class="unavaliable small" noselect=""><i></i><p>没有了，怎么想都没有了吧！</p></div>`;
 postsErrorBoxHTML = `
@@ -394,7 +487,7 @@ function setMedia(mediaJson, pid = 0) {
         writeLog("e", "load post media in " + pid + "error", err);
         mediasHTML = specialMediasHTML = mNum = "";
     };
-    $(".medias img").on("click",function(){pushHistory("img");})
+    $(".medias img").on("click", function () { pushHistory("img"); })
     return { "mediasHTML": mediasHTML, "specialMediasHTML": specialMediasHTML, "mNum": mediaType, };
 }
 

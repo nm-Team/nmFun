@@ -34,11 +34,11 @@ function setHeaderLog() {
                     <p class="top"><span data-posts-num-uid="${myUid}"><span class="skeleton" style="padding-right: 1em"></span></span></p>
                     <p class="bottom">帖子</p>
                 </button>
-                <button class="myPageMoreButton">
+                <button class="myPageMoreButton" onclick="showUserFollowListPage(${myUid},'${accountInfo['nick']}','followings');">
                     <p class="top"><span data-following-num-uid="${myUid}"><span class="skeleton" style="padding-right: 1em"></span></span></p>
                     <p class="bottom">关注</p>
                 </button>
-                <button class="myPageMoreButton">
+                <button class="myPageMoreButton" onclick="showUserFollowListPage(${myUid},'${accountInfo['nick']}','followers');">
                     <p class="top"><span data-followers-num-uid="${myUid}"><span class="skeleton" style="padding-right: 1em"></span></span></p>
                     <p class="bottom">粉丝</p>
                 </button>

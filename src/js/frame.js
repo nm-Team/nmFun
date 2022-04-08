@@ -212,7 +212,7 @@ fixIndexAni();
 // barPage逻辑
 barPageCD = false;
 function showBarPage(pageId) {
-    if (barPageCD) return newMsgBox("切换冷却中");
+    if (barPageCD) return;
     barPageCD = true;
     if (getOpenBoxes("pageLeft").length == 0) {
         focusBox("pageLeft", $("[data-bar-page-id=" + pageId + "]")[0].id, true);
