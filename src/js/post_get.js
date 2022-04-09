@@ -8,7 +8,7 @@ function initPostsList(box, attr) {
             box.append(`<div class="main"></div><div class="mark"></div><div spe class="loading">${postSkeleton}</div><div spe class="card error">${postsErrorBoxHTML.replace(/{boxid}/g, box[0].id)}</div><div spe class="card nomore">${postsNoMoreBoxHTML}</div>`);
             break;
         case "follow":
-            box.append(`<div class="card avatarBox"><div class="main"></div><div class="mark"></div><div spe class="loading">${uListSkeleton}</div><div spe class="error">${postsErrorBoxHTML.replace(/{boxid}/g, box[0].id)}</div><div spe class="nomore">${postsNoMoreBoxHTML}</div></div>`);
+            box.append(`<div class="card avatarBox"><div class="main"></div><div class="mark"></div><div spe class="loading">${uListSkeleton}</div><div spe class="error">${postsErrorBoxHTML.replace(/{boxid}/g, box[0].id)}</div><div spe class="noone">${followNoOneHTML.replace(/{{fType}}/, (attr.search.type == "followers" ? "粉丝" : "关注"))}</div></div>`);
             break;
     }
     writeLog("i", "initPostsList", `box id: ${box[0].id},attr: ${JSON.stringify(attr)}`);
@@ -157,7 +157,7 @@ function loadPostsList(box) {
                             $("[data-like-post-id=" + info.pid + "]:not([data-ignore=true])").attr("data-status", (info['liked'] ? "yes" : "no"));
                             $("[data-comment-num-post-id=" + info.pid + "]").html(info['comment']);
                         });
-                        if (response['data'].length == 0) box.attr("data-status", "nomore");
+                        if (response['data'].length < 5) box.attr("data-status", "nomore");
                         else box.attr("data-status", "undefined");
                     }
                     catch (err) {
@@ -193,13 +193,14 @@ function loadPostsList(box) {
                             new_element = document.createElement('span');
                             new_element.innerHTML = `<a class="name uListItem" data-uid="${Number(info.user.uid)}" tabindex="0" onclick="newUserInfoPage('${Number(info.user.uid)}', '${info.user.nick}');" onkeydown="divClick(this, event)"><i style="background-image:url('https://api.nmteam.xyz/avatar/?id=${Number(info.user.uid)}"></i>
                             <div>
-                                <p class="unick">${info.user.nick}</p>
+                                <p class="unick">${getNickHTML(info.user)}</p>
                                 <p></p>
                             </div>
                         </a>`;
                             box.find(".main").append(new_element);
                         });
-                        if (response['data'].length == 0) box.attr("data-status", "nomore");
+                        if (response['data'].length == 0 && box.find(".main:empty").length > 0) box.attr("data-status", "noone");
+                        else if (response['data'].length < 20) box.attr("data-status", "nomore");
                         else box.attr("data-status", "undefined");
                     }
                     catch (err) {
@@ -452,9 +453,13 @@ uListSkeleton = `<div class="uSke avatarBox">
 </div>`;
 
 postsNoMoreBoxHTML = `
-<div class="unavaliable small" noselect=""><i></i><p>没有了，怎么想都没有了吧！</p></div>`;
+<div class="unavaliable small" noselect><i></i><p>没有了，怎么想都没有了吧！</p></div>`;
+
 postsErrorBoxHTML = `
-<div class="unavaliable small search-not-start" noselect=""><i></i><p>坏掉了啦，载不出来了！<br /><button onclick="$('#{boxid}').attr('data-status','undefined');loadPostsList($('#{boxid}'));">重试</button></p></div>`;
+<div class="unavaliable small search-not-start" noselect><i></i><p>坏掉了啦，载不出来了！<br /><button onclick="$('#{boxid}').attr('data-status','undefined');loadPostsList($('#{boxid}'));">重试</button></p></div>`;
+
+followNoOneHTML = `
+<div class="unavaliable small search-not-start" noselect><i></i><p>他还没有{{fType}}</p></div>`;
 
 function setMedia(mediaJson, pid = 0) {
     try {

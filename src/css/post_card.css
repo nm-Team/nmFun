@@ -39,7 +39,7 @@ body[theme=dark]{
 .postsList [spe]{
     display: none;
 }
-.postsList[data-status=loading] .loading, .postsList[data-status=undefined] .loading, .postsList[data-status=error] .error, .postsList[data-status=nomore] .nomore{
+.postsList[data-status=loading] .loading, .postsList[data-status=undefined] .loading, .postsList[data-status=error] .error, .postsList[data-status=nomore] .nomore, .postsList[data-status=noone] .noone{
     display: block;
 } 
 .postsListBar{

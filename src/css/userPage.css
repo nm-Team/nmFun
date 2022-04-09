@@ -184,3 +184,13 @@ body[theme=dark]{
     padding: 0 10rem;
     margin-bottom: 10rem;
 }
+.followListFrame .cardBox.main{
+    height: calc(100% - 46rem); 
+    overflow: hidden; 
+    display: flex; 
+    flex-direction: column;
+}
+.followListFrame .cardBox.main .postsList .card.avatarBox{
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+}

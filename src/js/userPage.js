@@ -177,7 +177,7 @@ function showUserFollowListPage(uid, uNick, type) {
     try {
         //如果有则定位
         try {
-            focusBox("pageRight", 'followListFrame_' + uid, noOther);
+            focusBox("pageRight", 'followListFrame_' + uid, false);
         }
         catch (error) { // 没有则创建
             new_element = document.createElement('div');
@@ -187,6 +187,7 @@ function showUserFollowListPage(uid, uNick, type) {
             new_element.setAttribute('totallyclose', 'true');
             new_element.setAttribute('uid', uid);
             new_element.setAttribute('name', uNick);
+            new_element.setAttribute('data-unick', uNick);
             new_element.setAttribute('noother', 'false');
             new_element.innerHTML = followListTemplate.replace(/{{uid}}/g, uid).replace(/{{nick}}/g, uNick).replace(/{{avatar}}/g, avatarURL.replace(/{id}/g, uid));
             pageRight.appendChild(new_element);
@@ -194,10 +195,8 @@ function showUserFollowListPage(uid, uNick, type) {
             initPostsListMonitor($(`#followListFrame_${uid}_lScrollMonitor`));
             initPostsList($(`#followListFrame_${uid}_l_followings`), { "type": "follow", "search": { "uid": uid, "type": "followings" }, "noOther": "false" });
             initPostsList($(`#followListFrame_${uid}_l_followers`), { "type": "follow", "search": { "uid": uid, "type": "followers" }, "noOther": "false" });
-            focusInPostsList($(`#followListFrame_${uid}_lScrollMonitor`), $(`#followListFrame_${uid}_l_${type}`));
-            $(`#followListFrame_${uid}_${type}`).click();
-            // loadPostsList($(`#followListFrame_${uid}_l_${type}`));
         };
+        $(`#followListFrame_${uid}_${type}`).click();
     }
     catch (err) {
         console.error(err);
@@ -220,11 +219,11 @@ followListTemplate = `
     </div>
     <div class="right"></div>
 </header>
-<div class="cardBox postCardBox main" style="height: calc(100% - 46rem); overflow: hidden; display: flex; flex-direction: column;">
+<div class="cardBox postCardBox main">
     <div class="" >
         <div class="typeSelecter" fly="true" noselect>
-            <label for="followListFrame_{{uid}}_followings"><input type="radio" id="followListFrame_{{uid}}_followings" name="followListFrame_{{uid}}_f" onclick="focusInPostsList($('#followListFrame_{{uid}}_lScrollMonitor'), $('#followListFrame_{{uid}}_l_followings'));"><span>关注</span></label>
-            <label for="followListFrame_{{uid}}_followers" ><input type="radio" id="followListFrame_{{uid}}_followers"  name="followListFrame_{{uid}}_f" onclick="focusInPostsList($('#followListFrame_{{uid}}_lScrollMonitor'), $('#followListFrame_{{uid}}_l_followers'));"><span>粉丝</span></label>
+            <label for="followListFrame_{{uid}}_followings"><input type="radio" id="followListFrame_{{uid}}_followings" name="followListFrame_{{uid}}_f" onclick="focusInPostsList($('#followListFrame_{{uid}}_lScrollMonitor'), $('#followListFrame_{{uid}}_l_followings')); $('#followListFrame_{{uid}}').attr('name',$('#followListFrame_{{uid}}').attr(\`data-unick\`)+'的关注')"><span>关注</span></label>
+            <label for="followListFrame_{{uid}}_followers" ><input type="radio" id="followListFrame_{{uid}}_followers"  name="followListFrame_{{uid}}_f" onclick="focusInPostsList($('#followListFrame_{{uid}}_lScrollMonitor'), $('#followListFrame_{{uid}}_l_followers'));  $('#followListFrame_{{uid}}').attr('name',$('#followListFrame_{{uid}}').attr(\`data-unick\`)+'的粉丝')""><span>粉丝</span></label>
         </div>
     </div>
     <div class="userMainCards equalPages floatFrame-content postsListScrollMonitor" id="followListFrame_{{uid}}_lScrollMonitor">
