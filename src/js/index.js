@@ -316,7 +316,10 @@ sRankTypeJSON = {
 
 function switchSearchRankType(typeId) {
     sRankType = typeId;
-    $("#sRankTypeR+span").html(sRankTypeJSON[typeId]['name']);
+    $("#sRankTypeR+span").html(sRankTypeJSON[typeId]['name'])
+    if (typeId != "time") {
+        newMsgBox("非按时间排序的搜索结果可能不完全。请尝试使用更准确的搜索词或切换到按时间排序以获得精确结果。");
+    }
     search();
 }
 

@@ -118,11 +118,14 @@
                                             name="sTypeR"><span>用户</span></label>
                                 </span>
                                 <span class="right" id="sFilterRight">
-                                    <label class="noFocus" for="sRankTypeR"><input type="radio" id="sRankTypeR"
-                                            onclick="showSwitchSearchRankTypeContextMenu()"
+                                    <label class="noFocus" for="sRankTypeR"
+                                        onclick="showSwitchSearchRankTypeContextMenu()" onkeydown="if(event.keyCode == 13) setTimeout(() => {
+                                             showSwitchSearchRankTypeContextMenu()
+                                        }, 20);"><input type="radio" id="sRankTypeR"
                                             name="sRankTypeR"><span>阅读量</span></label>
-                                    <label class="noFocus" for="sRankTimeR"><input type="radio" id="sRankTimeR"
-                                            onclick="switchSearchRankTime()" name="sRankTimeR"><span>倒序</span></label>
+                                    <label class="noFocus" for="sRankTimeR" onkeydown="divClick(this, event)"><input
+                                            type="radio" id="sRankTimeR" onclick="switchSearchRankTime()"
+                                            name="sRankTimeR"><span>倒序</span></label>
                                 </span>
                             </div>
                         </div>
