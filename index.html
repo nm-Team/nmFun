@@ -6,7 +6,8 @@
     <title>nmFun</title>
     <meta name="keywords" content="" />
     <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
     <meta name='apple-mobile-web-app-capable' content='yes'>
     <meta name='apple-mobile-web-app-status-bar-style' content='black'>
     <meta name='format-detection' content='telephone=no'>
@@ -93,28 +94,30 @@
                         <div class="left">
                             <button class="backButton" title="返回" onclick="closeBox('pageLeft','searchFrame',false);"
                                 oncontextmenu="quickBack('pageLeft',this)"
-                                ontouchstart="longPressToDo(function(){quickBack('pageLeft',this)})"
+                                ontouchstart="longPressToDo(function(){quickBack('pageLeft')})"
                                 ontouchend="longPressStop()"><i class="material-icons"></i></button>
-                            <input id="searchFrame_input" placeholder="搜索..." title="搜索">
+                            <input id="searchFrame_input" placeholder="搜索..." title="搜索" onkeydown="if(event.keyCode == 13) search();">
                         </div>
                         <div class="right">
-                            <button id="" onclick="" title="点击以搜索"><i class="material-icons">search</i></button>
+                            <button id="" onclick="search()" title="点击以搜索"><i class="material-icons">search</i></button>
                         </div>
                     </header>
                     <div class="cardBox postCardBox main">
-                        <div class="typeContainer" noselect>
-                            <div class="typeSelecter" fly="true">
-                                <label for=""><input type="radio"><span>全部</span></label>
-                                <label for=""><input type="radio"><span>帖子</span></label>
-                                <label for=""><input type="radio"><span>用户</span></label>
+                        <div class="typeContainer" noselect class="floatFrame-header">
+                            <div class="typeSelecter" id="sType" fly="true">
+                                <label for="sTypeR_all"><input type="radio" id="sTypeR_all" name="sTypeR"
+                                        onclick="focusInPostsList($('#searchResults'),$('#sRes_all'))"
+                                        checked><span>全部</span></label>
+                                <label for="sTypeR_post"><input type="radio" id="sTypeR_post"
+                                        onclick="focusInPostsList($('#searchResults'),$('#sRes_post'))"
+                                        name="sTypeR"><span>帖子</span></label>
+                                <label for="sTypeR_user"><input type="radio" id="sTypeR_user"
+                                        onclick="focusInPostsList($('#searchResults'),$('#sRes_user'))"
+                                        name="sTypeR"><span>用户</span></label>
                             </div>
                         </div>
-                        <div id="searchResults">
-                            <div class="postMainReal card avatarBox">
-                                <div class="unavaliable search-not-start" noselect><i></i>
-                                    <p></p>
-                                </div>
-                            </div>
+                        <div class="userMainCards equalPages postsListScrollMonitor"
+                            id="searchResults">
                         </div>
                     </div>
                 </div>
@@ -173,21 +176,26 @@
                                 <div id="myPageMoreTags"></div>
                             </div>
                             <div class="lists" id="myBlockDisplay">
-                                <div class="but" onclick="alert(`由于您违反了社区规定，nmFun 团队已暂时或永久封禁了您的账号。<br><br><b>预计解封时间：</b>` + myBlockTime.innerHTML)" tabindex="0"
-                                    onkeydown="divClick(this, event)">
-                                    <icon class="material-icons" style="color: rgba(0, 0, 0, 0); background: rgba(0, 0, 0, 0)"></icon>
-                                    <t>您已被封禁至 <span id="myBlockTime" class="time" time="true" timestyle="fixed" timesec="false" timefull="false"></span> </t>
+                                <div class="but"
+                                    onclick="alert(`由于您违反了社区规定，nmFun 团队已暂时或永久封禁了您的账号。<br><br><b>预计解封时间：</b>` + myBlockTime.innerHTML)"
+                                    tabindex="0" onkeydown="divClick(this, event)">
+                                    <icon class="material-icons"
+                                        style="color: rgba(0, 0, 0, 0); background: rgba(0, 0, 0, 0)"></icon>
+                                    <t>您已被封禁至 <span id="myBlockTime" class="time" time="true" timestyle="fixed"
+                                            timesec="false" timefull="false"></span> </t>
                                 </div>
                             </div>
                             <div class="lists">
                                 <div class="but" onclick="newMsgBox('开发中')" tabindex="0"
                                     onkeydown="divClick(this, event)">
-                                    <icon class="material-icons" style="color: #000000; background: #eee">comment</icon>
+                                    <icon class="material-icons" style="color: #000000; background: #eee">comment
+                                    </icon>
                                     <t>评论</t>
                                 </div>
                                 <div class="but" onclick="newMsgBox('开发中')" tabindex="0"
                                     onkeydown="divClick(this, event)">
-                                    <icon class="material-icons" style="color: #c9aa0f; background: #eee">star</icon>
+                                    <icon class="material-icons" style="color: #c9aa0f; background: #eee">star
+                                    </icon>
                                     <t>收藏</t>
                                 </div>
                             </div>
@@ -209,7 +217,8 @@
                             <div class="lists">
                                 <div class="but" onclick="newBrowser('/settings/about.html', '', false, false)"
                                     tabindex="0" onkeydown="divClick(this, event)">
-                                    <icon class="material-icons" style="color: #000; background: #EAD050">info_outline
+                                    <icon class="material-icons" style="color: #000; background: #EAD050">
+                                        info_outline
                                     </icon>
                                     <t>关于 nmFun</t>
                                 </div>

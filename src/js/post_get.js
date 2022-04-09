@@ -39,7 +39,7 @@ function focusInPostsList(box, id) {
     loadPostsList(id);
     box.find(".postsList").attr("data-focus", "false");
     id.attr("data-focus", "true");
-    box.scrollTop=id.attr("data-scroll");
+    box.scrollTop = id.attr("data-scroll");
     writeLog("i", "focusInPostsList", "focused box id: " + id[0].id + "in " + box[0].id);
 }
 
@@ -85,9 +85,10 @@ function loadPostsList(box) {
             writeLog("i", "loadPostsList", "start, attr " + JSON.stringify(attr) + ",detected last pid is " + lastPid + "");
             box.attr("data-status", "loading");
             $.ajax({
-                type: "GET",
+                type: "POST",
                 url: backEndURL + "/post/listpost.php?pid=" + (lastPid ? lastPid : "") + "&category=" + (attr.search.category ? attr.search.category : "") + "&user=" + (attr.search.uid ? attr.search.uid : "") + "&CodySESSION=" + localStorage.sessionid,
                 async: true,
+                data: { keyword: (attr.search.keyword ? attr.search.keyword : "") },
                 dataType: "json",
                 success: function (response, status, request) {
                     writeLog("i", "loadPostsList get backend response", JSON.stringify(response));
@@ -219,6 +220,11 @@ function loadPostsList(box) {
                 }
             });
             break;
+        case "search": {
+            if (box.empty())
+                box.append("<div class='card'><center>开发中</center></div>");
+            break;
+        }
     }
 }
 

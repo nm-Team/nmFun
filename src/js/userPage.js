@@ -210,7 +210,7 @@ followListTemplate = `
     <div class="left">
         <button class="backButton" title="返回" onclick="closeBox('pageRight','followListFrame_{{uid}}',false);"
             oncontextmenu="quickBack('pageRight',this)"
-            ontouchstart="longPressToDo(function(){quickBack('pageRight',this)})"
+            ontouchstart="longPressToDo(function(){quickBack('pageRight')})"
             ontouchend="longPressStop()"><i class="material-icons"></i></button>
             <div class="nameDiv">
             <p class="title">{{nick}}</p>

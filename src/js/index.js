@@ -14,7 +14,7 @@ $.ajax({
             // 首页分类
             moreCategoryList = eval(response['info']['category']);
             categoryList = systemCategoryList.concat(moreCategoryList);
-            initPostsListMonitor($(".postsListScrollMonitor"));
+            initPostsListMonitor($("#indexMainCards"));
             categoryList.forEach(element => {
                 indexMoreTypes.innerHTML += `<label for="indexType_${element['id']}"><input id="indexType_${element['id']}" onclick="indexSwitchType('${element['id']}');" type="radio" name="indexType"><span>${element['name']}</span></label>`;
                 indexMainLists.innerHTML += `<div id="indexPostsList_${element['id']}"></div>`;
@@ -259,4 +259,36 @@ function loadWelcomePage() {
             localStorage.started = 'true';
         }
     }
+}
+
+// 搜索
+initSearch();
+// sTypeR_all.click();
+function initSearch() {
+    searchResults.innerHTML = `
+    <div id="searchResultsContainer" class="cardsListsContainer">
+        <div id="sRes_all"></div>
+        <div id="sRes_post"></div>
+        <div id="sRes_user"></div>
+    </div>
+    <div class="postMainReal card avatarBox" id="sBoxDefault">
+        <div class="unavaliable search-not-start" noselect><i></i>
+        </div>
+    </div>`;
+    initPostsListMonitor($(`#searchResults`));
+}
+
+function search() {
+    initSearch();
+    sWord = searchFrame_input.value;
+    if (sWord == "") {
+        return newMsgBox("请输入搜索词！");
+    }
+    initPostsList($(`#sRes_all`), { "type": "post", "search": { "type": "all", "keyword": sWord }, "noOther": true });
+    initPostsList($(`#sRes_post`), { "type": "post", "search": { "type": "post", "keyword": sWord }, "noOther": true });
+    initPostsList($(`#sRes_user`), { "type": "search", "search": { "type": "user", "keyword": sWord }, "noOther": true });
+    // loadPostsList(getActivePostsList(`#searchResults`));
+    $("#sType :checked")[0].click();
+    writeLog("i", "search", "search_" + sWord + "_" + $("#sType :checked")[0].innerHTML);
+    if (sBoxDefault) sBoxDefault.outerHTML = "";
 }

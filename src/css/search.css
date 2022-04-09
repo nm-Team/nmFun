@@ -1,7 +1,8 @@
-.searchFrame .main{
+.searchFrame .main:not(.main *){
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow: hidden!important;
+    height: calc(100% - 45rem);
 }
 .searchFrame .main .typeContainer{
     flex-shrink: 0;
