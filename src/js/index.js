@@ -49,6 +49,9 @@ function closeHover() {
         console.log("closeHover closed");
         postInputInit();
         loadWelcomePage();
+        setTimeout(() => {
+            startHover.outerHTML = "";
+        }, 400);
     }
     catch (err) {
         writeLog("e", "closeHover", err);
