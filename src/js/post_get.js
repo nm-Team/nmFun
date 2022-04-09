@@ -39,6 +39,7 @@ function focusInPostsList(box, id) {
     loadPostsList(id);
     box.find(".postsList").attr("data-focus", "false");
     id.attr("data-focus", "true");
+    box.scrollTop=id.attr("data-scroll");
     writeLog("i", "focusInPostsList", "focused box id: " + id[0].id + "in " + box[0].id);
 }
 
@@ -62,6 +63,8 @@ setInterval(() => {
 function postsListOnScroll(box) {
     try {
         attr = JSON.parse(box.attr("data-config"));
+        // 记录滚动位置
+        box.attr("data-scroll", box.scrollTop());
         // 如果more的位置在屏幕上，则要继续加载
         if (box.find(".mark")[0].getBoundingClientRect().top < window.outerHeight) {
             loadPostsList(box);

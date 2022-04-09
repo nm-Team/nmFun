@@ -46,15 +46,15 @@ function closeHover() {
         $(startHover).attr("data-closed", "true");
         writeLog("i", "closeHover", "done");
         $("body").attr("data-loadover", "true");
-        setTimeout(() => {
-            startHover.outerHTML = "";
-        }, 400);
         console.log("closeHover closed");
         postInputInit();
         loadWelcomePage();
     }
     catch (err) {
         writeLog("e", "closeHover", err);
+        setTimeout(() => {
+            closeHover();
+        }, 400);
     }
 }
 

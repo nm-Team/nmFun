@@ -346,7 +346,7 @@ header .nameDiv .little{
     padding: 9rem 20rem 11rem 20rem;
 }
 .alertBox .buttons{
-    height: 35rem;
+    min-height: 35rem;
     display: flex;
     margin-top: 10rem;
     justify-content: space-between;

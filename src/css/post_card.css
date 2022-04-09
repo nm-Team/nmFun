@@ -58,7 +58,7 @@ body[theme=dark]{
     margin: 3rem 0rem;
     border-radius: 20rem;
     background-color: var(--postsListBar-bgcolor);
-    box-shadow: #00000033 1rem 1rem 5rem;
+    box-shadow: #00000017 0rem 0rem 3rem;
     transition: all 0.5s;
 }
 .postsListBar button[data-hidden=true]{
