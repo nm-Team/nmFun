@@ -233,6 +233,11 @@ body{
     color: var(--header-title);
     background-color: var(--header-bgcolor);
 }
+@media (max-width: 800px) {
+    .searchFrame header input{
+        margin-left: 15rem;
+    }    
+}
 .popFrame{
     top: 27rem;
     background-color: var(--page-bgcolor);

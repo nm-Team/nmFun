@@ -77,6 +77,12 @@ body[theme=dark]{
 .typeSelecter:not(*:hover)::-webkit-scrollbar{
     height: 0;
 }
+.typeSelecter .left{
+    float: left;
+}
+.typeSelecter .right{
+    float: right;
+}
 .typeSelecter label input{
     width: 0;
     height: 0;
@@ -101,7 +107,7 @@ body[theme=dark]{
     margin-left: 5rem;
     opacity: 0.8;
 }
-.typeSelecter label input:checked + span{
+.typeSelecter label:not(.noFocus) input:checked + span{
     font-weight: bold;
 }
 .typeSelecter label input:focus-visible + span{

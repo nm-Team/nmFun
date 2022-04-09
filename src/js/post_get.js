@@ -86,7 +86,7 @@ function loadPostsList(box) {
             box.attr("data-status", "loading");
             $.ajax({
                 type: "POST",
-                url: backEndURL + "/post/listpost.php?pid=" + (lastPid ? lastPid : "") + "&category=" + (attr.search.category ? attr.search.category : "") + "&user=" + (attr.search.uid ? attr.search.uid : "") + "&CodySESSION=" + localStorage.sessionid,
+                url: backEndURL + "/post/listpost.php?pid=" + (lastPid ? lastPid : "") + "&category=" + (attr.search.category ? attr.search.category : "") + "&user=" + (attr.search.uid ? attr.search.uid : "") + "&order_by=" + (attr.order && attr.order.type ? attr.order.type : "") + "&order_time=" + (attr.order && attr.order.time? attr.order.time : "") + "&CodySESSION=" + localStorage.sessionid,
                 async: true,
                 data: { keyword: (attr.search.keyword ? attr.search.keyword : "") },
                 dataType: "json",

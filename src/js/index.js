@@ -281,14 +281,49 @@ function initSearch() {
 function search() {
     initSearch();
     sWord = searchFrame_input.value;
-    if (sWord == "") {
-        return newMsgBox("请输入搜索词！");
-    }
-    initPostsList($(`#sRes_all`), { "type": "post", "search": { "type": "all", "keyword": sWord }, "noOther": true });
-    initPostsList($(`#sRes_post`), { "type": "post", "search": { "type": "post", "keyword": sWord }, "noOther": true });
+    initPostsList($(`#sRes_all`), { "type": "post", "search": { "type": "all", "keyword": sWord }, "order": { "time": sRankTime, "type": sRankType }, "noOther": true });
+    initPostsList($(`#sRes_post`), { "type": "post", "search": { "type": "post", "keyword": sWord }, "order": { "time": sRankTime, "type": sRankType }, "noOther": true });
     initPostsList($(`#sRes_user`), { "type": "search", "search": { "type": "user", "keyword": sWord }, "noOther": true });
-    // loadPostsList(getActivePostsList(`#searchResults`));
     $("#sType :checked")[0].click();
     writeLog("i", "search", "search_" + sWord + "_" + $("#sType :checked")[0].innerHTML);
     if (sBoxDefault) sBoxDefault.outerHTML = "";
+}
+
+// 搜索正序倒序
+sRankTime = "DESC";
+
+function switchSearchRankTime() {
+    if (sRankTime == "DESC") {
+        sRankTime = "ASC";
+        $("#sRankTimeR+span").html("正序");
+    }
+    else {
+        sRankTime = "DESC";
+        $("#sRankTimeR+span").html("倒序");
+    }
+    search();
+}
+
+// 搜索排序
+sRankType = "time";
+
+sRankTypeJSON = {
+    "time": { "name": "发布时间", "icon": "access_time" },
+    "view": { "name": "阅读量", "icon": "remove_red_eye" },
+    "like": { "name": "点赞量", "icon": "thumb_up" },
+    "comment": { "name": "评论量", "icon": "comment" },
+};
+
+function switchSearchRankType(typeId) {
+    sRankType = typeId;
+    $("#sRankTypeR+span").html(sRankTypeJSON[typeId]['name']);
+    search();
+}
+
+function showSwitchSearchRankTypeContextMenu() {
+    sSRTCMI = [];
+    for (var i in sRankTypeJSON) {
+        sSRTCMI.push([sRankTypeJSON[i]['name'], "switchSearchRankType('" + i + "')", sRankTypeJSON[i]['icon']]);
+    }
+    createContextMenu(sSRTCMI, true, true, sRankTimeR);
 }

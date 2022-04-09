@@ -96,7 +96,8 @@
                                 oncontextmenu="quickBack('pageLeft',this)"
                                 ontouchstart="longPressToDo(function(){quickBack('pageLeft')})"
                                 ontouchend="longPressStop()"><i class="material-icons"></i></button>
-                            <input id="searchFrame_input" placeholder="搜索..." title="搜索" onkeydown="if(event.keyCode == 13) search();">
+                            <input id="searchFrame_input" placeholder="搜索..." title="搜索"
+                                onkeydown="if(event.keyCode == 13) search();">
                         </div>
                         <div class="right">
                             <button id="" onclick="search()" title="点击以搜索"><i class="material-icons">search</i></button>
@@ -105,19 +106,27 @@
                     <div class="cardBox postCardBox main">
                         <div class="typeContainer" noselect class="floatFrame-header">
                             <div class="typeSelecter" id="sType" fly="true">
-                                <label for="sTypeR_all"><input type="radio" id="sTypeR_all" name="sTypeR"
-                                        onclick="focusInPostsList($('#searchResults'),$('#sRes_all'))"
-                                        checked><span>全部</span></label>
-                                <label for="sTypeR_post"><input type="radio" id="sTypeR_post"
-                                        onclick="focusInPostsList($('#searchResults'),$('#sRes_post'))"
-                                        name="sTypeR"><span>帖子</span></label>
-                                <label for="sTypeR_user"><input type="radio" id="sTypeR_user"
-                                        onclick="focusInPostsList($('#searchResults'),$('#sRes_user'))"
-                                        name="sTypeR"><span>用户</span></label>
+                                <span class="left">
+                                    <label for="sTypeR_all"><input type="radio" id="sTypeR_all" name="sTypeR"
+                                            onclick="sFilterRight.style.display='block';focusInPostsList($('#searchResults'),$('#sRes_all'));"
+                                            checked><span>全部</span></label>
+                                    <label for="sTypeR_post"><input type="radio" id="sTypeR_post"
+                                            onclick=";sFilterRight.style.display='block';focusInPostsList($('#searchResults'),$('#sRes_post'))"
+                                            name="sTypeR"><span>帖子</span></label>
+                                    <label for="sTypeR_user"><input type="radio" id="sTypeR_user"
+                                            onclick="sFilterRight.style.display='none';focusInPostsList($('#searchResults'),$('#sRes_user'));"
+                                            name="sTypeR"><span>用户</span></label>
+                                </span>
+                                <span class="right" id="sFilterRight">
+                                    <label class="noFocus" for="sRankTypeR"><input type="radio" id="sRankTypeR"
+                                            onclick="showSwitchSearchRankTypeContextMenu()"
+                                            name="sRankTypeR"><span>阅读量</span></label>
+                                    <label class="noFocus" for="sRankTimeR"><input type="radio" id="sRankTimeR"
+                                            onclick="switchSearchRankTime()" name="sRankTimeR"><span>倒序</span></label>
+                                </span>
                             </div>
                         </div>
-                        <div class="userMainCards equalPages postsListScrollMonitor"
-                            id="searchResults">
+                        <div class="userMainCards equalPages postsListScrollMonitor" id="searchResults">
                         </div>
                     </div>
                 </div>
