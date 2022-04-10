@@ -1,5 +1,6 @@
 // 打开新用户信息页
 function newUserInfoPage(uid, uNick, noOther = false) {
+    if (isNaN(uid)) return newMsgBox("参数错误，无法打开用户页面");
     try {
         //如果有则定位
         try {

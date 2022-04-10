@@ -21,6 +21,7 @@ function setPostInputArea(ele, type) {
             } catch (err) { }
             document.getElementById(ele.id).getElementsByClassName("sendBoxInput")[0].innerHTML = localStorage.getItem("sendCraft" + "_" + ele.id);
             document.getElementById(ele.id).getElementsByClassName("mediasBox")[0].innerHTML = localStorage.getItem("sendMediaCraft" + "_" + ele.id);
+            $('#' + ele + ' .mediasBox div.m').arrangeable();
         } catch (err) { console.error(err); }
     }
     catch (err) {
@@ -256,6 +257,7 @@ function putFilesToInput(fileInput, type, id) {
                     default:
                 }
             }
+
         }
     }
     catch (err) {
@@ -268,6 +270,7 @@ function addItemToFileBar(id, info, HTML, type) {
     mtid = gTime();
     if (document.getElementById(id).getElementsByClassName("mediasBox")[0].getElementsByClassName("m").length > 8) return newMsgBox("抱歉，上传附件失败，因为您只能同时插入最多 9 个附件。");
     document.getElementById(id).getElementsByClassName("mediasBox")[0].innerHTML += `<div class="m" m="` + JSON.stringify(info).replace(/"/g, "'") + `" mtid="` + mtid + `"><button class="delButton" title="删除这个媒体" onclick="delItemInFileBar(` + mtid + `);autoSaveCraft('${id}','${type}')"></button>` + HTML + `</div>`;
+    $('#' + id + ' .mediasBox div.m').arrangeable();
     writeLog("i", "addItemToFileBar", "id: " + id + ", mtid: " + mtid);
 }
 

@@ -39,7 +39,10 @@ function focusInPostsList(box, id) {
     loadPostsList(id);
     box.find(".postsList").attr("data-focus", "false");
     id.attr("data-focus", "true");
-    box.scrollTop = id.attr("data-scroll");
+    try {
+        box[0].scrollTop = id.attr("data-scroll");
+    }
+    catch (err) { }
     writeLog("i", "focusInPostsList", "focused box id: " + id[0].id + "in " + box[0].id);
 }
 
@@ -64,7 +67,7 @@ function postsListOnScroll(box) {
     try {
         attr = JSON.parse(box.attr("data-config"));
         // 记录滚动位置
-        box.attr("data-scroll", box.scrollTop());
+        box.attr("data-scroll", box.parent().parent().scrollTop());
         // 如果more的位置在屏幕上，则要继续加载
         if (box.find(".mark")[0].getBoundingClientRect().top < window.outerHeight) {
             loadPostsList(box);
@@ -86,7 +89,7 @@ function loadPostsList(box) {
             box.attr("data-status", "loading");
             $.ajax({
                 type: "POST",
-                url: backEndURL + "/post/listpost.php?pid=" + (lastPid ? lastPid : "") + "&category=" + (attr.search.category ? attr.search.category : "") + "&user=" + (attr.search.uid ? attr.search.uid : "") + "&order_by=" + (attr.order && attr.order.type ? attr.order.type : "") + "&order_time=" + (attr.order && attr.order.time? attr.order.time : "") + "&CodySESSION=" + localStorage.sessionid,
+                url: backEndURL + "/post/listpost.php?pid=" + (lastPid ? lastPid : "") + "&category=" + (attr.search.category ? attr.search.category : "") + "&user=" + (attr.search.uid ? attr.search.uid : "") + "&order_by=" + (attr.order && attr.order.type ? attr.order.type : "") + "&order_time=" + (attr.order && attr.order.time ? attr.order.time : "") + "&CodySESSION=" + localStorage.sessionid,
                 async: true,
                 data: { keyword: (attr.search.keyword ? attr.search.keyword : "") },
                 dataType: "json",
@@ -267,16 +270,16 @@ function refreshPostArea(pid) {
             // 识别话题
             tagsIn = [];
             // 抓取每个#至空格和#至换行，并视作话题
-            numbersignCaught = contentHandled.split("#");
-            for (p = 0; p < numbersignCaught.length; p++) {
-                tagCaught = numbersignCaught[p].split("<br />")[0].split(" ")[0];
-                if (!tagCaught || (p == 0 && contentHandled.indexOf("#") != 0)
-                    || (numbersignCaught[p - 1].split("<br />")[numbersignCaught[p - 1].split("<br />").length - 1].split(" ")[numbersignCaught[p - 1].split("<br />")[numbersignCaught[p - 1].split("<br />").length - 1].split(" ").length - 1])
-                )
-                    continue;
-                contentHandled = contentHandled.replace("#" + tagCaught, '<a class="linkInPost" href="" target="_blank" onclick="return false;" title="查看话题 #' + tagCaught + '">#' + tagCaught + '</a>');
-                tagsIn.push(tagCaught);
-            };
+            // numbersignCaught = contentHandled.split("#");
+            // for (p = 0; p < numbersignCaught.length; p++) {
+            //     tagCaught = numbersignCaught[p].split("<br />")[0].split(" ")[0];
+            //     if (!tagCaught || (p == 0 && contentHandled.indexOf("#") != 0)
+            //         || (numbersignCaught[p - 1].split("<br />")[numbersignCaught[p - 1].split("<br />").length - 1].split(" ")[numbersignCaught[p - 1].split("<br />")[numbersignCaught[p - 1].split("<br />").length - 1].split(" ").length - 1])
+            //     )
+            //         continue;
+            //     contentHandled = contentHandled.replace("#" + tagCaught, '<a class="linkInPost" href="" target="_blank" onclick="return false;" title="查看话题 #' + tagCaught + '">#' + tagCaught + '</a>');
+            //     tagsIn.push(tagCaught);
+            // };
             medias = setMedia(pData['attachment'], pid);
             // 基本
             $("#postFrame" + pid + " .postMainReal").html(`
@@ -336,25 +339,35 @@ function refreshPostArea(pid) {
                 tagsHTML += `<a href="javascript:" onclick="newMsgBox('开发中')">` + currentValue + `</a>`;
             });
             document.getElementById('postFrame' + pid).getElementsByClassName("postRelated")[0].innerHTML = `
-            <div class="card tagCard"><div class="content"><a class="ca" href="javascript:" onclick="newMsgBox('开发中')" >`+ moreCategoryList.filter(function (_data) { return _data.id == pData['category'] })[0].name + `</a>
+            <div class="card tagCard"><div class="content"><a class="ca" onclick="newMsgBox('开发中')" >`+ moreCategoryList.filter(function (_data) { return _data.id == pData['category'] })[0].name + `</a>
             <div class="tags">`+ tagsHTML + `</div> </div>
-            </div><div class="card interactionBar"><button onclick="newMsgBox('开发中')">评论 <span class="commentNum" data-comment-num-post-id="${pid}">` + pData['comment'] + `</span></button><button onclick="newMsgBox('开发中')">赞 <span class="likeNum" data-like-num-post-id="${pid}">` + pData['like'] + `</span></button> </div>
+            </div><div class="card interactionBar"><button onclick="$('#postFrame${pid} .comments').css('display', 'block'); $('#postFrame${pid} .likes').css('display', 'none');">评论 <span class="commentNum" data-comment-num-post-id="${pid}">` + pData['comment'] + `</span></button><button onclick="$('#postFrame${pid} .comments').css('display', 'none'); $('#postFrame${pid} .likes').css('display', 'block');">赞 <span class="likeNum" data-like-num-post-id="${pid}">` + pData['like'] + `</span></button> </div>
             `;
             $("[data-view-num-post-id=" + pid + "]").html(pData['view']);
             $(":not([data-ignore=true]) [data-like-num-post-id=" + pid + "]").html(pData['like']);
             $("[data-like-post-id=" + pid + "]:not([data-ignore=true])").attr("data-status", (pData['liked'] ? "yes" : "no"));
             $("[data-comment-num-post-id=" + pid + "]").html(pData['comment']);
             document.getElementById('postFrame' + pid).getElementsByClassName("bottomBox")[0].style.display = "block";
-
+            $(`#postFrame${pid} .commentsReal`).html("<center>开发中</center>");
+            likeListHTML = ``;
+            for (i in pData['like_list']) {
+                likeListHTML += `<a class="name uListItem" data-uid="${Number(pData['like_list'][i]['uid'])}" tabindex="0" onclick="newUserInfoPage('${Number(pData['like_list'][i]['uid'])}', '${pData['like_list'][i]['nick']}');" onkeydown="divClick(this, event)"><i style="background-image:url('https://api.nmteam.xyz/avatar/?id=${Number(pData['like_list'][i]['uid'])}"></i>
+                <div>
+                    <p class="unick">${getNickHTML(pData['like_list'][i])}</p>
+                    <p></p>
+                </div>
+            </a>`;
+            };
+            $(`#postFrame${pid} .likeReal`).html(likeListHTML);
         }
         else {
             document.getElementById('postFrame' + pid).getElementsByClassName("bottomBox")[0].style.display = "none";
         }
     }, function (pData) {
         newMsgBox("帖子加载失败，因为" + pData['info']);
-        document.getElementById('postFrame' + pid).getElementsByClassName("inputBox")[0].style.display = "none";
+        document.getElementById('postFrame' + pid).getElementsByClassName("bottomBox")[0].style.display = "none";
         document.getElementById('postFrame' + pid).getElementsByClassName("postMainSke")[0].style.display = "none";
-        setPostArea(document.getElementById('postFrame' + pid).getElementsByClassName("postMainReal")[0], { "code": "NETWORK_ERROR" }, { slug: false, click: false, fullmedia: false });
+        $("#postFrame" + pid + " .postMainReal").html(`<div class="unavaliable" noselect><i></i><p>内容可能去了另一个星球</p></div>`);
     });
 }
 
@@ -384,14 +397,22 @@ postTemplate = `
     </div>
     <div class="postMainReal card avatarBox"></div>
     <div class="postRelated" noselect></div>
-    <div class="card comments avatarBox" style="display:none">
+    <div class="card comments avatarBox">
         <div class="header">
             <h2 noselect>评论</h2>
             <div class="buttons"><button onclick="showCommentTypeSwitch({{pid}})"><i class="material-icons">swap_horiz</i></button></div>
         </div>
         <div class="commentsReal"></div>
         <div class="comment skeBox">
-        {{postSke}}
+        </div>
+    </div>
+    <div class="card likes avatarBox" style="display: none">
+        <div class="header">
+            <h2 noselect>最近点赞</h2>
+        </div>
+        <div class="likeReal" noselect></div>
+        <div class="bottom">
+        <p>仅展示最近点赞的 5 人</p>
         </div>
     </div>
 </div>

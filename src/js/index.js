@@ -64,8 +64,7 @@ function closeHover() {
 function indexSwitchType(typeName) {
     localStorage.typeSelected = "indexType_" + typeName;
     loadPostsList($("#indexPostsList_" + typeName));
-    $("#indexMainLists .postsList").attr("data-focus", "false");
-    $("#indexPostsList_" + typeName).attr("data-focus", "true");
+    focusInPostsList($("#indexMainCards"), $("#indexPostsList_" + typeName));
 }
 
 // 键盘事件
