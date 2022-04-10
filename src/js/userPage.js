@@ -21,7 +21,7 @@ function newUserInfoPage(uid, uNick, noOther = false) {
             initPostsListMonitor($(`#userPage_${uid}_postsListScrollMonitor`));
             initPostsList($(`#userPage_${uid}_postsList_posts`), { "type": "post", "search": { "uid": uid }, "noOther": "false" });
             refreshUserInfoArea(uid);
-            focusInPostsList($(`#userPage_${uid}_postsListScrollMonitor`), $(`#userPage_${uid}_postsList_posts`));
+            focusInPostsList($(`#userPage_${uid}_postsListScrollMonitor`), $(`#userPage_${uid}_postsList_info`));
             loadPostsList($(`#userPage_${uid}_postsList_posts`));
             refreshFloatFrameOnScroll();
         };
@@ -37,6 +37,7 @@ function refreshUserInfoArea(uid) {
         if (data['status'] == "successful") {
             pData = data['data'];
             $(`#userInfoFrame_${uid} .urole`).html(getNickHTML(pData, { "nick": false }));
+            $(`#userInfoFrame_${uid} .ubio`).html(cleanHTMLTag(pData['bio']));
             $("[data-disabled-uid=" + uid + "]").attr("data-show", pData['disabled'] == 1 ? "true" : "false");
             $("[data-disabled-time-uid=" + uid + "]").attr("timestamp", pData['disabled_time']);
             $("[data-following-num-uid=" + uid + "]").html(pData['followings_num']);
@@ -96,14 +97,24 @@ uPageTemp = `
     </div>
     <div class="typeContainer" noselect>
         <div class="typeSelecter">
-            <label for="uPage_{{uid}}_s_posts"><input id="uPage_{{uid}}_s_posts" type="radio" name="uPage_{{uid}}_s" checked onclick="loadPostsList($(\'#userPage_{{uid}}_postsList_posts\`));"><span>帖子<n data-posts-num-uid="{{uid}}"></n></span></label>
-            <label for="uPage_{{uid}}_s_replies"><input id="uPage_{{uid}}_s_replies" type="radio" name="uPage_{{uid}}_s" onclick="loadPostsList($(\`#userPage_{{uid}}_postsList_comments\`));"><span>回复<n data-replies-num-uid="{{uid}}"></n></span></label>
+            <label for="uPage_{{uid}}_s_info"><input id="uPage_{{uid}}_s_info" type="radio" name="uPage_{{uid}}_s" checked onclick="focusInPostsList($('#userPage_{{uid}}_postsListScrollMonitor'), $('#userPage_{{uid}}_postsList_info'));"><span>简介</span></label>
+            <label for="uPage_{{uid}}_s_posts"><input id="uPage_{{uid}}_s_posts" type="radio" name="uPage_{{uid}}_s" onclick="focusInPostsList($('#userPage_{{uid}}_postsListScrollMonitor'), $('#userPage_{{uid}}_postsList_posts'));"><span>帖子<n data-posts-num-uid="{{uid}}"></n></span></label>
+            <label for="uPage_{{uid}}_s_replies"><input id="uPage_{{uid}}_s_replies" type="radio" name="uPage_{{uid}}_s" onclick="focusInPostsList($('#userPage_{{uid}}_postsListScrollMonitor'), $('#userPage_{{uid}}_postsList_comments'));"><span>回复<n data-replies-num-uid="{{uid}}"></n></span></label>
         </div>
     </div>
     <div class="userMainCards equalPages floatFrame-content postsListScrollMonitor" id="userPage_{{uid}}_postsListScrollMonitor">
         <div class="placeHolder"></div>
         <div id="userPage_{{uid}}_postsListContainer" class="cardsListsContainer">
-                <div id="userPage_{{uid}}_postsList_posts"></div>
+            <div id="userPage_{{uid}}_postsList_info" class="cardBox postsList cardBox postCardBox">
+                <div class="card">
+                    <div class="header"><div class="name">签名</div></div> 
+                    <div class="content ubio">
+                        <span class="skeleton" style="padding-right: 100%"></span><br>
+                        <span class="skeleton" style="padding-right: 100%"></span>
+                    </div>
+                </div>
+            </div>
+            <div id="userPage_{{uid}}_postsList_posts"></div>
             <div id="userPage_{{uid}}_postsList_comments"></div>
         </div>
     </div>

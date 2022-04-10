@@ -36,11 +36,14 @@ function getActivePostsList(d) {
 }
 
 function focusInPostsList(box, id) {
-    loadPostsList(id);
     box.find(".postsList").attr("data-focus", "false");
     id.attr("data-focus", "true");
     try {
         box[0].scrollTop = id.attr("data-scroll");
+    }
+    catch (err) { }
+    try {
+        loadPostsList(id);
     }
     catch (err) { }
     writeLog("i", "focusInPostsList", "focused box id: " + id[0].id + "in " + box[0].id);
@@ -201,7 +204,7 @@ function loadPostsList(box) {
                             new_element.innerHTML = `<a class="name uListItem" data-uid="${Number(info.user.uid)}" tabindex="0" onclick="newUserInfoPage('${Number(info.user.uid)}', '${info.user.nick}');" onkeydown="divClick(this, event)"><i style="background-image:url('https://api.nmteam.xyz/avatar/?id=${Number(info.user.uid)}"></i>
                             <div>
                                 <p class="unick">${getNickHTML(info.user)}</p>
-                                <p></p>
+                                <p>${info.user.bio ? info.user.bio : ""}</p>
                             </div>
                         </a>`;
                             box.find(".main").append(new_element);
@@ -354,7 +357,7 @@ function refreshPostArea(pid) {
                 likeListHTML += `<a class="name uListItem" data-uid="${Number(pData['like_list'][i]['uid'])}" tabindex="0" onclick="newUserInfoPage('${Number(pData['like_list'][i]['uid'])}', '${pData['like_list'][i]['nick']}');" onkeydown="divClick(this, event)"><i style="background-image:url('https://api.nmteam.xyz/avatar/?id=${Number(pData['like_list'][i]['uid'])}"></i>
                 <div>
                     <p class="unick">${getNickHTML(pData['like_list'][i])}</p>
-                    <p></p>
+                    <p>${pData['like_list'][i]['bio'] ? pData['like_list'][i]['bio'] : ""}</p>
                 </div>
             </a>`;
             };

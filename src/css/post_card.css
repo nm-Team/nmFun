@@ -111,12 +111,14 @@ body[theme=dark]{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    overflow: hidden;
 }
 .avatarBox .name div p.unick{
     display: flex;
     align-items: center;
 }
 .avatarBox .name div span.unick{
+    font-weight: bold;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -153,11 +155,18 @@ body[theme=dark]{
 .usertag.nmTeam{
     background-image: url(https://websiteres.nmteam.xyz/producticon/nmTeam/logo@32.png);
 }
-.avatarBox .name div .time{
+.avatarBox .name div .time, .uListItem .unick+p:not(:empty){
     height: 19rem;
     font-weight: normal;
     font-size: 12rem;
-    opacity: 0.6;
+    opacity: 0.6;   
+}
+.uListItem .unick+p:not(:empty){
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+    flex-shrink: 1;
 }
 .cardBox.postCardBox .content .status{
     color: var(--red);
