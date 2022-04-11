@@ -28,7 +28,8 @@
             onclick="parent.alert('确定要注销账号吗？','注销','是','localStorage.sessionid=``;window.location.href=``;','取消')">
             <t>注销账号</t>
         </div>
-        <div class="but" onclick="goToPage('account_editinfo.html')">
+        <div class="but"
+            onclick="parent.newBrowser('/settings/account_editinfo.html','',false, false, '',`<button onclick='$(\`#browserFrame{{browserId}} iframe\`)[0].contentWindow.submit(\`{{browserId}}\`)' title='保存'><i class='material-icons'>save</i></button>`)">
             <t>编辑账号信息</t>
         </div>
         <div class="but" onclick="goToPage('privacy.html')" tabindex="0" onkeydown="divClick(this, event)">

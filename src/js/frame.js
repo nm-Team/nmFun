@@ -120,7 +120,11 @@ function thinPageRight(to) {
     else {
         bodyMain.removeAttribute("thin");
     }
-    mySwiper.updateSize();
+    try {
+        mySwiper.updateSize();
+    } catch (e) {
+        writeLog("e", "thinPageRight", "mySwiper.updateSize() error: " + e);
+    }
 }
 
 // 检测pageRight有没有多窗口，没有就关闭

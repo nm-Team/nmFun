@@ -1,7 +1,7 @@
 browserId = 0;
 legacyBrowserId = 0;
 
-function newBrowser(URL, className = "", withTip = true, showOpenInBrowser = true, script = function () { }, customButtons) {
+function newBrowser(URL, className = "", withTip = true, showOpenInBrowser = true, script = function () { }, customButtons = "") {
     browserId++;
     if (withTip) fakeURL = siteURL + "/jumpurl.html?" + URL;
     else fakeURL = URL;
@@ -11,7 +11,7 @@ function newBrowser(URL, className = "", withTip = true, showOpenInBrowser = tru
     new_element.setAttribute('class', 'popFrame browserFrame ' + className);
     new_element.setAttribute('name', URL);
     new_element.setAttribute('totallyClose', 'true');
-    new_element.innerHTML = browserTemplate.replace(/{{script}}/g, script).replace(/{{browserId}}/g, browserId).replace(/{{browserURL}}/g, fakeURL).replace(/{{browserRealURL}}/g, URL);
+    new_element.innerHTML = browserTemplate.replace(/{{customButtons}}/g, customButtons).replace(/{{script}}/g, script).replace(/{{browserId}}/g, browserId).replace(/{{browserURL}}/g, fakeURL).replace(/{{browserRealURL}}/g, URL);
     document.body.appendChild(new_element);
     new_element = document.createElement('div');
     new_element.setAttribute('id', 'coverWithColorBro' + browserId);
@@ -68,7 +68,7 @@ browserTemplate = `
         <p class="little"></p>
     </div>
 </div>
-<div class="right">
+<div class="right">{{customButtons}}
     <button class="moreButton" title="选项" onclick="showBrowserContextMenu('{{browserRealURL}}',this)"><i class="material-icons">&#xe5d3;</i></button>
 </div>
 </header>
@@ -77,7 +77,7 @@ browserTemplate = `
 </div>
 `;
 
-function newLegacyBrowser(URL, withTip = true, showOpenInLegacyBrowser = true, script = function () { }, customButtons) {
+function newLegacyBrowser(URL, withTip = true, showOpenInLegacyBrowser = true, script = function () { }, customButtons="") {
     legacyBrowserId++;
     if (withTip) fakeURL = "./jumpurl.html?" + URL;
     else fakeURL = URL;
@@ -87,7 +87,7 @@ function newLegacyBrowser(URL, withTip = true, showOpenInLegacyBrowser = true, s
     new_element.setAttribute('con', 'none');
     new_element.setAttribute('name', URL);
     new_element.setAttribute('totallyClose', 'true');
-    new_element.innerHTML = legacyBrowserTemplate.replace(/{{script}}/g, script).replace(/{{legacyBrowserId}}/g, legacyBrowserId).replace(/{{legacyBrowserURL}}/g, fakeURL).replace(/{{legacyBrowserRealURL}}/g, URL);
+    new_element.innerHTML = legacyBrowserTemplate.replace(/{{customButtons}}/g, customButtons).replace(/{{script}}/g, script).replace(/{{legacyBrowserId}}/g, legacyBrowserId).replace(/{{legacyBrowserURL}}/g, fakeURL).replace(/{{legacyBrowserRealURL}}/g, URL);
     pageRight.appendChild(new_element);
     focusBox("pageRight", "legacyBrowserFrame" + legacyBrowserId);
     if (!showOpenInLegacyBrowser) document.getElementById("legacyBrowserFrame" + legacyBrowserId).getElementsByClassName("moreButton")[0].style.display = "none";
@@ -127,7 +127,7 @@ legacyBrowserTemplate = `
         <p class="little"></p>
     </div>
 </div>
-<div class="right">
+<div class="right">{{customButtons}}
     <button class="moreButton" title="选项" onclick="showLegacyBrowserContextMenu('{{legacyBrowserRealURL}}',this)"><i class="material-icons">&#xe5d3;</i></button>
 </div>
 </header>
