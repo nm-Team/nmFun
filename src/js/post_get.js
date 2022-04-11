@@ -207,7 +207,7 @@ function loadPostsList(box) {
                                 new_element.innerHTML = `<a class="name uListItem" data-uid="${Number(info.user.uid)}" tabindex="0" onclick="newUserInfoPage('${Number(info.user.uid)}', '${info.user.nick}');" onkeydown="divClick(this, event)"><i style="background-image:url('https://api.nmteam.xyz/avatar/?id=${Number(info.user.uid)}"></i>
                             <div>
                                 <p class="unick">${getNickHTML(info.user)}</p>
-                                <p>${info.user.bio ? info.user.bio : ""}</p>
+                                <p>${info.user.bio ?cleanHTMLTag(info.user.bio) : ""}</p>
                             </div>
                         </a>`;
                                 box.find(".main").append(new_element);
@@ -361,7 +361,7 @@ function refreshPostArea(pid) {
                 likeListHTML += `<a class="name uListItem" data-uid="${Number(pData['like_list'][i]['uid'])}" tabindex="0" onclick="newUserInfoPage('${Number(pData['like_list'][i]['uid'])}', '${pData['like_list'][i]['nick']}');" onkeydown="divClick(this, event)"><i style="background-image:url('https://api.nmteam.xyz/avatar/?id=${Number(pData['like_list'][i]['uid'])}"></i>
                 <div>
                     <p class="unick">${getNickHTML(pData['like_list'][i])}</p>
-                    <p>${pData['like_list'][i]['bio'] ? pData['like_list'][i]['bio'] : ""}</p>
+                    <p>${pData['like_list'][i]['bio'] ? cleanHTMLTag(pData['like_list'][i]['bio']) : ""}</p>
                 </div>
             </a>`;
             };
