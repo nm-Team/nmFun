@@ -196,27 +196,31 @@ function loadPostsList(box) {
                 success: function (response, status, request) {
                     writeLog("i", "loadPostsList get backend response", JSON.stringify(response));
                     if (response['status'] == "error") {
-                        newMsgBox("抱歉，加载列表时出现问题。<br />" + response['info']);
+                        if (response['error_hidden']) box.html(`<div class="card" noselect><div class="content"><center>根据用户的隐私设置，你无法查看他的关注。</center></div></div>`);
+                        else
+                            newMsgBox("抱歉，加载列表时出现问题。<br />" + response['info']);
                     }
-                    try {
-                        response['data'].forEach(info => {
-                            new_element = document.createElement('span');
-                            new_element.innerHTML = `<a class="name uListItem" data-uid="${Number(info.user.uid)}" tabindex="0" onclick="newUserInfoPage('${Number(info.user.uid)}', '${info.user.nick}');" onkeydown="divClick(this, event)"><i style="background-image:url('https://api.nmteam.xyz/avatar/?id=${Number(info.user.uid)}"></i>
+                    else {
+                        try {
+                            response['data'].forEach(info => {
+                                new_element = document.createElement('span');
+                                new_element.innerHTML = `<a class="name uListItem" data-uid="${Number(info.user.uid)}" tabindex="0" onclick="newUserInfoPage('${Number(info.user.uid)}', '${info.user.nick}');" onkeydown="divClick(this, event)"><i style="background-image:url('https://api.nmteam.xyz/avatar/?id=${Number(info.user.uid)}"></i>
                             <div>
                                 <p class="unick">${getNickHTML(info.user)}</p>
                                 <p>${info.user.bio ? info.user.bio : ""}</p>
                             </div>
                         </a>`;
-                            box.find(".main").append(new_element);
-                        });
-                        if (response['data'].length == 0 && box.find(".main:empty").length > 0) box.attr("data-status", "noone");
-                        else if (response['data'].length < 20) box.attr("data-status", "nomore");
-                        else box.attr("data-status", "undefined");
-                    }
-                    catch (err) {
-                        writeLog("e", "loadPostsList", err);
-                        newMsgBox("抱歉，加载列表时出现问题。<br />" + err);
-                        box.attr("data-status", "error");
+                                box.find(".main").append(new_element);
+                            });
+                            if (response['data'].length == 0 && box.find(".main:empty").length > 0) box.attr("data-status", "noone");
+                            else if (response['data'].length < 20) box.attr("data-status", "nomore");
+                            else box.attr("data-status", "undefined");
+                        }
+                        catch (err) {
+                            writeLog("e", "loadPostsList", err);
+                            newMsgBox("抱歉，加载列表时出现问题。<br />" + err);
+                            box.attr("data-status", "error");
+                        }
                     }
                 },
                 error: function () {

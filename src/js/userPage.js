@@ -20,9 +20,9 @@ function newUserInfoPage(uid, uNick, noOther = false) {
             focusBox("pageRight", "userInfoFrame_" + uid, noOther);
             initPostsListMonitor($(`#userPage_${uid}_postsListScrollMonitor`));
             initPostsList($(`#userPage_${uid}_postsList_posts`), { "type": "post", "search": { "uid": uid }, "noOther": "false" });
+            initPostsList($(`#userPage_${uid}_postsList_comments`), { "type": "comment", "search": { "uid": uid }, "noOther": "false" });
             refreshUserInfoArea(uid);
             focusInPostsList($(`#userPage_${uid}_postsListScrollMonitor`), $(`#userPage_${uid}_postsList_info`));
-            loadPostsList($(`#userPage_${uid}_postsList_posts`));
             refreshFloatFrameOnScroll();
         };
     }
@@ -46,6 +46,23 @@ function refreshUserInfoArea(uid) {
             $("[data-posts-num-uid=" + uid + "]").html(pData['publish_post']);
             $("[data-replies-num-uid=" + uid + "]").html(pData['publish_comment']);
             $("[data-my-following-to-uid=" + uid + "]").attr("data-follow", (pData['is_myself'] ? "edit" : (pData['i_followed'] ? (pData['followed_me'] ? "both" : "true") : (pData['followed_me'] ? "followedme" : "false"))));
+            if (pData['hide_follow'] == 1 && uid != myUid) {
+                $(`#u${uid}FollowButton`).attr("onclick", "newMsgBox('根据用户的隐私设置，你无法查看他的关注。')")
+            }
+            else {
+                $(`#u${uid}FollowButton`).attr("onclick", `showUserFollowListPage(${uid},'${$(`#userInfoFrame_${uid} .uHeaderInfos .name`).html()}','followings');`);
+            }
+            if (pData['hide_post'] == 1 && uid != myUid) {
+                $(`#userPage_${uid}_postsList_posts`).attr("data-config", JSON.stringify({ "type": "undefined" }));
+                $(`#userPage_${uid}_postsList_posts`).html(`<div class="card" noselect><div class="content"><center>根据用户的隐私设置，你无法查看他发布的帖子。</center></div></div>`);
+            }
+            else {
+                loadPostsList($(`#userPage_${uid}_postsList_posts`));
+            }
+            if (pData['hide_comment'] == 1) {
+                $(`#userPage_${uid}_postsList_comments`).attr("data-config", JSON.stringify({ "type": "undefined" }));
+                $(`#userPage_${uid}_postsList_comments`).html(`<div class="card" noselect><div class="content"><center>根据用户的隐私设置，你无法查看他发布的评论。</center></div></div>`);
+            }
         }
         else {
             newMsgBox("用户信息加载失败");
@@ -80,7 +97,7 @@ uPageTemp = `
                 <div class="name">{{nick}}</div>
                 <div class="urole"></div>
                 <div class="data">
-                    <button onclick="showUserFollowListPage({{uid}},'{{nick}}','followings');">关注<span class="num" data-following-num-uid="{{uid}}"><span class="skeleton" style="padding-right: 2em"></span></span></button>
+                    <button id="u{{uid}}FollowButton" onclick="newMsgBox('加载中')">关注<span class="num" data-following-num-uid="{{uid}}"><span class="skeleton" style="padding-right: 2em"></span></span></button>
                     <button onclick="showUserFollowListPage({{uid}},'{{nick}}','followers' );">粉丝<span class="num" data-followers-num-uid="{{uid}}"><span class="skeleton" style="padding-right: 2em"></span></span></button>
                     <button>获赞<span class="num" data-gain-likes-num-uid="{{uid}}"><span class="skeleton" style="padding-right: 2em"></span></span></button>
                 </div>
