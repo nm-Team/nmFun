@@ -10,6 +10,9 @@ function initPostsList(box, attr) {
         case "follow":
             box.append(`<div class="card avatarBox"><div class="main"></div><div class="mark"></div><div spe class="loading">${uListSkeleton}</div><div spe class="error">${postsErrorBoxHTML.replace(/{boxid}/g, box[0].id)}</div><div spe class="noone">${followNoOneHTML.replace(/{{fType}}/, (attr.search.type == "followers" ? "粉丝" : "关注")).replace(/{{call}}/, (attr.search.uid == myUid ? "你" : "他"))}</div></div>`);
             break;
+        case "blocklist":
+            box.append(`<div class="card avatarBox"><div class="main"></div><div class="mark"></div><div spe class="loading">${uListSkeleton}</div><div spe class="error">${postsErrorBoxHTML.replace(/{boxid}/g, box[0].id)}</div><div spe class="noone">你还没有屏蔽任何用户</div></div>`);
+            break;
     }
     writeLog("i", "initPostsList", `box id: ${box[0].id},attr: ${JSON.stringify(attr)}`);
 }
@@ -65,7 +68,7 @@ function postsListOnScroll(box) {
         // 记录滚动位置
         box.attr("data-scroll", box.parent().parent().scrollTop());
         // 如果more的位置在屏幕上，则要继续加载
-        if (box.find(".mark")[0].getBoundingClientRect().top < window.outerHeight) {
+        if (box.find(".mark")[0].getBoundingClientRect().top < window.outerHeight && box.attr("data-status") == "undefined") {
             loadPostsList(box);
         }
     }
@@ -101,7 +104,7 @@ function loadPostsList(box) {
                             medias = setMedia(info.attachment, info.pid);
                             new_element = document.createElement('object');
                             new_element.innerHTML = `
-<div class="postMainReal card avatarBox" data-type="post" data-postid="${info.pid}" data-postlist-post-uid="${info.user.uid}">
+<div class="postMainReal card avatarBox" data-type="post" data-postid="${info.pid}" data-postlist-post-uid="${info.user.uid}" ${blockList.indexOf(String(info.user.uid)) > -1 || blockList.indexOf(Number(info.user.uid)) > -1 ? "style='display: none'" : ""}>
     <div class="header">
         <a class="name" tabindex="0" onclick="newUserInfoPage('${info.user.uid}', '${info.user.nick}');"
             onkeydown="divClick(this, event)"><i
@@ -172,6 +175,7 @@ function loadPostsList(box) {
                         writeLog("e", "loadPostsList", err);
                         newMsgBox("抱歉，加载帖子时出现问题。<br />" + err);
                         box.attr("data-status", "error");
+                        console.error(err);
                     }
                 },
                 error: function () {
@@ -213,6 +217,49 @@ function loadPostsList(box) {
                             if (response['data'].length == 0 && box.find(".main:empty").length > 0) box.attr("data-status", "noone");
                             else if (response['data'].length < 20) box.attr("data-status", "nomore");
                             else box.attr("data-status", "undefined");
+                        }
+                        catch (err) {
+                            writeLog("e", "loadPostsList", err);
+                            newMsgBox("抱歉，加载列表时出现问题。<br />" + err);
+                            box.attr("data-status", "error");
+                        }
+                    }
+                },
+                error: function () {
+                    writeLog("e", "loadPostsList", "ajax error");
+                    newMsgBox("抱歉，加载列表时出现问题。");
+                    box.attr("data-status", "error");
+                }
+            });
+            break;
+        case "blocklist":
+            writeLog("i", "loadPostsList", "start, attr " + JSON.stringify(attr));
+            box.attr("data-status", "loading");
+            $.ajax({
+                type: "GET",
+                url: backEndURL + "/user/blocklist.php?action=get&CodySESSION=" + localStorage.sessionid,
+                async: true,
+                dataType: "json",
+                success: function (response, status, request) {
+                    writeLog("i", "loadPostsList get backend response", JSON.stringify(response));
+                    if (response['status'] == "error") {
+                        newMsgBox("抱歉，加载列表时出现问题。<br />" + response['info']);
+                        box.attr("data-status", "error");
+                    }
+                    else {
+                        try {
+                            response['blocklist'].forEach(info => {
+                                new_element = document.createElement('span');
+                                new_element.innerHTML = `<a class="name uListItem" data-uid="${Number(info.user.uid)}" tabindex="0" onclick="newUserInfoPage('${Number(info.user.uid)}', '${info.user.nick}');" onkeydown="divClick(this, event)"><i style="background-image:url('https://api.nmteam.xyz/avatar/?id=${Number(info.user.uid)}"></i>
+                                <div>
+                                    <p class="unick">${getNickHTML(info.user)}</p>
+                                    <p>${info.user.bio ? cleanHTMLTag(info.user.bio) : ""}</p>
+                                </div>
+                            </a>`;
+                                box.find(".main").append(new_element);
+                            });
+                            $("#blcount").html(response['blocklist'].length + "/200");
+                            box.attr("data-status", "nomore");
                         }
                         catch (err) {
                             writeLog("e", "loadPostsList", err);
@@ -644,7 +691,7 @@ function likePost(ele, pid) {
         $("[data-like-post-id=" + pid + "]").attr("data-status", (likeOpe == "like" ? "yes" : "no"));
         newLikeNum = (Number($(":not([data-ignore=true]) [data-like-num-post-id=" + pid + "]")[0].innerHTML) + (likeOpe == "like" ? 1 : -1));
         $(":not([data-ignore=true]) [data-like-num-post-id=" + pid + "]").html(newLikeNum);
-        newAjax("POST", backEndURL + "/post/like.php", true, "pid=" + pid + (likeOpe == "unlike" ? "&unlike=unlike" : ""), "", function () { writeLog("i", "likePost", "like post " + pid + " success"); $("[data-like-num-post-id=" + pid + "]").html(newLikeNum); $("[data-like-post-id=" + pid + "]").attr("data-status", (likeOpe == "like" ? "yes" : "no")); $("[data-like-post-id=" + pid + "]").attr("data-ignore", "false"); }, function (data) { $("[data-like-post-id=" + pid + "]").attr("data-status", (likeOpe != "like" ? "yes" : "no")); writeLog("i", "likePost", "like post " + pid + " error"); $("[data-like-post-id=" + pid + "]").attr("data-ignore", "false"); $(":not([data-ignore=true]) [data-like-num-post-id=" + pid + "]").html((Number($(":not([data-ignore=true]) [data-like-num-post-id=" + pid + "]")[0].innerHTML) + (likeOpe != "like" ? 1 : -1))); newMsgBox((likeOpe == "unlike" ? "取消" : "") + "点赞失败，因为" + data['info']); });
+        newAjax("POST", backEndURL + "/post/like.php", true, "pid=" + pid + (likeOpe == "unlike" ? "&unlike=unlike" : ""), "", function (d) { writeLog("i", "likePost", "like post " + pid + " success"); $("[data-like-num-post-id=" + pid + "]").html(d.like); $("[data-like-post-id=" + pid + "]").attr("data-status", (likeOpe == "like" ? "yes" : "no")); $("[data-like-post-id=" + pid + "]").attr("data-ignore", "false"); }, function (data) { $("[data-like-post-id=" + pid + "]").attr("data-status", (likeOpe != "like" ? "yes" : "no")); writeLog("i", "likePost", "like post " + pid + " error"); $("[data-like-post-id=" + pid + "]").attr("data-ignore", "false"); $(":not([data-ignore=true]) [data-like-num-post-id=" + pid + "]").html(d.like); newMsgBox((likeOpe == "unlike" ? "取消" : "") + "点赞失败，因为" + data['info']); });
     }
 }
 

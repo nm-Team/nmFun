@@ -1,7 +1,7 @@
 // 初始化
 $.ajax({
     type: "GET",
-    url: backEndURL + "/info.php",
+    url: backEndURL + "/info.php?CodySESSION=" + localStorage.sessionid,
     async: true,
     dataType: "json",
     success: function (response, status, request) {
@@ -25,7 +25,9 @@ $.ajax({
                 localStorage.typeSelected = "indexType_";
             document.getElementById(localStorage.typeSelected).click();
             closeHover();
+            // 保存身份组和名单
             roleList = response['info']['role'];
+            blockList = response['info']['blocklist'];
         }
         catch (err) {
             writeLog("e", "setting site main", err);

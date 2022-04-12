@@ -732,7 +732,7 @@ function getStickersJSON(fun) {
 
 function setStickersSelBox(div, targetInput) {
     if (localStorage.disableStickers == "true") {
-        div.innerHTML = "已经在 Test Field 禁用了表情功能";
+        div.innerHTML = "<center style='font-size: 15rem;'>已经在 Test Field 禁用了表情功能</center>";
         return;
     }
     getStickersJSON(function () {
@@ -777,8 +777,8 @@ var isiPod = /ipod/i.test(navigator.userAgent.toLowerCase());
 var isiOS = isiPhone || isiPad || isiPod;
 var isAndroid = /android/i.test(navigator.userAgent.toLowerCase());
 var isWindowsPhone = /windows phone/i.test(navigator.userAgent.toLowerCase());
+var isFunApp = /nmfun/i.test(navigator.userAgent.toLowerCase());
 var isMobile = isAndroid || isiOS || isWindowsPhone;
 
-if (isiPhone || isiPod || isAndroid) {
-    $("body").attr("data-mobile", "true");
-}
+if (isiPhone || isiPod || isAndroid) $("body").attr("data-mobile", "true");
+if (isFunApp) $("body").attr("data-funapp", "true");

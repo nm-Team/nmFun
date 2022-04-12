@@ -301,8 +301,65 @@ function confirmBlockUser(uid, unblock) {
         $("#blockCover").remove();
         newMsgBox((unblock ? "取消" : "") + "屏蔽成功！<br>可能需要重载 nmFun 才能应用全部更改。");
         if (!unblock) $("[data-postlist-post-uid=" + uid + "]").remove();
+        if (d.blocklist) blockList = d.blocklist;
     }, function (data) {
         $("#blockCover").remove();
         newMsgBox((unblock ? "取消" : "") + "屏蔽失败，因为" + data['info']);
     });
 }
+
+
+// 关注列表/粉丝列表
+function showUserBlockListPage() {
+    if (logRequire()) {
+        try {
+            //如果有则定位
+            try {
+                focusBox("pageRight", 'blockListFrame', false);
+            }
+            catch (error) { // 没有则创建
+                new_element = document.createElement('div');
+                new_element.setAttribute('id', "blockListFrame");
+                new_element.setAttribute('class', 'blockListFrame box rightBox');
+                new_element.setAttribute('con', 'none');
+                new_element.setAttribute('totallyclose', 'true');
+                new_element.setAttribute('name', "黑名单");
+                new_element.setAttribute('noother', 'false');
+                new_element.innerHTML = blockListTemplate;
+                pageRight.appendChild(new_element);
+                focusBox("pageRight", "blockListFrame", false);
+                initPostsListMonitor($(`#blockListFrame_scrollMonitor`));
+                initPostsList($(`#blockListFrame_l`), { "type": "blocklist", "noOther": "false" });
+                focusInPostsList($(`#blockListFrame_scrollMonitor`), $(`#blockListFrame_l`));
+                // loadPostsList($(`#blockListFrame_l`));
+            };
+        }
+        catch (err) {
+            console.error(err);
+        }
+    }
+}
+
+blockListTemplate = `
+<header>
+    <div class="left">
+        <button class="backButton" title="返回" onclick="closeBox('pageRight','blockListFrame',false);"
+            oncontextmenu="quickBack('pageRight',this)"
+            ontouchstart="longPressToDo(function(){quickBack('pageRight')})"
+            ontouchend="longPressStop()"><i class="material-icons"></i></button>
+        <div class="nameDiv">
+            <p class="title">黑名单<span></span></p>
+            <p class="little" id="blcount"></p>
+        </div>
+    </div>
+    <div class="right">
+        <button onclick="openNotice('blocklisthelp')" title="黑名单帮助"><i class="material-icons">info_outline</i></button>
+    </div>
+</header>
+<div class="cardBox postCardBox main">
+    <div class="userMainCards equalPages floatFrame-content postsListScrollMonitor" id="blockListFrame_scrollMonitor">
+        <div id="blockListFrame_lContainer" class="cardsListsContainer">
+                <div id="blockListFrame_l"></div>
+        </div>
+    </div>
+</div>`;
