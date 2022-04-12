@@ -3,13 +3,11 @@ themeList = ["default", "dark",];
 languageList = ["zh_CN",];
 
 //  禁用右键
-setInterval(() => {
-    {
-        $(`.contextMenu, .commonCover, .coverWithColor, #bodyHover, button, .alertBox, .msgBox, #widthChanger`).contextmenu(function () {
-            return false;
-        })
-    }
-}, 200);
+$("body").bind("DOMNodeInserted", function () {
+    $(`.contextMenu, .commonCover, .coverWithColor, #bodyHover, button, .alertBox, .msgBox, #widthChanger`).contextmenu(function () {
+        return false;
+    })
+});
 
 // 展示右键菜单
 function createContextMenu(items, customX = false, customY = false, element = undefined) {
@@ -671,7 +669,7 @@ function newAjax(type, url, session, getParam, postParam, succeedF = function ()
         error: function () {
             newMsgBox("服务器故障，请重试。");
             writeLog("e", "newAjax", "error(network)");
-            faliureF("Something wrong with the server");
+            faliureF({ "status": "error", "info": "网络错误" });
             return null;
         }
     });
@@ -702,9 +700,8 @@ function newFileAjax(type, url, session, getParam, postParam, succeedF = functio
             return data;
         },
         error: function () {
-            newMsgBox("服务器故障，请重试。");
             writeLog("e", "newAjax", "error(network)");
-            faliureF("Something wrong with the server");
+            faliureF({ "status": "error", "info": "网络错误" });
             return null;
         }
     });
@@ -772,4 +769,16 @@ function jumpStickers(divId, setId) {
 
 function addStickerToEditBox(targetInput, pakId, stkId, src) {
     $(`#${targetInput} .sendBoxInput`).append(`<sticker data-setname="${pakId}" data-stkname="${stkId}" style="background-image:url(${src})">`);
+}
+
+var isiPhone = /iphone/i.test(navigator.userAgent.toLowerCase());
+var isiPad = /ipad/i.test(navigator.userAgent.toLowerCase());
+var isiPod = /ipod/i.test(navigator.userAgent.toLowerCase());
+var isiOS = isiPhone || isiPad || isiPod;
+var isAndroid = /android/i.test(navigator.userAgent.toLowerCase());
+var isWindowsPhone = /windows phone/i.test(navigator.userAgent.toLowerCase());
+var isMobile = isAndroid || isiOS || isWindowsPhone;
+
+if (isiPhone || isiPod || isAndroid) {
+    $("body").attr("data-mobile", "true");
 }

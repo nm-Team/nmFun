@@ -8,7 +8,7 @@ function initPostsList(box, attr) {
             box.append(`<div class="main"></div><div class="mark"></div><div spe class="loading">${postSkeleton}</div><div spe class="card error">${postsErrorBoxHTML.replace(/{boxid}/g, box[0].id)}</div><div spe class="card nomore">${postsNoMoreBoxHTML}</div>`);
             break;
         case "follow":
-            box.append(`<div class="card avatarBox"><div class="main"></div><div class="mark"></div><div spe class="loading">${uListSkeleton}</div><div spe class="error">${postsErrorBoxHTML.replace(/{boxid}/g, box[0].id)}</div><div spe class="noone">${followNoOneHTML.replace(/{{fType}}/, (attr.search.type == "followers" ? "粉丝" : "关注"))}</div></div>`);
+            box.append(`<div class="card avatarBox"><div class="main"></div><div class="mark"></div><div spe class="loading">${uListSkeleton}</div><div spe class="error">${postsErrorBoxHTML.replace(/{boxid}/g, box[0].id)}</div><div spe class="noone">${followNoOneHTML.replace(/{{fType}}/, (attr.search.type == "followers" ? "粉丝" : "关注")).replace(/{{call}}/, (attr.search.uid == myUid ? "你" : "他"))}</div></div>`);
             break;
     }
     writeLog("i", "initPostsList", `box id: ${box[0].id},attr: ${JSON.stringify(attr)}`);
@@ -59,13 +59,6 @@ function refreshPostsListOnScroll() {
     })
 }
 
-// 定时任务防止列表因项目过少卡死
-setInterval(() => {
-    for (element in $(".postsListScrollMonitor")) {
-        postsListOnScroll(getActivePostsList("#" + $(".postsListScrollMonitor")[element]['id']));
-    }
-}, 3000);
-
 function postsListOnScroll(box) {
     try {
         attr = JSON.parse(box.attr("data-config"));
@@ -98,12 +91,17 @@ function loadPostsList(box) {
                 dataType: "json",
                 success: function (response, status, request) {
                     writeLog("i", "loadPostsList get backend response", JSON.stringify(response));
+                    if (response['status'] == "error") {
+                        if (response['error_hidden']) return box.html(`<div class="card" noselect><div class="content"><center>根据用户的隐私设置，你无法查看他的帖子。</center></div></div>`);
+                        else
+                            return newMsgBox("抱歉，加载帖子时出现问题。<br />" + response['info']);
+                    }
                     try {
                         response['data'].forEach(info => {
                             medias = setMedia(info.attachment, info.pid);
                             new_element = document.createElement('object');
                             new_element.innerHTML = `
-<div class="postMainReal card avatarBox" data-type="post" data-postid="${info.pid}">
+<div class="postMainReal card avatarBox" data-type="post" data-postid="${info.pid}" data-postlist-post-uid="${info.user.uid}">
     <div class="header">
         <a class="name" tabindex="0" onclick="newUserInfoPage('${info.user.uid}', '${info.user.nick}');"
             onkeydown="divClick(this, event)"><i
@@ -196,9 +194,9 @@ function loadPostsList(box) {
                 success: function (response, status, request) {
                     writeLog("i", "loadPostsList get backend response", JSON.stringify(response));
                     if (response['status'] == "error") {
-                        if (response['error_hidden']) box.html(`<div class="card" noselect><div class="content"><center>根据用户的隐私设置，你无法查看他的关注。</center></div></div>`);
+                        if (response['error_hidden']) return box.html(`<div class="card" noselect><div class="content"><center>根据用户的隐私设置，你无法查看他的关注。</center></div></div>`);
                         else
-                            newMsgBox("抱歉，加载列表时出现问题。<br />" + response['info']);
+                            return newMsgBox("抱歉，加载列表时出现问题。<br />" + response['info']);
                     }
                     else {
                         try {
@@ -207,7 +205,7 @@ function loadPostsList(box) {
                                 new_element.innerHTML = `<a class="name uListItem" data-uid="${Number(info.user.uid)}" tabindex="0" onclick="newUserInfoPage('${Number(info.user.uid)}', '${info.user.nick}');" onkeydown="divClick(this, event)"><i style="background-image:url('https://api.nmteam.xyz/avatar/?id=${Number(info.user.uid)}"></i>
                             <div>
                                 <p class="unick">${getNickHTML(info.user)}</p>
-                                <p>${info.user.bio ?cleanHTMLTag(info.user.bio) : ""}</p>
+                                <p>${info.user.bio ? cleanHTMLTag(info.user.bio) : ""}</p>
                             </div>
                         </a>`;
                                 box.find(".main").append(new_element);
@@ -235,6 +233,10 @@ function loadPostsList(box) {
                 box.append("<div class='card'><center>开发中</center></div>");
             break;
         }
+    }
+    // 防止加载卡死
+    for (element in $(".postsListScrollMonitor")) {
+        postsListOnScroll(getActivePostsList("#" + $(".postsListScrollMonitor")[element]['id']));
     }
 }
 
@@ -496,7 +498,7 @@ postsErrorBoxHTML = `
 <div class="unavaliable small search-not-start" noselect><i></i><p>坏掉了啦，载不出来了！<br /><button onclick="$('#{boxid}').attr('data-status','undefined');loadPostsList($('#{boxid}'));">重试</button></p></div>`;
 
 followNoOneHTML = `
-<div class="unavaliable small search-not-start" noselect><i></i><p>他还没有{{fType}}</p></div>`;
+<div class="unavaliable small search-not-start" noselect><i></i><p>{{call}}还没有{{fType}}</p></div>`;
 
 function setMedia(mediaJson, pid = 0) {
     try {
@@ -556,7 +558,7 @@ function postContextMenu(type, id, poName, uid, ele) {
         createContextMenu([["编辑", "editMyPost(`" + id + "`)", "edit"], ["删除", "deleteMyPostAlert(`" + id + "`, `" + poName + "`)", "delete"],], true, undefined, ele);
     }
     else {
-        createContextMenu([["举报", "alert(`开发中`)", "warning"], ["屏蔽", "alert(`开发中`)", "block"]], true, undefined, ele);
+        createContextMenu([["举报", "alert(`开发中`)", "warning"], ["屏蔽此用户", "blockUser(`" + uid + "`)", "block"]], true, undefined, ele);
     }
 }
 

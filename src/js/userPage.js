@@ -46,8 +46,11 @@ function refreshUserInfoArea(uid) {
             $("[data-posts-num-uid=" + uid + "]").html(pData['publish_post']);
             $("[data-replies-num-uid=" + uid + "]").html(pData['publish_comment']);
             $("[data-my-following-to-uid=" + uid + "]").attr("data-follow", (pData['is_myself'] ? "edit" : (pData['i_followed'] ? (pData['followed_me'] ? "both" : "true") : (pData['followed_me'] ? "followedme" : "false"))));
+            if (pData['blocked'] == 1) {
+                $(`#userInfoFrame_${uid} .blockTip`).css("display", "flex");
+            }
             if (pData['hide_follow'] == 1 && uid != myUid) {
-                $(`#u${uid}FollowButton`).attr("onclick", "newMsgBox('根据用户的隐私设置，你无法查看他的关注。')")
+                $(`#u${uid}FollowButton`).attr("onclick", "newMsgBox('根据用户的隐私设置，你无法查看他的关注。')");
             }
             else {
                 $(`#u${uid}FollowButton`).attr("onclick", `showUserFollowListPage(${uid},'${$(`#userInfoFrame_${uid} .uHeaderInfos .name`).html()}','followings');`);
@@ -121,13 +124,24 @@ uPageTemp = `
     </div>
     <div class="userMainCards equalPages floatFrame-content postsListScrollMonitor" id="userPage_{{uid}}_postsListScrollMonitor">
         <div class="placeHolder"></div>
-        <div id="userPage_{{uid}}_postsListContainer" class="cardsListsContainer">
-            <div id="userPage_{{uid}}_postsList_info" class="cardBox postsList cardBox postCardBox">
+            <div id="userPage_{{uid}}_postsListContainer" class="cardsListsContainer">
+                <div id="userPage_{{uid}}_postsList_info" class="cardBox postsList cardBox postCardBox">
                 <div class="card">
-                    <div class="header"><div class="name">签名</div></div> 
-                    <div class="content ubio">
-                        <span class="skeleton" style="padding-right: 100%"></span><br>
+                   <div class="header"><div class="name">签名</div></div> 
+                   <div class="content ubio">
+                        <span class="skeleton" style="padding-right: 100%; margin-bottom: 4rem;"></span><br>
                         <span class="skeleton" style="padding-right: 100%"></span>
+                    </div>
+                </div>
+                <div class="card blockTip" style="display: none;">
+                    <div class="header">
+                        <div class="name">已屏蔽</div>
+                        <div class="buttons">
+                            <button onclick="blockUser({{uid}})" title="取消屏蔽"><i class="material-icons">delete</i></button>
+                        </div>
+                    </div> 
+                    <div class="content">
+                        您已屏蔽该用户。
                     </div>
                 </div>
             </div>
@@ -196,43 +210,43 @@ function showUserPageContextMenu(uid, ele) {
         cMenuItems = [["编辑资料", "newLegacyBrowser('/settings/account.html', false, false)", "edit"]];
     }
     else {
-        cMenuItems = [["屏蔽", ""], ["举报", "", "report"]];
+        cMenuItems = [["举报", "", "warning"], ["屏蔽", "blockUser(" + uid + ")", "block"]];
     }
     createContextMenu(cMenuItems, undefined, undefined, ele);
 }
 
 // 关注列表/粉丝列表
 function showUserFollowListPage(uid, uNick, type) {
-    try {
-        //如果有则定位
+    if (logRequire()) {
         try {
-            focusBox("pageRight", 'followListFrame_' + uid, false);
+            //如果有则定位
+            try {
+                focusBox("pageRight", 'followListFrame_' + uid, false);
+            }
+            catch (error) { // 没有则创建
+                new_element = document.createElement('div');
+                new_element.setAttribute('id', "followListFrame_" + uid);
+                new_element.setAttribute('class', 'followListFrame box rightBox');
+                new_element.setAttribute('con', 'none');
+                new_element.setAttribute('totallyclose', 'true');
+                new_element.setAttribute('uid', uid);
+                new_element.setAttribute('name', uNick);
+                new_element.setAttribute('data-unick', uNick);
+                new_element.setAttribute('noother', 'false');
+                new_element.innerHTML = followListTemplate.replace(/{{uid}}/g, uid).replace(/{{nick}}/g, uNick).replace(/{{avatar}}/g, avatarURL.replace(/{id}/g, uid));
+                pageRight.appendChild(new_element);
+                focusBox("pageRight", "followListFrame_" + uid, false);
+                initPostsListMonitor($(`#followListFrame_${uid}_lScrollMonitor`));
+                initPostsList($(`#followListFrame_${uid}_l_followings`), { "type": "follow", "search": { "uid": uid, "type": "followings" }, "noOther": "false" });
+                initPostsList($(`#followListFrame_${uid}_l_followers`), { "type": "follow", "search": { "uid": uid, "type": "followers" }, "noOther": "false" });
+            };
+            $(`#followListFrame_${uid}_${type}`).click();
         }
-        catch (error) { // 没有则创建
-            new_element = document.createElement('div');
-            new_element.setAttribute('id', "followListFrame_" + uid);
-            new_element.setAttribute('class', 'followListFrame box rightBox');
-            new_element.setAttribute('con', 'none');
-            new_element.setAttribute('totallyclose', 'true');
-            new_element.setAttribute('uid', uid);
-            new_element.setAttribute('name', uNick);
-            new_element.setAttribute('data-unick', uNick);
-            new_element.setAttribute('noother', 'false');
-            new_element.innerHTML = followListTemplate.replace(/{{uid}}/g, uid).replace(/{{nick}}/g, uNick).replace(/{{avatar}}/g, avatarURL.replace(/{id}/g, uid));
-            pageRight.appendChild(new_element);
-            focusBox("pageRight", "followListFrame_" + uid, false);
-            initPostsListMonitor($(`#followListFrame_${uid}_lScrollMonitor`));
-            initPostsList($(`#followListFrame_${uid}_l_followings`), { "type": "follow", "search": { "uid": uid, "type": "followings" }, "noOther": "false" });
-            initPostsList($(`#followListFrame_${uid}_l_followers`), { "type": "follow", "search": { "uid": uid, "type": "followers" }, "noOther": "false" });
-        };
-        $(`#followListFrame_${uid}_${type}`).click();
-    }
-    catch (err) {
-        console.error(err);
+        catch (err) {
+            console.error(err);
+        }
     }
 }
-
-
 
 followListTemplate = `
 <header>
@@ -241,7 +255,7 @@ followListTemplate = `
             oncontextmenu="quickBack('pageRight',this)"
             ontouchstart="longPressToDo(function(){quickBack('pageRight')})"
             ontouchend="longPressStop()"><i class="material-icons"></i></button>
-            <div class="nameDiv">
+        <div class="nameDiv">
             <p class="title">{{nick}}</p>
             <p class="little"></p>
         </div>
@@ -262,3 +276,33 @@ followListTemplate = `
         </div>
     </div>
 </div>`;
+
+// 屏蔽用户 
+
+function blockUser(uid) {
+    if (logRequire()) {
+        $("body").append(`<div id="blockCover" class="sendCover unscaleArea" open="true" noselect><div class="content"><i></i><p>正在查询</p></div></div>`);
+        newAjax("GET", backEndURL + "/user/blocklist.php", true, "action=get&uid=" + uid, {}, function (d) {
+            $("#blockCover").remove();
+            writeLog("i", "blockUser", "get block user " + uid + " status success");
+            alert((d.blocked ? "是否要取消屏蔽该用户？" : "是否要确认屏蔽该用户？<br><br>您将不会在信息流中看到他的动态，他也无法在个人主页查看您的签名、最近点赞、发帖和评论列表。"), (d.blocked ? "已屏蔽此用户" : "屏蔽此用户"), "确认", "confirmBlockUser(" + uid + ", " + d.blocked + ")", "取消");
+
+        }, function (data) {
+            $("#blockCover").remove();
+            writeLog("e", "blockUser", "get block user " + uid + " status error");
+            newMsgBox("查询用户屏蔽状态失败，因为" + data['info']);
+        });
+    }
+}
+
+function confirmBlockUser(uid, unblock) {
+    $("body").append(`<div id="blockCover" class="sendCover unscaleArea" open="true" noselect><div class="content"><i></i><p>正在操作</p></div></div>`);
+    newAjax("GET", backEndURL + "/user/blocklist.php", true, "action=" + (unblock ? "del" : "add") + "&uid=" + uid, {}, function (d) {
+        $("#blockCover").remove();
+        newMsgBox((unblock ? "取消" : "") + "屏蔽成功！<br>可能需要重载 nmFun 才能应用全部更改。");
+        if (!unblock) $("[data-postlist-post-uid=" + uid + "]").remove();
+    }, function (data) {
+        $("#blockCover").remove();
+        newMsgBox((unblock ? "取消" : "") + "屏蔽失败，因为" + data['info']);
+    });
+}

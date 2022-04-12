@@ -208,7 +208,9 @@ body{
     left: 0;
     right: 0;
     background-color: var(--page-bgcolor);
+    overflow-x: hidden;
     overflow-y: auto;
+    overflow-y: overlay;
 }
 *[noani], *[nownoani], *[childnoani] *{
     animation: none!important;
