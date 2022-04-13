@@ -170,12 +170,14 @@ function loadPostsList(box) {
                         });
                         if (response['data'].length < 5) box.attr("data-status", "nomore");
                         else box.attr("data-status", "undefined");
+                        setTimeTexts();
                     }
                     catch (err) {
                         writeLog("e", "loadPostsList", err);
                         newMsgBox("抱歉，加载帖子时出现问题。<br />" + err);
                         box.attr("data-status", "error");
                         console.error(err);
+                        setTimeTexts();
                     }
                 },
                 error: function () {
@@ -415,6 +417,7 @@ function refreshPostArea(pid) {
             </a>`;
             };
             $(`#postFrame${pid} .likeReal`).html(likeListHTML);
+            setTimeTexts();
         }
         else {
             document.getElementById('postFrame' + pid).getElementsByClassName("bottomBox")[0].style.display = "none";

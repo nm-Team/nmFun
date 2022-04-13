@@ -45,6 +45,7 @@ function setHeaderLog() {
                 `;
                 $("#myBlockDisplay").attr("data-disabled-uid", myUid);
                 $("#myBlockTime").attr("data-disabled-time-uid", myUid);
+                setTimeTexts();
                 writeLog("i", "setHeaderLog", "log success, sessionid " + localStorage.sessionid + ", " + JSON.stringify(accountInfo));
             };
             refreshUserInfoArea(myUid);

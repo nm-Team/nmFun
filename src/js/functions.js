@@ -387,79 +387,80 @@ function refreshFloatFrameOnScroll() {
 
 // 时间
 setInterval(() => {
-    setTimeTexts();
-}, 50);
+    // setTimeTexts();
+}, 60000);
 
 function setTimeTexts() {
-    $("*[time=true]").each(function (index, domEle) {
-        timeInText = new Date();
-        time = new Date();
-        time.setTime(time.getTime() + 60000 * time.getTimezoneOffset());
-        // if (debugMode) console.log(time.getTime());
-        // 读取要求的时间
-        timeS = Number(domEle.getAttribute("timestamp"));
-        // 换算PHP的时间戳
-        timeS *= 1000;
-        // 将时间转为当前时区
-        zone = Number(localStorage.zone);
-        timeInText = new Date();
-        timeInText.setTime(timeS + 3600000 * zone * 0);// 禁用了这里的转换，问就不知道为什么
-        time.setTime(time.getTime() + 3600000 * zone);
-        // 处理两则时间
-        timeInText = JSON.parse(splitTime(timeInText));
-        time = JSON.parse(splitTime(time));
-        var timeWord = "";
-        showTime = true;
-        showDate = false;
-        // if (debugMode) console.log(JSON.stringify(timeInText) + JSON.stringify(time));
-        switch (domEle.getAttribute("timestyle")) {
-            case "absolute":
-                switch (time.fullDate - timeInText.fullDate) {
-                    case 0:
-                        break;
-                    case -1:
-                        break;
-                    case 1:
-                        timeWord = "昨天";
-                        break;
-                    case 2:
-                        timeWord = "前天";
-                        break;
-                    default:
-                        showTime = false;
-                        showDate = true;
-                }
-                if (showTime) {
-                    timeWord += timeInText.hour + ":" + timeInText.sMinute + (domEle.getAttribute("timesec" == "true") ? ":" + timeInText.SSecond : "");
-                }
-                if (showDate) {
-                    timeWord += (time.year == timeInText.year ? "" : timeInText.year + "/") + timeInText.month + "/" + timeInText.date;
-                }
-                domEle.innerHTML = timeWord;
-                domEle.setAttribute("title", timeInText.year + "-" + timeInText.month + "-" + timeInText.date + " " + timeInText.hour + ":" + timeInText.sMinute + ":" + timeInText.sSecond);
-                break;
-            case "relative":
-                if (time.fullMinute - timeInText.fullMinute < 1) {
-                    timeWord = "现在";
-                }
-                else if (time.fullMinute - timeInText.fullMinute < 60) {
-                    timeWord = time.fullMinute - timeInText.fullMinute + "分钟前";
-                }
-                else if (time.fullHour - timeInText.fullHour < 24) {
-                    timeWord = time.fullHour - timeInText.fullHour + "小时前";
-                }
-                else if (time.fullDate - timeInText.fullDate < 15) {
-                    timeWord = time.fullDate - timeInText.fullDate + "天前";
-                }
-                else timeWord = (time.year == timeInText.year ? "" : timeInText.year + "/") + timeInText.month + "/" + timeInText.date;
-                domEle.innerHTML = timeWord;
-                domEle.setAttribute("title", timeInText.year + "-" + timeInText.month + "-" + timeInText.date + " " + timeInText.hour + ":" + timeInText.sMinute + ":" + timeInText.sSecond);
-                break;
-            case "fixed":
-                domEle.innerHTML = timeInText.year + "-" + timeInText.month + "-" + timeInText.date + " " + timeInText.hour + ":" + timeInText.sMinute + ":" + timeInText.sSecond;
-                break;
-        }
-    });
+        $("[time=true]").each(function (index, domEle) {
+            timeInText = new Date();
+            time = new Date();
+            time.setTime(time.getTime() + 60000 * time.getTimezoneOffset());
+            // if (debugMode) console.log(time.getTime());
+            // 读取要求的时间
+            timeS = Number(domEle.getAttribute("timestamp"));
+            // 换算PHP的时间戳
+            timeS *= 1000;
+            // 将时间转为当前时区
+            zone = Number(localStorage.zone);
+            timeInText = new Date();
+            timeInText.setTime(timeS + 3600000 * zone * 0);// 禁用了这里的转换，问就不知道为什么
+            time.setTime(time.getTime() + 3600000 * zone);
+            // 处理两则时间
+            timeInText = JSON.parse(splitTime(timeInText));
+            time = JSON.parse(splitTime(time));
+            var timeWord = "";
+            showTime = true;
+            showDate = false;
+            // if (debugMode) console.log(JSON.stringify(timeInText) + JSON.stringify(time));
+            switch (domEle.getAttribute("timestyle")) {
+                case "absolute":
+                    switch (time.fullDate - timeInText.fullDate) {
+                        case 0:
+                            break;
+                        case -1:
+                            break;
+                        case 1:
+                            timeWord = "昨天";
+                            break;
+                        case 2:
+                            timeWord = "前天";
+                            break;
+                        default:
+                            showTime = false;
+                            showDate = true;
+                    }
+                    if (showTime) {
+                        timeWord += timeInText.hour + ":" + timeInText.sMinute + (domEle.getAttribute("timesec" == "true") ? ":" + timeInText.SSecond : "");
+                    }
+                    if (showDate) {
+                        timeWord += (time.year == timeInText.year ? "" : timeInText.year + "/") + timeInText.month + "/" + timeInText.date;
+                    }
+                    domEle.innerHTML = timeWord;
+                    domEle.setAttribute("title", timeInText.year + "-" + timeInText.month + "-" + timeInText.date + " " + timeInText.hour + ":" + timeInText.sMinute + ":" + timeInText.sSecond);
+                    break;
+                case "relative":
+                    if (time.fullMinute - timeInText.fullMinute < 1) {
+                        timeWord = "现在";
+                    }
+                    else if (time.fullMinute - timeInText.fullMinute < 60) {
+                        timeWord = time.fullMinute - timeInText.fullMinute + "分钟前";
+                    }
+                    else if (time.fullHour - timeInText.fullHour < 24) {
+                        timeWord = time.fullHour - timeInText.fullHour + "小时前";
+                    }
+                    else if (time.fullDate - timeInText.fullDate < 15) {
+                        timeWord = time.fullDate - timeInText.fullDate + "天前";
+                    }
+                    else timeWord = (time.year == timeInText.year ? "" : timeInText.year + "/") + timeInText.month + "/" + timeInText.date;
+                    domEle.innerHTML = timeWord;
+                    domEle.setAttribute("title", timeInText.year + "-" + timeInText.month + "-" + timeInText.date + " " + timeInText.hour + ":" + timeInText.sMinute + ":" + timeInText.sSecond);
+                    break;
+                case "fixed":
+                    domEle.innerHTML = timeInText.year + "-" + timeInText.month + "-" + timeInText.date + " " + timeInText.hour + ":" + timeInText.sMinute + ":" + timeInText.sSecond;
+                    break;
+            }
+        });
+        console.log("setTimeTexts");
 }
 
 function splitTime(timeToSplit) {
