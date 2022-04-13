@@ -338,18 +338,23 @@
     </div>
     <div id="hoverArea" class="unscaleArea"></div>
     <!--[if IE]>
-    <style>.noie{position:fixed;top:0;bottom:0;left:0;right:0;background-color:#fff}</style>
     <div class="noie unscaleArea">
-        <div id="alertBox114514" class="alertBox">
-            <div class="title">提示</div>
-            <div class="msg">本网站<b>不支持</b>您正在使用的浏览器。请使用 Microsoft Edge、Google Chrome、Safari 等受支持的浏览器访问 nmFun。</div>
-            <div class="buttons">
-                <button class="positive" onclick="window.location.href='https://www.microsoft.com/edge';">下载 Microsoft Edge</button>
-                <button class="nagative" onclick="window.close();">停止使用</button>
-            </div> 
-        </div>
+        <div class="title">提示</div>
+        <div class="msg">nmFun <b>不支持</b> 您正在使用的 Internet Explorer 浏览器。<br>请使用 Microsoft Edge、Google Chrome、Safari 等受支持的浏览器访问 nmFun。</div>
+        <div class="buttons">
+            <button class="positive" onclick="window.location.href='https://www.microsoft.com/edge';">下载 Microsoft Edge</button>
+        </div> 
     </div>
     <![endif]-->
+    <noscript>
+        <div class="noie unscaleArea">
+            <div class="title">提示</div>
+            <div class="msg">nmFun 需要<b> 启用 JavaScript </b> 才能使用。<br>请打开 JavaScript 并关闭广告拦截插件后重试。</div>
+            <div class="buttons">
+                <button class="positive" onclick="window.location.href='https://www.baidu.com/s?wd=%E5%A6%82%E4%BD%95%E6%89%93%E5%BC%80javascript';">了解如何打开 JavaScript </button>
+            </div>
+        </div>
+    </noscript>
     <div id="debugInfo"></div>
     <script src="src/js/jquery.min.js"></script>
     <script src="src/js/functions.js"></script>

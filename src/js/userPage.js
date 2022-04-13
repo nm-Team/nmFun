@@ -281,19 +281,11 @@ followListTemplate = `
 
 function blockUser(uid) {
     if (logRequire()) {
-        $("body").append(`<div id="blockCover" class="sendCover unscaleArea" open="true" noselect><div class="content"><i></i><p>正在查询</p></div></div>`);
-        newAjax("GET", backEndURL + "/user/blocklist.php", true, "action=get&uid=" + uid, {}, function (d) {
-            $("#blockCover").remove();
-            writeLog("i", "blockUser", "get block user " + uid + " status success");
-            alert((d.blocked ? "是否要取消屏蔽该用户？" : "是否要确认屏蔽该用户？<br><br>您将不会在信息流中看到他的动态，他也无法在个人主页查看您的签名、最近点赞、发帖和评论列表。"), (d.blocked ? "已屏蔽此用户" : "屏蔽此用户"), "确认", "confirmBlockUser(" + uid + ", " + d.blocked + ")", "取消");
-
-        }, function (data) {
-            $("#blockCover").remove();
-            writeLog("e", "blockUser", "get block user " + uid + " status error");
-            newMsgBox("查询用户屏蔽状态失败，因为" + data['info']);
-        });
-    }
-}
+        sta = blockList.indexOf(String(uid)) > -1 || blockList.indexOf(Number(uid)) > -1 ? true : false;
+   
+    writeLog("i", "blockUser", "get block user " + uid + " status success");
+    alert((sta ? "是否要取消屏蔽该用户？" : "是否要确认屏蔽该用户？<br><br>您将不会在信息流中看到他的动态，他也无法在个人主页查看您的签名、最近点赞、发帖和评论列表。"), (sta ? "已屏蔽此用户" : "屏蔽此用户"), "确认", "confirmBlockUser(" + uid + ", " + sta + ")", "取消");
+} }
 
 function confirmBlockUser(uid, unblock) {
     $("body").append(`<div id="blockCover" class="sendCover unscaleArea" open="true" noselect><div class="content"><i></i><p>正在操作</p></div></div>`);
@@ -309,7 +301,7 @@ function confirmBlockUser(uid, unblock) {
 }
 
 
-// 关注列表/粉丝列表
+// 黑名单
 function showUserBlockListPage() {
     if (logRequire()) {
         try {

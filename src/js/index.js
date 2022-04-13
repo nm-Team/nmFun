@@ -1,3 +1,5 @@
+writeLog("i", "Page", "found page loading...");
+
 // 初始化
 $.ajax({
     type: "GET",
@@ -152,7 +154,7 @@ inv = setInterval(() => {
         clearInterval(inv);
         setHeaderLog();
     }
-}, 10);
+}, 100);
 
 // 预定义的选项表
 settingsPreDefineList = [["region", "China Standard Time (UTC + 8:00)"], ["zone", 8], ["usebrowser", "true"], ["thinMode", "true"], ["autoSaveCraft", "false"], ["bigText", "false"], ["noAni", "false"], ["showbuttonAni", "true"]];
@@ -263,6 +265,7 @@ function loadWelcomePage() {
             document.getElementById('welcomeFramePop').removeAttribute('open');
             welcomeFrame.setAttribute('open', 'false');
             localStorage.started = 'true';
+            setPopScale();
         }
     }
 }
@@ -287,6 +290,8 @@ function initSearch() {
 function search() {
     initSearch();
     sWord = searchFrame_input.value;
+    if (sWord == "") return;
+    if (sWord.replace(/ /g, "").length < 3) return newMsgBox("请至少搜索 3 个字符");
     initPostsList($(`#sRes_all`), { "type": "post", "search": { "type": "all", "keyword": sWord }, "order": { "time": sRankTime, "type": sRankType }, "noOther": true });
     initPostsList($(`#sRes_post`), { "type": "post", "search": { "type": "post", "keyword": sWord }, "order": { "time": sRankTime, "type": sRankType }, "noOther": true });
     initPostsList($(`#sRes_user`), { "type": "search", "search": { "type": "user", "keyword": sWord }, "noOther": true });
@@ -336,3 +341,40 @@ function showSwitchSearchRankTypeContextMenu() {
     }
     createContextMenu(sSRTCMI, true, true, sRankTimeR);
 }
+
+clickTestField = 0;
+pageHeader.getElementsByClassName("logo")[0].onclick = function () {
+    if (++clickTestField >= 7) showTestField();
+    setTimeout(() => {
+        clickTestField = 0;
+    }, 10000);
+}
+
+navigatorItems = '';
+for (var propname in navigator)
+    navigatorItems += "" + propname + ": " + JSON.stringify(navigator[propname]) + ", ";
+writeLog('i', 'navigator', navigatorItems);
+
+lsItems = '';
+for (var propname in localStorage)
+    if (propname != "systemLog") lsItems += propname + ": " + JSON.stringify(localStorage[propname]) + "; ";
+writeLog("i", "localStorage", lsItems);
+
+function headerClick() {
+    // 被底栏取代
+    // if (window.offsetWidth > 800) {
+    //     window.location.href = "";
+    // }
+    // else if (pageHeader.getAttribute("open") == "true")
+    //     pageHeader.removeAttribute("open");
+    // else pageHeader.setAttribute("open", "true");
+}
+
+$("body").bind("DOMNodeInserted", function () {
+    // 更新图集
+    $("ui.medias").each(function (index, domEle) {
+        new Viewer(domEle, {
+            title: false
+        })
+    });
+});

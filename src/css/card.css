@@ -110,6 +110,9 @@ body[theme=dark] .cardBox .card.clickable:hover, .cardBox .card.clickable:focus-
     height: 12rem;
     font-size: 12rem;
 }
+[data-webkit=true] .cardBox .card .header .buttons button i{
+    font-size: 12px;
+}
 .cardBox .card .header .buttons button:hover, .cardBox .card .header .buttons button:focus-visible{
     background-color: var(--card-button-bgcolor);
 }

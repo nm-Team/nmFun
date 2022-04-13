@@ -50,8 +50,8 @@ function searchSetting(ele, divId) {
     }
 }
 
-function setSearchBoxPlaceHolder(divid, word){
-    if(i18n.t(word)!=word){
+function setSearchBoxPlaceHolder(divid, word) {
+    if (i18n.t(word) != word) {
         document.getElementById(divid).setAttribute("placeholder", i18n.t(word));
     }
     else setTimeout(() => {
@@ -59,7 +59,7 @@ function setSearchBoxPlaceHolder(divid, word){
     }, 100);
 }
 
-setInterval(() => {
-    $(".but").attr("tabindex","0");
-    $(".but").attr("onkeydown","divClick(this, event)");
-}, 500);
+$("body").bind("DOMNodeInserted", function () {
+    $(".but").attr("tabindex", "0");
+    $(".but").attr("onkeydown", "divClick(this, event)");
+});

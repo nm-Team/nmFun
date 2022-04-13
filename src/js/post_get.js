@@ -252,11 +252,12 @@ function loadPostsList(box) {
                         try {
                             response['blocklist'].forEach(info => {
                                 new_element = document.createElement('span');
-                                new_element.innerHTML = `<a class="name uListItem" data-uid="${Number(info.user.uid)}" tabindex="0" onclick="newUserInfoPage('${Number(info.user.uid)}', '${info.user.nick}');" onkeydown="divClick(this, event)"><i style="background-image:url('https://api.nmteam.xyz/avatar/?id=${Number(info.user.uid)}"></i>
+                                new_element.innerHTML = `<a class="name uListItem" data-blocklist-uid="${Number(info.user.uid)}" tabindex="0" onclick="newUserInfoPage('${Number(info.user.uid)}', '${info.user.nick}');" onkeydown="divClick(this, event)"><i style="background-image:url('https://api.nmteam.xyz/avatar/?id=${Number(info.user.uid)}"></i>
                                 <div>
                                     <p class="unick">${getNickHTML(info.user)}</p>
                                     <p>${info.user.bio ? cleanHTMLTag(info.user.bio) : ""}</p>
                                 </div>
+                                <button onclick="blockUser('${Number(info.user.uid)}',true);event.stopPropagation();" class="editBut" data-show="true">移除</button>
                             </a>`;
                                 box.find(".main").append(new_element);
                             });

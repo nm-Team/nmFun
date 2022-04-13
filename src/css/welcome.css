@@ -33,6 +33,9 @@ body[theme=dark]{
     bottom: 0;
     left: 0;
     right: 0;
+    animation: welcome_main 0.99s;
+}
+[data-funapp=true] .welcomeFrame .main{
     animation: welcome_main 3.99s;
 }
 .welcomeFrame .main .welcome_icon{
@@ -43,6 +46,9 @@ body[theme=dark]{
     background-position: center center;
     background-repeat: no-repeat;
     transition: opacity 0.3s;
+    animation: welcome_icon 0.99s;
+}
+[data-funapp=true] .welcomeFrame .main .welcome_icon{
     animation: welcome_icon 3.99s;
 }
 .welcomeFrame .main .welcome_icon[hidden=true]{
@@ -55,6 +61,9 @@ body[theme=dark]{
     font-weight: bold;
     text-align: center;
     padding: 19rem 22rem 7rem 22rem;
+    animation: none;
+}
+[data-funapp=true] .welcomeFrame .main .welcome_Header, [data-funapp=true] .welcomeFrame .main .welcome_FirstIntroduce{
     animation: welcome_title 4.5s;
 }
 .welcomeFrame .main .welcome_FirstIntroduce{
@@ -64,7 +73,7 @@ body[theme=dark]{
     font-weight: 400;
     text-align: center;
     padding: 8rem 22rem 6rem 22rem;
-    animation: welcome_title 4.5s;
+    animation: none;
 }
 .welcomeFrame .main .welcome_Intro{    
     display: block;
@@ -77,6 +86,9 @@ body[theme=dark]{
 .welcome_Intro .intro_item{
     display: flex;
     margin-top: 15rem;
+    animation: none;
+}
+[data-funapp=true] .welcome_Intro .intro_item{
     animation: welcome_intro 5s;
 }
 .welcome_Intro .intro_item i{
@@ -87,6 +99,9 @@ body[theme=dark]{
     background-position: center center;
     background-repeat: no-repeat;
     flex-shrink: 0;
+    animation: none;
+}
+[data-funapp=true] .welcome_Intro .intro_item i{
     animation: welcome_intro_i 5s;
 }
 .welcome_Intro .intro_item .intro{
@@ -96,6 +111,9 @@ body[theme=dark]{
     font-size: 17rem;
     font-weight: bold;
     margin-bottom: 3rem;
+    animation: none;
+}
+[data-funapp=true] .welcome_Intro .intro_item .intro h2{
     animation: welcome_intro_h2 6s;
 }
 .welcome_Intro .intro_item .intro p{
@@ -103,6 +121,9 @@ body[theme=dark]{
     font-weight: 400;
     margin-bottom: 5rem;
     overflow: hidden;
+    animation: none;
+}
+[data-funapp=true] .welcome_Intro .intro_item .intro p{
     animation: welcome_intro_p 14s;
 }
 .welcomeFrame .main .welcome_goButton{
@@ -116,6 +137,9 @@ body[theme=dark]{
     padding: 10rem 20rem;
     color: #000;
     background-color: #ead050;
+    animation: none;
+}
+[data-funapp=true] .welcomeFrame .main .welcome_goButton{
     animation: welcome_button 7s;
 }
 .welcomeFrame .main .welcome_knowMore{
@@ -128,6 +152,9 @@ body[theme=dark]{
     padding: 8rem 40rem;
     color: var(--welcome-moreButton);
     background: none;
+    animation: none;
+}
+[data-funapp=true] .welcomeFrame .main .welcome_knowMore{
     animation: welcome_more 8s;
 }
 .welcomeFrame .main .welcome_knowMore .icon{

@@ -130,6 +130,9 @@ body[theme=dark]{
     overflow-x: hidden;
     overflow-y: overlay;
 }
+[data-mobile=true] .floatFrame-content{
+    padding-bottom: 80rem;
+}
 #myPageAcc{
     display: flex;
     flex-direction: column;

@@ -387,80 +387,80 @@ function refreshFloatFrameOnScroll() {
 
 // 时间
 setInterval(() => {
-    // setTimeTexts();
+    setTimeTexts();
 }, 60000);
 
 function setTimeTexts() {
-        $("[time=true]").each(function (index, domEle) {
-            timeInText = new Date();
-            time = new Date();
-            time.setTime(time.getTime() + 60000 * time.getTimezoneOffset());
-            // if (debugMode) console.log(time.getTime());
-            // 读取要求的时间
-            timeS = Number(domEle.getAttribute("timestamp"));
-            // 换算PHP的时间戳
-            timeS *= 1000;
-            // 将时间转为当前时区
-            zone = Number(localStorage.zone);
-            timeInText = new Date();
-            timeInText.setTime(timeS + 3600000 * zone * 0);// 禁用了这里的转换，问就不知道为什么
-            time.setTime(time.getTime() + 3600000 * zone);
-            // 处理两则时间
-            timeInText = JSON.parse(splitTime(timeInText));
-            time = JSON.parse(splitTime(time));
-            var timeWord = "";
-            showTime = true;
-            showDate = false;
-            // if (debugMode) console.log(JSON.stringify(timeInText) + JSON.stringify(time));
-            switch (domEle.getAttribute("timestyle")) {
-                case "absolute":
-                    switch (time.fullDate - timeInText.fullDate) {
-                        case 0:
-                            break;
-                        case -1:
-                            break;
-                        case 1:
-                            timeWord = "昨天";
-                            break;
-                        case 2:
-                            timeWord = "前天";
-                            break;
-                        default:
-                            showTime = false;
-                            showDate = true;
-                    }
-                    if (showTime) {
-                        timeWord += timeInText.hour + ":" + timeInText.sMinute + (domEle.getAttribute("timesec" == "true") ? ":" + timeInText.SSecond : "");
-                    }
-                    if (showDate) {
-                        timeWord += (time.year == timeInText.year ? "" : timeInText.year + "/") + timeInText.month + "/" + timeInText.date;
-                    }
-                    domEle.innerHTML = timeWord;
-                    domEle.setAttribute("title", timeInText.year + "-" + timeInText.month + "-" + timeInText.date + " " + timeInText.hour + ":" + timeInText.sMinute + ":" + timeInText.sSecond);
-                    break;
-                case "relative":
-                    if (time.fullMinute - timeInText.fullMinute < 1) {
-                        timeWord = "现在";
-                    }
-                    else if (time.fullMinute - timeInText.fullMinute < 60) {
-                        timeWord = time.fullMinute - timeInText.fullMinute + "分钟前";
-                    }
-                    else if (time.fullHour - timeInText.fullHour < 24) {
-                        timeWord = time.fullHour - timeInText.fullHour + "小时前";
-                    }
-                    else if (time.fullDate - timeInText.fullDate < 15) {
-                        timeWord = time.fullDate - timeInText.fullDate + "天前";
-                    }
-                    else timeWord = (time.year == timeInText.year ? "" : timeInText.year + "/") + timeInText.month + "/" + timeInText.date;
-                    domEle.innerHTML = timeWord;
-                    domEle.setAttribute("title", timeInText.year + "-" + timeInText.month + "-" + timeInText.date + " " + timeInText.hour + ":" + timeInText.sMinute + ":" + timeInText.sSecond);
-                    break;
-                case "fixed":
-                    domEle.innerHTML = timeInText.year + "-" + timeInText.month + "-" + timeInText.date + " " + timeInText.hour + ":" + timeInText.sMinute + ":" + timeInText.sSecond;
-                    break;
-            }
-        });
-        console.log("setTimeTexts");
+    $("[time=true]").each(function (index, domEle) {
+        timeInText = new Date();
+        time = new Date();
+        time.setTime(time.getTime() + 60000 * time.getTimezoneOffset());
+        // if (debugMode) console.log(time.getTime());
+        // 读取要求的时间
+        timeS = Number(domEle.getAttribute("timestamp"));
+        // 换算PHP的时间戳
+        timeS *= 1000;
+        // 将时间转为当前时区
+        zone = Number(localStorage.zone);
+        timeInText = new Date();
+        timeInText.setTime(timeS + 3600000 * zone * 0);// 禁用了这里的转换，问就不知道为什么
+        time.setTime(time.getTime() + 3600000 * zone);
+        // 处理两则时间
+        timeInText = JSON.parse(splitTime(timeInText));
+        time = JSON.parse(splitTime(time));
+        var timeWord = "";
+        showTime = true;
+        showDate = false;
+        // if (debugMode) console.log(JSON.stringify(timeInText) + JSON.stringify(time));
+        switch (domEle.getAttribute("timestyle")) {
+            case "absolute":
+                switch (time.fullDate - timeInText.fullDate) {
+                    case 0:
+                        break;
+                    case -1:
+                        break;
+                    case 1:
+                        timeWord = "昨天";
+                        break;
+                    case 2:
+                        timeWord = "前天";
+                        break;
+                    default:
+                        showTime = false;
+                        showDate = true;
+                }
+                if (showTime) {
+                    timeWord += timeInText.hour + ":" + timeInText.sMinute + (domEle.getAttribute("timesec" == "true") ? ":" + timeInText.SSecond : "");
+                }
+                if (showDate) {
+                    timeWord += (time.year == timeInText.year ? "" : timeInText.year + "/") + timeInText.month + "/" + timeInText.date;
+                }
+                domEle.innerHTML = timeWord;
+                domEle.setAttribute("title", timeInText.year + "-" + timeInText.month + "-" + timeInText.date + " " + timeInText.hour + ":" + timeInText.sMinute + ":" + timeInText.sSecond);
+                break;
+            case "relative":
+                if (time.fullMinute - timeInText.fullMinute < 1) {
+                    timeWord = "现在";
+                }
+                else if (time.fullMinute - timeInText.fullMinute < 60) {
+                    timeWord = time.fullMinute - timeInText.fullMinute + "分钟前";
+                }
+                else if (time.fullHour - timeInText.fullHour < 24) {
+                    timeWord = time.fullHour - timeInText.fullHour + "小时前";
+                }
+                else if (time.fullDate - timeInText.fullDate < 15) {
+                    timeWord = time.fullDate - timeInText.fullDate + "天前";
+                }
+                else timeWord = (time.year == timeInText.year ? "" : timeInText.year + "/") + timeInText.month + "/" + timeInText.date;
+                domEle.innerHTML = timeWord;
+                domEle.setAttribute("title", timeInText.year + "-" + timeInText.month + "-" + timeInText.date + " " + timeInText.hour + ":" + timeInText.sMinute + ":" + timeInText.sSecond);
+                break;
+            case "fixed":
+                domEle.innerHTML = timeInText.year + "-" + timeInText.month + "-" + timeInText.date + " " + timeInText.hour + ":" + timeInText.sMinute + ":" + timeInText.sSecond;
+                break;
+        }
+    });
+    console.log("setTimeTexts");
 }
 
 function splitTime(timeToSplit) {
@@ -523,16 +523,6 @@ function openNotice(name) {
     newBrowser(siteURL + "/notice.html?name=" + name, " noticeFrame ", false, false);
 }
 
-
-// 更新图集
-setInterval(() => {
-    $("ui.medias").each(function (index, domEle) {
-        new Viewer(domEle, {
-            title: false
-        })
-    });
-}, 200);
-
 function logRequire() {
     if (!localStorage.sessionid) {
         newMsgBox("还没有登录，登录后才能继续哦");
@@ -551,16 +541,6 @@ function cleanHTMLTag(text) {
     return text;
 }
 
-function headerClick() {
-    // 被底栏取代
-    // if (window.offsetWidth > 800) {
-    //     window.location.href = "";
-    // }
-    // else if (pageHeader.getAttribute("open") == "true")
-    //     pageHeader.removeAttribute("open");
-    // else pageHeader.setAttribute("open", "true");
-}
-
 // PWA-BETA
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function () {
@@ -572,6 +552,11 @@ if ('serviceWorker' in navigator) {
             (console.log('ServiceWorker registration failed: ', err))
         })
     })
+}
+
+// TestField
+function showTestField() {
+    newBrowser("settings/testfield.html", "", false, false);
 }
 
 function isPwa() {
@@ -598,19 +583,6 @@ setInterval(() => {
     }
 }, 300);
 
-// TestField
-function showTestField() {
-    newBrowser("settings/testfield.html", "", false, false);
-}
-
-clickTestField = 0;
-pageHeader.getElementsByClassName("logo")[0].onclick = function () {
-    if (++clickTestField >= 7) showTestField();
-    setTimeout(() => {
-        clickTestField = 0;
-    }, 10000);
-}
-
 function writeLog(logType, funName, content) {
     if (!localStorage.systemLog) localStorage.systemLog = "";
     logTypeList = ["INFO", "DEBUG", "WARN", "ERROR", "FATAL"];
@@ -633,21 +605,9 @@ function writeLog(logType, funName, content) {
     console.log(logWord);
 }
 
-writeLog("i", "Page", "found page loading...");
-
-navigatorItems = '';
-for (var propname in navigator)
-    navigatorItems += "" + propname + ": " + JSON.stringify(navigator[propname]) + ", ";
-writeLog('i', 'navigator', navigatorItems);
-
-lsItems = '';
-for (var propname in localStorage)
-    if (propname != "systemLog") lsItems += propname + ": " + JSON.stringify(localStorage[propname]) + "; ";
-writeLog("i", "localStorage", lsItems);
-
 function newAjax(type, url, session, getParam, postParam, succeedF = function () { }, faliureF = function () { }) {
     sessionid = localStorage.sessionid;
-    writeLog("i", "newAjax", (type + ", " + url + ", " + session + ", " + getParam + ", " + JSON.stringify(postParam) + ", " + succeedF + ", " + faliureF));
+    writeLog("i", "newAjax", (type + ", " + url + ", " + session + ", " + getParam + ", " + JSON.stringify(postParam)));
     $.ajax(url + "?" + (session ? "CodySESSION=" + sessionid + "&" : "") + getParam, {
         type: type,
         async: true,
@@ -678,7 +638,7 @@ function newAjax(type, url, session, getParam, postParam, succeedF = function ()
 
 function newFileAjax(type, url, session, getParam, postParam, succeedF = function () { }, faliureF = function () { }) {
     sessionid = localStorage.sessionid;
-    writeLog("i", "newFileAjax", (type + ", " + url + ", " + session + ", " + getParam + ", " + JSON.stringify(postParam) + ", " + succeedF + ", " + faliureF));
+    writeLog("i", "newFileAjax", (type + ", " + url + ", " + session + ", " + getParam + ", " + JSON.stringify(postParam)));
     $.ajax(url + "?" + (session ? "CodySESSION=" + sessionid + "&" : "") + getParam, {
         type: type,
         async: true,
@@ -780,6 +740,13 @@ var isAndroid = /android/i.test(navigator.userAgent.toLowerCase());
 var isWindowsPhone = /windows phone/i.test(navigator.userAgent.toLowerCase());
 var isFunApp = /nmfun/i.test(navigator.userAgent.toLowerCase());
 var isMobile = isAndroid || isiOS || isWindowsPhone;
+var isOpera = navigator.userAgent.indexOf("Opera") > -1; //判断是否Opera浏览器
+var isIE = navigator.userAgent.indexOf("compatible") > -1 && navigator.userAgent.indexOf("MSIE") > -1 && !isOpera; //判断是否IE浏览器
+var isEdge = navigator.userAgent.indexOf("Edge") > -1; //判断是否Edge浏览器
+var isFF = navigator.userAgent.indexOf("Firefox") > -1; //判断是否Firefox浏览器
+var isSafari = navigator.userAgent.indexOf("Safari") > -1 && navigator.userAgent.indexOf("Chrome") == -1; //判断是否Safari浏览器
+var isChrome = navigator.userAgent.indexOf("Chrome") > -1; //判断Chrome浏览器
 
 if (isiPhone || isiPod || isAndroid) $("body").attr("data-mobile", "true");
 if (isFunApp) $("body").attr("data-funapp", "true");
+if (isSafari || isiOS) $("body").attr("data-webkit", "true");

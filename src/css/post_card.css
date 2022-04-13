@@ -161,12 +161,19 @@ body[theme=dark]{
     font-size: 12rem;
     opacity: 0.6;   
 }
+.uListItem div{
+    flex-grow: 1;
+}
 .uListItem .unick+p:not(:empty){
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     word-break: break-all;
     flex-shrink: 1;
+}
+.uListItem .editBut{
+    flex-grow: 0;
+    flex-shrink: 0;
 }
 .cardBox.postCardBox .content .status{
     color: var(--red);
@@ -366,6 +373,9 @@ body[theme=dark]{
 }
 .postBox{
     padding-bottom: 60rem;
+}
+[data-mobile=true] .postFrame .main{
+    padding-bottom: 100rem;
 }
 .viewer-backdrop{
     background-color: rgba(0,0,0);

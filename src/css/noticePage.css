@@ -5,6 +5,9 @@ body{
     overflow-y: auto;
     overflow-y: overlay;
 }
+[data-mobile=true] body{
+    padding-bottom: 80rem;
+}
 body{
     --a-color: rgb(0, 153, 255);
 }
@@ -17,10 +20,16 @@ body{
     max-width: 100%;
 }
 h1{
-    font-size: 2em;
+    font-size: 1.6em;
 }
 h2{
-    font-size: 1.5em;
+    font-size: 1.3em;
+}
+p{
+    font-size: 1em;
+}
+li, ui{
+    margin-left: 1em;
 }
 a{
     color: var(--a-color);

@@ -293,12 +293,16 @@ $(function () {
 
 // pop
 function openPop(ele) {
+    writeLog("i", "openPop", "ele: " + ele);
     ele.setAttribute("open", "true");
+    setPopScale();
     pushHistory("pop_" + ele);
 }
 
 function closePop(ele, totally = false) {
+    writeLog("i", "closePop", "ele: " + ele);
     ele.setAttribute("open", "false");
+    setPopScale();
     if (totally) {
         setTimeout(() => {
             ele.outerHTML = "";
@@ -308,7 +312,7 @@ function closePop(ele, totally = false) {
 }
 
 // scale
-setInterval(() => {
+function setPopScale() {
     if ($(".popFrame[open=true]").length > 0) {
         document.body.setAttribute("scale", "true");
         if ($(".popFrame[open=true]").length > 1) $(".popFrame[open=true]").attr("data-behind", "true");
@@ -317,4 +321,12 @@ setInterval(() => {
     else {
         document.body.setAttribute("scale", "false");
     }
-}, 10);
+    console.log("setPopScale");
+}
+
+$("body").bind("DOMNodeInserted", function () {
+    $(".popFrame").bind("change", function (e) {
+        setPopScale();
+    });
+    setPopScale();
+});
