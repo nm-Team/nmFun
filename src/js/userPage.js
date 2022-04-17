@@ -46,6 +46,7 @@ function refreshUserInfoArea(uid) {
             $("[data-posts-num-uid=" + uid + "]").html(pData['publish_post']);
             $("[data-replies-num-uid=" + uid + "]").html(pData['publish_comment']);
             $("[data-my-following-to-uid=" + uid + "]").attr("data-follow", (pData['is_myself'] ? "edit" : (pData['i_followed'] ? (pData['followed_me'] ? "both" : "true") : (pData['followed_me'] ? "followedme" : "false"))));
+            setTimeTexts();
             if (pData['blocked'] == 1) {
                 $(`#userInfoFrame_${uid} .blockTip`).css("display", "flex");
             }

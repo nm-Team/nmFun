@@ -594,7 +594,7 @@ function writeLog(logType, funName, content) {
     logTime.setTime(logTime.getTime() + 60000 * logTime.getTimezoneOffset());
     logTime = JSON.parse(splitTime(logTime));
     ltime = logTime.year + "-" + logTime.month + "-" + logTime.date + " " + logTime.hour + ":" + logTime.sMinute + ":" + logTime.sSecond;
-    logWord = `[` + logType + `] ` + ltime + " " + funName + `: ` + content + ` \n`;
+    logWord = (`[` + logType + `] ` + ltime + " " + funName + `: ` + content + ` \n`);
     try { localStorage.systemLog += logWord; }
     catch (err) {
         localStorage.removeItem("systemLog");

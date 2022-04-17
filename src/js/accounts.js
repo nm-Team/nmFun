@@ -7,7 +7,7 @@ document.body.appendChild(logScript);
 myUid = NaN;
 function setHeaderLog() {
     returnWord = "";
-    document.cookie = "PHPSESSID=" + localStorage.sessionid + ";domain=" + siteURL.split("/")[2];
+    document.cookie = "sessionid=" + localStorage.sessionid + ";domain=" + siteURL.split("/")[2];
     try {
         getInfo(function () {
             accountInfo = returnWord;
@@ -45,7 +45,6 @@ function setHeaderLog() {
                 `;
                 $("#myBlockDisplay").attr("data-disabled-uid", myUid);
                 $("#myBlockTime").attr("data-disabled-time-uid", myUid);
-                setTimeTexts();
                 writeLog("i", "setHeaderLog", "log success, sessionid " + localStorage.sessionid + ", " + JSON.stringify(accountInfo));
             };
             refreshUserInfoArea(myUid);
@@ -101,5 +100,7 @@ function logOut() {
     localStorage.sessionid = "";
     document.cookie = "PHPSESSID=;expires=01-Dec-2006 01:14:26 GMT;domain=" + siteURL.split("/")[2];
     document.cookie = "PHPSESSID=;expires=01-Dec-2006 01:14:26 GMT;domain=" + accountClient.split("/")[2];
+    document.cookie = "sessionid=;expires=01-Dec-2006 01:14:26 GMT;domain=" + siteURL.split("/")[2];
+    document.cookie = "sessionid=;expires=01-Dec-2006 01:14:26 GMT;domain=" + accountClient.split("/")[2];
     writeLog("i", "logOut", "success");
 }

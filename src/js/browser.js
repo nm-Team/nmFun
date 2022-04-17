@@ -24,6 +24,7 @@ function newBrowser(URL, className = "", withTip = true, showOpenInBrowser = tru
     iframeScript(browserId);
     pushHistory("");
     writeLog("i", "newBrowser", "URL: " + URL + ", className: " + className + ", withTip: " + withTip + ", showOpenInBrowser: " + showOpenInBrowser);
+    setPopScale();
 }
 
 function closeBrowser(id) {
@@ -34,6 +35,7 @@ function closeBrowser(id) {
         document.getElementById("coverWithColorBro" + id).outerHTML = "";
     }, 500);
     writeLog("i", "closeBrowser", "div: " + id);
+    setPopScale();
 }
 
 function showBrowserContextMenu(URL, ele = this) {
