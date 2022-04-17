@@ -650,7 +650,9 @@ body[theme=dark]{
 }
 @media (max-width: 700px) {
     body[data-mobile=true] .inputArea .bottomBox{
-        padding-bottom: 71rem;
+        margin-bottom: 71rem;
+        overflow: hidden;
+        box-shadow: none;
     }
 }
 .inputArea .mediasBox{

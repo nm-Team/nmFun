@@ -5,7 +5,7 @@ document.body.appendChild(logScript);
 
 // 登录账户
 myUid = NaN;
-function setHeaderLog() {
+function setLog() {
     returnWord = "";
     document.cookie = "sessionid=" + localStorage.sessionid + ";domain=" + siteURL.split("/")[2];
     try {
@@ -45,7 +45,7 @@ function setHeaderLog() {
                 `;
                 $("#myBlockDisplay").attr("data-disabled-uid", myUid);
                 $("#myBlockTime").attr("data-disabled-time-uid", myUid);
-                writeLog("i", "setHeaderLog", "log success, sessionid " + localStorage.sessionid + ", " + JSON.stringify(accountInfo));
+                writeLog("i", "setLog", "log success, sessionid " + localStorage.sessionid + ", " + JSON.stringify(accountInfo));
             };
             refreshUserInfoArea(myUid);
         });
@@ -56,7 +56,7 @@ function setHeaderLog() {
         myPageNick.innerHTML = "无法连接服务器";
         myPageInfoPTag.innerHTML = "请刷新后重试";
         accMain.setAttribute("onclick", "alert('无法连接到服务器，请刷新页面后重试。');");
-        writeLog("i", "setHeaderLog", "log fail: sessionid " + localStorage.sessionid + ", " + err);
+        writeLog("i", "setLog", "log fail: sessionid " + localStorage.sessionid + ", " + err);
     }
 }
 

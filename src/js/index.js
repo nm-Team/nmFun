@@ -152,7 +152,7 @@ else bodyMain.removeAttribute("thinable");
 inv = setInterval(() => {
     if (getInfo) {
         clearInterval(inv);
-        setHeaderLog();
+        setLog();
     }
 }, 100);
 
