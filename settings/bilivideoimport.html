@@ -19,7 +19,7 @@
     <input class="searchBox" id="biliBvid" placeholder="BV 号">
     <input class="searchBox" id="biliPid" type="number" placeholder="分 P (选填)">
     <div class="lists">
-        <div class="but" onclick="confirmImport();">
+        <div class="but" onclick="confirmImport();" tabindex="0" onkeydown="divClick(this, event)">
             <t>插入</t>
         </div>
         <p class="tip" id="tipWord">请填写视频的 BV 号并确认插入。</p>

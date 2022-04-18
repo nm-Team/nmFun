@@ -14,6 +14,11 @@ function setLog() {
             if (accountInfo == -1 || accountInfo == -2) {
                 userName.innerHTML = "登录";
                 myPageNick.innerHTML = "点击登录";
+                localStorage.sessionid = "";
+                document.cookie = "PHPSESSID=;expires=01-Dec-2006 01:14:26 GMT;domain=" + siteURL.split("/")[2];
+                document.cookie = "PHPSESSID=;expires=01-Dec-2006 01:14:26 GMT;domain=" + accountClient.split("/")[2];
+                document.cookie = "sessionid=;expires=01-Dec-2006 01:14:26 GMT;domain=" + siteURL.split("/")[2];
+                document.cookie = "sessionid=;expires=01-Dec-2006 01:14:26 GMT;domain=" + accountClient.split("/")[2];
                 toUserPageBut.setAttribute("onclick", "showLogFrame()");
                 myPageMoreTags.setAttribute("data-show", "false");
                 myPageAccounteditBut.setAttribute("data-show", "false");

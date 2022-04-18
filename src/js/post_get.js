@@ -200,7 +200,7 @@ function loadPostsList(box) {
                 success: function (response, status, request) {
                     writeLog("i", "loadPostsList get backend response", JSON.stringify(response));
                     if (response['status'] == "error") {
-                        if (response['error_hidden']) return box.html(`<div class="card" noselect><div class="content"><center>根据用户的隐私设置，你无法查看他的关注。</center></div></div>`);
+                        if (response['error_hidden']) return box.html(`<div class="card" noselect><div class="content"><center>根据用户的隐私设置，你无法查看他的${attr.search.type == "followings" ? "关注" : "粉丝"}。</center></div></div>`);
                         else
                             return newMsgBox("抱歉，加载列表时出现问题。<br />" + response['info']);
                     }
@@ -262,7 +262,7 @@ function loadPostsList(box) {
                                 box.find(".main").append(new_element);
                             });
                             $("#blcount").html(response['blocklist'].length);
-                            if(response['blocklist'].length==0){ box.attr("data-status", "noone");}
+                            if (response['blocklist'].length == 0) { box.attr("data-status", "noone"); }
                             else box.attr("data-status", "nomore");
                         }
                         catch (err) {

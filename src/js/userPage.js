@@ -124,7 +124,7 @@ uPageTemp = `
         <div class="typeSelecter">
             <label for="uPage_{{uid}}_s_info"><input id="uPage_{{uid}}_s_info" type="radio" name="uPage_{{uid}}_s" checked onclick="focusInPostsList($('#userPage_{{uid}}_postsListScrollMonitor'), $('#userPage_{{uid}}_postsList_info'));"><span>简介</span></label>
             <label for="uPage_{{uid}}_s_posts"><input id="uPage_{{uid}}_s_posts" type="radio" name="uPage_{{uid}}_s" onclick="focusInPostsList($('#userPage_{{uid}}_postsListScrollMonitor'), $('#userPage_{{uid}}_postsList_posts'));"><span>帖子<n data-posts-num-uid="{{uid}}"></n></span></label>
-            <label for="uPage_{{uid}}_s_replies"><input id="uPage_{{uid}}_s_replies" type="radio" name="uPage_{{uid}}_s" onclick="focusInPostsList($('#userPage_{{uid}}_postsListScrollMonitor'), $('#userPage_{{uid}}_postsList_comments'));"><span>回复<n data-replies-num-uid="{{uid}}"></n></span></label>
+            <label for="uPage_{{uid}}_s_replies"><input id="uPage_{{uid}}_s_replies" type="radio" name="uPage_{{uid}}_s" onclick="focusInPostsList($('#userPage_{{uid}}_postsListScrollMonitor'), $('#userPage_{{uid}}_postsList_comments'));"><span>评论<n data-replies-num-uid="{{uid}}"></n></span></label>
         </div>
     </div>
     <div class="userMainCards equalPages floatFrame-content postsListScrollMonitor" id="userPage_{{uid}}_postsListScrollMonitor">
