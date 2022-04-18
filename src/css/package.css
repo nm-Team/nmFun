@@ -279,14 +279,14 @@ body[theme=dark]{
     font-size: 20rem;
     margin: 2rem 4rem;
 }
-#myBlockDisplay{
+.myPageLogRequireButtons{
     display: none;
     max-height: 0;
     transition: max-height 0.2s;
 }
-#myBlockDisplay[data-show=true]{
+.myPageLogRequireButtons[data-show=true]{
     display: block;
-    max-height: 45rem;
+    max-height: 100vh;
 }
 .stickersChoose{
     color: var(--stksCos);

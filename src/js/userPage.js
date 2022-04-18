@@ -14,6 +14,7 @@ function newUserInfoPage(uid, uNick, noOther = false) {
             new_element.setAttribute('totallyclose', 'true');
             new_element.setAttribute('uid', uid);
             new_element.setAttribute('name', uNick);
+            new_element.setAttribute('data-url', 'user_' + uid + "_" + escape(uNick));
             new_element.setAttribute('noother', noOther);
             new_element.innerHTML = uPageTemp.replace(/{{uid}}/g, uid).replace(/{{nick}}/g, uNick).replace(/{{avatar}}/g, avatarURL.replace(/{id}/g, uid));
             pageRight.appendChild(new_element);
@@ -62,6 +63,9 @@ function refreshUserInfoArea(uid) {
             }
             else {
                 loadPostsList($(`#userPage_${uid}_postsList_posts`));
+            }
+            if (uid == myUid) {
+                $("[data-mypoint]").html(pData['point']);
             }
             if (pData['hide_comment'] == 1) {
                 $(`#userPage_${uid}_postsList_comments`).attr("data-config", JSON.stringify({ "type": "undefined" }));
@@ -283,10 +287,11 @@ followListTemplate = `
 function blockUser(uid) {
     if (logRequire()) {
         sta = blockList.indexOf(String(uid)) > -1 || blockList.indexOf(Number(uid)) > -1 ? true : false;
-   
-    writeLog("i", "blockUser", "get block user " + uid + " status success");
-    alert((sta ? "是否要取消屏蔽该用户？" : "是否要确认屏蔽该用户？<br><br>您将不会在信息流中看到他的动态，他也无法在个人主页查看您的签名、最近点赞、发帖和评论列表。"), (sta ? "已屏蔽此用户" : "屏蔽此用户"), "确认", "confirmBlockUser(" + uid + ", " + sta + ")", "取消");
-} }
+
+        writeLog("i", "blockUser", "get block user " + uid + " status success");
+        alert((sta ? "是否要取消屏蔽该用户？" : "是否要确认屏蔽该用户？<br><br>您将不会在信息流中看到他的动态，他也无法在个人主页查看您的签名、最近点赞、发帖和评论列表。"), (sta ? "已屏蔽此用户" : "屏蔽此用户"), "确认", "confirmBlockUser(" + uid + ", " + sta + ")", "取消");
+    }
+}
 
 function confirmBlockUser(uid, unblock) {
     $("body").append(`<div id="blockCover" class="sendCover unscaleArea" open="true" noselect><div class="content"><i></i><p>正在操作</p></div></div>`);
@@ -317,6 +322,7 @@ function showUserBlockListPage() {
                 new_element.setAttribute('con', 'none');
                 new_element.setAttribute('totallyclose', 'true');
                 new_element.setAttribute('name', "黑名单");
+                new_element.setAttribute('data-url', "blocklist");
                 new_element.setAttribute('noother', 'false');
                 new_element.innerHTML = blockListTemplate;
                 pageRight.appendChild(new_element);

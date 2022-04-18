@@ -70,7 +70,6 @@
                             <div class="swiper-container indexSwiper floatFrame-header">
                                 <!-- 此处若设置关闭滚动图display为none agou 211113 -->
                                 <div class="swiper-wrapper" id="indexSwiperBox">
-
                                 </div>
                                 <div class="swiper-pagination"></div>
                                 <div class="swiper-button-prev" title="前一张轮播图"></div>
@@ -187,7 +186,7 @@
                                 </div>
                                 <div id="myPageMoreTags"></div>
                             </div>
-                            <div class="lists" id="myBlockDisplay">
+                            <div class="lists myPageLogRequireButtons" id="myBlockDisplay">
                                 <div class="but"
                                     onclick="alert(`由于您违反了社区规定，nmFun 团队已暂时或永久封禁了您的账号。<br><br><b>预计解封时间：</b>` + myBlockTime.innerHTML)"
                                     tabindex="0" onkeydown="divClick(this, event)">
@@ -197,7 +196,7 @@
                                             timesec="false" timefull="false"></span> </t>
                                 </div>
                             </div>
-                            <div class="lists">
+                            <div class="lists myPageLogRequireButtons" id="myActions">
                                 <div class="but" onclick="newMsgBox('开发中')" tabindex="0"
                                     onkeydown="divClick(this, event)">
                                     <icon class="material-icons" style="color: #000000; background: #eee">comment
@@ -209,6 +208,16 @@
                                     <icon class="material-icons" style="color: #c9aa0f; background: #eee">star
                                     </icon>
                                     <t>收藏</t>
+                                </div>
+                            </div>
+                            <div class="lists myPageLogRequireButtons" id="myPointDisplay">
+                                <div class="but" onclick="newMsgBox('开发中')" tabindex="0"
+                                    onkeydown="divClick(this, event)">
+                                    <icon class="material-icons" style="color: #ffbd2e; background: rgb(255, 228, 169)">
+                                        credit_card
+                                    </icon>
+                                    <t>积分</t>
+                                    <t2 class="right" data-mypoint></t2>
                                 </div>
                             </div>
                             <div class="lists">
@@ -351,7 +360,9 @@
             <div class="title">提示</div>
             <div class="msg">nmFun 需要<b> 启用 JavaScript </b> 才能使用。<br>请打开 JavaScript 并关闭广告拦截插件后重试。</div>
             <div class="buttons">
-                <button class="positive" onclick="window.location.href='https://www.baidu.com/s?wd=%E5%A6%82%E4%BD%95%E6%89%93%E5%BC%80javascript';">了解如何打开 JavaScript </button>
+                <button class="positive"
+                    onclick="window.location.href='https://www.baidu.com/s?wd=%E5%A6%82%E4%BD%95%E6%89%93%E5%BC%80javascript';">了解如何打开
+                    JavaScript </button>
             </div>
         </div>
     </noscript>

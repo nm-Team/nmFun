@@ -53,6 +53,7 @@ function closeHover() {
         console.log("closeHover closed");
         postInputInit();
         loadWelcomePage();
+        checkURLParam();
         setTimeout(() => {
             startHover.outerHTML = "";
         }, 400);

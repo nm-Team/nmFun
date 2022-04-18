@@ -303,6 +303,7 @@ function newPostDetailPage(pid, noOther = false, aheadTo = "") {
             new_element.setAttribute('con', 'none');
             new_element.setAttribute('totallyclose', 'true');
             new_element.setAttribute('pid', pid);
+            new_element.setAttribute('data-url', "post_" + pid);
             new_element.setAttribute('name', '详情');
             new_element.setAttribute('noother', noOther);
             new_element.innerHTML = postTemplate.replace(/{{pid}}/g, pid).replace(/{{postSke}}/g, postSkeleton);
@@ -695,7 +696,7 @@ function likePost(ele, pid) {
         $("[data-like-post-id=" + pid + "]").attr("data-status", (likeOpe == "like" ? "yes" : "no"));
         newLikeNum = (Number($(":not([data-ignore=true]) [data-like-num-post-id=" + pid + "]")[0].innerHTML) + (likeOpe == "like" ? 1 : -1));
         $(":not([data-ignore=true]) [data-like-num-post-id=" + pid + "]").html(newLikeNum);
-        newAjax("POST", backEndURL + "/post/like.php", true, "pid=" + pid + (likeOpe == "unlike" ? "&unlike=unlike" : ""), "", function (d) { writeLog("i", "likePost", "like post " + pid + " success"); $("[data-like-num-post-id=" + pid + "]").html(d.like); $("[data-like-post-id=" + pid + "]").attr("data-status", (likeOpe == "like" ? "yes" : "no")); $("[data-like-post-id=" + pid + "]").attr("data-ignore", "false"); }, function (data) { $("[data-like-post-id=" + pid + "]").attr("data-status", (likeOpe != "like" ? "yes" : "no")); writeLog("i", "likePost", "like post " + pid + " error"); $("[data-like-post-id=" + pid + "]").attr("data-ignore", "false"); $(":not([data-ignore=true]) [data-like-num-post-id=" + pid + "]").html(d.like); newMsgBox((likeOpe == "unlike" ? "取消" : "") + "点赞失败，因为" + data['info']); });
+        newAjax("POST", backEndURL + "/post/like.php", true, "pid=" + pid + (likeOpe == "unlike" ? "&unlike=unlike" : ""), "", function (d) { writeLog("i", "likePost", "like post " + pid + " success"); $("[data-like-num-post-id=" + pid + "]").html(d.like); $("[data-like-post-id=" + pid + "]").attr("data-status", (likeOpe == "like" ? "yes" : "no")); $("[data-like-post-id=" + pid + "]").attr("data-ignore", "false"); }, function (d) { $("[data-like-post-id=" + pid + "]").attr("data-status", (likeOpe != "like" ? "yes" : "no")); writeLog("i", "likePost", "like post " + pid + " error"); $("[data-like-post-id=" + pid + "]").attr("data-ignore", "false"); $(":not([data-ignore=true]) [data-like-num-post-id=" + pid + "]").html(newLikeNum - 1); newMsgBox((likeOpe == "unlike" ? "取消" : "") + "点赞失败，因为" + d['info']); });
     }
 }
 

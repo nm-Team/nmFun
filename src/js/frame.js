@@ -5,6 +5,24 @@ widthChanger.ondragstart = function () {
     // alert("Developing");
 }
 
+// url 含参数时跳转到页面
+function checkURLParam() {
+    if (window.location.hash != "") {
+        hash = window.location.hash.replace("#", "").split("_");
+        switch (hash[0]) {
+            case "post":
+                newPostDetailPage(hash[1]);
+                break;
+            case "user":
+                newUserInfoPage(hash[1], unescape(hash[2]));
+                break;
+            case "blocklist":
+                showUserBlockListPage();
+                break;
+        }
+    }
+}
+
 // 使得Box置顶
 function focusBox(div, boxId, noOther) {
     if (noOther == undefined && document.getElementById(boxId).getAttribute("noother") == "true") noOther = true;
@@ -45,7 +63,6 @@ function focusBox(div, boxId, noOther) {
         for (dt = 0; dt < boxDelTime; dt++)
             divToDel[dt].outerHTML = "";
     }, 600);
-    pushHistory(div + "_" + boxId);
     if (div == "pageRight" && noOther) {
         document.getElementById(boxId).setAttribute("pcnoani", "true");
         document.getElementById(boxId).setAttribute("back", "no");
@@ -65,6 +82,8 @@ function focusBox(div, boxId, noOther) {
     $("#" + div + " .box").attr("data-hidden", "false");
     // 更新底栏
     if (div == "pageLeft") lightBottomBar();
+    // 更新 url
+    updateURL(div);
     writeLog("i", "focusBox", "div: " + div + ", boxId: " + boxId + ", noOther: " + noOther + ", allBoxes: " + getAllBoxes(div));
 }
 
@@ -108,9 +127,13 @@ function closeBox(div, boxId, totally = false, origin = "") {
         }
     $("#" + div + " .box").attr("data-hidden", "false");
     // 更新底栏
-    pushHistory("");
+    updateURL(div);
     if (div == "pageLeft") lightBottomBar();
     writeLog("i", "closeBox", "div: " + div + ", boxId: " + boxId + ", totally: " + totally + ", origin: " + origin + ", allBoxes: " + getAllBoxes(div));
+}
+
+function updateURL(div) {
+    pushHistory($(`#${div} .box[con=on]`).attr("data-url") ? $(`#${div} .box[con=on]`).attr("data-url") : "");
 }
 
 function thinPageRight(to) {
@@ -296,7 +319,7 @@ function openPop(ele) {
     writeLog("i", "openPop", "ele: " + ele);
     ele.setAttribute("open", "true");
     setPopScale();
-    pushHistory("pop_" + ele);
+    pushHistory("");
 }
 
 function closePop(ele, totally = false) {

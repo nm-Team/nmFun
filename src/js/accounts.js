@@ -44,6 +44,8 @@ function setLog() {
                 </button>
                 `;
                 $("#myBlockDisplay").attr("data-disabled-uid", myUid);
+                $("#myPointDisplay").attr("data-show", "true");
+                $("#myActions").attr("data-show", "true");
                 $("#myBlockTime").attr("data-disabled-time-uid", myUid);
                 writeLog("i", "setLog", "log success, sessionid " + localStorage.sessionid + ", " + JSON.stringify(accountInfo));
             };
