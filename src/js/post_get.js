@@ -11,7 +11,7 @@ function initPostsList(box, attr) {
             box.append(`<div class="card avatarBox"><div class="main"></div><div class="mark"></div><div spe class="loading">${uListSkeleton}</div><div spe class="error">${postsErrorBoxHTML.replace(/{boxid}/g, box[0].id)}</div><div spe class="noone">${followNoOneHTML.replace(/{{fType}}/, (attr.search.type == "followers" ? "粉丝" : "关注")).replace(/{{call}}/, (attr.search.uid == myUid ? "你" : "他"))}</div></div>`);
             break;
         case "blocklist":
-            box.append(`<div class="card avatarBox"><div class="main"></div><div class="mark"></div><div spe class="loading">${uListSkeleton}</div><div spe class="error">${postsErrorBoxHTML.replace(/{boxid}/g, box[0].id)}</div><div spe class="noone">你还没有屏蔽任何用户</div></div>`);
+            box.append(`<div class="card avatarBox"><div class="main"></div><div class="mark"></div><div spe class="loading">${uListSkeleton}</div><div spe class="error">${postsErrorBoxHTML.replace(/{boxid}/g, box[0].id)}</div><div spe class="noone">${blockListNoOne}</div></div>`);
             break;
     }
     writeLog("i", "initPostsList", `box id: ${box[0].id},attr: ${JSON.stringify(attr)}`);
@@ -257,12 +257,13 @@ function loadPostsList(box) {
                                     <p class="unick">${getNickHTML(info.user)}</p>
                                     <p>${info.user.bio ? cleanHTMLTag(info.user.bio) : ""}</p>
                                 </div>
-                                <button onclick="blockUser('${Number(info.user.uid)}',true);event.stopPropagation();" class="editBut" data-show="true">移除</button>
+                                <button onclick="blockUser('${Number(info.user.uid)}',true);event.stopPropagation();" onkeydown="event.stopPropagation();" class="editBut" data-show="true">移除</button>
                             </a>`;
                                 box.find(".main").append(new_element);
                             });
-                            $("#blcount").html(response['blocklist'].length + "/200");
-                            box.attr("data-status", "nomore");
+                            $("#blcount").html(response['blocklist'].length);
+                            if(response['blocklist'].length==0){ box.attr("data-status", "noone");}
+                            else box.attr("data-status", "nomore");
                         }
                         catch (err) {
                             writeLog("e", "loadPostsList", err);
@@ -551,6 +552,8 @@ postsErrorBoxHTML = `
 
 followNoOneHTML = `
 <div class="unavaliable small search-not-start" noselect><i></i><p>{{call}}还没有{{fType}}</p></div>`;
+
+blockListNoOne = `<div class="unavaliable small" noselect><i></i><p>你还没有屏蔽任何用户</p></div>`;
 
 function setMedia(mediaJson, pid = 0) {
     try {

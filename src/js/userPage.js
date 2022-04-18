@@ -300,6 +300,13 @@ function confirmBlockUser(uid, unblock) {
         newMsgBox((unblock ? "取消" : "") + "屏蔽成功！<br>可能需要重载 nmFun 才能应用全部更改。");
         if (!unblock) $("[data-postlist-post-uid=" + uid + "]").remove();
         if (d.blocklist) blockList = d.blocklist;
+        if(unblock) {
+            $("[data-blocklist-uid=" + uid + "]").remove();
+            $("#blcount").html(Number($("#blcount").html()) - 1);
+            if (Number($("#blcount").html()) == 0) {
+                $("#blockListFrame_l .main").html(blockListNoOne);
+            }
+        }
     }, function (data) {
         $("#blockCover").remove();
         newMsgBox((unblock ? "取消" : "") + "屏蔽失败，因为" + data['info']);
@@ -347,8 +354,8 @@ blockListTemplate = `
             ontouchstart="longPressToDo(function(){quickBack('pageRight')})"
             ontouchend="longPressStop()"><i class="material-icons"></i></button>
         <div class="nameDiv">
-            <p class="title">黑名单<span></span></p>
-            <p class="little" id="blcount"></p>
+            <p class="title">黑名单</p>
+            <p class="little"><span id="blcount"></span>/200</p>
         </div>
     </div>
     <div class="right">
