@@ -293,6 +293,9 @@ body[theme=dark]{
     display: flex;
     flex-direction: column;
 }
+.stickersChoose[open=true]{
+    height: min(300rem, 50vh)!important;
+}
 .stickersChoose .stks{
     flex-grow: 1;
     padding: 0rem 20rem;
@@ -367,6 +370,8 @@ img[data-type=sticker][data-size=big]{
     left: 0;
     right: 0;
     padding: 12rem 4rem;
+    overflow-y: auto;
+    overflow-y: overlay;
     align-content: flex-start;
 }
 .stickersSetFrame .main button{

@@ -101,7 +101,7 @@ function closeBox(div, boxId, totally = false, origin = "") {
     openBoxes = getOpenBoxes(div);
     if (openBoxes.length > 1) {
         document.getElementById(openBoxes[1][1]).setAttribute("con", "on");
-        if (!(((navigator.userAgent.indexOf("ios") > 0 || navigator.userAgent.indexOf("iPhone") > 0 || navigator.userAgent.indexOf("iPad") > 0) && isPwa()) && origin != "system"))
+        if (!(($("body[data-mobile=true]") && isPwa()) && origin != "system"))
             document.getElementById(openBoxes[1][1]).setAttribute("from", "none");
     }
     document.getElementById(boxId).removeAttribute("nownoani");

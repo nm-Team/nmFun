@@ -375,7 +375,7 @@ body[theme=dark]{
 .postBox{
     padding-bottom: 60rem;
 }
-[data-mobile=true] .postFrame .main{
+[data-mobile=true]:not([data-funapp=true]) .postFrame .main{
     padding-bottom: 100rem;
 }
 .viewer-backdrop{

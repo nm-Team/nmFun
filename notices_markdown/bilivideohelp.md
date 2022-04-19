@@ -4,11 +4,11 @@
 
 ![在 nmFun 帖子中嵌入 Bilibili 视频的实例](https://websiteres.nmteam.xyz/nmFun/documentimg/bilihelp_import.png)
 
-## 在 Bilibili app 中获取 BVID
+## 在 Bilibili App 中获取 BVID
 
-在 Bilibili app 中，打开要嵌入帖子的播放页面，点击按钮展开视频简介后在其中找到以 BV 开头的一段字母和数字，长按并选择“拷贝”后粘贴到 nmFun 导入页面即可。
+在 Bilibili App 中，打开要嵌入帖子的播放页面，点击按钮展开视频简介后在其中找到以 BV 开头的一段字母和数字，长按并选择“拷贝”后粘贴到 nmFun 导入页面即可。
 
-![在 Bilibili app 中获取 BVID](https://websiteres.nmteam.xyz/nmFun/documentimg/bilihelp_app.png)
+![在 Bilibili App 中获取 BVID](https://websiteres.nmteam.xyz/nmFun/documentimg/bilihelp_App.png)
 
 ## 在 Bilibili 网站中获取 BVID
 
