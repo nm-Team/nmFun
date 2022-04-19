@@ -313,18 +313,20 @@ body[theme=dark]{
     flex-wrap: wrap;
 }
 .stickersChoose .stks .set .list button{
+    position: relative;
     display: flex;
     width: 70rem;
     height: 70rem;
     background: none;
+    overflow: hidden;
 }
-.stickersChoose .stks .set .list i{
-    width: 60rem;
-    height: 60rem;
-    margin: 5rem;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
+.stickersChoose .stks .set .list img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 60rem;
+    max-height: 60rem;
 }
 .stickersChoose .bar{
     height: 49rem;
@@ -344,6 +346,61 @@ body[theme=dark]{
     background-repeat: no-repeat;
     background-size: contain;
 }
-sticker{
-    display: inline-block;
+img[data-type=sticker]{
+    display: inline-block!important;
+    margin: 0 3rem -3rem 3rem;
+    max-width: 20rem;
+    max-height: 20rem;
+}
+img[data-type=sticker][data-size=middle]{
+    max-width: 40rem;
+    max-height: 30rem;
+}
+img[data-type=sticker][data-size=big]{
+    max-width: 65rem;
+    max-height: 55rem;
+}
+.stickersSetFrame .main{
+    position: absolute;
+    top: 45rem;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12rem 4rem;
+    align-content: flex-start;
+}
+.stickersSetFrame .main button{
+    flex-grow: 0;
+    flex-shrink: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    position: relative;
+    width: 76rem;
+    height: 97rem;
+    padding: 0rem;
+    background: none;
+}
+.stickersSetFrame .main button img{
+    margin: 0;-webkit-user-drag: none;
+    -moz-user-input: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, calc(-50% - 10rem));
+    max-width: 60rem;
+    max-height: 60rem;
+}
+.stickersSetFrame .main button p{
+    position: absolute;
+    bottom: 8rem;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12rem;
+    margin: 0;
+    color: var(--stksCos);
+    text-align: center;
 }

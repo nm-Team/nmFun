@@ -327,7 +327,8 @@ function refreshPostArea(pid) {
             pData = data['data'];
             $("#postFrameMenuButton" + pid).attr("onclick", `postContextMenu('post', '${pid}', '${pData['title']}', ${(pData['uid'])}, this)`);
             // 处理内容中的特殊项
-            contentHandled = contentFormat(pData['content']).replace(/((((ht|f)tps?):\/\/)?([^!@#$%^&*?.\s-]([^!@#$%^&*?.\s]{0,63}[^!@#$%^&*?.\s])?\.)+[a-z]{2,6}\/?)/g, `<a class="linkInPost" href="` + siteURL + `/jumpurl.php?$1" target="_blank" onclick="newBrowser('$1', 'postOutBrowser', true, true); return false;"><svg class="icon link" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M618.24 439.381333a152.746667 152.746667 0 0 1 0 216l-135.893333 135.893334a163.370667 163.370667 0 1 1-231.04-231.04l66.922666-66.944 45.269334 45.269333-66.944 66.944a99.370667 99.370667 0 1 0 140.522666 140.522667l135.893334-135.893334a88.746667 88.746667 0 0 0 0-125.482666z m182.528-197.589333a163.370667 163.370667 0 0 1 0 231.04L733.866667 539.776l-45.269334-45.248 66.944-66.944a99.370667 99.370667 0 1 0-140.522666-140.522667l-135.893334 135.893334a88.746667 88.746667 0 0 0 0 125.482666l-45.269333 45.269334a152.746667 152.746667 0 0 1 0-216l135.893333-135.893334a163.370667 163.370667 0 0 1 231.04 0z"</path></svg>$1</a>`);
+            contentHandled = contentFormat(pData['content']);
+            // contentHandled = contentFormat(pData['content']).replace(/((((ht|f)tps?):\/\/)?([^!@#$%^&*?.\s-]([^!@#$%^&*?.\s]{0,63}[^!@#$%^&*?.\s])?\.)+[a-z]{2,6}\/?)/g, `<a class="linkInPost" href="` + siteURL + `/jumpurl.php?$1" target="_blank" onclick="newBrowser('$1', 'postOutBrowser', true, true); return false;"><svg class="icon link" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M618.24 439.381333a152.746667 152.746667 0 0 1 0 216l-135.893333 135.893334a163.370667 163.370667 0 1 1-231.04-231.04l66.922666-66.944 45.269334 45.269333-66.944 66.944a99.370667 99.370667 0 1 0 140.522666 140.522667l135.893334-135.893334a88.746667 88.746667 0 0 0 0-125.482666z m182.528-197.589333a163.370667 163.370667 0 0 1 0 231.04L733.866667 539.776l-45.269334-45.248 66.944-66.944a99.370667 99.370667 0 1 0-140.522666-140.522667l-135.893334 135.893334a88.746667 88.746667 0 0 0 0 125.482666l-45.269333 45.269334a152.746667 152.746667 0 0 1 0-216l135.893333-135.893334a163.370667 163.370667 0 0 1 231.04 0z"</path></svg>$1</a>`);
             // 识别话题
             tagsIn = [];
             // 抓取每个#至空格和#至换行，并视作话题
@@ -600,6 +601,18 @@ function contentFormat(msg) {
     msg = msg.replace(/\\/g, "");
     msg = msg.replace(/\n/g, "<br />");
     msg = msg.replace(/\[b\](.*)\[\/b\]/g, "<b>$1</b>").replace(/\[i\](.*)\[\/i\]/g, "<i>$1</i>").replace(/\[u\](.*)\[\/u\]/g, "<u>$1</u>").replace(/\[br\]/g, "<br />");
+    msg = msg.replace(/\[sticker=([^,]*),([^,]*)\]/g, function (match, p1, p2) {
+        stickersCacheTime = gTime();
+        try {
+            if (stickersJSON.filter(function (_data) { return _data.id == p1 })[0]['stickers'].filter(function (_data2) { return _data2.id == p2 }).length)
+                return `<a href="javascript:" style="display: inline-block" id="stickerSetA_${stickersCacheTime}_${p1}_${p2}" onclick="showStickerSet(\`${JSON.stringify(stickersJSON.filter(function (_data) { return _data.id == p1 })[0]).replace(/\"/g, "'")}\`);event.stopPropagation();" title="${stickersJSON.filter(function (_data) { return _data.id == p1 })[0]['stickers'].filter(function (_data2) { return _data2.id == p2 })[0]['name']}"><img data-type="sticker" data-setid="${p1}" data-stickerid="${p2}" data-size="${stickersJSON.filter(function (_data) { return _data.id == p1 })[0]['size']}" src="${stickersURL}/${p1}/${stickersJSON.filter(function (_data) { return _data.id == p1 })[0]['stickers'].filter(function (_data2) { return _data2.id == p2 })[0]['src']}" noselect ondragstart="return false;" onerror="stickerSetA_${stickersCacheTime}_${p1}_${p2}.outerHTML='[表情]'"></a>`;
+            else return "[表情]";
+        }
+        catch (err) {
+            console.error(err);
+            return "[表情]";
+        }
+    });
     return msg;
 }
 

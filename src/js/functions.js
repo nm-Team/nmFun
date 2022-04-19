@@ -668,6 +668,8 @@ function newFileAjax(type, url, session, getParam, postParam, succeedF = functio
     });
 }
 
+getStickersJSON(function (data) { });
+
 function getStickersJSON(fun) {
     try {
         stickersJSON;
@@ -681,8 +683,8 @@ function getStickersJSON(fun) {
             dataType: "json",
             success: function (response, status, request) {
                 writeLog("i", "get stickers set", JSON.stringify(response));
-                stickersJSON = response;
-                fun();
+                stickersJSON = response['stickers'];
+                fun(stickersJSON);
             },
             error: function () {
                 writeLog("e", "get stickers", "ajax error");
@@ -701,14 +703,10 @@ function setStickersSelBox(div, targetInput) {
             div.innerHTML = "<div class='stks'></div><div class='bar'></div>";
             stksDiv = div.getElementsByClassName("stks")[0];
             sbarDiv = div.getElementsByClassName("bar")[0];
-            stickersJSON['stickers'].forEach(function (val) {
-                stksListHTML = "";
-                pakId = val['id'];
-                val['stickers'].forEach(function (val) {
-                    stksListHTML += `<button title="${val['name']}" onclick="addStickerToEditBox('${targetInput}','${pakId}','${val['id']}','${`/src/img/stickers/${pakId}/${val['src']}`}')"><i style="background-image:url(/src/img/stickers/${pakId}/${val['src']})"></i></button>`;
-                });
+            stickersJSON.forEach(function (val) {
+                stksListHTML = getStickerSetHTML(val, targetInput);
                 stksDiv.innerHTML += `<div class="set" data-setid="${val['id']}"><div class="name">${val['name']}</div><div class="list">${stksListHTML}</div></div>`;
-                sbarDiv.innerHTML += `<button data-setid="${val['id']}" title="${val['name']}" style="background-image:url(/src/img/stickers/${val['id']}/${val['icon']})" onclick="jumpStickers('${div.id}','${val['id']}')"></button>`;
+                sbarDiv.innerHTML += `<button data-setid="${val['id']}" title="${val['name']}" style="background-image:url(${stickersURL}/${val['id']}/${val['icon']})" onclick="jumpStickers('${div.id}','${val['id']}')"></button>`;
             });
         }
         catch (err) {
@@ -717,6 +715,15 @@ function setStickersSelBox(div, targetInput) {
             newMsgBox("加载表情面板出错，试着不发龙图吧");
         }
     });
+}
+
+function getStickerSetHTML(val, targetInput) {
+    sHTML = "";
+    pakId = val['id'];
+    val['stickers'].forEach(function (val2) {
+        sHTML += `<button contenteditable="true" title="${val2['name']}" onclick="addStickerToEditBox('${targetInput}','${pakId}','${val['size']}','${val2['id']}','${`${stickersURL}/${pakId}/${val2['src']}`}')" ondrag="this.innerHTML=\`<img data-type='sticker' data-setname='${pakId}' data-stickerid='${val2['id']}' data-size='${val['size']}' src='${stickersURL}/${pakId}/${val2['src']}' noselect oncontextmenu='return false;'>\`;"><img data-type="sticker" data-setname="${pakId}" data-stickerid="${val2['id']}" data-size="${val['size']}" src="${stickersURL}/${pakId}/${val2['src']}" noselect oncontextmenu="return false;"></button>`;
+    });
+    return sHTML;
 }
 
 function jumpStickers(divId, setId) {
@@ -728,9 +735,73 @@ function jumpStickers(divId, setId) {
     }, { duration: 300, easing: "swing" });
 }
 
-function addStickerToEditBox(targetInput, pakId, stkId, src) {
-    $(`#${targetInput} .sendBoxInput`).append(`<sticker data-setname="${pakId}" data-stkname="${stkId}" style="background-image:url(${src})">`);
+function addStickerToEditBox(targetInput, pakId, pakSize, stkId, src) {
+    $(`#${targetInput} .sendBoxInput`).append(`<img data-type="sticker" data-setname="${pakId}" data-stickerid="${stkId}" data-size="${pakSize}" src="${src}" noselect oncontextmenu="return false;">`);
 }
+
+function showStickerSet(json) {
+    try{
+    json = JSON.parse(json.replace(/\'/g, '"'));
+    stickersSetId = json.id;
+    if ($("#stickersSetFrame" + stickersSetId).length > 0) {
+        $("#stickersSetFrame" + stickersSetId).attr("open", "true");
+        $("#coverWithColorSti" + stickersSetId).attr("open", "true");
+    }
+    new_element = document.createElement('div');
+    new_element.setAttribute('id', "stickersSetFrame" + stickersSetId);
+    new_element.setAttribute('class', 'popFrame stickersSetFrame ');
+    new_element.setAttribute('name', json.name);
+    new_element.setAttribute('totallyClose', 'true');
+    new_element.innerHTML = stickersSetFrameTemplate.replace(/{{name}}/g, json.name).replace(/{{id}}/g, json.id).replace(/{{stickers}}/g, function () {
+        sHTML = "";
+        val=json.stickers;
+        val.forEach(function (val2) {
+            sHTML += `<button title="${val2['name']}" onclick="localStorage.imgSrc='${stickersURL}/${stickersSetId}/${val2['src']}'; newBrowser('imgviewer.html',false,false,false)"><img data-type="sticker" data-setname="${stickersSetId}" data-stickerid="${val2['id']}" data-size="${val['size']}" src="${stickersURL}/${stickersSetId}/${val2['src']}" noselect oncontextmenu="return false;"><p>${val2['name']}</p></button>`;
+        });
+        return sHTML;
+    });
+    document.body.appendChild(new_element);
+    new_element = document.createElement('div');
+    new_element.setAttribute('id', 'coverWithColorSti' + stickersSetId);
+    new_element.setAttribute('class', 'coverWithColor pop');
+    new_element.setAttribute('open', 'true');
+    document.body.appendChild(new_element);
+    document.getElementById("stickersSetFrame" + stickersSetId).setAttribute('open', 'true');
+    pushHistory("");
+    writeLog("i", "showStickerSet", "showStickerSet" + stickersSetId);
+    setPopScale();
+}   
+catch (err) {
+writeLog("e", "showStickerSet", err);
+newMsgBox("加载表情包错误")
+}
+}
+
+function closeStickerSet(stickersSetId) {
+    $("#stickersSetFrame" + stickersSetId).attr("open", "false");
+    $("#coverWithColorSti" + stickersSetId).removeAttr("open");
+    setTimeout(() => {
+        $("#stickersSetFrame" + stickersSetId).remove();
+        $("#coverWithColorSti" + stickersSetId).remove();
+    }, 500);
+    setPopScale();
+}
+
+stickersSetFrameTemplate = `
+<header>
+<div class="left">
+    <button class="backButton" title="关闭" onclick="closeStickerSet('{{id}}')" oncontextmenu="" ontouchstart="" ontouchend="longPressStop()"><i class="material-icons">keyboard_arrow_down</i></button>
+    <div class="nameDiv">
+        <p class="title">{{name}}</p>
+        <p class="little">查看表情包</p>
+    </div>
+</div>
+<div class="right"></div>
+</header>
+<div class="main list">
+    {{stickers}}
+</div>
+`;
 
 var isiPhone = /iphone/i.test(navigator.userAgent.toLowerCase());
 var isiPad = /ipad/i.test(navigator.userAgent.toLowerCase());

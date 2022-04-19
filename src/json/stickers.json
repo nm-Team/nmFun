@@ -4,6 +4,7 @@
             "name": "Blood Pressure",
             "id": "bloodpressure",
             "icon": "icon.png",
+            "size": "big",
             "stickers": [
                 {
                     "name": "喝茶了",
@@ -89,6 +90,29 @@
                     "name": "吐血",
                     "id": "16",
                     "src": "16.png"
+                }
+            ]
+        },
+        {
+            "name": "nmTeam",
+            "id": "nmTeam_0",
+            "icon": "icon.png",
+            "size": "big",
+            "stickers": [
+                {
+                    "name": "一定是 nmTeam 干的",
+                    "id": "mustbe",
+                    "src": "0.png"
+                },
+                {
+                    "name": "卡尔邀请你加入 nmTeam",
+                    "id": "invite",
+                    "src": "1.png"
+                },
+                {
+                    "name": "nmTeam 看了连夜跑路",
+                    "id": "run",
+                    "src": "2.png"
                 }
             ]
         }

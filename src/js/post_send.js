@@ -33,16 +33,25 @@ function setPostInputArea(ele, type) {
 // 发帖
 function sendPost(div, postType, onSuccess) {
     if (logRequire()) {
+        // 通用：设置参数
+        textToSend = cleanHTMLTag(div.getElementsByClassName("sendBoxInput")[0].innerHTML
+            .replace(/<b>(.*)<\/b>/g, "[b]$1[/b]")
+            .replace(/<i>(.*)<\/i>/g, "[i]$1[/i]")
+            .replace(/<u>(.*)<\/u>/g, "[u]$1[/u]")
+            .replace(/<br>/g, "[br]")
+            .replace(/<img data-type="sticker" data-setname="([^"]*)" data-stickerid="([^"]*)" data-size[^>]*>/g, "[sticker=$1,$2]"));
+        console.log(textToSend);
         // 通用：是否填写内容
-        if (cleanHTMLTag(div.getElementsByClassName("sendBoxInput")[0].innerHTML).replace(/ /g, "").replace(/\\n/g, "") == "") {
+        if (textToSend.replace(/ /g, "").replace(/\\n/g, "") == "") {
             return newMsgBox("你总得写点什么再发表吧……");
         }
-        // 通用：设置参数
-        textToSend = cleanHTMLTag(div.getElementsByClassName("sendBoxInput")[0].innerHTML.replace(/<b>(.*)<\/b>/g, "[b]$1[/b]").replace(/<i>(.*)<\/i>/g, "[i]$1[/i]").replace(/<u>(.*)<\/u>/g, "[u]$1[/u]")).replace(/<br>/g, "[br]");
         tagsToSend = ""; // 开发中
         // 发送参数：帖子
         if (postType == "post") {
-            titleToSend = div.getElementsByClassName("titleInput")[0].value;
+            titleToSend = cleanHTMLTag(div.getElementsByClassName("titleInput")[0].value);
+            if (titleToSend.length > 250) {
+                return newMsgBox("标题过长，请缩短标题。");
+            }
             categoryToSend = div.getElementsByClassName("categoryS")[0].getElementsByTagName("option")[div.getElementsByClassName("categoryS")[0].selectedIndex].getAttribute("cgid");
             sendData = { type: "post", title: titleToSend, content: textToSend, category: categoryToSend, tags: tagsToSend };
         }
