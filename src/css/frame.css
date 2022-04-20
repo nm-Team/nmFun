@@ -26,7 +26,7 @@ body[theme=dark]{
     --real-bg: #000;
 }
 :root{
-    --fontSize: 1.07px;
+    --fontSize: 1.11px!important;
 }
 body .scaleArea{
     position: fixed;

@@ -314,6 +314,7 @@ body[theme=dark]{
     margin: auto;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: flex-start;
 }
 .stickersChoose .stks .set .list button{
     position: relative;

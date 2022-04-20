@@ -422,6 +422,9 @@ function refreshPostArea(pid) {
             };
             $(`#postFrame${pid} .likeReal`).html(likeListHTML);
             setTimeTexts();
+            // 设置分享菜单
+            shareLink = "https://fun.nmteam.xyz/#post_" + pid + "?ref=share";
+            $(`#shareFrame_post_${pid} .ways`).html(shareTemplate.replace(/{{shareLink}}/g, shareLink).replace(/{{shareLinkEscaped}}/g, escape(shareLink)).replace(/{{title}}/g, escape(cleanHTMLTag(pData['title'] ? pData['title'] : pData['content']).replace(/<[^>]*>/g, "").substr(0, 30))));
         }
         else {
             document.getElementById('postFrame' + pid).getElementsByClassName("bottomBox")[0].style.display = "none";
@@ -434,6 +437,18 @@ function refreshPostArea(pid) {
     });
 }
 
+function showShareFrame(id) {
+    if ($("#" + id).attr("data-open") == "true")
+        $("#" + id).attr("data-open", "false");
+    else $("#" + id).attr("data-open", "true");
+    $("#" + id + " button").click(function () {
+        $("#" + id).attr("data-open", "false");
+    });
+    if (navigator.share)
+        $("#" + id + " [data-system-share]").css("display", "inline-flex");
+    else $("#" + id + " [data-system-share]").css("display", "none");
+
+}
 
 postTemplate = `
 <header>
@@ -482,11 +497,42 @@ postTemplate = `
 <div class="bottomBox">
     <div class="bottomSurface"><div onclick="newMsgBox('开发中')" class="fakeInput" tabindex="0" onkeydown="divClick(this, event)" title="点击来发表评论">精彩的评论也是乐子的一部分</div>  
     <button onclick="newMsgBox('开发中')" class="starButton"><i class="material-icons star">star_border</i><i class="material-icons starred">star</i></button>
-    <button onclick="newMsgBox('开发中')" class="share"><i class="material-icons">share</i></button>
+    <button onclick="showShareFrame('shareFrame_post_{{pid}}');" class="share"><i class="material-icons">share</i></button>
     </div>
 </div>
+<div class="shareFrame cardBox" id="shareFrame_post_{{pid}}">
+    <div class="card" noselect>
+        <div class="title">分享</div>
+        <div class="ways">加载中…
+        </div>
+    </div>
+</div>
+<div class="sFrameHover" onclick="$('#shareFrame_post_{{pid}}').attr('data-open','false')"></div>
 </div>
 `;
+
+shareTemplate = `
+<button data-system-share onclick="navigator.share({title: '{{title}}', url: '{{shareLink}}', text: '我正在看 nmFun 贴子 {{title}}，分享给你，快来看看吧！'})">
+<i style="background-image: url(/src/img/share/system.png)"></i><p>系统分享</p>
+</button>
+<button onclick="copyToClipboard('{{shareLink}}');newMsgBox('分享链接已拷贝到剪贴板')">
+<i style="background-image: url(/src/img/share/copy.png)"></i><p>拷贝链接</p>
+</button>
+<button onclick="window.open('https://connect.qq.com/widget/shareqq/index.html?url={{shareLinkEscaped}}&desc=我正在看nmFun贴子{{title}}，分享给你，快来看看吧！&title={{title}}')">
+<i style="background-image: url(/src/img/share/qq.png)"></i><p>QQ 好友</p>
+</button>
+<button onclick="window.open('https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={{shareLinkEscaped}}&desc=我正在看nmFun贴子{{title}}，分享给你，快来看看吧！&title={{title}}')">
+<i style="background-image: url(/src/img/share/qzone.png)"></i><p>Qzone</p>
+</button>
+<button onclick="window.open('http://service.weibo.com/share/share.php?url={{shareLinkEscaped}}&desc=我正在看nmFun贴子{{title}}，分享给你，快来看看吧！&title={{title}}')">
+<i style="background-image: url(/src/img/share/weibo.png)"></i><p>微博</p>
+</button>
+<button onclick="window.open('https://twitter.com/share?url={{shareLinkEscaped}}&text=我正在看nmFun贴子，分享给你，快来看看吧！')">
+<i style="background-image: url(/src/img/share/twitter.png)"></i><p>Twitter</p>
+</button>
+<button onclick="window.open('https://www.facebook.com/sharer.php?u={{shareLinkEscaped}}')">
+<i style="background-image: url(/src/img/share/facebook.png)"></i><p>FaceBook</p>
+</button>`;
 
 postSkeleton = `
 <div class="postMainSke">
