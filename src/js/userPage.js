@@ -215,7 +215,7 @@ function showUserPageContextMenu(uid, ele) {
         cMenuItems = [["编辑资料", "newLegacyBrowser('/settings/account.html', false, false)", "edit"]];
     }
     else {
-        cMenuItems = [["举报", "", "warning"], ["屏蔽", "blockUser(" + uid + ")", "block"]];
+        cMenuItems = [["举报", "report('post','" + uid + "','','')", "warning"], ["屏蔽", "blockUser(" + uid + ")", "block"]];
     }
     createContextMenu(cMenuItems, undefined, undefined, ele);
 }
@@ -300,7 +300,7 @@ function confirmBlockUser(uid, unblock) {
         newMsgBox((unblock ? "取消" : "") + "屏蔽成功！<br>可能需要重载 nmFun 才能应用全部更改。");
         if (!unblock) $("[data-postlist-post-uid=" + uid + "]").remove();
         if (d.blocklist) blockList = d.blocklist;
-        if(unblock) {
+        if (unblock) {
             $("[data-blocklist-uid=" + uid + "]").remove();
             $("#blcount").html(Number($("#blcount").html()) - 1);
             if (Number($("#blcount").html()) == 0) {

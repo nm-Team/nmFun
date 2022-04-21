@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>举报</title>
+    <title> </title>
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
     <meta name='apple-mobile-web-app-capable' content='yes'>
     <meta name='apple-mobile-web-app-status-bar-style' content='black'>
@@ -14,20 +14,86 @@
 </head>
 
 <body class="settings radius">
-    <h1></h1>
+    <h1>举报</h1>
+    <p class="listName">举报内容：</p>
+    <p class="listName" id="content"></p>
     <p class="listName"></p>
-    <textarea class="searchBox" id="sRI" placeholder="请补充举报原因">
     <div class="lists">
-        <div class="but" onclick="confirmReport();" tabindex="0" onkeydown="divClick(this, event)">
-            <t>举报</t>
-        </div>
+        <textarea class="searchBox" id="reasonInput" placeholder="请补充举报原因"></textarea>
         <p class="tip" id="tipWord">恶意举报将被处罚。</p>
+    </div>
+    <div class="lists">
+        <div class="but">
+            <t>同时将他加入黑名单</t>
+            <t2 class="right" id="">
+                <div class="select-radio-box">
+                    <input type="checkbox" id="block">
+                    <div class="select-switch">
+                        <div class="select-cursor"></div>
+                        <div class="select-label select-label-on"></div>
+                        <div class="select-label select-label-off"></div>
+                    </div>
+                </div>
+            </t2>
+        </div>
     </div>
     <script src="../src/js/jquery.min.js"></script>
     <script src="../src/js/functions.js"></script>
     <script src="../src/js/settings.js"></script>
     <script>
-
+        type = getUrlParam("type");
+        content = getUrlParam("content");
+        uid = getUrlParam("uid");
+        postid = getUrlParam("postid");
+        switch (type) {
+            case "post":
+                $("#content").html(`帖子：${content} (uid: ${uid}, postid: ${postid})`);
+                break;
+            case "comment":
+                $("#content").html(`评论：${content} (uid: ${uid}, commentid: ${postid})`);
+                break;
+            case "user":
+                $("#content").html(`用户：${content} (uid: ${uid})`);
+                break;
+            default:
+                parent.closeBrowser(browserId);
+                parent.newMsgBox("内部错误");
+        }
+        function submit(browserId) {
+            writeLog("i", "report.submit", "start");
+            reason = cleanHTMLTag($("#reasonInput").val());
+            if (reason == "") {
+                parent.newMsgBox("请补充举报原因");
+                writeLog("e", "report.submit", "reason is empty");
+                return;
+            }
+            try {
+                parent.$("#sendCover").attr("open", "true");
+                newAjax("POST", backEndURL + "/user/report.php", true, "update", {
+                    type: type,
+                    uid: uid,
+                    postid: postid,
+                    reason: reason
+                }, function () {
+                    parent.$("#sendCover").removeAttr("open");
+                    parent.closeBrowser(browserId);
+                    parent.newMsgBox("举报成功！")
+                    writeLog("i", "report.submit", "ok");
+                    if ($("#block").is(":checked")) {
+                        blockUser(uid);
+                    }
+                }, function (data) {
+                    parent.$("#sendCover").removeAttr("open");
+                    parent.newMsgBox("举报失败。<br>" + data['info']);
+                    writeLog("e", "report.submit", data['info']);
+                });
+            }
+            catch (err) {
+                parent.$("#sendCover").removeAttr("open");
+                parent.newMsgBox("网络错误，举报失败。");
+                writeLog("e", "report.submit", "err");
+            }
+        }
     </script>
 </body>
 

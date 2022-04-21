@@ -740,41 +740,41 @@ function addStickerToEditBox(targetInput, pakId, pakSize, stkId, src) {
 }
 
 function showStickerSet(json) {
-    try{
-    json = JSON.parse(json.replace(/\'/g, '"'));
-    stickersSetId = json.id;
-    if ($("#stickersSetFrame" + stickersSetId).length > 0) {
-        $("#stickersSetFrame" + stickersSetId).attr("open", "true");
-        $("#coverWithColorSti" + stickersSetId).attr("open", "true");
-    }
-    new_element = document.createElement('div');
-    new_element.setAttribute('id', "stickersSetFrame" + stickersSetId);
-    new_element.setAttribute('class', 'popFrame stickersSetFrame ');
-    new_element.setAttribute('name', json.name);
-    new_element.setAttribute('totallyClose', 'true');
-    new_element.innerHTML = stickersSetFrameTemplate.replace(/{{name}}/g, json.name).replace(/{{id}}/g, json.id).replace(/{{stickers}}/g, function () {
-        sHTML = "";
-        val=json.stickers;
-        val.forEach(function (val2) {
-            sHTML += `<button title="${val2['name']}" onclick="localStorage.imgSrc='${stickersURL}/${stickersSetId}/${val2['src']}'; newBrowser('imgviewer.html',false,false,false)"><img data-type="sticker" data-setname="${stickersSetId}" data-stickerid="${val2['id']}" data-size="${val['size']}" src="${stickersURL}/${stickersSetId}/${val2['src']}" noselect oncontextmenu="return false;"><p>${val2['name']}</p></button>`;
+    try {
+        json = JSON.parse(json.replace(/\'/g, '"'));
+        stickersSetId = json.id;
+        if ($("#stickersSetFrame" + stickersSetId).length > 0) {
+            $("#stickersSetFrame" + stickersSetId).attr("open", "true");
+            $("#coverWithColorSti" + stickersSetId).attr("open", "true");
+        }
+        new_element = document.createElement('div');
+        new_element.setAttribute('id', "stickersSetFrame" + stickersSetId);
+        new_element.setAttribute('class', 'popFrame stickersSetFrame ');
+        new_element.setAttribute('name', json.name);
+        new_element.setAttribute('totallyClose', 'true');
+        new_element.innerHTML = stickersSetFrameTemplate.replace(/{{name}}/g, json.name).replace(/{{id}}/g, json.id).replace(/{{stickers}}/g, function () {
+            sHTML = "";
+            val = json.stickers;
+            val.forEach(function (val2) {
+                sHTML += `<button title="${val2['name']}" onclick="localStorage.imgSrc='${stickersURL}/${stickersSetId}/${val2['src']}'; newBrowser('imgviewer.html',false,false,false)"><img data-type="sticker" data-setname="${stickersSetId}" data-stickerid="${val2['id']}" data-size="${val['size']}" src="${stickersURL}/${stickersSetId}/${val2['src']}" noselect oncontextmenu="return false;"><p>${val2['name']}</p></button>`;
+            });
+            return sHTML;
         });
-        return sHTML;
-    });
-    document.body.appendChild(new_element);
-    new_element = document.createElement('div');
-    new_element.setAttribute('id', 'coverWithColorSti' + stickersSetId);
-    new_element.setAttribute('class', 'coverWithColor pop');
-    new_element.setAttribute('open', 'true');
-    document.body.appendChild(new_element);
-    document.getElementById("stickersSetFrame" + stickersSetId).setAttribute('open', 'true');
-    pushHistory("");
-    writeLog("i", "showStickerSet", "showStickerSet" + stickersSetId);
-    setPopScale();
-}   
-catch (err) {
-writeLog("e", "showStickerSet", err);
-newMsgBox("加载表情包错误")
-}
+        document.body.appendChild(new_element);
+        new_element = document.createElement('div');
+        new_element.setAttribute('id', 'coverWithColorSti' + stickersSetId);
+        new_element.setAttribute('class', 'coverWithColor pop');
+        new_element.setAttribute('open', 'true');
+        document.body.appendChild(new_element);
+        document.getElementById("stickersSetFrame" + stickersSetId).setAttribute('open', 'true');
+        pushHistory("");
+        writeLog("i", "showStickerSet", "showStickerSet" + stickersSetId);
+        setPopScale();
+    }
+    catch (err) {
+        writeLog("e", "showStickerSet", err);
+        newMsgBox("加载表情包错误")
+    }
 }
 
 function closeStickerSet(stickersSetId) {
@@ -821,3 +821,19 @@ var isChrome = navigator.userAgent.indexOf("Chrome") > -1; //判断Chrome浏览�
 if (isiPhone || isiPod || isAndroid) $("body").attr("data-mobile", "true");
 if (isFunApp) $("body").attr("data-funapp", "true");
 if (isSafari || isiOS) $("body").attr("data-webkit", "true");
+
+function report(type, uid, postid = "", content = "") {
+    newBrowser(`/settings/report.html?type=${type}&uid=${uid}&postid=${postid}&content=${content.substring(0, 20)}`, '', false, false, '', `<button onclick='$(\`#browserFrame{{browserId}} iframe\`)[0].contentWindow.submit(\`{{browserId}}\`)' title='提交'><i class='material-icons'>send</i></button>`);
+}
+
+window.onbeforeunload = function (e) {
+    if ($(".popFrame .inputArea").length > 0) {
+        e = e || window.event;
+        // 兼容IE8和Firefox 4之前的版本
+        if (e) {
+            e.returnValue = '关闭提示';
+        }
+        // Chrome, Safari, Firefox 4+, Opera 12+ , IE 9+
+        return '关闭提示';
+    }
+};

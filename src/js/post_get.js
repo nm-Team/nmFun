@@ -672,7 +672,7 @@ function postContextMenu(type, id, poName, uid, ele) {
         createContextMenu([["编辑", "editMyPost(`" + id + "`)", "edit"], ["删除", "deleteMyPostAlert(`" + id + "`, `" + poName + "`)", "delete"],], true, undefined, ele);
     }
     else {
-        createContextMenu([["举报", "alert(`开发中`)", "warning"], ["屏蔽此用户", "blockUser(`" + uid + "`)", "block"]], true, undefined, ele);
+        createContextMenu([["举报", "report('post','"+uid+"','"+id+"','"+poName+"')", "warning"], ["屏蔽此用户", "blockUser(`" + uid + "`)", "block"]], true, undefined, ele);
     }
 }
 

@@ -139,7 +139,6 @@ function showPostInput(which, toS) {
     document.getElementById("" + which + "Edit").setAttribute("open", toS);
     if (toS) {
         document.getElementById("" + which + "EditBoxCover").setAttribute("open", "true");
-
     }
     else document.getElementById("" + which + "EditBoxCover").removeAttribute("open");
     try { setStickersSelBox(document.getElementById("" + which + "EditBox").getElementsByClassName("stickersChoose")[0], ("" + which + "EditBox")); }

@@ -20,8 +20,10 @@ function newBrowser(URL, className = "", withTip = true, showOpenInBrowser = tru
     document.body.appendChild(new_element);
     if (!showOpenInBrowser) document.getElementById("browserFrame" + browserId).getElementsByClassName("moreButton")[0].style.display = "none";
     document.getElementById("browserFrame" + browserId).setAttribute('open', 'true');
-    iframeScript = script;
-    iframeScript(browserId);
+    try {
+        iframeScript = script;
+        iframeScript(browserId);
+    } catch (err) { }
     pushHistory("");
     writeLog("i", "newBrowser", "URL: " + URL + ", className: " + className + ", withTip: " + withTip + ", showOpenInBrowser: " + showOpenInBrowser);
     setPopScale();
@@ -79,7 +81,7 @@ browserTemplate = `
 </div>
 `;
 
-function newLegacyBrowser(URL, withTip = true, showOpenInLegacyBrowser = true, script = function () { }, customButtons="") {
+function newLegacyBrowser(URL, withTip = true, showOpenInLegacyBrowser = true, script = function () { }, customButtons = "") {
     legacyBrowserId++;
     if (withTip) fakeURL = "./jumpurl.html?" + URL;
     else fakeURL = URL;
@@ -93,8 +95,10 @@ function newLegacyBrowser(URL, withTip = true, showOpenInLegacyBrowser = true, s
     pageRight.appendChild(new_element);
     focusBox("pageRight", "legacyBrowserFrame" + legacyBrowserId);
     if (!showOpenInLegacyBrowser) document.getElementById("legacyBrowserFrame" + legacyBrowserId).getElementsByClassName("moreButton")[0].style.display = "none";
-    iframeScript = script;
-    iframeScript(legacyBrowserId);
+    try {
+        iframeScript = script;
+        iframeScript(legacyBrowserId);
+    } catch (err) { }
 }
 
 function showLegacyBrowserContextMenu(URL, ele = this) {
