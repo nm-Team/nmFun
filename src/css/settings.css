@@ -54,7 +54,7 @@ body.settings{
     user-select: none;
 }
 .settings[data-mobile=true], [data-mobile=true] .settings{
-    border-bottom: 80rem solid #00000000;
+    border-bottom: 20rem solid #00000000;
 }
 .settings.radius{
     margin-left: 10rem;

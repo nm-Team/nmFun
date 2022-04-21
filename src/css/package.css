@@ -131,7 +131,7 @@ body[theme=dark]{
     overflow-y: overlay;
 }
 [data-mobile=true] .floatFrame-content{
-    padding-bottom: 80rem;
+    padding-bottom: 20rem;
 }
 #myPageAcc{
     display: flex;
