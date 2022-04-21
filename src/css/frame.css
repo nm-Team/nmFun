@@ -139,7 +139,7 @@ body{
         top: 27rem;
         left: 10rem;
         right: 10rem;
-        font-size: 12rem;
+        font-size: 11.5rem;
         color: var(--bottombar-text);
     }
     .showBottomBar .bottomBar .item[data-active=true] span{
@@ -232,9 +232,9 @@ body{
     flex-grow: 1;
     border-radius: 7rem;
     padding: 8rem 7rem;
-    font-size: 14rem;
+    font-size: 15rem;
     line-height: 1.4;
-    color: var(--header-title);
+    color: var(--card);
     background-color: var(--header-bgcolor);
 }
 @media (max-width: 800px) {

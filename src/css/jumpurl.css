@@ -6,6 +6,9 @@ body{
     color: #000;
     background-color: #fff;
     --button: rgb(220, 220, 220);
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
 }
 body[theme=dark]{
     color: #fff;
@@ -38,6 +41,10 @@ body[theme=dark]{
     overflow: overlay;
     word-break: break-all;
     white-space: nowrap;
+    font-size: 15rem;
+    user-select: all;
+    -webkit-user-select: all;
+    -moz-user-select: all;
 }
 .jumpbutton{
     margin: 5rem 20rem;

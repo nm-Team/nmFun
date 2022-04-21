@@ -405,6 +405,9 @@ body[theme=dark]{
 .card .content .title{
     font-weight: bold;
 }
+.postMainReal .content{
+    font-size: 14.45rem;
+}
 .card .content a.linkInPost{
     color: var(--content-link);
     transition: opacity 0.3s;
@@ -503,6 +506,7 @@ body[theme=dark]{
     height: 38rem;
     border-radius: 19rem;
     background: none;
+    color: var(--card);
     align-items: center;
     flex-direction: row;
 }

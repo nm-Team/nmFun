@@ -241,7 +241,7 @@ header .nameDiv *{
     flex-shrink: 1;
 }
 header .nameDiv .title{
-    font-size: 16rem;
+    font-size: 15rem;
     color: var(--header-title);
 }
 header .nameDiv .little{
