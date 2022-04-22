@@ -68,7 +68,8 @@
                 return;
             }
             try {
-                parent.$("#sendCover").attr("open", "true");
+                parent.sendCover.setAttribute("open", "true");
+                parent.$("#sendCover .content").html("正在举报");
                 newAjax("POST", backEndURL + "/user/report.php", true, "update", {
                     type: type,
                     uid: uid,
@@ -80,7 +81,7 @@
                     parent.newMsgBox("举报成功！")
                     writeLog("i", "report.submit", "ok");
                     if ($("#block").is(":checked")) {
-                        blockUser(uid);
+                        parent.blockUser(uid);
                     }
                 }, function (data) {
                     parent.$("#sendCover").removeAttr("open");

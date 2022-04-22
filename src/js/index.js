@@ -379,3 +379,15 @@ $("body").bind("DOMNodeInserted", function () {
         })
     });
 });
+
+window.onbeforeunload = function (e) {
+    if ($(".popFrame[open=true] .inputArea").length > 0) {
+        e = e || window.event;
+        // 兼容IE8和Firefox 4之前的版本
+        if (e) {
+            e.returnValue = '关闭提示';
+        }
+        // Chrome, Safari, Firefox 4+, Opera 12+ , IE 9+
+        return '关闭提示';
+    }
+};

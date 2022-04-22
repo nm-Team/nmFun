@@ -215,7 +215,7 @@ function showUserPageContextMenu(uid, ele) {
         cMenuItems = [["编辑资料", "newLegacyBrowser('/settings/account.html', false, false)", "edit"]];
     }
     else {
-        cMenuItems = [["举报", "report('post','" + uid + "','','')", "warning"], ["屏蔽", "blockUser(" + uid + ")", "block"]];
+        cMenuItems = [["举报", "report('user','" + uid + "','','')", "warning"], ["屏蔽", "blockUser(" + uid + ")", "block"]];
     }
     createContextMenu(cMenuItems, undefined, undefined, ele);
 }

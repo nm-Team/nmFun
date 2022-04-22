@@ -825,15 +825,3 @@ if (isSafari || isiOS) $("body").attr("data-webkit", "true");
 function report(type, uid, postid = "", content = "") {
     newBrowser(`/settings/report.html?type=${type}&uid=${uid}&postid=${postid}&content=${content.substring(0, 20)}`, '', false, false, '', `<button onclick='$(\`#browserFrame{{browserId}} iframe\`)[0].contentWindow.submit(\`{{browserId}}\`)' title='提交'><i class='material-icons'>send</i></button>`);
 }
-
-window.onbeforeunload = function (e) {
-    if ($(".popFrame .inputArea").length > 0) {
-        e = e || window.event;
-        // 兼容IE8和Firefox 4之前的版本
-        if (e) {
-            e.returnValue = '关闭提示';
-        }
-        // Chrome, Safari, Firefox 4+, Opera 12+ , IE 9+
-        return '关闭提示';
-    }
-};
