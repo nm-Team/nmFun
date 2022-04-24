@@ -17,7 +17,7 @@ function initPostsList(box, attr) {
             box.html(`<div class="main inCardComments"></div><div class="mark"></div></div><div spe class="loading">${inCardCommentSkeleton}</div><div spe class="error">${postsErrorBoxHTML.replace(/{boxid}/g, box[0].id)}</div><div spe class="noone">${commentNoOne}</div>`);
             break;
         case "user_comment":
-            box.append(`<div class="main"></div><div class="mark"></div><div spe class="loading">${postSkeleton}</div><div spe class="card error">${postsErrorBoxHTML.replace(/{boxid}/g, box[0].id)}</div><div spe class="card nomore">${postsNoMoreBoxHTML}</div>`);
+            box.append(`<div class="main"></div><div class="mark"></div><div spe class="loading">${postSkeleton}</div><div spe class="card error">${postsErrorBoxHTML.replace(/{boxid}/g, box[0].id)}</div><div spe class="card nomore">${postsNoMoreBoxHTML}</div><div spe class="card noone">${userCommentNoOne}</div>`);
             break;
     }
     writeLog("i", "initPostsList", `box id: ${box[0].id},attr: ${JSON.stringify(attr)}`);
@@ -401,7 +401,8 @@ function loadPostsList(box) {
             if (box.attr("data-status") != "undefined") return -1;
             writeLog("i", "loadPostsList", "start, attr " + JSON.stringify(attr) + ",detected last cid is " + lastCid + "");
             box.attr("data-status", "loading");
-            if (attr.search.keyword) sData = { keyword: attr.search.keyword };
+            if (attr.search && attr.search.keyword) sData = { keyword: attr.search.keyword };
+            else sData = {};
             $.ajax({
                 type: "POST",
                 url: backEndURL + "/comment/listcomment.php?CodySESSION=" + localStorage.sessionid + (attr.uid ? "&user=" + attr.uid : "") + (attr.rank_type == "hot" ? "&order_by=like&order_time=DESC&from=" + startFrom : "&order_by=cid&order_time=" + attr.rank_type.toUpperCase() + "&cid=" + lastCid),
@@ -880,6 +881,8 @@ followNoOneHTML = `
 blockListNoOne = `<div class="unavaliable small" noselect><i></i><p>你还没有屏蔽任何用户</p></div>`;
 
 commentNoOne = `<div class="unavaliable small" noselect><i></i><p>还没有评论，快来第一个发言吧</p></div>`;
+
+userCommentNoOne = `<div class="unavaliable small" noselect><i></i><p>没有找到评论</p></div>`;
 
 function setMedia(mediaJson, pid = 0) {
     try {

@@ -30,7 +30,7 @@ $.ajax({
             // 保存身份组和名单
             roleList = response['info']['role'];
             blockList = response['info']['blocklist'];
-            if (response['my_role'] != "user") {
+            if (response['my_role'] && response['my_role'] != "user") {
                 myRole = response['my_role'];
                 writeLog("i", "get backend site info", "my role is " + myRole);
                 $("body").attr("data-admin", "true");
@@ -302,7 +302,7 @@ function search() {
     if (sWord.replace(/ /g, "").length < 3) return newMsgBox("请至少搜索 3 个字符");
     initPostsList($(`#sRes_all`), { "type": "post", "search": { "type": "all", "keyword": sWord }, "order": { "time": sRankTime, "type": sRankType }, "noOther": true });
     initPostsList($(`#sRes_post`), { "type": "post", "search": { "type": "post", "keyword": sWord }, "order": { "time": sRankTime, "type": sRankType }, "noOther": true });
-    initPostsList($(`#sRes_comment`), {  "type": "user_comment", "search": { "keyword": sWord }, "rank_type": sCommentRankType, "noOther": true });
+    initPostsList($(`#sRes_comment`), { "type": "user_comment", "search": { "keyword": sWord }, "rank_type": sCommentRankType, "noOther": true });
     initPostsList($(`#sRes_user`), { "type": "search", "search": { "type": "user", "keyword": sWord }, "noOther": true });
     $("#sType :checked")[0].click();
     writeLog("i", "search", "search_" + sWord + "_" + $("#sType :checked")[0].innerHTML);
@@ -351,7 +351,7 @@ function showSwitchSearchRankTypeContextMenu() {
     createContextMenu(sSRTCMI, true, true, sRankTimeR);
 }
 
-sCommentRankType="hot";
+sCommentRankType = "hot";
 
 function switchSearchCommentRankType(typeId) {
     sCommentRankType = typeId;
