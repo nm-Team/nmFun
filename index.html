@@ -108,13 +108,16 @@
                             <div class="typeSelecter" id="sType" fly="true">
                                 <span class="left">
                                     <label for="sTypeR_all"><input type="radio" id="sTypeR_all" name="sTypeR"
-                                            onclick="sFilterRight.style.display='block';focusInPostsList($('#searchResults'),$('#sRes_all'));"
+                                            onclick="focusInPostsList($('#searchResults'),$('#sRes_all'));$('#sType .right').css('display', 'none');sFilterRight.style.display='block';"
                                             checked><span>全部</span></label>
                                     <label for="sTypeR_post"><input type="radio" id="sTypeR_post"
-                                            onclick=";sFilterRight.style.display='block';focusInPostsList($('#searchResults'),$('#sRes_post'))"
+                                            onclick="focusInPostsList($('#searchResults'),$('#sRes_post'));$('#sType .right').css('display', 'none');sFilterRight.style.display='block';"
                                             name="sTypeR"><span>帖子</span></label>
+                                    <label for="sTypeR_comment"><input type="radio" id="sTypeR_comment"
+                                            onclick="focusInPostsList($('#searchResults'),$('#sRes_comment'));$('#sType .right').css('display', 'none');sCommentFilterRight.style.display='block';"
+                                            name="sTypeR"><span>评论</span></label>
                                     <label for="sTypeR_user"><input type="radio" id="sTypeR_user"
-                                            onclick="sFilterRight.style.display='none';focusInPostsList($('#searchResults'),$('#sRes_user'));"
+                                            onclick="focusInPostsList($('#searchResults'),$('#sRes_user'));$('#sType .right').css('display', 'none');"
                                             name="sTypeR"><span>用户</span></label>
                                 </span>
                                 <span class="right" id="sFilterRight">
@@ -126,6 +129,15 @@
                                     <label class="noFocus" for="sRankTimeR" onkeydown="divClick(this, event)"><input
                                             type="radio" id="sRankTimeR" onclick="switchSearchRankTime()"
                                             name="sRankTimeR"><span>倒序</span></label>
+                                </span>
+                                <span class="right" id="sCommentFilterRight" style="display: none;">
+                                    <label class="noFocus" for="sCommentRankTypeR"
+                                        onclick="showSwitchSearchCommentRankTypeContextMenu()" onkeydown="if(event.keyCode == 13) setTimeout(() => {
+                                             showSwitchSearchCommentRankTypeContextMenu()
+                                        }, 20);"><input type="radio" id="sCommentRankTypeR"
+                                            name="sCommentRankTypeR"><span>热门</span></label>
+                                    <label style="visibility: hidden;" class="noFocus" for="sCommentHiddenR"><input
+                                            type="radio" id="sCommentHiddenR" name="sCommentHiddenR"></label>
                                 </span>
                             </div>
                         </div>
@@ -249,8 +261,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="adminFrame leftBox box bottomBarTarget" id="adminFrame" data-bar-page-id="admin"
-                    name="管理面板" totallyclose="false" con="gone">
+                <div class="adminFrame leftBox box bottomBarTarget" id="adminFrame" data-bar-page-id="admin" name="管理面板"
+                    totallyclose="false" con="gone">
                     <header>
                         <div class="left">
                             <button class="backButton" title="返回" onclick="closeBox('pageLeft','adminFrame',false);"

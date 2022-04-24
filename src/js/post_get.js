@@ -320,7 +320,7 @@ function loadPostsList(box) {
             onkeydown="divClick(this, event)"><i
                 style="background-image:url('${avatarURL.replace(/{id}/g, info.user.uid)}"></i>
             <div>
-                <p class="unick">${info.is_author ? `<span class="usertag border">楼主</span>` : ""}${getNickHTML(info.user)}</p>
+                <p class="unick">${info.user.nick}${info.is_author ? `<span class="usertag border">楼主</span>` : ""}${getNickHTML(info.user, { "nick": false })}</p>
                 <p class="time" time="true" timestamp="${info.time}" timestyle="relative"
                     timesec="false" timefull="false"></p>
             </div>
@@ -401,11 +401,12 @@ function loadPostsList(box) {
             if (box.attr("data-status") != "undefined") return -1;
             writeLog("i", "loadPostsList", "start, attr " + JSON.stringify(attr) + ",detected last cid is " + lastCid + "");
             box.attr("data-status", "loading");
+            if (attr.search.keyword) sData = { keyword: attr.search.keyword };
             $.ajax({
                 type: "POST",
-                url: backEndURL + "/comment/listcomment.php?CodySESSION=" + localStorage.sessionid + "&user=" + attr.uid + (attr.rank_type == "hot" ? "&order_by=like&order_time=DESC&from=" + startFrom : "&order_by=cid&order_time=" + attr.rank_type.toUpperCase() + "&cid=" + lastCid),
+                url: backEndURL + "/comment/listcomment.php?CodySESSION=" + localStorage.sessionid + (attr.uid ? "&user=" + attr.uid : "") + (attr.rank_type == "hot" ? "&order_by=like&order_time=DESC&from=" + startFrom : "&order_by=cid&order_time=" + attr.rank_type.toUpperCase() + "&cid=" + lastCid),
                 async: true,
-                data: {},
+                data: sData,
                 dataType: "json",
                 success: function (response, status, request) {
                     writeLog("i", "loadPostsList get backend response", JSON.stringify(response));
@@ -424,7 +425,7 @@ function loadPostsList(box) {
             <div class="name"><i
                     style="background-image:url('${avatarURL.replace(/{id}/g, info.user.uid)}"></i>
                 <div>
-                    <p class="unick">${getNickHTML(info.user)}</p>
+                <p class="unick">${info.user.nick}${info.is_author ? `<span class="usertag border">楼主</span>` : ""}${getNickHTML(info.user, { "nick": false })}</p>
                     <p class="time" time="true" timestamp="${info.time}" timestyle="relative"
                         timesec="false" timefull="false"></p>
                 </div>

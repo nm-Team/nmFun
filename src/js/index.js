@@ -285,6 +285,7 @@ function initSearch() {
     <div id="searchResultsContainer" class="cardsListsContainer">
         <div id="sRes_all"></div>
         <div id="sRes_post"></div>
+        <div id="sRes_comment"></div>
         <div id="sRes_user"></div>
     </div>
     <div class="postMainReal card avatarBox" id="sBoxDefault">
@@ -301,6 +302,7 @@ function search() {
     if (sWord.replace(/ /g, "").length < 3) return newMsgBox("请至少搜索 3 个字符");
     initPostsList($(`#sRes_all`), { "type": "post", "search": { "type": "all", "keyword": sWord }, "order": { "time": sRankTime, "type": sRankType }, "noOther": true });
     initPostsList($(`#sRes_post`), { "type": "post", "search": { "type": "post", "keyword": sWord }, "order": { "time": sRankTime, "type": sRankType }, "noOther": true });
+    initPostsList($(`#sRes_comment`), {  "type": "user_comment", "search": { "keyword": sWord }, "rank_type": sCommentRankType, "noOther": true });
     initPostsList($(`#sRes_user`), { "type": "search", "search": { "type": "user", "keyword": sWord }, "noOther": true });
     $("#sType :checked")[0].click();
     writeLog("i", "search", "search_" + sWord + "_" + $("#sType :checked")[0].innerHTML);
@@ -347,6 +349,22 @@ function showSwitchSearchRankTypeContextMenu() {
         sSRTCMI.push([sRankTypeJSON[i]['name'], "switchSearchRankType('" + i + "')", (i == sRankType ? "checked" : sRankTypeJSON[i]['icon'])]);
     }
     createContextMenu(sSRTCMI, true, true, sRankTimeR);
+}
+
+sCommentRankType="hot";
+
+function switchSearchCommentRankType(typeId) {
+    sCommentRankType = typeId;
+    $("#sCommentRankTypeR+span").html(commentRankTypeJSON[typeId]['name']);
+    search();
+}
+
+function showSwitchSearchCommentRankTypeContextMenu() {
+    sSRTCMI = [];
+    for (var i in commentRankTypeJSON) {
+        sSRTCMI.push([commentRankTypeJSON[i]['name'], "switchSearchCommentRankType('" + i + "')", (i == sCommentRankType ? "checked" : commentRankTypeJSON[i]['icon'])]);
+    }
+    createContextMenu(sSRTCMI, true, true, sCommentHiddenR);
 }
 
 clickTestField = 0;
