@@ -73,7 +73,7 @@ function sendPost(div, postType, onSuccess) {
 function attachmentUpload(div, pid, postType, onSuc, onErr) {
     if (div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m").length == 0) {
         onSuc(pid);
-        return newPostDetailPage(pid);
+        if (postType == "post") return newPostDetailPage(pid);
     }
     mediaUploadSta = Array(0);
     for (i = 0; i < div.getElementsByClassName("mediasBox")[0].getElementsByClassName("m").length; i++) {

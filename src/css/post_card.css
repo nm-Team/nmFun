@@ -214,6 +214,11 @@ body[theme=dark]{
     flex-wrap: wrap;
     overflow: hidden;
 }
+@media (min-width: 650px) {
+    .cardBox.postCardBox .content .media .medias:not([type=x3]) {
+        max-width: calc(100% / 1.5);
+    }    
+}
 .cardBox.postCardBox .content .media .medias li, .cardBox.postCardBox .content .media .medias:after{
     height: 0;
     color: #00000000;
@@ -479,10 +484,13 @@ body[theme=dark]{
 .card.interactionBar button[on]{
     font-size: bold;
 }
-.card.comments{
+.inCardComments .comment .header{
+    margin-bottom: 2rem;
+    align-items: center;
 }
-.card.comments .comment{
-    
+.inCardComments .comment .bottom{
+    margin-top: -3rem;
+    margin-bottom: 4rem;
 }
 .card.comments .comment .content{
     padding-left: 36rem;

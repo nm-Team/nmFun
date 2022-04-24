@@ -14,7 +14,7 @@ function initPostsList(box, attr) {
             box.append(`<div class="card avatarBox"><div class="main"></div><div class="mark"></div><div spe class="loading">${uListSkeleton}</div><div spe class="error">${postsErrorBoxHTML.replace(/{boxid}/g, box[0].id)}</div><div spe class="noone">${blockListNoOne}</div></div>`);
             break;
         case "post_comment":
-            box.html(`<div class="main"></div><div class="mark"></div></div><div spe class="loading">${inCardCommentSkeleton}</div><div spe class="error">${postsErrorBoxHTML.replace(/{boxid}/g, box[0].id)}</div><div spe class="noone">${commentNoOne}</div>`);
+            box.html(`<div class="main inCardComments"></div><div class="mark"></div></div><div spe class="loading">${inCardCommentSkeleton}</div><div spe class="error">${postsErrorBoxHTML.replace(/{boxid}/g, box[0].id)}</div><div spe class="noone">${commentNoOne}</div>`);
             break;
         case "user_comment":
             box.append(`<div class="main"></div><div class="mark"></div><div spe class="loading">${postSkeleton}</div><div spe class="card error">${postsErrorBoxHTML.replace(/{boxid}/g, box[0].id)}</div><div spe class="card nomore">${postsNoMoreBoxHTML}</div>`);
@@ -421,14 +421,14 @@ function loadPostsList(box) {
                             new_element.innerHTML = `
     <div class="comment card avatarBox postCard" data-type="comment" data-commentid="${info.cid}" data-commentlist-comment-uid="${info.user.uid}" >
         <div class="header">
-            <a class="name" tabindex="0"><i
+            <div class="name"><i
                     style="background-image:url('${avatarURL.replace(/{id}/g, info.user.uid)}"></i>
                 <div>
                     <p class="unick">${getNickHTML(info.user)}</p>
                     <p class="time" time="true" timestamp="${info.time}" timestyle="relative"
                         timesec="false" timefull="false"></p>
                 </div>
-            </a>
+            </div>
             <div class="buttons">
                 <button onclick="postContextMenu('comment', '${info.cid}', '${info.content.substr(0, 30)}', ${info.user.uid}, this);" title="选项"><i
                         class="material-icons">more_vert</i></button>
@@ -642,7 +642,8 @@ function refreshPostArea(pid) {
             $(`#postFrame${pid} .likeReal`).html(likeListHTML);
             setTimeTexts();
             // 设置评论
-            commentRankType[pid] = "hot";
+            if (!localStorage.commentDefaultRank) localStorage.commentDefaultRank = "hot";
+            commentRankType[pid] = localStorage.commentDefaultRank;
             initPostsListMonitor($(`#postFrame${pid}`));
             initPostsList($(`#postFrame${pid} .commentsReal`), { "type": "post_comment", "post_id": pid, "rank_type": commentRankType[pid] });
             focusInPostsList($(`#postFrame${pid}`), $(`#postFrame${pid} .commentsReal`));
@@ -686,6 +687,7 @@ commentRankTypeJSON = {
 };
 
 function switchCommentRankType(pid, typeId) {
+    localStorage.commentDefaultRank = typeId;
     commentRankType[pid] = typeId;
     initPostsList($(`#postFrame${pid} .commentsReal`), { "type": "post_comment", "post_id": pid, "rank_type": commentRankType[pid] });
     loadPostsList($(`#postFrame${pid} .commentsReal`));

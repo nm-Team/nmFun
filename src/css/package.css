@@ -19,6 +19,9 @@ body[theme=dark]{
 .indexFrame{
     overflow: overlay;
 }
+body:not([data-admin=true]) [data-admin-option]{
+    display: none;
+}
 .indexSwiper{
     height: 150rem;
     margin: 0 10rem!important;
