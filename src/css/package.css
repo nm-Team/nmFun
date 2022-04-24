@@ -292,6 +292,7 @@ body[theme=dark]{
     color: var(--stksCos);
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 .stickersChoose[open=true]{
     height: min(300rem, 50vh)!important;
@@ -333,19 +334,23 @@ body[theme=dark]{
     max-height: 60rem;
 }
 .stickersChoose .bar{
-    height: 49rem;
+    height: 0;
     padding: 0 20rem;
     flex-shrink: 0;
     border-top-style: 1rem solid var(--stksCosBor);
     overflow-x: auto;
     overflow-x: overlay;
     overflow-y: hidden;
+    transition: height 0.4s;
+}
+.stickersChoose[open=true] .bar{
+    height: 49rem;
 }
 .stickersChoose .bar button{
     background: none;
     margin: 5rem 2.5rem 0 5rem;
     width: 34rem;
-    height: 34rem;
+    height: min(90%,34rem);
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -409,4 +414,27 @@ img[data-type=sticker][data-size=big]{
     margin: 0;
     color: var(--stksCos);
     text-align: center;
+}
+.formatDrawer[open=true]{
+    height: 40rem !important;
+    padding: 0 20rem;
+    overflow-y: hidden;
+    overflow-x: auto;
+    overflow-x: overlay;
+}
+.formatDrawer button{
+    width: 35rem;
+    height: 35rem;
+    margin: 2.5rem 3rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--header-buttoncolor);
+    border-radius: 50%;
+}
+.formatDrawer button:hover, .formatDrawer button:focus-visible{
+    background-color: var(--header-buttoncolor-hover);
+}
+.formatDrawer button i{
+    font-size: 21rem;
 }

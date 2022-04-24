@@ -21,7 +21,7 @@ function newUserInfoPage(uid, uNick, noOther = false) {
             focusBox("pageRight", "userInfoFrame_" + uid, noOther);
             initPostsListMonitor($(`#userPage_${uid}_postsListScrollMonitor`));
             initPostsList($(`#userPage_${uid}_postsList_posts`), { "type": "post", "search": { "uid": uid }, "noOther": "false" });
-            initPostsList($(`#userPage_${uid}_postsList_comments`), { "type": "comment", "search": { "uid": uid }, "noOther": "false" });
+            initPostsList($(`#userPage_${uid}_postsList_comments`), { "type": "user_comment", "uid": uid, "rank_type": "DESC" });
             refreshUserInfoArea(uid);
             focusInPostsList($(`#userPage_${uid}_postsListScrollMonitor`), $(`#userPage_${uid}_postsList_info`));
             refreshFloatFrameOnScroll();
@@ -64,12 +64,15 @@ function refreshUserInfoArea(uid) {
             else {
                 loadPostsList($(`#userPage_${uid}_postsList_posts`));
             }
-            if (uid == myUid) {
-                $("[data-mypoint]").html(pData['point']);
-            }
             if (pData['hide_comment'] == 1) {
                 $(`#userPage_${uid}_postsList_comments`).attr("data-config", JSON.stringify({ "type": "undefined" }));
                 $(`#userPage_${uid}_postsList_comments`).html(`<div class="card" noselect><div class="content"><center>根据用户的隐私设置，你无法查看他发布的评论。</center></div></div>`);
+            }
+            else {
+                loadPostsList($(`#userPage_${uid}_postsList_comments`));
+            }
+            if (uid == myUid) {
+                $("[data-mypoint]").html(pData['point']);
             }
         }
         else {

@@ -318,6 +318,23 @@ body[theme=dark]{
 .cardBox.postCardBox .bottom{
     align-items: center;
 }
+.cardBox .noteArea:not(:empty){
+    padding: 9rem 10rem;
+    border-radius: 6rem;
+    font-size: 13.5rem;
+    color: var(--card);
+    background-color: var(--page-bgcolor);
+}
+.cardBox .noteArea:not(:empty) *{
+    font-size: 13.5rem;
+    color: var(--card);
+    background: none;
+}
+.cardBox .noteArea:not(:empty) button{
+    display: block;
+    width: 100%;
+    text-align: left;
+}
 .cardBox.postCardBox .bottom .buttons button{
     display: inline-flex;
     margin: 0 0rem 0rem 4rem;
@@ -377,6 +394,9 @@ body[theme=dark]{
 }
 [data-mobile=true]:not([data-funapp=true]) .postFrame .main{
     padding-bottom: 100rem;
+}
+.postFrame .postsListBar{
+    bottom: 56rem;
 }
 .viewer-backdrop{
     background-color: rgba(0,0,0);
@@ -460,7 +480,6 @@ body[theme=dark]{
     font-size: bold;
 }
 .card.comments{
-
 }
 .card.comments .comment{
     
@@ -635,7 +654,7 @@ body[theme=dark]{
     flex-direction: column;
     overflow: hidden!important;
 }
-.inputArea.comment *[hideincomment]{
+.inputArea.comment *[hideincomment], .inputArea.post *[hideinpost]{
     display: none;
 }
 .inputArea .categoryAndTitle{
@@ -685,6 +704,19 @@ body[theme=dark]{
     background-color: var(--type-selecter-bgcolor);
     border: none;
     border-radius: 0 6rem 6rem 0;
+    box-shadow: none;
+}
+.inputArea .replyTip{
+    padding: 9rem 15rem;
+    font-size: 15rem;
+    flex-grow: 1;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    color: var(--inputArea-select);
+    background-color: var(--type-selecter-bgcolor);
+    border: none;
+    border-radius: 6rem;
     box-shadow: none;
 }
 .inputArea .textarea{

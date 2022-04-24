@@ -197,8 +197,9 @@
                                 </div>
                             </div>
                             <div class="lists myPageLogRequireButtons" id="myActions">
-                                <div class="but" onclick="newMsgBox('开发中')" tabindex="0"
-                                    onkeydown="divClick(this, event)">
+                                <div class="but"
+                                    onclick="if(!newUserInfoPage(myInfos.uid, myInfos.nick));$('#uPage_'+myInfos.uid+'_s_replies')[0].click();"
+                                    tabindex="0" onkeydown="divClick(this, event)">
                                     <icon class="material-icons" style="color: #000000; background: #eee">comment
                                     </icon>
                                     <t>评论</t>
@@ -315,7 +316,9 @@
                         class="material-icons">save</i></button>
                 <button onclick="alert('确定要清空草稿箱并清空当前键入内容吗？','提示','好','dropCraft(commentEditBox,`comment`)','取消')"
                     title="清空输入内容并清空草稿箱"><i class="material-icons">delete_forever</i></button>
-                <button onclick=""><i class="material-icons">send</i></button>
+                <button
+                    onclick="sendPost(commentEditBox,'comment',function(){showPostInput('comment',false);newMsgBox('评论发送成功！');dropCraft(commentEditBox,`comment`);setPostInputArea(commentEditBox, 'comment');})"><i
+                        class="material-icons">send</i></button>
             </div>
         </header>
         <div class="content" id="commentEditBox">

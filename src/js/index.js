@@ -338,7 +338,7 @@ function switchSearchRankType(typeId) {
 function showSwitchSearchRankTypeContextMenu() {
     sSRTCMI = [];
     for (var i in sRankTypeJSON) {
-        sSRTCMI.push([sRankTypeJSON[i]['name'], "switchSearchRankType('" + i + "')", sRankTypeJSON[i]['icon']]);
+        sSRTCMI.push([sRankTypeJSON[i]['name'], "switchSearchRankType('" + i + "')", (i == sRankType ? "checked" : sRankTypeJSON[i]['icon'])]);
     }
     createContextMenu(sSRTCMI, true, true, sRankTimeR);
 }

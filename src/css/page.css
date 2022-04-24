@@ -71,10 +71,10 @@ body{
     scrollbar-width: thin;
     font-family: PingFang SC,Microsoft Yahei,HanHei SC,Arial;
 }
-*[scroll=true], *[scroll=true] *{
+*{
     scroll-behavior: smooth;
 }
-a {
+a{
     color: inherit;
     text-decoration: none;
 }
@@ -84,7 +84,7 @@ body[transitioncolor], body[transitioncolor] *{
 *::selection{
     background-color: var(--selection-bgcolor);
 }
-:focus-visible {
+:focus-visible{
     outline: var(--outline);
     outline-offset: 1rem;
 }
@@ -425,6 +425,10 @@ header .nameDiv .little{
 ::-webkit-scrollbar-thumb{
     border-radius: 10rem;
     background: var(--scroller-grey);
+}
+*:not(:hover):not(:focus):not(:active)::-webkit-scrollbar-thumb{
+    background-color: #00000000;
+    transition: all 1s;
 }
 body *[scroll=hidden]::-webkit-scrollbar-thumb{
     background: none;

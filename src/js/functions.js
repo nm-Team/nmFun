@@ -736,7 +736,20 @@ function jumpStickers(divId, setId) {
 }
 
 function addStickerToEditBox(targetInput, pakId, pakSize, stkId, src) {
-    $(`#${targetInput} .sendBoxInput`).append(`<img data-type="sticker" data-setname="${pakId}" data-stickerid="${stkId}" data-size="${pakSize}" src="${src}" noselect oncontextmenu="return false;">`);
+    htmlW = document.createElement("img");
+    htmlW.setAttribute("data-type", "sticker");
+    htmlW.setAttribute("data-setname", pakId);
+    htmlW.setAttribute("data-stickerid", stkId);
+    htmlW.setAttribute("data-size", pakSize);
+    htmlW.setAttribute("src", src);
+    try {
+        newE = window.getSelection().baseNode.splitText(window.getSelection().baseOffset);
+        window.getSelection().baseNode.parentNode.insertBefore(htmlW, newE);
+    }
+    catch (err) {
+        console.log(err);
+        $("#" + targetInput+" .sendBoxInput").append(htmlW);
+    }
 }
 
 function showStickerSet(json) {
