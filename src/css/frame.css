@@ -113,7 +113,7 @@ body{
         position: relative;
         width: 48rem;
         height: 48rem;
-        margin: 1rem 10rem;
+        margin: 1rem 0rem;
         border-radius: 50%;
         transition: all 0.5s;
         overflow: hidden;

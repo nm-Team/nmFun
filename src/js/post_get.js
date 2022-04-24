@@ -320,7 +320,7 @@ function loadPostsList(box) {
             onkeydown="divClick(this, event)"><i
                 style="background-image:url('${avatarURL.replace(/{id}/g, info.user.uid)}"></i>
             <div>
-                <p class="unick">${getNickHTML(info.user)}</p>
+                <p class="unick">${info.is_author ? `<span class="usertag border">楼主</span>` : ""}${getNickHTML(info.user)}</p>
                 <p class="time" time="true" timestamp="${info.time}" timestyle="relative"
                     timesec="false" timefull="false"></p>
             </div>

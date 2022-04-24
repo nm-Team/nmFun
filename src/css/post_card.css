@@ -397,9 +397,6 @@ body[theme=dark]{
 .postBox{
     padding-bottom: 60rem;
 }
-[data-mobile=true]:not([data-funapp=true]) .postFrame .main{
-    padding-bottom: 100rem;
-}
 .postFrame .postsListBar{
     bottom: 56rem;
 }
@@ -491,6 +488,9 @@ body[theme=dark]{
 .inCardComments .comment .bottom{
     margin-top: -3rem;
     margin-bottom: 4rem;
+}
+.inCardComments .comment .media .medias:not(:empty){
+    margin-bottom: 6rem;
 }
 .card.comments .comment .content{
     padding-left: 36rem;
