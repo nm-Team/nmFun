@@ -485,14 +485,15 @@ function loadPostsList(box) {
                             new_element.innerHTML = `
     <div class="comment card avatarBox postCard" data-type="comment" data-commentid="${info.cid}" data-commentlist-comment-uid="${info.user.uid}" >
         <div class="header">
-            <div class="name"><i
+            <a class="name" tabindex="0" onclick="newUserInfoPage('${info.user.uid}', '${info.user.nick}');"
+        onkeydown="divClick(this, event)"><i
                     style="background-image:url('${avatarURL.replace(/{id}/g, info.user.uid)}"></i>
                 <div>
                 <p class="unick">${info.user.nick}${info.is_author ? `<span class="usertag border">楼主</span>` : ""}${getNickHTML(info.user, { "nick": false })}</p>
-                    <p class="time" time="true" timestamp="${info.time}" timestyle="relative"
+                <p class="time" time="true" timestamp="${info.time}" timestyle="relative"
                         timesec="false" timefull="false"></p>
                 </div>
-            </div>
+            </a>
             <div class="buttons">
                 <button onclick="postContextMenu('comment', '${info.cid}', '${info.content.substr(0, 30)}', ${info.user.uid}, this);" title="选项"><i
                         class="material-icons">more_vert</i></button>
@@ -500,9 +501,10 @@ function loadPostsList(box) {
         </div>
         <div class="content">
             <p class="status"></p>
+            <a href="${siteURL + "#comment_" + info.cid}" target="_blank" onclick="newCommentDetailPage('${info.cid}'); return false;" class="text" title="点击来进入评论页面">
             <object class="slug">
                 <p class="slugWord">${contentFormat(info.content)}</p>
-            </object>
+            </object></a>
             <div class="media">
             <ui class="medias" id="tes" type="x${medias.mNum}">${medias.mediasHTML}</ui>
             ${medias.specialMediasHTML}
@@ -631,6 +633,8 @@ function newCommentDetailPage(cid, noOther = false) {
             initPostsList($(`#commentDetailFrame${cid} .commentsReal`), { "type": "post_comment", "rid": cid, "rank_type": commentDetailRankType[cid] });
             focusInPostsList($(`#commentDetailFrame${cid}`), $(`#commentDetailFrame${cid} .commentsReal`));
             loadPostsList($(`#commentDetailFrame${cid} .commentsReal`));
+            shareLink = siteURL + "#comment_" + cid;
+            $(`#shareFrame_comment_${cid} .ways`).html(shareTemplate.replace(/{{shareLink}}/g, shareLink).replace(/{{shareLinkEscaped}}/g, escape(shareLink)).replace(/{{title}}/g, escape("评论")));
         }
     }
     catch (err) {
@@ -911,14 +915,14 @@ commentDetailFrameTemplate = `
     <button onclick="showShareFrame('shareFrame_comment_{{cid}}');" class="share"><i class="material-icons">share</i></button>
     </div>
 </div>
-<div class="shareFrame cardBox" id="shareFrame_comment_{{pid}}">
+<div class="shareFrame cardBox" id="shareFrame_comment_{{cid}}">
     <div class="card" noselect>
         <div class="title">分享</div>
         <div class="ways">加载中…
         </div>
     </div>
 </div>
-<div class="sFrameHover" onclick="$('#shareFrame_comment_{{pid}}').attr('data-open','false')"></div>
+<div class="sFrameHover" onclick="$('#shareFrame_comment_{{cid}}').attr('data-open','false')"></div>
 </div>
 `;
 
