@@ -397,7 +397,7 @@ body[theme=dark]{
 .postBox{
     padding-bottom: 60rem;
 }
-.postFrame .postsListBar{
+.postFrame .postsListBar, .commentDetailFrame .postsListBar{
     bottom: 62rem;
 }
 .viewer-backdrop{

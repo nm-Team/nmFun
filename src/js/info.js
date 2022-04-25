@@ -8,7 +8,7 @@ debugMode = true;
 systemCategoryList = [{ "id": "focus", "name": "关注" }, { "id": "", "name": "全部" }, { "id": "selected", "name": "精选" }, { "id": "hot", "name": "热榜" }]
 version = {
     version: "0.3_dev",
-    versionNum: "99.68.1",
+    versionNum: "99.69",
     branch: "co_refresh",
     betaVersion: true
 }

@@ -298,7 +298,7 @@ function loadPostsList(box) {
             box.attr("data-status", "loading");
             $.ajax({
                 type: "POST",
-                url: backEndURL + "/comment/listcomment.php?CodySESSION=" + localStorage.sessionid + "&pid=" + attr.post_id + (attr.rank_type == "hot" ? "&order_by=like&order_time=DESC&from=" + startFrom : "&order_by=cid&order_time=" + attr.rank_type.toUpperCase() + "&cid=" + lastCid),
+                url: backEndURL + "/comment/listcomment.php?CodySESSION=" + localStorage.sessionid + ("&pid=" + attr.post_id) + ("&rid=" + attr.rid) + (attr.rank_type == "hot" ? "&order_by=like&order_time=DESC&from=" + startFrom : "&order_by=cid&order_time=" + attr.rank_type.toUpperCase() + "&cid=" + lastCid),
                 async: true,
                 data: {},
                 dataType: "json",
@@ -308,6 +308,67 @@ function loadPostsList(box) {
                         if (response['error_hidden']) return box.html(`<div class="card" noselect><div class="content"><center>根据用户的隐私设置，你无法查看他的帖子。</center></div></div>`);
                         else
                             return newMsgBox("抱歉，加载帖子时出现问题。<br />" + response['info']);
+                    }
+                    if (response['origin_comment']) {
+                        $(`#commentDetailFrame${attr.rid} .fakeInput`).attr("onclick", "comment('" + response['origin_comment'].pid + "'," + attr.rid + ",'" + response['origin_comment']['user']['nick'] + "')");
+                        info = response['origin_comment'];
+                        $("#commentDetailFrame" + attr.rid + " .oriComment").html(`
+<div class="card avatarBox comment" data-type="comment" data-commentid="${info.cid}" data-commentlist-comment-uid="${info.user.uid}" ${blockList.indexOf(String(info.user.uid)) > -1 || blockList.indexOf(Number(info.user.uid)) > -1 ? "style='display: none'" : ""}>
+    <div class="noteArea" style="margin-bottom: 6rem;">
+        <button class="originPost" onclick="newPostDetailPage('${info.pid}'); return false;">${info.post_slug ? "<b>原帖：</b>" + info.post_slug : "原帖不存在"}</button>
+    </div>
+    <div class="header">
+        <a class="name" tabindex="0" onclick="newUserInfoPage('${info.user.uid}', '${info.user.nick}');"
+            onkeydown="divClick(this, event)"><i
+                style="background-image:url('${avatarURL.replace(/{id}/g, info.user.uid)}"></i>
+            <div>
+                <p class="unick">${info.user.nick}${info.is_author ? `<span class="usertag border">楼主</span>` : ""}${getNickHTML(info.user, { "nick": false })}</p>
+                <p class="time" time="true" timestamp="${info.time}" timestyle="relative"
+                    timesec="false" timefull="false"></p>
+            </div>
+        </a>
+        <div class="buttons">
+            <button hidden onclick="postContextMenu('comment', '${info.cid}', '${info.content.substr(0, 30)}', ${info.user.uid}, this);" title="选项"><i
+                    class="material-icons">more_vert</i></button>
+        </div>
+    </div>
+    <div class="content">
+        <p class="status"></p>
+        <object class="slug">
+            <p class="slugWord">${contentFormat(info.content)}</p>
+        </object>
+        <div class="media">
+        <ui class="medias" id="tes" type="x${medias.mNum}">${medias.mediasHTML}</ui>
+        ${medias.specialMediasHTML}
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="word">
+        </div>
+        <div class="buttons">
+            <button onclick="likePost('comment',$(this),'${info.cid}')" class="likeButton" data-like-comment-id="${info.cid}" data-status="${(info.i ? "yes" : "no")}" title="点赞">
+                <svg class="no" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M757.76 852.906667c36.906667-0.021333 72.832-30.208 79.296-66.56l51.093333-287.04c10.069333-56.469333-27.093333-100.522667-84.373333-100.096l-10.261333 0.085333a19972.266667 19972.266667 0 0 1-52.842667 0.362667 3552.853333 3552.853333 0 0 1-56.746667 0l-30.997333-0.426667 11.498667-28.8c10.24-25.642667 21.76-95.744 21.504-128.021333-0.618667-73.045333-31.36-114.858667-69.290667-114.410667-46.613333 0.554667-69.461333 23.466667-69.333333 91.136 0.213333 112.661333-102.144 226.112-225.130667 225.109333a1214.08 1214.08 0 0 0-20.629333 0l-3.52 0.042667c-0.192 0 0.64 409.109333 0.64 409.109333 0-0.085333 459.093333-0.490667 459.093333-0.490666z m-17.301333-495.914667a15332.288 15332.288 0 0 0 52.693333-0.362667l10.282667-0.085333c84.010667-0.618667 141.44 67.52 126.72 150.250667L879.061333 793.813333c-10.090667 56.661333-63.68 101.696-121.258666 101.76l-458.922667 0.384A42.666667 42.666667 0 0 1 256 853.546667l-0.853333-409.173334a42.624 42.624 0 0 1 42.346666-42.730666l3.669334-0.042667c5.909333-0.064 13.12-0.064 21.333333 0 98.176 0.789333 182.293333-92.437333 182.144-182.378667C504.469333 128.021333 546.24 86.186667 616.106667 85.333333c65.173333-0.768 111.68 62.506667 112.448 156.714667 0.256 28.48-6.848 78.826667-15.701334 115.050667 8.021333 0 17.28-0.042667 27.584-0.106667zM170.666667 448v405.333333h23.466666a21.333333 21.333333 0 0 1 0 42.666667H154.837333A26.709333 26.709333 0 0 1 128 869.333333v-437.333333c0-14.784 12.074667-26.666667 26.773333-26.666667h38.912a21.333333 21.333333 0 0 1 0 42.666667H170.666667z"></path>
+                </svg>
+                <svg class="yes" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M710.549333 384.810667a12409.045333 12409.045333 0 0 0 47.466667-0.32l8.746667-0.085334c83.989333-0.618667 141.44 67.584 126.72 150.229334L847.296 794.026667c-10.026667 56.448-63.914667 101.546667-121.130667 101.589333L298.624 896a42.730667 42.730667 0 0 1-42.666667-42.410667l-0.810666-383.978666a42.666667 42.666667 0 0 1 42.026666-42.666667l3.157334-0.064c5.226667-0.042667 11.797333-0.042667 19.626666 0 91.946667 0.768 170.88-86.698667 170.709334-170.944-0.149333-86.741333 39.786667-126.762667 106.453333-127.573333 62.250667-0.746667 106.602667 59.605333 107.349333 149.12 0.213333 26.602667-6.293333 73.237333-14.506666 107.434666 6.186667 0 13.077333-0.042667 20.586666-0.085333z m-497.706666 63.232L213.333333 874.624A21.312 21.312 0 0 1 191.786667 896H149.525333A21.333333 21.333333 0 0 1 128 874.624l0.042667-426.581333A21.269333 21.269333 0 0 1 149.44 426.666667h41.984c11.669333 0 21.418667 9.578667 21.418667 21.376z" p-id="4969"></path>
+                </svg>
+                <span class="likeNum" data-like-num-comment-id="${info.cid}">${info.like}</span>
+            </button>
+            <button onclick="dislikePost('comment','${info.cid}')" class="unlikeButton" title="不喜欢">
+                <svg class="no" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M757.76 852.906667c36.906667-0.021333 72.832-30.208 79.296-66.56l51.093333-287.04c10.069333-56.469333-27.093333-100.522667-84.373333-100.096l-10.261333 0.085333a19972.266667 19972.266667 0 0 1-52.842667 0.362667 3552.853333 3552.853333 0 0 1-56.746667 0l-30.997333-0.426667 11.498667-28.8c10.24-25.642667 21.76-95.744 21.504-128.021333-0.618667-73.045333-31.36-114.858667-69.290667-114.410667-46.613333 0.554667-69.461333 23.466667-69.333333 91.136 0.213333 112.661333-102.144 226.112-225.130667 225.109333a1214.08 1214.08 0 0 0-20.629333 0l-3.52 0.042667c-0.192 0 0.64 409.109333 0.64 409.109333 0-0.085333 459.093333-0.490667 459.093333-0.490666z m-17.301333-495.914667a15332.288 15332.288 0 0 0 52.693333-0.362667l10.282667-0.085333c84.010667-0.618667 141.44 67.52 126.72 150.250667L879.061333 793.813333c-10.090667 56.661333-63.68 101.696-121.258666 101.76l-458.922667 0.384A42.666667 42.666667 0 0 1 256 853.546667l-0.853333-409.173334a42.624 42.624 0 0 1 42.346666-42.730666l3.669334-0.042667c5.909333-0.064 13.12-0.064 21.333333 0 98.176 0.789333 182.293333-92.437333 182.144-182.378667C504.469333 128.021333 546.24 86.186667 616.106667 85.333333c65.173333-0.768 111.68 62.506667 112.448 156.714667 0.256 28.48-6.848 78.826667-15.701334 115.050667 8.021333 0 17.28-0.042667 27.584-0.106667zM170.666667 448v405.333333h23.466666a21.333333 21.333333 0 0 1 0 42.666667H154.837333A26.709333 26.709333 0 0 1 128 869.333333v-437.333333c0-14.784 12.074667-26.666667 26.773333-26.666667h38.912a21.333333 21.333333 0 0 1 0 42.666667H170.666667z"></path>
+                </svg>
+                <svg class="yes" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M710.549333 384.810667a12409.045333 12409.045333 0 0 0 47.466667-0.32l8.746667-0.085334c83.989333-0.618667 141.44 67.584 126.72 150.229334L847.296 794.026667c-10.026667 56.448-63.914667 101.546667-121.130667 101.589333L298.624 896a42.730667 42.730667 0 0 1-42.666667-42.410667l-0.810666-383.978666a42.666667 42.666667 0 0 1 42.026666-42.666667l3.157334-0.064c5.226667-0.042667 11.797333-0.042667 19.626666 0 91.946667 0.768 170.88-86.698667 170.709334-170.944-0.149333-86.741333 39.786667-126.762667 106.453333-127.573333 62.250667-0.746667 106.602667 59.605333 107.349333 149.12 0.213333 26.602667-6.293333 73.237333-14.506666 107.434666 6.186667 0 13.077333-0.042667 20.586666-0.085333z m-497.706666 63.232L213.333333 874.624A21.312 21.312 0 0 1 191.786667 896H149.525333A21.333333 21.333333 0 0 1 128 874.624l0.042667-426.581333A21.269333 21.269333 0 0 1 149.44 426.666667h41.984c11.669333 0 21.418667 9.578667 21.418667 21.376z" p-id="4969"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>`);
+                        $(":not([data-ignore=true]) [data-like-num-comment-id=" + info.cid + "]").html(info['like']);
+                        $("[data-like-comment-id=" + info.cid + "]:not([data-ignore=true])").attr("data-status", (info['liked'] ? "yes" : "no"));
+                        $("[data-comment-num-comment-id=" + info.cid + "]").html(info['comment']);
                     }
                     try {
                         response['data'].forEach(info => {
@@ -367,6 +428,7 @@ function loadPostsList(box) {
                 </svg>
                 <span class="commentNum" data-comment-num-comment-id="${info.cid}">${info.comment}</span>
             </button>
+            <button onclick="newCommentDetailPage('${info.cid}')" title="评论详情">Debug按钮</button>
         </div>
     </div>
 </div>`;
@@ -541,6 +603,41 @@ function newPostDetailPage(pid, noOther = false, aheadTo = "") {
     }
 }
 
+commentDetailRankType = [];
+
+function newCommentDetailPage(cid, noOther = false) {
+    try {
+        //如果有则定位
+        try {
+            focusBox("pageRight", 'commentDetailFrame' + cid, noOther);
+        }
+        catch (error) { // 没有则创建
+            new_element = document.createElement('div');
+            new_element.setAttribute('id', "commentDetailFrame" + cid);
+            new_element.setAttribute('class', 'commentDetailFrame box rightBox floatFrame');
+            new_element.setAttribute('con', 'none');
+            new_element.setAttribute('totallyclose', 'true');
+            new_element.setAttribute('cid', cid);
+            new_element.setAttribute('data-url', "comment_" + cid);
+            new_element.setAttribute('name', '详情');
+            new_element.setAttribute('noother', noOther);
+            new_element.innerHTML = commentDetailFrameTemplate.replace(/{{cid}}/g, cid).replace(/{{postSke}}/g, postSkeleton);
+            pageRight.appendChild(new_element);
+            focusBox("pageRight", "commentDetailFrame" + cid, noOther);
+            // 设置评论
+            if (!localStorage.commentDefaultRank) localStorage.commentDefaultRank = "hot";
+            commentDetailRankType[cid] = localStorage.commentDefaultRank;
+            initPostsListMonitor($(`#commentDetailFrame${cid}`));
+            initPostsList($(`#commentDetailFrame${cid} .commentsReal`), { "type": "post_comment", "rid": cid, "rank_type": commentDetailRankType[cid] });
+            focusInPostsList($(`#commentDetailFrame${cid}`), $(`#commentDetailFrame${cid} .commentsReal`));
+            loadPostsList($(`#commentDetailFrame${cid} .commentsReal`));
+        }
+    }
+    catch (err) {
+        console.error(err);
+    }
+}
+
 function refreshPostArea(pid) {
     newAjax("POST", backEndURL + "/post/getpost.php", true, "pid=" + pid, {}, function (data) {
         document.getElementById('postFrame' + pid).getElementsByClassName("postMainSke")[0].style.display = "none";
@@ -663,6 +760,7 @@ function refreshPostArea(pid) {
         document.getElementById('postFrame' + pid).getElementsByClassName("bottomBox")[0].style.display = "none";
         document.getElementById('postFrame' + pid).getElementsByClassName("postMainSke")[0].style.display = "none";
         $("#postFrame" + pid + " .postMainReal").html(`<div class="unavaliable" noselect><i></i><p>内容可能去了另一个星球</p></div>`);
+        $("#postFrame" + pid + " .comments").remove();
     });
 }
 
@@ -695,10 +793,25 @@ function switchCommentRankType(pid, typeId) {
     loadPostsList($(`#postFrame${pid} .commentsReal`));
 }
 
+function switchCommentDetailRankType(cid, typeId) {
+    localStorage.commentDetailDefaultRank = typeId;
+    commentDetailRankType[cid] = typeId;
+    initPostsList($(`#commentDetailFrame${cid} .commentsReal`), { "type": "post_comment", "rid": cid, "rank_type": commentDetailRankType[cid] });
+    loadPostsList($(`#commentDetailFrame${cid} .commentsReal`));
+}
+
 function showCommentTypeSwitch(pid, ele) {
     commentRankMenuJSON = [];
     for (var i in commentRankTypeJSON) {
         commentRankMenuJSON.push([commentRankTypeJSON[i]['name'], "switchCommentRankType('" + pid + "','" + i + "')", (i == commentRankType[pid] ? "checked" : commentRankTypeJSON[i]['icon'])]);
+    }
+    createContextMenu(commentRankMenuJSON, true, true, ele);
+}
+
+function showCommentDetailTypeSwitch(cid, ele) {
+    commentRankMenuJSON = [];
+    for (var i in commentRankTypeJSON) {
+        commentRankMenuJSON.push([commentRankTypeJSON[i]['name'], "switchCommentDetailRankType('" + cid + "','" + i + "')", (i == commentDetailRankType[cid] ? "checked" : commentRankTypeJSON[i]['icon'])]);
     }
     createContextMenu(commentRankMenuJSON, true, true, ele);
 }
@@ -761,6 +874,51 @@ postTemplate = `
     </div>
 </div>
 <div class="sFrameHover" onclick="$('#shareFrame_post_{{pid}}').attr('data-open','false')"></div>
+</div>
+`;
+
+commentDetailFrameTemplate = `
+<header>
+<div class="left">
+    <button class="backButton" onclick="closeBox('pageRight','commentDetailFrame{{cid}}')" oncontextmenu="quickBack('pageRight',this)" ontouchstart="longPressToDo(function(){quickBack('pageRight')})" ontouchend="longPressStop()"><i class="material-icons">&#xe5c4;</i></button>
+    <div class="nameDiv">
+        <p class="title">详情</p>
+        <p class="little"></p>
+    </div>
+</div>
+<div class="right">
+    <button id="commentDetailFrameMenuButton{{cid}}" onclick="postContextMenu('comment', '{{cid}}', '', false, this);"><i class="material-icons">&#xe5d3;</i></button>
+</div>
+</header>
+<div class="postBox cardBox postCardBox main floatFrame-content postsListScrollMonitor">
+    <div class="oriComment">    
+        <div class="postMainSke">
+            {{postSke}}
+        </div>
+    </div>
+    <div class="card comments avatarBox">
+        <div class="header">
+            <h2 noselect>回复</h2>
+            <div class="buttons"><button onclick="showCommentDetailTypeSwitch({{cid}}, this)"><i class="material-icons">swap_horiz</i></button></div>
+        </div>
+        <div class="commentsReal" id="pC{{cid}}_CR"></div>
+        <div class="comment skeBox">
+        </div>
+    </div>
+</div>
+<div class="bottomBox">
+    <div class="bottomSurface"><div onclick="newMsgBox('加载中')" class="fakeInput" tabindex="0" onkeydown="divClick(this, event)" title="点击来发表评论">精彩的评论也是乐子的一部分</div>  
+    <button onclick="showShareFrame('shareFrame_comment_{{cid}}');" class="share"><i class="material-icons">share</i></button>
+    </div>
+</div>
+<div class="shareFrame cardBox" id="shareFrame_comment_{{pid}}">
+    <div class="card" noselect>
+        <div class="title">分享</div>
+        <div class="ways">加载中…
+        </div>
+    </div>
+</div>
+<div class="sFrameHover" onclick="$('#shareFrame_comment_{{pid}}').attr('data-open','false')"></div>
 </div>
 `;
 

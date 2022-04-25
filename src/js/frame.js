@@ -13,6 +13,9 @@ function checkURLParam() {
             case "post":
                 newPostDetailPage(hash[1]);
                 break;
+            case "comment":
+                newCommentDetailPage(hash[1]);
+                break;
             case "user":
                 newUserInfoPage(hash[1], unescape(hash[2]));
                 break;
