@@ -316,6 +316,7 @@ function loadPostsList(box) {
 <div class="card avatarBox comment" data-type="comment" data-commentid="${info.cid}" data-commentlist-comment-uid="${info.user.uid}" ${blockList.indexOf(String(info.user.uid)) > -1 || blockList.indexOf(Number(info.user.uid)) > -1 ? "style='display: none'" : ""}>
     <div class="noteArea" style="margin-bottom: 6rem;">
         <button class="originPost" onclick="newPostDetailPage('${info.pid}'); return false;">${info.post_slug ? "<b>原帖：</b>" + info.post_slug : "原帖不存在"}</button>
+        ${(info.reply_to_slug ? `<button class="originPost" onclick="newCommentDetailPage(${info.rid});"><b>回复：</b>${info.reply_to_slug}</button>` : "")}
     </div>
     <div class="header">
         <a class="name" tabindex="0" onclick="newUserInfoPage('${info.user.uid}', '${info.user.nick}');"
@@ -373,6 +374,11 @@ function loadPostsList(box) {
                     try {
                         response['data'].forEach(info => {
                             medias = setMedia(info.attachment, "c_" + info.cid);
+                            cRW = "";
+                            if (info.replies && info.replies.length > 0) for (let i = 0; i < info.replies.length; i++) {
+                                reply = info.replies[i];
+                                cRW += `<p class="postCommentReplySlug"><b>${reply.user.nick}${reply.is_author ? `<span class="usertag border">楼主</span>` : ""}${getNickHTML(reply.user, { "nick": false })}</b>：${contentFormat(reply.content)}</p>`;
+                            }
                             new_element = document.createElement('object');
                             new_element.innerHTML = `
 <div class="comment" data-type="comment" data-commentid="${info.cid}" data-commentlist-comment-uid="${info.user.uid}" ${blockList.indexOf(String(info.user.uid)) > -1 || blockList.indexOf(Number(info.user.uid)) > -1 ? "style='display: none'" : ""}>
@@ -394,7 +400,7 @@ function loadPostsList(box) {
     <div class="content">
         <p class="status"></p>
         <object class="slug">
-            <p class="slugWord">${contentFormat(info.content)}</p>
+            <p class="slugWord" tabindex="0" onkeydown="divClick(this, event)" onclick="this.style.webkitLineClamp=999999999">${contentFormat(info.content)}</p>
         </object>
         <div class="media">
         <ui class="medias" id="tes" type="x${medias.mNum}">${medias.mediasHTML}</ui>
@@ -428,9 +434,14 @@ function loadPostsList(box) {
                 </svg>
                 <span class="commentNum" data-comment-num-comment-id="${info.cid}">${info.comment}</span>
             </button>
-            <button onclick="newCommentDetailPage('${info.cid}')" title="评论详情">Debug按钮</button>
         </div>
     </div>
+    ${info.replies && info.replies.length > 0 ? `
+    <div class="noteArea commentReply"><button onclick="newCommentDetailPage('${info.cid}')">
+      ${cRW}
+    </button></div>
+    ` : ""
+                                }
 </div>`;
                             box.children(".main").append(new_element);
                             $(":not([data-ignore=true]) [data-like-num-comment-id=" + info.cid + "]").html(info['like']);

@@ -323,23 +323,42 @@ body[theme=dark]{
 .cardBox.postCardBox .bottom{
     align-items: center;
 }
-.cardBox .noteArea:not(:empty){
+.card .noteArea:not(:empty){
     padding: 9rem 10rem;
     border-radius: 6rem;
     font-size: 13.5rem;
     color: var(--card);
     background-color: var(--page-bgcolor);
 }
-.cardBox .noteArea:not(:empty) *{
+.card .noteArea:not(:empty) *:not(.usertag){
     font-size: 13.5rem;
     color: var(--card);
-    background: none;
 }
-.cardBox .noteArea:not(:empty) button{
+.card .noteArea:not(:empty) button{
     display: block;
     width: 100%;
     text-align: left;
+    background: none;
 }
+.card .noteArea:not(:empty) button+button{
+    margin-top: 7rem;
+}
+.card .noteArea.commentReply:not(:empty){
+    margin-left: 26rem;
+    margin-bottom: 9rem;
+}
+.card .noteArea:not(:empty) button .postCommentReplySlug{
+    line-height: 1.7;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.card .noteArea:not(:empty) button .postCommentReplySlug .icon{
+    margin-bottom: -3rem;
+}
+
 .cardBox.postCardBox .bottom .buttons button{
     display: inline-flex;
     margin: 0 0rem 0rem 4rem;
