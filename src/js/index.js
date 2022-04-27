@@ -30,7 +30,7 @@ $.ajax({
             // 保存身份组和名单
             roleList = response['info']['role'];
             blockList = response['info']['blocklist'];
-            if (response['my_role'] && response['my_role'] != "user") {
+            if (response['info']['my_role'] && response['info']['my_role'] != "user") {
                 myRole = response['my_role'];
                 writeLog("i", "get backend site info", "my role is " + myRole);
                 $("body").attr("data-admin", "true");

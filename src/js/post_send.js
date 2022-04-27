@@ -35,9 +35,9 @@ function sendPost(div, postType, onSuccess) {
     if (logRequire()) {
         // 通用：设置参数
         textToSend = cleanHTMLTag(div.getElementsByClassName("sendBoxInput")[0].innerHTML
-            .replace(/<b>(.*)<\/b>/g, "[b]$1[/b]")
-            .replace(/<i>(.*)<\/i>/g, "[i]$1[/i]")
-            .replace(/<u>(.*)<\/u>/g, "[u]$1[/u]")
+            .replace(/<b>([^</b>]*)<\/b>/g, "[b]$1[/b]")
+            .replace(/<i>([^</i>]*)<\/i>/g, "[i]$1[/i]")
+            .replace(/<u>([^</u>]*)<\/u>/g, "[u]$1[/u]")
             .replace(/<br>/g, "[br]")
             .replace(/<img data-type="sticker" data-setname="([^"]*)" data-stickerid="([^"]*)" data-size[^>]*>/g, "[sticker=$1,$2]"));
         console.log(textToSend);

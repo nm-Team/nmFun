@@ -1101,7 +1101,7 @@ function contentFormat(msg) {
     msg = cleanHTMLTag(msg);
     msg = msg.replace(/\\/g, "");
     msg = msg.replace(/\n/g, "<br />");
-    msg = msg.replace(/\[b\](.*)\[\/b\]/g, "<b>$1</b>").replace(/\[i\](.*)\[\/i\]/g, "<i>$1</i>").replace(/\[u\](.*)\[\/u\]/g, "<u>$1</u>").replace(/\[br\]/g, "<br />");
+    msg = msg.replace(/\[b\]([^\[/b\]]*)\[\/b\]/g, "<b>$1</b>").replace(/\[i\]([^\[/i\]]*)\[\/i\]/g, "<i>$1</i>").replace(/\[u\]([^\[/u\]]*)\[\/u\]/g, "<u>$1</u>").replace(/\[br\]/g, "<br />");
     msg = msg.replace(/\[sticker=([^,]*),([^,]*)\]/g, function (match, p1, p2) {
         stickersCacheTime = gTime();
         try {
