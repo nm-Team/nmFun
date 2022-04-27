@@ -34,7 +34,9 @@ $.ajax({
                 myRole = response['my_role'];
                 writeLog("i", "get backend site info", "my role is " + myRole);
                 $("body").attr("data-admin", "true");
-
+                $("body").append(`<link rel="stylesheet" type="text/css" href="/src/css/admin.css">`);
+                $("body").append(`<script src="/src/js/admin.js"></script>`);
+                $("#adminPanelIframe").attr("src", "/admin/");
             }
         }
         catch (err) {

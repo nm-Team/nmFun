@@ -350,7 +350,6 @@ function setPopScale() {
     else {
         document.body.setAttribute("scale", "false");
     }
-    console.log("setPopScale");
 }
 
 $("body").bind("DOMNodeInserted", function () {

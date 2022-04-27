@@ -33,8 +33,7 @@ function initPostsListMonitor(box) {
     refreshPostsListOnScroll();
 }
 
-function refreshPostsList(box, config = { "notify": true }) {
-    if (config.notify) newMsgBox("正在刷新...");
+function refreshPostsList(box, config = {}) {
     box.find(".main").empty();
     box.attr("data-status", "undefined");
     loadPostsList(box);
@@ -296,6 +295,10 @@ function loadPostsList(box) {
             if (box.attr("data-status") != "undefined") return -1;
             writeLog("i", "loadPostsList", "start, attr " + JSON.stringify(attr) + ",detected last cid is " + lastCid + "");
             box.attr("data-status", "loading");
+            if (isNaN(attr.rid) && isNaN(attr.post_id)) {
+                box.attr("data-status", "error");
+                return newMsgBox("抱歉，加载评论时出现问题。<br />未指定任何合法标识符，不允许查找其回复。");
+            }
             $.ajax({
                 type: "POST",
                 url: backEndURL + "/comment/listcomment.php?CodySESSION=" + localStorage.sessionid + ("&pid=" + attr.post_id) + ("&rid=" + attr.rid) + (attr.rank_type == "hot" ? "&order_by=like&order_time=DESC&from=" + startFrom : "&order_by=cid&order_time=" + attr.rank_type.toUpperCase() + "&cid=" + lastCid),
@@ -305,9 +308,11 @@ function loadPostsList(box) {
                 success: function (response, status, request) {
                     writeLog("i", "loadPostsList get backend response", JSON.stringify(response));
                     if (response['status'] == "error") {
-                        if (response['error_hidden']) return box.html(`<div class="card" noselect><div class="content"><center>根据用户的隐私设置，你无法查看他的帖子。</center></div></div>`);
-                        else
-                            return newMsgBox("抱歉，加载帖子时出现问题。<br />" + response['info']);
+                        if (response['error_hidden']) return box.html(`<div class="card" noselect><div class="content"><center>根据用户的隐私设置，你无法查看他的评论。</center></div></div>`);
+                        else {
+                            box.attr("data-status", "error");
+                            return newMsgBox("抱歉，加载评论时出现问题。<br />" + response['info']);
+                        }
                     }
                     if (response['origin_comment']) {
                         $(`#commentDetailFrame${attr.rid} .fakeInput`).attr("onclick", "comment('" + response['origin_comment'].pid + "'," + attr.rid + ",'" + response['origin_comment']['user']['nick'] + "')");
@@ -485,9 +490,9 @@ function loadPostsList(box) {
                 success: function (response, status, request) {
                     writeLog("i", "loadPostsList get backend response", JSON.stringify(response));
                     if (response['status'] == "error") {
-                        if (response['error_hidden']) return box.html(`<div class="card" noselect><div class="content"><center>根据用户的隐私设置，你无法查看他的帖子。</center></div></div>`);
+                        if (response['error_hidden']) return box.html(`<div class="card" noselect><div class="content"><center>根据用户的隐私设置，你无法查看他的评论。</center></div></div>`);
                         else
-                            return newMsgBox("抱歉，加载帖子时出现问题。<br />" + response['info']);
+                            return newMsgBox("抱歉，加载评论时出现问题。<br />" + response['info']);
                     }
                     try {
                         response['data'].forEach(info => {
@@ -645,7 +650,7 @@ function newCommentDetailPage(cid, noOther = false) {
             focusInPostsList($(`#commentDetailFrame${cid}`), $(`#commentDetailFrame${cid} .commentsReal`));
             loadPostsList($(`#commentDetailFrame${cid} .commentsReal`));
             shareLink = siteURL + "#comment_" + cid;
-            $(`#shareFrame_comment_${cid} .ways`).html(shareTemplate.replace(/{{shareLink}}/g, shareLink).replace(/{{shareLinkEscaped}}/g, escape(shareLink)).replace(/{{title}}/g, escape("评论")));
+            $(`#shareFrame_comment_${cid} .ways`).html(shareTemplate.replace(/{{shareLink}}/g, shareLink).replace(/{{shareLinkEscaped}}/g, escape(shareLink)).replace(/{{title}}/g, "评论")).replace(/{{titleEscaped}}/g, escape("评论"));
         }
     }
     catch (err) {
@@ -765,7 +770,7 @@ function refreshPostArea(pid) {
             $(`#postFrame${pid} .fakeInput`).attr("onclick", "comment('" + pid + "',0,'" + pData['user']['nick'] + "')");
             // 设置分享菜单
             shareLink = "https://fun.nmteam.xyz/#post_" + pid + "?ref=share";
-            $(`#shareFrame_post_${pid} .ways`).html(shareTemplate.replace(/{{shareLink}}/g, shareLink).replace(/{{shareLinkEscaped}}/g, escape(shareLink)).replace(/{{title}}/g, escape(cleanHTMLTag(pData['title'] ? pData['title'] : pData['content']).replace(/<[^>]*>/g, "").substr(0, 30))));
+            $(`#shareFrame_post_${pid} .ways`).html(shareTemplate.replace(/{{shareLink}}/g, shareLink).replace(/{{shareLinkEscaped}}/g, escape(shareLink)).replace(/{{title}}/g, cleanHTMLTag(pData['title'] ? pData['title'] : pData['content']).replace(/<[^>]*>/g, "").substr(0, 30)).replace(/{{titleEscaped}}/g, escape(cleanHTMLTag(pData['title'] ? pData['title'] : pData['content']).replace(/<[^>]*>/g, "").substr(0, 30))));
         }
         else {
             document.getElementById('postFrame' + pid).getElementsByClassName("bottomBox")[0].style.display = "none";
@@ -944,13 +949,13 @@ shareTemplate = `
 <button onclick="copyToClipboard('{{shareLink}}');newMsgBox('分享链接已拷贝到剪贴板')">
 <i style="background-image: url(/src/img/share/copy.png)"></i><p>拷贝链接</p>
 </button>
-<button onclick="window.open('https://connect.qq.com/widget/shareqq/index.html?url={{shareLinkEscaped}}&desc=我正在看nmFun贴子{{title}}，分享给你，快来看看吧！&title={{title}}')">
+<button onclick="window.open('https://connect.qq.com/widget/shareqq/index.html?url={{shareLinkEscaped}}&desc=我正在看nmFun贴子{{titleEscaped}}，分享给你，快来看看吧！&title={{titleescaped}}')">
 <i style="background-image: url(/src/img/share/qq.png)"></i><p>QQ 好友</p>
 </button>
-<button onclick="window.open('https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={{shareLinkEscaped}}&desc=我正在看nmFun贴子{{title}}，分享给你，快来看看吧！&title={{title}}')">
+<button onclick="window.open('https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={{shareLinkEscaped}}&desc=我正在看nmFun贴子{{title}}，分享给你，快来看看吧！&title={{titleescaped}}')">
 <i style="background-image: url(/src/img/share/qzone.png)"></i><p>Qzone</p>
 </button>
-<button onclick="window.open('http://service.weibo.com/share/share.php?url={{shareLinkEscaped}}&desc=我正在看nmFun贴子{{title}}，分享给你，快来看看吧！&title={{title}}')">
+<button onclick="window.open('http://service.weibo.com/share/share.php?url={{shareLinkEscaped}}&desc=我正在看nmFun贴子{{title}}，分享给你，快来看看吧！&title={{titleescaped}}')">
 <i style="background-image: url(/src/img/share/weibo.png)"></i><p>微博</p>
 </button>
 <button onclick="window.open('https://twitter.com/share?url={{shareLinkEscaped}}&text=我正在看nmFun贴子，分享给你，快来看看吧！')">

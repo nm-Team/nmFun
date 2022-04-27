@@ -358,7 +358,9 @@ body[theme=dark]{
 .card .noteArea:not(:empty) button .postCommentReplySlug .icon{
     margin-bottom: -3rem;
 }
-
+[data-comment-num-comment-id]{
+    display: none;
+}
 .cardBox.postCardBox .bottom .buttons button{
     display: inline-flex;
     margin: 0 0rem 0rem 4rem;

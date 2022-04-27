@@ -105,7 +105,7 @@ body:not([data-admin=true]) [data-admin-option]{
     font-size: 14.6rem;
     color: var(--type-selecter);
 }
-.typeSelecter label n{
+.typeSelecter label n:not(:empty){
     font-size: 80%;
     margin-left: 5rem;
     opacity: 0.8;
