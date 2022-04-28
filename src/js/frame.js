@@ -11,13 +11,13 @@ function checkURLParam() {
         hash = window.location.hash.replace("#", "").split("_");
         switch (hash[0]) {
             case "post":
-                newPostDetailPage(hash[1]);
+                if (hash[1]) newPostDetailPage(hash[1]);
                 break;
             case "comment":
-                newCommentDetailPage(hash[1]);
+                if (hash[1]) newCommentDetailPage(hash[1]);
                 break;
             case "user":
-                newUserInfoPage(hash[1], unescape(hash[2]));
+                if (hash[1]) newUserInfoPage(hash[1], unescape(hash[2]));
                 break;
             case "blocklist":
                 showUserBlockListPage();
@@ -150,9 +150,14 @@ function thinPageRight(to) {
         bodyMain.removeAttribute("thin");
     }
     try {
-        mySwiper.updateSize();
+        swiperWidthIn = setInterval(() => {
+            mySwiper.update();
+        }, 20);
+        setTimeout(() => {
+            clearInterval(swiperWidthIn);
+        }, 500);
     } catch (e) {
-        writeLog("e", "thinPageRight", "mySwiper.updateSize() error: " + e);
+        writeLog("e", "thinPageRight", "mySwiper.update() error: " + e);
     }
 }
 

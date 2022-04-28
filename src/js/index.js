@@ -401,7 +401,8 @@ $("body").bind("DOMNodeInserted", function () {
     // 更新图集
     $("ui.medias").each(function (index, domEle) {
         new Viewer(domEle, {
-            title: false
+            title: false,
+            transition: false,
         })
     });
 });
