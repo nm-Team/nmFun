@@ -20,7 +20,7 @@ function newUserInfoPage(uid, uNick, noOther = false) {
             pageRight.appendChild(new_element);
             focusBox("pageRight", "userInfoFrame_" + uid, noOther);
             initPostsListMonitor($(`#userPage_${uid}_postsListScrollMonitor`));
-            initPostsList($(`#userPage_${uid}_postsList_posts`), { "type": "post", "search": { "uid": uid }, "noOther": "false" });
+            initPostsList($(`#userPage_${uid}_postsList_posts`), { "type": "post", "search": { "uid": uid }, "noOther": false });
             initPostsList($(`#userPage_${uid}_postsList_comments`), { "type": "user_comment", "uid": uid, "rank_type": "DESC" });
             refreshUserInfoArea(uid);
             focusInPostsList($(`#userPage_${uid}_postsListScrollMonitor`), $(`#userPage_${uid}_postsList_info`));
@@ -245,8 +245,8 @@ function showUserFollowListPage(uid, uNick, type) {
                 pageRight.appendChild(new_element);
                 focusBox("pageRight", "followListFrame_" + uid, false);
                 initPostsListMonitor($(`#followListFrame_${uid}_lScrollMonitor`));
-                initPostsList($(`#followListFrame_${uid}_l_followings`), { "type": "follow", "search": { "uid": uid, "type": "followings" }, "noOther": "false" });
-                initPostsList($(`#followListFrame_${uid}_l_followers`), { "type": "follow", "search": { "uid": uid, "type": "followers" }, "noOther": "false" });
+                initPostsList($(`#followListFrame_${uid}_l_followings`), { "type": "follow", "search": { "uid": uid, "type": "followings" }, "noOther": false });
+                initPostsList($(`#followListFrame_${uid}_l_followers`), { "type": "follow", "search": { "uid": uid, "type": "followers" }, "noOther": false });
             };
             $(`#followListFrame_${uid}_${type}`).click();
         }
@@ -338,7 +338,7 @@ function showUserBlockListPage() {
                 pageRight.appendChild(new_element);
                 focusBox("pageRight", "blockListFrame", false);
                 initPostsListMonitor($(`#blockListFrame_scrollMonitor`));
-                initPostsList($(`#blockListFrame_l`), { "type": "blocklist", "noOther": "false" });
+                initPostsList($(`#blockListFrame_l`), { "type": "blocklist", "noOther": false });
                 focusInPostsList($(`#blockListFrame_scrollMonitor`), $(`#blockListFrame_l`));
                 // loadPostsList($(`#blockListFrame_l`));
             };
