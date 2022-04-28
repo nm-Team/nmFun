@@ -650,7 +650,9 @@ function newCommentDetailPage(cid, noOther = false) {
             focusInPostsList($(`#commentDetailFrame${cid}`), $(`#commentDetailFrame${cid} .commentsReal`));
             loadPostsList($(`#commentDetailFrame${cid} .commentsReal`));
             shareLink = siteURL + "#comment_" + cid;
-            $(`#shareFrame_comment_${cid} .ways`).html(shareTemplate.replace(/{{shareLink}}/g, shareLink).replace(/{{shareLinkEscaped}}/g, escape(shareLink)).replace(/{{title}}/g, "评论")).replace(/{{titleEscaped}}/g, escape("评论"));
+            $(`#shareFrame_comment_${cid} .ways`).html(shareTemplate.replace(/{{shareLink}}/g, shareLink).replace(/{{shareLinkEscaped}}/g, escape(shareLink)).replace(/{{title}}/g, "评论").replace(/{{titleEscaped}}/g, escape("评论")));
+            $(`#shareFrame_comment_${cid} .sharePreview`).html(sharePreviewTemplate.replace(/{{shareLink}}/g, shareLink).replace(/{{shareLinkEscaped}}/g, escape(shareLink)).replace(/{{title}}/g, "评论").replace(/{{titleEscaped}}/g, escape("评论")));
+            new QRCode($(`#shareFrame_comment_${cid} .qrcode`)[0], shareLink);
         }
     }
     catch (err) {
@@ -771,6 +773,8 @@ function refreshPostArea(pid) {
             // 设置分享菜单
             shareLink = "https://fun.nmteam.xyz/#post_" + pid + "?ref=share";
             $(`#shareFrame_post_${pid} .ways`).html(shareTemplate.replace(/{{shareLink}}/g, shareLink).replace(/{{shareLinkEscaped}}/g, escape(shareLink)).replace(/{{title}}/g, cleanHTMLTag(pData['title'] ? pData['title'] : pData['content']).replace(/<[^>]*>/g, "").substr(0, 30)).replace(/{{titleEscaped}}/g, escape(cleanHTMLTag(pData['title'] ? pData['title'] : pData['content']).replace(/<[^>]*>/g, "").substr(0, 30))));
+            $(`#shareFrame_post_${pid} .sharePreview`).html(sharePreviewTemplate.replace(/{{shareLink}}/g, shareLink).replace(/{{shareLinkEscaped}}/g, escape(shareLink)).replace(/{{title}}/g, cleanHTMLTag(pData['title'] ? pData['title'] : pData['content']).replace(/<[^>]*>/g, "").substr(0, 30)).replace(/{{titleEscaped}}/g, escape(cleanHTMLTag(pData['title'] ? pData['title'] : pData['content']).replace(/<[^>]*>/g, "").substr(0, 30))));
+            new QRCode($(`#shareFrame_post_${pid} .qrcode`)[0], shareLink);
         }
         else {
             document.getElementById('postFrame' + pid).getElementsByClassName("bottomBox")[0].style.display = "none";
@@ -889,6 +893,7 @@ postTemplate = `
 <div class="shareFrame cardBox" id="shareFrame_post_{{pid}}">
     <div class="card" noselect>
         <div class="title">分享</div>
+        <div class="sharePreview"></div>
         <div class="ways">加载中…
         </div>
     </div>
@@ -934,6 +939,7 @@ commentDetailFrameTemplate = `
 <div class="shareFrame cardBox" id="shareFrame_comment_{{cid}}">
     <div class="card" noselect>
         <div class="title">分享</div>
+        <div class="sharePreview"></div>
         <div class="ways">加载中…
         </div>
     </div>
@@ -946,16 +952,13 @@ shareTemplate = `
 <button data-system-share onclick="navigator.share({title: '{{title}}', url: '{{shareLink}}', text: '我正在看 nmFun 贴子 {{title}}，分享给你，快来看看吧！'})">
 <i style="background-image: url(/src/img/share/system.png)"></i><p>系统分享</p>
 </button>
-<button onclick="copyToClipboard('{{shareLink}}');newMsgBox('分享链接已拷贝到剪贴板')">
-<i style="background-image: url(/src/img/share/copy.png)"></i><p>拷贝链接</p>
-</button>
-<button onclick="window.open('https://connect.qq.com/widget/shareqq/index.html?url={{shareLinkEscaped}}&desc=我正在看nmFun贴子{{titleEscaped}}，分享给你，快来看看吧！&title={{titleescaped}}')">
+<button onclick="window.open('https://connect.qq.com/widget/shareqq/index.html?url={{shareLinkEscaped}}&desc=我正在看nmFun贴子{{titleEscaped}}，分享给你，快来看看吧！&title={{titleEscaped}}')">
 <i style="background-image: url(/src/img/share/qq.png)"></i><p>QQ 好友</p>
 </button>
-<button onclick="window.open('https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={{shareLinkEscaped}}&desc=我正在看nmFun贴子{{title}}，分享给你，快来看看吧！&title={{titleescaped}}')">
+<button onclick="window.open('https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={{shareLinkEscaped}}&desc=我正在看nmFun贴子{{title}}，分享给你，快来看看吧！&title={{titleEscaped}}')">
 <i style="background-image: url(/src/img/share/qzone.png)"></i><p>Qzone</p>
 </button>
-<button onclick="window.open('http://service.weibo.com/share/share.php?url={{shareLinkEscaped}}&desc=我正在看nmFun贴子{{title}}，分享给你，快来看看吧！&title={{titleescaped}}')">
+<button onclick="window.open('http://service.weibo.com/share/share.php?url={{shareLinkEscaped}}&desc=我正在看nmFun贴子{{title}}，分享给你，快来看看吧！&title={{titleEscaped}}')">
 <i style="background-image: url(/src/img/share/weibo.png)"></i><p>微博</p>
 </button>
 <button onclick="window.open('https://twitter.com/share?url={{shareLinkEscaped}}&text=我正在看nmFun贴子，分享给你，快来看看吧！')">
@@ -965,6 +968,9 @@ shareTemplate = `
 <i style="background-image: url(/src/img/share/facebook.png)"></i><p>FaceBook</p>
 </button>`;
 
+sharePreviewTemplate = `
+<div class="qrcode"></div><div class="detail"><p class="name">{{title}}</p><p class="link"><span>{{shareLink}}</span><button class="material-icons" onclick="copyToClipboard('{{shareLink}}');newMsgBox('分享链接已拷贝到剪贴板')">content_copy</button></p></div>`
+    ;
 postSkeleton = `
 <div class="postMainSke">
     <div class="card avatarBox ">
