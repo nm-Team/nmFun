@@ -142,7 +142,10 @@ function showPostInput(which, toS) {
         document.getElementById("" + which + "EditBoxCover").setAttribute("open", "true");
     }
     else document.getElementById("" + which + "EditBoxCover").removeAttribute("open");
-    try { setStickersSelBox(document.getElementById("" + which + "EditBox").getElementsByClassName("stickersChoose")[0], ("" + which + "EditBox")); }
+    try {
+        setStickersSelBox(document.getElementById("" + which + "EditBox").getElementsByClassName("stickersChoose")[0], ("" + which + "EditBox"));
+        document.getElementById("" + which + "EditBox").getElementsByClassName("textarea")[0].focus();
+    }
     catch (err) { console.error(err) };
     writeLog("i", "showPostInput", which + " to " + toS);
 }
@@ -217,7 +220,7 @@ sendBoxTemplate = `
     <input hideincomment class="titleInput" title="取个标题" placeholder="取个标题" oninput="autoSaveCraft('{{id}}','{{type}}')">
     <input hideinpost class="replyTip" readonly title="" placeholder="回复" tabindex="-1">
 </div>
-<div class="sendBoxInput textarea" title="说点什么吧……" placeholder="说点什么吧……" oninput="autoSaveCraft('{{id}}','{{type}}')" contenteditable="true"></div>
+<div class="sendBoxInput textarea" tabindex="0" title="说点什么吧……" placeholder="说点什么吧……" oninput="autoSaveCraft('{{id}}','{{type}}')" contenteditable="true"></div>
 <div class="noticeBox"><button onclick="openNotice('nmfun_post_rule')">nmFun发帖守则</button></div>
 <div class="mediasBox" noselect></div>
 <div class="bottomBox">

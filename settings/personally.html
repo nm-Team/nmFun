@@ -57,12 +57,12 @@
             </t2>
         </div>
         <script>
-            if (localStorage.getItem("showbuttonAni") == "false")
+            if (localStorage.getItem("showButtonAni") == "false")
             buttonAniInput.checked = false;
             else buttonAniInput.checked = true;
             setInterval(() => {
-                if (!buttonAniInput.checked) { localStorage.setItem("showbuttonAni", "false"); }
-                else { localStorage.setItem("showbuttonAni", "true"); }
+                if (!buttonAniInput.checked) { localStorage.setItem("showButtonAni", "false"); }
+                else { localStorage.setItem("showButtonAni", "true"); }
             }, 1000);
         </script>
         <p class="tip">在点赞、关注用户或执行其它操作时展示 nmFun 精心制作的动画。</p>

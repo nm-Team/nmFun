@@ -364,6 +364,9 @@ img[data-type=sticker]{
     max-width: 20rem;
     max-height: 20rem;
 }
+.stickerATag:focus-visible{
+    outline-offset: -3rem;
+}
 img[data-type=sticker][data-size=middle]{
     max-width: 40rem;
     max-height: 30rem;

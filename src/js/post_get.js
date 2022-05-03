@@ -176,6 +176,7 @@ function loadPostsList(box) {
                         if (response['data'].length < 5) box.attr("data-status", "nomore");
                         else box.attr("data-status", "undefined");
                         setTimeTexts();
+                        fixPostsListStuck();
                     }
                     catch (err) {
                         writeLog("e", "loadPostsList", err);
@@ -183,6 +184,7 @@ function loadPostsList(box) {
                         box.attr("data-status", "error");
                         console.error(err);
                         setTimeTexts();
+                        fixPostsListStuck();
                     }
                 },
                 error: function () {
@@ -341,7 +343,7 @@ function loadPostsList(box) {
     <div class="content">
         <p class="status"></p>
         <object class="slug">
-            <p class="slugWord">${contentFormat(info.content)}</p>
+            <p class="slugWord" tabindex="0" onkeydown="divClick(this, event)" onclick="this.style.webkitLineClamp=999999999">${contentFormat(info.content)}</p>
         </object>
         <div class="media">
         <ui class="medias" id="tes" type="x${medias.mNum}">${medias.mediasHTML}</ui>
@@ -457,6 +459,7 @@ function loadPostsList(box) {
                         else box.attr("data-status", "undefined");
                         if (box.find(".main *").length == 0) { box.attr("data-status", "noone"); }
                         setTimeTexts();
+                        fixPostsListStuck();
                     }
                     catch (err) {
                         writeLog("e", "loadPostsList", err);
@@ -464,6 +467,7 @@ function loadPostsList(box) {
                         box.attr("data-status", "error");
                         console.error(err);
                         setTimeTexts();
+                        fixPostsListStuck();
                     }
                 },
                 error: function () {
@@ -568,6 +572,7 @@ function loadPostsList(box) {
                         else box.attr("data-status", "undefined");
                         if (box.find(".main *").length == 0) { box.attr("data-status", "noone"); }
                         setTimeTexts();
+                        fixPostsListStuck();
                     }
                     catch (err) {
                         writeLog("e", "loadPostsList", err);
@@ -575,6 +580,7 @@ function loadPostsList(box) {
                         box.attr("data-status", "error");
                         console.error(err);
                         setTimeTexts();
+                        fixPostsListStuck();
                     }
                 },
                 error: function () {
@@ -586,9 +592,15 @@ function loadPostsList(box) {
             break;
         }
     }
-    // 防止加载卡死
+}
+
+// 防止加载卡死
+function fixPostsListStuck() {
     for (element in $(".postsListScrollMonitor")) {
-        postsListOnScroll(getActivePostsList("#" + $(".postsListScrollMonitor")[element]['id']));
+        try {
+            postsListOnScroll(getActivePostsList("#" + $(".postsListScrollMonitor")[element]['id']));
+        }
+        catch (e) { }
     }
 }
 
@@ -1117,7 +1129,7 @@ function contentFormat(msg) {
         stickersCacheTime = gTime();
         try {
             if (stickersJSON.filter(function (_data) { return _data.id == p1 })[0]['stickers'].filter(function (_data2) { return _data2.id == p2 }).length)
-                return `<a href="javascript:" style="display: inline-block" id="stickerSetA_${stickersCacheTime}_${p1}_${p2}" onclick="showStickerSet(\`${JSON.stringify(stickersJSON.filter(function (_data) { return _data.id == p1 })[0]).replace(/\"/g, "'")}\`);event.stopPropagation();" title="${stickersJSON.filter(function (_data) { return _data.id == p1 })[0]['stickers'].filter(function (_data2) { return _data2.id == p2 })[0]['name']}"><img data-type="sticker" data-setid="${p1}" data-stickerid="${p2}" data-size="${stickersJSON.filter(function (_data) { return _data.id == p1 })[0]['size']}" src="${stickersURL}/${p1}/${stickersJSON.filter(function (_data) { return _data.id == p1 })[0]['stickers'].filter(function (_data2) { return _data2.id == p2 })[0]['src']}" noselect ondragstart="return false;" onerror="stickerSetA_${stickersCacheTime}_${p1}_${p2}.outerHTML='[表情]'"></a>`;
+                return `<a href="javascript:" style="display: inline-block" class="stickerATag" id="stickerSetA_${stickersCacheTime}_${p1}_${p2}" onclick="showStickerSet(\`${JSON.stringify(stickersJSON.filter(function (_data) { return _data.id == p1 })[0]).replace(/\"/g, "'")}\`);event.stopPropagation();" title="${stickersJSON.filter(function (_data) { return _data.id == p1 })[0]['stickers'].filter(function (_data2) { return _data2.id == p2 })[0]['name']}"><img data-type="sticker" data-setid="${p1}" data-stickerid="${p2}" data-size="${stickersJSON.filter(function (_data) { return _data.id == p1 })[0]['size']}" src="${stickersURL}/${p1}/${stickersJSON.filter(function (_data) { return _data.id == p1 })[0]['stickers'].filter(function (_data2) { return _data2.id == p2 })[0]['src']}" noselect ondragstart="return false;" onerror="stickerSetA_${stickersCacheTime}_${p1}_${p2}.outerHTML='[表情]'"></a>`;
             else return "[表情]";
         }
         catch (err) {
@@ -1192,7 +1204,7 @@ function likePost(type, ele, pid) {
         else {
             likeOpe = "like";
             // 展示点赞动画
-            if (localStorage.showbuttonAni == "true") {
+            if (localStorage.showButtonAni == "true") {
                 $("body .scaleArea").append(`<div class="likeAni buttonAni" data-like-ani-pid-${pid}>
                 <div class="f"></div>
                 <div class="b"></div>

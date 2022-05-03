@@ -261,15 +261,19 @@ body[theme=dark]{
 }
 .cardBox.postCardBox .content .media .medias li *:focus-visible + outline{
     position: absolute;
-    top: 2rem;
-    bottom: 2rem;
-    left: 2rem;
-    right: 2rem;
+    top: 3rem;
+    bottom: 3rem;
+    left: 3rem;
+    right: 3rem;
     outline: var(--outline);
+    border-radius: 0rem;
 }
 .cardBox.postCardBox .content .media .medias[type=x1] li{
     width: 100%;
     padding-bottom: 100%;
+    border-radius: 6rem;
+}
+.cardBox.postCardBox .content .media .medias[type=x1] li outline{
     border-radius: 6rem;
 }
 .cardBox.postCardBox .content .media .medias[type=x2] li{

@@ -165,7 +165,7 @@ function followUser(uid, unfollow = false, ele) {
     if (logRequire()) {
         if (!unfollow) {
             // 展示关注动画
-            if (localStorage.showLikeAni == "true") {
+            if (localStorage.showButtonAni == "true") {
                 $("body .scaleArea").append(`<div class="buttonAni followAni" data-follow-ani-uid-${uid}>
                     <div class="f"></div>
                     <div class="b"></div>
