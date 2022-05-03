@@ -11,6 +11,7 @@ body{
     --bottombar-icon-active: rgb(218, 185, 0);
     --bottombar-text: rgb(44, 44, 44);
     --real-bg: rgb(161, 161, 161);
+    --iframe-bgcolor: #FAFCFD;
 }
 body[theme=dark]{
     --swiper-button: #EAD050;
@@ -24,6 +25,7 @@ body[theme=dark]{
     --bottombar-icon-active: rgb(218, 185, 0);
     --bottombar-text: rgb(197, 197, 197);
     --real-bg: #000;
+    --iframe-bgcolor: #010101;
 }
 :root{
     --fontSize: 1.11px!important;
@@ -451,6 +453,12 @@ body[data-loadover=true] .popFrame{
         transition: all 0.3s, border-right 0s 0s;
     }
 }
+.browserFrame{
+    background-image: url('../img/loading.gif');
+    background-position: 50%, 50%;
+    background-size: 25rem;
+    background-repeat: no-repeat;
+}
 .browserFrame iframe{
     position: absolute;
     top: 45rem;
@@ -459,6 +467,7 @@ body[data-loadover=true] .popFrame{
     right: 0;
     width: 100%;
     height: calc(100% - 45rem);
+    background-color: var(--iframe-bgcolor);
     opacity: 1;
     animation: iframe 3s;
     user-select: none;
@@ -468,23 +477,7 @@ body[data-loadover=true] .popFrame{
 .browserFrame iframe[loaded]{
     opacity: 1;
     animation: none;
-}
-@keyframes iframe {
-    0%{
-        opacity: 0;
-    }
-    99.9%{
-        opacity: 0;
-    }
-    100%{
-        opacity: 1;
-    }
-}
-body{
-    --iframe-bgcolor: #FAFCFD;
-}
-body[theme=dark]{
-    --iframe-bgcolor: #010101;
+    visibility: visible;
 }
 .legacyBrowserFrame .main{
     position: absolute;
@@ -519,16 +512,20 @@ body[theme=dark]{
 }
 .legacyBrowserFrame iframe[loaded]{
     opacity: 1;
+    visibility: visible;
     animation: none;
 }
 @keyframes iframe {
     0%{
         opacity: 0;
+        visibility: hidden;
     }
     99.9%{
         opacity: 0;
+        visibility: hidden;
     }
     100%{
         opacity: 1;
+        visibility: visible
     }
 }
