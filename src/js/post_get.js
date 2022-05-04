@@ -1193,15 +1193,23 @@ function contentFormat(msg) {
 biliVideoTemplate = `<div class="biliVideoCon" noselect><iframe class="biliVideo" frameborder="no" scrolling="no" src="https://player.bilibili.com/player.html?bvid={{bvid}}&page={{page}}&as_wide=1&high_quality=1" allowfullscreen=""></iframe><div class="biliVideoNote"><span>视频来自 Bilibili</span><button onclick="window.open('https://www.bilibili.com/video/{{bvid}}?p={{page}}&ref=nmfun')" title="在 bilibili.com 查看视频">转到</button></div></div>`;
 
 function postContextMenu(type, id, poName, uid, ele) {
+    contextMenuContent = [["拷贝分享链接", "copyToClipboard('" + siteURL + "#" + type + "_" + id + "')", "content_copy"], ["line"]];
+    if (gRole("ban_user")) {
+        contextMenuContent.push(["封禁 (管理员)", "banUser(" + uid + ")", "remove_circle"], ["line"]);
+    }
+    if (gRole("manage_posts")) {
+        contextMenuContent.push(["删除 (管理员)", "adminDelPost('" + type + "','" + id + "')", "delete"], ["line"]);
+    }
     if (isNaN(myUid)) {
-        createContextMenu([["登录后执行更多操作", "showLogFrame()", ""]], true, undefined, ele);
+        contextMenuContent.push(["登录后执行更多操作", "showLogFrame()", ""]);
     }
     else if (uid == myUid) {
-        createContextMenu([["编辑", "editMyPost(`" + id + "`)", "edit"], ["删除", "deleteMyPostAlert('" + type + "',`" + id + "`, `" + poName + "`)", "delete"],], true, undefined, ele);
+        contextMenuContent.push(["删除", "deleteMyPostAlert('" + type + "',`" + id + "`, `" + poName + "`)", "delete"]);
     }
     else {
-        createContextMenu([["举报", "report('" + type + "','" + uid + "','" + id + "','" + poName + "')", "warning"], ["屏蔽此用户", "blockUser(`" + uid + "`)", "block"]], true, undefined, ele);
+        contextMenuContent.push(["举报", "report('" + type + "','" + uid + "','" + id + "','" + poName + "')", "warning"], ["屏蔽此用户", "blockUser(`" + uid + "`)", "block"]);
     }
+    createContextMenu(contextMenuContent, true, undefined, ele);
 }
 
 function editMyPost(pid) {

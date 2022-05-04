@@ -95,7 +95,7 @@ uPageTemp = `
         </div>
     </div>
     <div class="right">
-        <button onclick="showUserPageContextMenu({{uid}},this)" title="选项"><i class="material-icons"></i></button>
+        <button onclick="showUserPageContextMenu({{uid}},'{{nick}}',this)" title="选项"><i class="material-icons"></i></button>
     </div>
 </header>
 <div class="main floatFrame">
@@ -213,12 +213,16 @@ function followUser(uid, unfollow = false, ele) {
 }
 
 // 菜单
-function showUserPageContextMenu(uid, ele) {
+function showUserPageContextMenu(uid, unick, ele) {
+    cMenuItems = [["拷贝分享链接", "copyToClipboard('" + siteURL + "#" + "user" + "_" + uid + "_" + escape(unick) + "')", "content_copy"], ["line"]];
+    if (gRole("ban_user")) {
+        cMenuItems.push(["封禁 (管理员)", "banUser(" + uid + ")", "remove_circle"], ["line"]);
+    }
     if (uid == myUid) {
-        cMenuItems = [["编辑资料", "newLegacyBrowser('/settings/account.html', false, false)", "edit"]];
+        cMenuItems.push(["编辑资料", "newLegacyBrowser('/settings/account.html', false, false)", "edit"]);
     }
     else {
-        cMenuItems = [["举报", "report('user','" + uid + "','','')", "warning"], ["屏蔽", "blockUser(" + uid + ")", "block"]];
+        cMenuItems.push(["举报", "report('user','" + uid + "','','')", "warning"], ["屏蔽", "blockUser(" + uid + ")", "block"]);
     }
     createContextMenu(cMenuItems, undefined, undefined, ele);
 }
@@ -286,7 +290,6 @@ followListTemplate = `
 </div>`;
 
 // 屏蔽用户 
-
 function blockUser(uid) {
     if (logRequire()) {
         sta = blockList.indexOf(String(uid)) > -1 || blockList.indexOf(Number(uid)) > -1 ? true : false;
@@ -372,3 +375,12 @@ blockListTemplate = `
         </div>
     </div>
 </div>`;
+
+// 用户权限
+function gRole(r) {
+    try {
+        return roleList.filter(function (_data) { return _data.id == myRole })[0][r] == 1 ? true : false;
+    } catch (err) {
+        return false;
+    }
+}
