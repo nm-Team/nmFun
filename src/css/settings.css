@@ -67,7 +67,7 @@ body.settings{
 }
 .settings .accountBox{
     display: flex;
-    margin: 5rem 0 20rem 0;
+    margin: 5rem 0 15rem 0;
     padding: 10rem 16rem;
     color: var(--settings-accountBox);
     background-color: var(--settings-items-bgcolor);

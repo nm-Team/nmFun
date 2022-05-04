@@ -16,7 +16,7 @@ function newUserInfoPage(uid, uNick, noOther = false) {
             new_element.setAttribute('name', uNick);
             new_element.setAttribute('data-url', 'user_' + uid + "_" + escape(uNick));
             new_element.setAttribute('noother', noOther);
-            new_element.innerHTML = uPageTemp.replace(/{{uid}}/g, uid).replace(/{{nick}}/g, uNick).replace(/{{avatar}}/g, avatarURL.replace(/{id}/g, uid));
+            new_element.innerHTML = uPageTemp.replace(/{{uid}}/g, uid).replace(/{{nick}}/g, uNick).replace(/{{avatar}}/g, avatarURL.replace(/{id}/g, uid)).replace(/{{background}}/g, backEndURL + "/user/background/index.php?id=" + uid + "&t=" + gTime());
             pageRight.appendChild(new_element);
             focusBox("pageRight", "userInfoFrame_" + uid, noOther);
             initPostsListMonitor($(`#userPage_${uid}_postsListScrollMonitor`));
@@ -100,7 +100,7 @@ uPageTemp = `
 </header>
 <div class="main floatFrame">
     <div class="userHeader floatFrame-header">
-        <div class="uHeaderMain floatFrame-header">
+        <div class="uHeaderMain floatFrame-header" style="background-image: url('{{background}}')">
             <div class="lin"></div>
             <div class="uHeaderInfos">
                 <div class="disabled" title="此用户封禁中" data-disabled-uid="{{uid}}"></div>

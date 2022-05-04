@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='format-detection' content='telephone=no'>
+    <link rel="stylesheet" type="text/css" href="../src/css/page.css">
+    <link rel="stylesheet" type="text/css" href="../src/css/settings.css">
+    <link rel="stylesheet" type="text/css" href="../src/css/cropper.min.css">
+    <script src="../src/js/info.js"></script>
+    <style>
+        .cropper-container {
+            border-radius: 6rem;
+        }
+    </style>
+</head>
+
+<body class="settings radius">
+    <h1>设置个人主页背景图片</h1>
+    <div id="step0">
+        <p class="listName">选取图片</p>
+        <input class="searchBox but" type="file" accept="image/*" id="imageInput" placeholder="选取图片">
+        <div class="lists">
+            <p class="tip" id="tipWord">请从设备本地选择一张图片，稍后您将可以对其进行裁剪。</p>
+            <p class="tip" id="tipWord"><b>请确保您上传的图片符合 nmFun 社区规范和相关法律法规。</b></p>
+        </div>
+        <p class="listName">或</p>
+        <div class="lists">
+            <div class="but" tabindex="0" onkeydown="divClick(this, event)" onclick="reset();">
+                <t>恢复到默认图片</t>
+            </div>
+        </div>
+    </div>
+    <div id="step1" style="display: none;">
+        <p class="listName">裁剪图片</p>
+        <img id="cropperImg">
+        <p class="listName"></p>
+        <div class="lists">
+            <div class="but" tabindex="0" onkeydown="divClick(this, event)"
+                onclick="avatarAccess.style.display='block';">无障碍模式</div>
+        </div>
+        <div class="lists" id="avatarAccess" style="display: none;">
+            <div class="but" tabindex="0" onkeydown="divClick(this, event)" onclick="cropper.move(0,10)" title="上">上
+            </div>
+            <div class="but" tabindex="0" onkeydown="divClick(this, event)" onclick="cropper.move(0,-10)" title="下">下
+            </div>
+            <div class="but" tabindex="0" onkeydown="divClick(this, event)" onclick="cropper.move(10,0)" title="左">左
+            </div>
+            <div class="but" tabindex="0" onkeydown="divClick(this, event)" onclick="cropper.move(-10,0)" title="右">右
+            </div>
+            <div class="but" tabindex="0" onkeydown="divClick(this, event)" onclick="cropper.zoom(0.1)" title="放大">放大
+            </div>
+            <div class="but" tabindex="0" onkeydown="divClick(this, event)" onclick="cropper.zoom(-0.1)" title="缩小">缩小
+            </div>
+        </div>
+        <div class="lists">
+            <div class="but" tabindex="0" onkeydown="divClick(this, event)" onclick="submit();">
+                <t>设置</t>
+            </div>
+            <p class="tip"></p>
+        </div>
+    </div>
+    <script src="../src/js/jquery.min.js"></script>
+    <script src="../src/js/functions.js"></script>
+    <script src="../src/js/cropper.min.js"></script>
+    <script src="../src/js/settings.js"></script>
+    <script>
+        var image = document.querySelector('#cropperImg');
+        var cropper = new Cropper(image, {
+            viewMode: 1,
+            dragMode: 'move',
+            aspectRatio: 1,
+            autoCropArea: 1,
+            restore: false,
+            modal: false,
+            guides: false,
+            highlight: true,
+            cropBoxMovable: true,
+            cropBoxResizable: true,
+            toggleDragModeOnDblclick: true,
+        });
+        $("#imageInput").on("change", function (e) {
+            var file = e.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function (evt) {
+                var replaceSrc = evt.target.result;
+                cropper.replace(replaceSrc, false);
+            }
+            reader.readAsDataURL(file);
+            $("#step0").css("display", "none");
+            $("#step1").css("display", "block");
+        });
+        function submit() {
+            browserId = parent.document.getElementsByClassName("browserFrame")[parent.document.getElementsByClassName("browserFrame").length - 1].getAttribute("data-browser-id");
+            writeLog("i", "account_editprofilephoto.submit", "start");
+            var avatarToSet = cropper.getCroppedCanvas({ width: 200, height: 200 }).toDataURL('image/png', 0.7);
+            var blob = dataURLtoBlob(avatarToSet);
+            var file = blobToFile(blob, "bg.png");
+            var formData = new FormData();
+            formData.append("bg", file, "bg.png");
+            console.log(file);
+            $.ajax(backEndURL + "/user/background.php?CodySESSION=" + localStorage.sessionid + "&action=update", {
+                type: "POST",
+                async: true,
+                data: formData,
+                crossDomain: true,
+                contentType: false,
+                processData: false,
+                datatype: "jsonp",
+                success: function (data) {
+                    let status = data['status'];
+                    if (status == "successful") {
+                        writeLog("i", "account_editprofilephoto.submit", "ok");
+                        parent.closeBrowser(browserId);
+                        parent.newMsgBox("设置背景图片成功！");
+                    }
+                    else if (status == "error") {
+                        writeLog("i", "account_editprofilephoto.submit", "error");
+                        parent.newMsgBox("设置背景图片失败！");
+                    }
+                },
+                error: function () {
+                    writeLog("i", "account_editprofilephoto.submit", "network error");
+                    parent.newMsgBox("设置背景图片失败！");
+                }
+            });
+        }
+        function reset() {
+            browserId = parent.document.getElementsByClassName("browserFrame")[parent.document.getElementsByClassName("browserFrame").length - 1].getAttribute("data-browser-id");
+            writeLog("i", "account_resetprofilephoto.submit", "start");
+            try {
+                newAjax("GET", backEndURL + "/user/background.php", true, "action=delete", null, function () {
+                    parent.closeBrowser(browserId);
+                    parent.newMsgBox("还原默认背景图片成功！");
+                    writeLog("i", "account_resetprofilephoto.submit", "ok");
+                }, function (data) {
+                    parent.newMsgBox("还原默认背景图片失败。<br>" + data['info']);
+                    writeLog("e", "account_resetprofilephoto.submit", data['info']);
+                });
+            }
+            catch (err) {
+                parent.newMsgBox("网络错误，还原默认背景图片失败。");
+                writeLog("e", "account_resetprofilephoto.submit", "err");
+            }
+        }
+        //将base64转换为blob
+        function dataURLtoBlob(dataurl) {
+            var arr = dataurl.split(','),
+                mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]),
+                n = bstr.length,
+                u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new Blob([u8arr], { type: mime });
+        }
+        //将blob转换为file
+        blobToFile = function (theBlob, fileName) {
+            theBlob.lastModifiedDate = new Date();
+            theBlob.name = fileName;
+            return theBlob;
+        }
+    </script>
+</body>
+
+</html>

@@ -937,13 +937,16 @@ body[theme=dark]{
     background-size: cover;
     background-position: center;
 }
-.viewer-in {
+.viewer-in{
     animation: viewerOpen .5s;
 }
-.viewer-in .viewer-canvas img {
+.viewer-hide{
+    animation: viewerClose .5s!important;
+}
+.viewer-in .viewer-canvas img{
     animation: viewerOpenImg .5s;
 }
-@keyframes viewerOpen {
+@keyframes viewerOpen{
     0%{
         opacity: 0;
     }
@@ -951,12 +954,14 @@ body[theme=dark]{
         opacity: 1;
     }
 }
-@keyframes viewerClose {
+@keyframes viewerClose{
     0%{
-        opacity: 0;
+        display: block!important;
+        opacity: 1!important;
     }
     100%{
-        opacity: 1;
+        display: block!important;
+        opacity: 0!important;
     }
 }
 @keyframes viewerOpenImg {
