@@ -134,7 +134,7 @@ function loadPostsList(box) {
             <p class="slugWord">${contentFormat(info.content)}</p>
             </object></a>
         <div class="media">
-        <ui class="medias" id="tes" type="x${medias.mNum}">${medias.mediasHTML}</ui>
+        <ui class="medias" type="x${medias.mNum}">${medias.mediasHTML}</ui>
         ${medias.specialMediasHTML}
         </div>
     </div>
@@ -348,7 +348,7 @@ function loadPostsList(box) {
             <p class="slugWord" tabindex="0" onkeydown="divClick(this, event)" onclick="this.style.webkitLineClamp=999999999">${contentFormat(info.content)}</p>
         </object>
         <div class="media">
-        <ui class="medias" id="tes" type="x${medias.mNum}">${medias.mediasHTML}</ui>
+        <ui class="medias" type="x${medias.mNum}">${medias.mediasHTML}</ui>
         ${medias.specialMediasHTML}
         </div>
     </div>
@@ -412,7 +412,7 @@ function loadPostsList(box) {
             <p class="slugWord" tabindex="0" onkeydown="divClick(this, event)" onclick="this.style.webkitLineClamp=999999999">${contentFormat(info.content)}</p>
         </object>
         <div class="media">
-        <ui class="medias" id="tes" type="x${medias.mNum}">${medias.mediasHTML}</ui>
+        <ui class="medias" type="x${medias.mNum}">${medias.mediasHTML}</ui>
         ${medias.specialMediasHTML}
         </div>
     </div>
@@ -528,7 +528,7 @@ function loadPostsList(box) {
                 <p class="slugWord">${contentFormat(info.content)}</p>
             </object></a>
             <div class="media">
-            <ui class="medias" id="tes" type="x${medias.mNum}">${medias.mediasHTML}</ui>
+            <ui class="medias" type="x${medias.mNum}">${medias.mediasHTML}</ui>
             ${medias.specialMediasHTML}
             </div>
             <div class="noteArea">
@@ -718,7 +718,7 @@ function refreshPostArea(pid) {
                     <p>${contentHandled}</p>
                 </object>
                 <div class="media">
-                    <ui class="medias" id="tes" type="x${medias.mNum}">${medias.mediasHTML}</ui>
+                    <ui class="medias" type="x${medias.mNum}">${medias.mediasHTML}</ui>
                     ${medias.specialMediasHTML}
                 </div>
             </div>
@@ -1100,7 +1100,7 @@ function setMedia(mediaJson, pid = 0) {
             mType = currentValue['type'];
             if (mType == "image") {
                 mContent = attachURL + currentValue['src'];
-                mediasHTML += `<li style="background-image:url('` + mContent + `')"><img src="` + mContent + `" tabindex="0" onkeydown="divClick(this, event)"><outline></outline></li>`;
+                mediasHTML += `<li style="background-image:url('` + mContent + `')"><img onclick="pushHistory('img'); viewerOpenTransition($(this)); " src="` + mContent + `" tabindex="0" onkeydown="divClick(this, event)"><outline></outline></li>`;
                 ++mNum;
             } else if (mType == "video") {
                 mediasHTML += `<li style="background-image:url('')"><video src="` + mContent + `" tabindex="0" controls="controls" onkeydown="divClick(this, event)">请更新你的浏览器，这样才可以查看视频。</video><outline></outline></li>`;
@@ -1120,12 +1120,53 @@ function setMedia(mediaJson, pid = 0) {
         writeLog("e", "load post media in " + pid + "error", err);
         mediasHTML = specialMediasHTML = mNum = "";
     };
-    $(".medias img").on("click", function () { pushHistory("img"); })
     return { "mediasHTML": mediasHTML, "specialMediasHTML": specialMediasHTML, "mNum": mediaType, };
 }
 
 function getNickHTML(userJSON, config = { "nick": true }) {
     return (config.nick ? `<span class="unick">` + userJSON['nick'] + `</span>` : "") + (userJSON['role'] != "user" ? `<span class="usertag border">` + roleList.filter(function (_data) { return _data.id == userJSON['role'] })[0].name + `</span>` : "") + (userJSON['is_nmteam'] == "1" ? `<span class="usertag icon nmTeam" title="nmTeam 成员"></span>` : "");
+}
+
+// viewer 动画
+function viewerOpenTransition(ele) {
+    setTimeout(() => {
+        tTime = .5;
+        time = gTime();
+        ele.attr("data-viewer-return-t", time);
+        oElement = ele.parent();
+        oBCR = oElement[0].getBoundingClientRect();
+        oBR = oElement.css("borderRadius");
+        tElement = $(".viewer-in .viewer-canvas img");
+        tBCR = tElement[0].getBoundingClientRect();
+        sElement = document.createElement("style");
+        sElement.innerHTML = ` 
+        #viewerTransition_` + time + ` {  
+            background-image: url(${ele.attr("src")});
+            animation: viewerTransition_${time} ${tTime}s;
+        }
+        @keyframes viewerTransition_${time} {
+            0% {
+                top: ${oBCR.top}px;
+                left: ${oBCR.left}px;
+                width: ${oBCR.width}px;
+                height: ${oBCR.height}px;
+                border-radius: ${oBR};
+            }
+            100% {
+                top: ${tBCR.top}px;
+                left: ${tBCR.left}px;
+                width: ${tBCR.width}px;
+                height: ${tBCR.height}px;
+                border-radius: 0;
+            }
+        }
+    `;
+        document.body.appendChild(sElement);
+        aElement = document.createElement("div");
+        aElement.className = "viewerTransition";
+        aElement.id = "viewerTransition_" + time;
+        document.body.appendChild(aElement);
+    }, 50);
 }
 
 // 消息格式处理

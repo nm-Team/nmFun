@@ -576,7 +576,7 @@ function getUrlParam(name) {
 
 // 大号字体
 setInterval(() => {
-    if (localStorage.bigText == "true") {
+    if (localStorage.bigText == "true" && !debugMode) {
         $("html").css("cssText", "font-size: 1.35px!important");
     }
     else {
@@ -749,7 +749,7 @@ function addStickerToEditBox(targetInput, pakId, pakSize, stkId, src) {
     }
     catch (err) {
         console.log(err);
-        $("#" + targetInput+" .sendBoxInput").append(htmlW);
+        $("#" + targetInput + " .sendBoxInput").append(htmlW);
     }
 }
 

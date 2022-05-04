@@ -931,6 +931,42 @@ body[theme=dark]{
     background-position: center center;
     background-repeat: no-repeat;
 }
+.viewerTransition{
+    position: fixed;
+    z-index: 9999;
+    background-size: cover;
+    background-position: center;
+}
+.viewer-in {
+    animation: viewerOpen .5s;
+}
+.viewer-in .viewer-canvas img {
+    animation: viewerOpenImg .5s;
+}
+@keyframes viewerOpen {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+@keyframes viewerClose {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+@keyframes viewerOpenImg {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 0;
+    }
+}
 .sendCover{
     position: fixed;
     top: 0;
