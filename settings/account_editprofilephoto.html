@@ -73,7 +73,7 @@
         var cropper = new Cropper(image, {
             viewMode: 1,
             dragMode: 'move',
-            aspectRatio: 1,
+            aspectRatio: 16 / 10,
             autoCropArea: 1,
             restore: false,
             modal: false,
@@ -97,7 +97,7 @@
         function submit() {
             browserId = parent.document.getElementsByClassName("browserFrame")[parent.document.getElementsByClassName("browserFrame").length - 1].getAttribute("data-browser-id");
             writeLog("i", "account_editprofilephoto.submit", "start");
-            var avatarToSet = cropper.getCroppedCanvas({ width: 200, height: 200 }).toDataURL('image/png', 0.7);
+            var avatarToSet = cropper.getCroppedCanvas({ width: 1200}).toDataURL('image/png', 0.7);
             var blob = dataURLtoBlob(avatarToSet);
             var file = blobToFile(blob, "bg.png");
             var formData = new FormData();
