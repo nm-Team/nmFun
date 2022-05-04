@@ -25,11 +25,13 @@ function initPostsList(box, attr) {
 
 // 初始化postsListMonitor
 function initPostsListMonitor(box) {
-    new_element = document.createElement("div");
-    new_element.className = "postsListBar";
-    new_element.setAttribute("noselect", "");
-    new_element.innerHTML = `<button class="refresh" onclick="refreshPostsList(getActivePostsList($('#${box[0].id}')))"><i class="material-icons">refresh</i></button><button class="top" onclick="($('#${box[0].id}')).animate({scrollTop: 0}, 500);" data-hidden="true"><i class="material-icons">arrow_upward</i></button>`;
-    box.append(new_element);
+    if (box.find(".postsListBar").length == 0) {
+        new_element = document.createElement("div");
+        new_element.className = "postsListBar";
+        new_element.setAttribute("noselect", "");
+        new_element.innerHTML = `<button class="refresh" onclick="refreshPostsList(getActivePostsList($('#${box[0].id}')))"><i class="material-icons">refresh</i></button><button class="top" onclick="($('#${box[0].id}')).animate({scrollTop: 0}, 500);" data-hidden="true"><i class="material-icons">arrow_upward</i></button>`;
+        box.append(new_element);
+    }
     refreshPostsListOnScroll();
 }
 
@@ -605,6 +607,7 @@ function fixPostsListStuck() {
 }
 
 function newPostDetailPage(pid, noOther = false, aheadTo = "") {
+    if (!pid || isNaN(pid)) { return newMsgBox("抱歉，参数不合法。"); }
     try {
         //如果有则定位
         try {
@@ -636,6 +639,7 @@ function newPostDetailPage(pid, noOther = false, aheadTo = "") {
 commentDetailRankType = [];
 
 function newCommentDetailPage(cid, noOther = false) {
+    if (!cid || isNaN(cid)) { return newMsgBox("抱歉，参数不合法。"); }
     try {
         //如果有则定位
         try {
@@ -673,6 +677,7 @@ function newCommentDetailPage(cid, noOther = false) {
 }
 
 function refreshPostArea(pid) {
+    $(`#postFrame${pid} .postsListBar`).remove();
     newAjax("POST", backEndURL + "/post/getpost.php", true, "pid=" + pid, {}, function (data) {
         document.getElementById('postFrame' + pid).getElementsByClassName("postMainSke")[0].style.display = "none";
         if (data['status'] == "successful") {
@@ -782,6 +787,10 @@ function refreshPostArea(pid) {
             focusInPostsList($(`#postFrame${pid}`), $(`#postFrame${pid} .commentsReal`));
             loadPostsList($(`#postFrame${pid} .commentsReal`));
             $(`#postFrame${pid} .fakeInput`).attr("onclick", "comment('" + pid + "',0,'" + pData['user']['nick'] + "')");
+            // $(`#postFrame${pid} .postsListBar .refresh`).bind("click", function () {
+            //     refreshPostArea(pid);
+            // });
+            $(`#postFrame${pid} .postsListBar .refresh`).attr("onclick", "refreshPostArea(" + pid + ");event.stopPropagation();");
             // 设置分享菜单
             shareLink = "https://fun.nmteam.xyz/#post_" + pid + "?ref=share";
             $(`#shareFrame_post_${pid} .ways`).html(shareTemplate.replace(/{{shareLink}}/g, shareLink).replace(/{{shareLinkEscaped}}/g, escape(shareLink)).replace(/{{title}}/g, cleanHTMLTag(pData['title'] ? pData['title'] : pData['content']).replace(/<[^>]*>/g, "").substr(0, 30)).replace(/{{titleEscaped}}/g, escape(cleanHTMLTag(pData['title'] ? pData['title'] : pData['content']).replace(/<[^>]*>/g, "").substr(0, 30))));
@@ -1180,8 +1189,16 @@ function deleteMyPost(type, pid, poName, withMsg = true) {
             document.getElementById(`delCoverForPost${type}${pid}`).outerHTML = "";
             writeLog("i", "deleteMyPost(" + pid + ")", "success");
             $("[data-" + type + "id=" + pid + "]").remove();
-            $("[data-" + type + "s-num-uid=" + myUid + "]").html($("[data-" + type + "s-num-uid=" + myUid + "]")[0].innerHTML - 1);
+            try {
+                $("[data-" + type + "s-num-uid=" + myUid + "]").html($("[data-" + type + "s-num-uid=" + myUid + "]")[0].innerHTML - 1);
+            } catch (e) { }
             if (type == "post") closeBox('pageRight', 'postFrame' + pid);
+            if (type == "comment") {
+                try {
+                    $('[data-comment-num-post-id=' + pid + ']').html(Number($('[data-comment-num-post-id=' + pid + ']').html()) - 1);
+                    // if ($('[data-comment-num-post-id=' + pid + ']').html() < 0) $('[data-comment-num-post-id=' + pid + ']').html(0);
+                } catch (e) { }
+            }
         },
             function (data) {
                 newMsgBox("删除 " + (type == "post" ? "帖子" : "评论") + "失败，因为" + data['info']);
