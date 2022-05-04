@@ -420,7 +420,7 @@ body[theme=dark]{
     border-radius: 4rem;
 }
 .postBox{
-    padding-bottom: 60rem;
+    padding-bottom: 100rem!important;
 }
 .postFrame .postsListBar, .commentDetailFrame .postsListBar{
     bottom: 62rem;
@@ -657,6 +657,9 @@ body[theme=dark]{
 .likeAni .f{
     background-image: url(../img/nmFun_like_main.svg);
 }
+[data-mobile=true] .postFrame .bottomBox .bottomSurface{
+    padding-bottom: 15rem;
+}
 .bottomBox{
     position: absolute;
     bottom: 0;
@@ -858,7 +861,7 @@ body[theme=dark]{
 }
 @media (max-width: 700px) {
     body[data-mobile=true] .inputArea .bottomBox{
-        margin-bottom: 21rem;
+        margin-bottom: 15rem;
         overflow: hidden;
         box-shadow: none;
     }

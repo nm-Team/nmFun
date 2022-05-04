@@ -64,8 +64,8 @@ refreshPostsListOnScroll();
 function refreshPostsListOnScroll() {
     $(".postsListScrollMonitor").on('scroll', function (event) {
         postsListOnScroll(getActivePostsList($(this)));
-        if ($(this).scrollTop() < $(this).outerHeight() / 2) $(this).find(".postsListBar .top").attr("data-hidden", "true");
-        else $(this).find(".postsListBar .top").attr("data-hidden", "false");
+        if ($(this).scrollTop() < $(this).outerHeight() / 2) ($(this).find(".postsListBar .top").length > 0 ? $(this).find(".postsListBar .top") : $(this).parent().find(".postsListBar .top")).attr("data-hidden", "true");
+        else ($(this).find(".postsListBar .top").length > 0 ? $(this).find(".postsListBar .top") : $(this).parent().find(".postsListBar .top")).attr("data-hidden", "false");
     })
 }
 
