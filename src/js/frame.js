@@ -22,6 +22,9 @@ function checkURLParam() {
             case "blocklist":
                 showUserBlockListPage();
                 break;
+            case "starlist":
+                showUserStarListPage();
+                break;
             case "search":
                 showBarPage('search');
                 searchFrame_input.value = unescape(hash[1]);

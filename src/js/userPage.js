@@ -319,7 +319,6 @@ function confirmBlockUser(uid, unblock) {
     });
 }
 
-
 // 黑名单
 function showUserBlockListPage() {
     if (logRequire()) {
@@ -369,9 +368,62 @@ blockListTemplate = `
     </div>
 </header>
 <div class="cardBox postCardBox main">
-    <div class="userMainCards equalPages floatFrame-content postsListScrollMonitor" id="blockListFrame_scrollMonitor">
+    <div class="userMainCards equalPages floatFrame-content postsListScrollMonitor" style="height: 100%" id="blockListFrame_scrollMonitor">
         <div id="blockListFrame_lContainer" class="cardsListsContainer">
                 <div id="blockListFrame_l"></div>
+        </div>
+    </div>
+</div>`;
+
+// 收藏
+function showUserStarListPage() {
+    if (logRequire()) {
+        try {
+            //如果有则定位
+            try {
+                focusBox("pageRight", 'starListFrame', false);
+            }
+            catch (error) { // 没有则创建
+                new_element = document.createElement('div');
+                new_element.setAttribute('id', "starListFrame");
+                new_element.setAttribute('class', 'starListFrame box rightBox');
+                new_element.setAttribute('con', 'none');
+                new_element.setAttribute('totallyclose', 'true');
+                new_element.setAttribute('name', "收藏");
+                new_element.setAttribute('data-url', "starlist");
+                new_element.setAttribute('noother', 'false');
+                new_element.innerHTML = starListTemplate;
+                pageRight.appendChild(new_element);
+                focusBox("pageRight", "starListFrame", false);
+                initPostsListMonitor($(`#starListFrame_scrollMonitor`));
+                initPostsList($(`#starListFrame_l`), { "type": "post", "search": { "star": true }, "noOther": false });
+                focusInPostsList($(`#starListFrame_scrollMonitor`), $(`#starListFrame_l`));
+            };
+        }
+        catch (err) {
+            console.error(err);
+        }
+    }
+}
+
+starListTemplate = `
+<header>
+    <div class="left">
+        <button class="backButton" title="返回" onclick="closeBox('pageRight','starListFrame',false);"
+            oncontextmenu="quickBack('pageRight',this)"
+            ontouchstart="longPressToDo(function(){quickBack('pageRight')})"
+            ontouchend="longPressStop()"><i class="material-icons"></i></button>
+        <div class="nameDiv">
+            <p class="title">收藏</p>
+        </div>
+    </div>
+    <div class="right">
+    </div>
+</header>
+<div class="cardBox postCardBox main">
+    <div class="userMainCards equalPages floatFrame-content postsListScrollMonitor" style="height: 100%" id="starListFrame_scrollMonitor">
+        <div id="starListFrame_lContainer"class="cardsListsContainer">
+                <div id="starListFrame_l"></div>
         </div>
     </div>
 </div>`;

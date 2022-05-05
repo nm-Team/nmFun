@@ -24,12 +24,15 @@ function initPostsList(box, attr) {
 }
 
 // 初始化postsListMonitor
-function initPostsListMonitor(box) {
+function initPostsListMonitor(box, realBox = undefined) {
+    if (realBox == undefined) {
+        realBox = box;
+    }
     if (box.find(".postsListBar").length == 0) {
         new_element = document.createElement("div");
         new_element.className = "postsListBar";
         new_element.setAttribute("noselect", "");
-        new_element.innerHTML = `<button class="refresh" onclick="refreshPostsList(getActivePostsList($('#${box[0].id}')))"><i class="material-icons">refresh</i></button><button class="top" onclick="($('#${box[0].id}')).animate({scrollTop: 0}, 500);" data-hidden="true"><i class="material-icons">arrow_upward</i></button>`;
+        new_element.innerHTML = `<button class="refresh" onclick="refreshPostsList(getActivePostsList($('#${realBox[0].id}')))"><i class="material-icons">refresh</i></button><button class="top" onclick="($('#${realBox[0].id}')).animate({scrollTop: 0}, 500);" data-hidden="true"><i class="material-icons">arrow_upward</i></button>`;
         box.append(new_element);
     }
     refreshPostsListOnScroll();
@@ -45,11 +48,11 @@ function getActivePostsList(d) {
     return $(d).find("[data-focus=true]");
 }
 
-function focusInPostsList(box, id) {
+function focusInPostsList(box, id, realBox = undefined) {
     box.find(".postsList").attr("data-focus", "false");
     id.attr("data-focus", "true");
     try {
-        box[0].scrollTop = id.attr("data-scroll");
+        (realBox ? realBox[0] : box[0]).scrollTop = id.attr("data-scroll");
     }
     catch (err) { }
     try {
@@ -95,7 +98,7 @@ function loadPostsList(box) {
             box.attr("data-status", "loading");
             $.ajax({
                 type: "POST",
-                url: backEndURL + "/post/listpost.php?pid=" + (lastPid ? lastPid : "") + "&category=" + (attr.search.category ? attr.search.category : "") + "&user=" + (attr.search.uid ? attr.search.uid : "") + "&order_by=" + (attr.order && attr.order.type ? attr.order.type : "") + "&order_time=" + (attr.order && attr.order.time ? attr.order.time : "") + "&CodySESSION=" + localStorage.sessionid,
+                url: backEndURL + "/post" + (attr.search.star == true ? "/star.php?action=get&" : "/listpost.php?") + "pid=" + (lastPid ? lastPid : "") + "&category=" + (attr.search.category ? attr.search.category : "") + "&user=" + (attr.search.uid ? attr.search.uid : "") + "&order_by=" + (attr.order && attr.order.type ? attr.order.type : "") + "&order_time=" + (attr.order && attr.order.time ? attr.order.time : "") + "&CodySESSION=" + localStorage.sessionid,
                 async: true,
                 data: { keyword: (attr.search.keyword ? attr.search.keyword : "") },
                 dataType: "json",
@@ -661,9 +664,9 @@ function newCommentDetailPage(cid, noOther = false) {
             // 设置评论
             if (!localStorage.commentDefaultRank) localStorage.commentDefaultRank = "hot";
             commentDetailRankType[cid] = localStorage.commentDefaultRank;
-            initPostsListMonitor($(`#commentDetailFrame${cid}`));
+            initPostsListMonitor($(`#commentDetailFrame${cid}`), $(`#commentDetailFrame${cid} .main.postBox`));
             initPostsList($(`#commentDetailFrame${cid} .commentsReal`), { "type": "post_comment", "rid": cid, "rank_type": commentDetailRankType[cid] });
-            focusInPostsList($(`#commentDetailFrame${cid}`), $(`#commentDetailFrame${cid} .commentsReal`));
+            focusInPostsList($(`#commentDetailFrame${cid}`), $(`#commentDetailFrame${cid} .commentsReal`), $(`#commentDetailFrame${cid} .postBox`));
             loadPostsList($(`#commentDetailFrame${cid} .commentsReal`));
             shareLink = siteURL + "#comment_" + cid;
             $(`#shareFrame_comment_${cid} .ways`).html(shareTemplate.replace(/{{shareLink}}/g, shareLink).replace(/{{shareLinkEscaped}}/g, escape(shareLink)).replace(/{{title}}/g, "评论").replace(/{{titleEscaped}}/g, escape("评论")));
@@ -782,9 +785,9 @@ function refreshPostArea(pid) {
             // 设置评论
             if (!localStorage.commentDefaultRank) localStorage.commentDefaultRank = "hot";
             commentRankType[pid] = localStorage.commentDefaultRank;
-            initPostsListMonitor($(`#postFrame${pid}`));
+            initPostsListMonitor($(`#postFrame${pid}`), $(`#postFrame${pid} .main.postBox`));
             initPostsList($(`#postFrame${pid} .commentsReal`), { "type": "post_comment", "post_id": pid, "rank_type": commentRankType[pid] });
-            focusInPostsList($(`#postFrame${pid}`), $(`#postFrame${pid} .commentsReal`));
+            focusInPostsList($(`#postFrame${pid}`), $(`#postFrame${pid} .commentsReal`), $(`#postFrame${pid} .postBox`));
             loadPostsList($(`#postFrame${pid} .commentsReal`));
             $(`#postFrame${pid} .fakeInput`).attr("onclick", "comment('" + pid + "',0,'" + pData['user']['nick'] + "')");
             // $(`#postFrame${pid} .postsListBar .refresh`).bind("click", function () {
@@ -796,6 +799,13 @@ function refreshPostArea(pid) {
             $(`#shareFrame_post_${pid} .ways`).html(shareTemplate.replace(/{{shareLink}}/g, shareLink).replace(/{{shareLinkEscaped}}/g, escape(shareLink)).replace(/{{title}}/g, cleanHTMLTag(pData['title'] ? pData['title'] : pData['content']).replace(/<[^>]*>/g, "").substr(0, 30)).replace(/{{titleEscaped}}/g, escape(cleanHTMLTag(pData['title'] ? pData['title'] : pData['content']).replace(/<[^>]*>/g, "").substr(0, 30))));
             $(`#shareFrame_post_${pid} .sharePreview`).html(sharePreviewTemplate.replace(/{{shareLink}}/g, shareLink).replace(/{{shareLinkEscaped}}/g, escape(shareLink)).replace(/{{title}}/g, cleanHTMLTag(pData['title'] ? pData['title'] : pData['content']).replace(/<[^>]*>/g, "").substr(0, 30)).replace(/{{titleEscaped}}/g, escape(cleanHTMLTag(pData['title'] ? pData['title'] : pData['content']).replace(/<[^>]*>/g, "").substr(0, 30))));
             new QRCode($(`#shareFrame_post_${pid} .qrcode`)[0], shareLink);
+            // 收藏
+            if (pData['star']) {
+                $(`#postFrame${pid} .starButton`).attr("starred", "true");
+            }
+            else {
+                $(`#postFrame${pid} .starButton`).attr("starred", "false");
+            }
         }
         else {
             document.getElementById('postFrame' + pid).getElementsByClassName("bottomBox")[0].style.display = "none";
@@ -874,7 +884,7 @@ postTemplate = `
     <button id="postFrameMenuButton{{pid}}" onclick="postContextMenu('post', '{{pid}}', '', false, this);"><i class="material-icons">&#xe5d3;</i></button>
 </div>
 </header>
-<div class="postBox cardBox postCardBox main floatFrame-content postsListScrollMonitor">
+<div class="postBox cardBox postCardBox main floatFrame-content postsListScrollMonitor" id="pBoxMain_{{pid}}">
     <div class="postMainSke">
         {{postSke}}
         <div class="card tagCard">
@@ -907,7 +917,7 @@ postTemplate = `
 </div>
 <div class="bottomBox">
     <div class="bottomSurface"><div onclick="newMsgBox('加载中')" class="fakeInput" tabindex="0" onkeydown="divClick(this, event)" title="点击来发表评论">精彩的评论也是乐子的一部分</div>  
-    <button onclick="newMsgBox('开发中')" class="starButton"><i class="material-icons star">star_border</i><i class="material-icons starred">star</i></button>
+    <button onclick="starPost({{pid}}, $(this))" class="starButton" data-star-post-id="{{pid}}"><i class="material-icons star">star_border</i><i class="material-icons starred">star</i></button>
     <button onclick="showShareFrame('shareFrame_post_{{pid}}');" class="share"><i class="material-icons">share</i></button>
     </div>
 </div>
@@ -936,7 +946,7 @@ commentDetailFrameTemplate = `
     <button id="commentDetailFrameMenuButton{{cid}}" onclick="postContextMenu('comment', '{{cid}}', '', false, this);"><i class="material-icons">&#xe5d3;</i></button>
 </div>
 </header>
-<div class="postBox cardBox postCardBox main floatFrame-content postsListScrollMonitor">
+<div class="postBox cardBox postCardBox main floatFrame-content postsListScrollMonitor" id="cDBoxMain_{{cid}}">
     <div class="oriComment">    
         <div class="postMainSke">
             {{postSke}}
@@ -990,8 +1000,8 @@ shareTemplate = `
 </button>`;
 
 sharePreviewTemplate = `
-<div class="qrcode"></div><div class="detail"><p class="name">{{title}}</p><p class="link"><span>{{shareLink}}</span><button class="material-icons" onclick="copyToClipboard('{{shareLink}}');newMsgBox('分享链接已拷贝到剪贴板')">content_copy</button></p></div>`
-    ;
+<div class="qrcode"></div><div class="detail"><p class="name">{{title}}</p><p class="link"><span>{{shareLink}}</span><button class="material-icons" onclick="copyToClipboard('{{shareLink}}');newMsgBox('分享链接已拷贝到剪贴板')">content_copy</button></p></div>`;
+
 postSkeleton = `
 <div class="postMainSke">
     <div class="card avatarBox ">
@@ -1303,6 +1313,53 @@ function likePost(type, ele, pid) {
         newLikeNum = (Number($(":not([data-ignore=true]) [data-like-num-" + type + "-id=" + pid + "]")[0].innerHTML) + (likeOpe == "like" ? 1 : -1));
         $(":not([data-ignore=true]) [data-like-num-" + type + "-id=" + pid + "]").html(newLikeNum);
         newAjax("POST", backEndURL + "/" + type + "/like.php", true, type[0] + "id=" + pid + (likeOpe == "unlike" ? "&unlike=unlike" : ""), "", function (d) { writeLog("i", "likePost", "like post " + pid + " success"); $("[data-like-num-" + type + "-id=" + pid + "]").html(d.like); $("[data-like-" + type + "-id=" + pid + "]").attr("data-status", (likeOpe == "like" ? "yes" : "no")); $("[data-like-" + type + "-id=" + pid + "]").attr("data-ignore", "false"); }, function (d) { $("[data-like-" + type + "-id=" + pid + "]").attr("data-status", (likeOpe != "like" ? "yes" : "no")); writeLog("i", "likePost", "like post " + pid + " error"); $("[data-like-" + type + "-id=" + pid + "]").attr("data-ignore", "false"); $(":not([data-ignore=true]) [data-like-num-" + type + "-id=" + pid + "]").html(newLikeNum + (likeOpe == "unlike" ? 1 : -1)); newMsgBox((likeOpe == "unlike" ? "取消" : "") + "点赞失败，因为" + d['info']); });
+    }
+}
+
+// 收藏帖子
+function starPost(pid, ele) {
+    if (logRequire()) {
+        if (ele.attr("data-ignore") == "true") {
+            newMsgBox("收藏冷却中，请稍后再试");
+            return;
+        }
+        if (ele.attr("starred") == "true") {
+            starOpe = "unstar";
+        }
+        else {
+            starOpe = "star";
+            // 展示动画
+            if (localStorage.showButtonAni == "true") {
+                $("body .scaleArea").append(`<div class="starAni buttonAni" data-star-ani-pid-${pid}>
+                <div class="f"></div>
+                <div class="b"></div>
+            </div>
+            <style>
+            .starAni[data-star-ani-pid-${pid}]{
+                animation: data-star-ani-${pid} 2s;
+            }
+            @keyframes data-star-ani-${pid}{
+                0%{
+                    top: ${ele.find("i")[0].getBoundingClientRect().top}px;
+                    left: ${ele.find("i")[0].getBoundingClientRect().left}px;
+                }
+                60%{
+                    top: 50vh;
+                    left: 50vw;
+                    transform: translate(-50%, -50%);
+                }
+                100%{
+                    top: 50vh;
+                    left: 50vw;
+                    transform: translate(-50%, -50%);
+                }
+            }
+            </style>`);
+            }
+        }
+        $("[data-star-post-id=" + pid + "]").attr("data-ignore", "true");
+        $("[data-star-post-id=" + pid + "]").attr("starred", (starOpe == "star" ? "true" : "false"));
+        newAjax("POST", backEndURL + "/post/star.php", true, "pid=" + pid + "&action=" + (starOpe == "unstar" ? "del" : "add"), "", function (d) { writeLog("i", "starPost", "star post " + pid + " success"); $("[data-star-post-id=" + pid + "]").attr("starred", (starOpe == "star" ? "true" : "false")); $("[data-star-post-id=" + pid + "]").attr("data-ignore", "false"); }, function (d) { $("[data-star-post-id=" + pid + "]").attr("starred", (starOpe != "star" ? "true" : "false")); writeLog("i", "starPost", "star post " + pid + " error"); $("[data-star-post-id=" + pid + "]").attr("data-ignore", "false"); newMsgBox((starOpe == "unstar" ? "取消" : "") + "收藏失败，因为" + d['info']); });
     }
 }
 

@@ -657,6 +657,9 @@ body[theme=dark]{
 .likeAni .f{
     background-image: url(../img/nmFun_like_main.svg);
 }
+.starAni .f{
+    background-image: url(../img/star.svg);
+}
 [data-mobile=true] .postFrame .bottomBox .bottomSurface{
     padding-bottom: 15rem;
 }
