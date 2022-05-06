@@ -93,12 +93,13 @@ function loadPostsList(box) {
     switch (attr.type) {
         case "post":
             lastPid = box.find(".main .postMainReal:last").attr("data-postid");
+            startFrom = box.find(".main [data-type=post]").length;
             if (box.attr("data-status") != "undefined") return -1;
             writeLog("i", "loadPostsList", "start, attr " + JSON.stringify(attr) + ",detected last pid is " + lastPid + "");
             box.attr("data-status", "loading");
             $.ajax({
                 type: "POST",
-                url: backEndURL + "/post" + (attr.search.star == true ? "/star.php?action=get&" : "/listpost.php?") + "pid=" + (lastPid ? lastPid : "") + "&category=" + (attr.search.category ? attr.search.category : "") + "&user=" + (attr.search.uid ? attr.search.uid : "") + "&order_by=" + (attr.order && attr.order.type ? attr.order.type : "") + "&order_time=" + (attr.order && attr.order.time ? attr.order.time : "") + "&CodySESSION=" + localStorage.sessionid,
+                url: backEndURL + "/post" + (attr.search.star == true ? "/star.php?action=get&" : "/listpost.php?") + "pid=" + (lastPid ? lastPid : "") + "&from=" + (startFrom ? startFrom : "") + "&category=" + (attr.search.category ? attr.search.category : "") + "&user=" + (attr.search.uid ? attr.search.uid : "") + "&order_by=" + (attr.order && attr.order.type ? attr.order.type : "") + "&order_time=" + (attr.order && attr.order.time ? attr.order.time : "") + "&CodySESSION=" + localStorage.sessionid,
                 async: true,
                 data: { keyword: (attr.search.keyword ? attr.search.keyword : "") },
                 dataType: "json",

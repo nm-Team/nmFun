@@ -367,8 +367,8 @@ blockListTemplate = `
         <button onclick="openNotice('blocklisthelp')" title="黑名单帮助"><i class="material-icons">info_outline</i></button>
     </div>
 </header>
-<div class="cardBox postCardBox main">
-    <div class="userMainCards equalPages floatFrame-content postsListScrollMonitor" style="height: 100%" id="blockListFrame_scrollMonitor">
+<div class="cardBox postCardBox main" style="overflow: hidden;">
+    <div class="equalPages floatFrame-content postsListScrollMonitor" style="height: 100%" id="blockListFrame_scrollMonitor">
         <div id="blockListFrame_lContainer" class="cardsListsContainer">
                 <div id="blockListFrame_l"></div>
         </div>
@@ -420,8 +420,8 @@ starListTemplate = `
     <div class="right">
     </div>
 </header>
-<div class="cardBox postCardBox main">
-    <div class="userMainCards equalPages floatFrame-content postsListScrollMonitor" style="height: 100%" id="starListFrame_scrollMonitor">
+<div class="cardBox postCardBox main" style="overflow: hidden;">
+    <div class="equalPages floatFrame-content postsListScrollMonitor" style="height: 100%" id="starListFrame_scrollMonitor">
         <div id="starListFrame_lContainer"class="cardsListsContainer">
                 <div id="starListFrame_l"></div>
         </div>
