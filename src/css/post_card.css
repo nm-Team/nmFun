@@ -132,7 +132,7 @@ body[theme=dark]{
     font-size: 12rem;
     font-weight: normal;
     margin: 0rem 0rem 0rem 5rem;
-    padding: 2rem 2rem 0rem 2rem;
+    padding: 1.5rem 2rem .5rem 2rem;
     line-height: 1;
     border-radius: 3rem;
     color: var(--usertag);
@@ -149,8 +149,9 @@ body[theme=dark]{
 }
 .usertag.icon {
     width: 12rem;
-    height: 12rem;
+    height: 17rem;
     background-size: 17rem 17rem;
+    background-position: center;
 }
 .usertag.nmTeam{
     background-image: url(https://websiteres.nmteam.xyz/producticon/nmTeam/logo@32.png);
@@ -508,7 +509,6 @@ body[theme=dark]{
 }
 .comments h2{
     font-size: 18rem;
-    font-weight: bold;
     margin: 1rem 0 7rem 0;
 }
 .inCardComments .comment .header{

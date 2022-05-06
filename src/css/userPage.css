@@ -1,7 +1,7 @@
 body{
     --uInfo-header-text: #000;
     --uInfo-header-text-grey: rgba(0, 0, 0, 0.568);
-    --uInfo-header-lin: linear-gradient(to bottom, rgba(0,0,0,0) 40%, var(--page-bgcolor));
+    --uInfo-header-lin: linear-gradient(to bottom, rgba(246,246,246,0) 26%, rgba(246,246,246,0.4) 62%, rgba(246,246,246,1) 100%);
     --uInfo-header-data-sepa: rgba(51, 51, 51, 0.342);
     --uInfo-header-interaction-button-positive-color: #000;
     --uInfo-header-interaction-button-positive-background: rgb(255, 208, 0);
@@ -13,7 +13,7 @@ body{
 body[theme=dark]{
     --uInfo-header-text: rgb(255, 255, 255);
     --uInfo-header-text-grey: rgba(255, 255, 255, 0.568);
-    --uInfo-header-lin: linear-gradient(to bottom, rgba(0,0,0,0) 40%, var(--page-bgcolor));
+    --uInfo-header-lin: linear-gradient(to bottom, rgba(5,5,5,0) 26%, rgba(5,5,5,0.4) 62%, rgba(5,5,5,1) 100%);
     --uInfo-header-data-sepa: rgba(255, 255, 255, 0.342);
     --uInfo-header-interaction-button-positive-color: #000;
     --uInfo-header-interaction-button-positive-background: rgb(255, 208, 0);
@@ -61,7 +61,7 @@ body[theme=dark]{
     align-items: center;
     align-content: center;
     text-align: center;
-    margin-bottom: 15rem;
+    margin-bottom: 5rem;
     color: var(--uInfo-header-text);
 }
 .uHeaderInfos .disabled{
