@@ -112,3 +112,7 @@ body[theme=dark]{
     color: #fff;
     margin-bottom: 40px;
 }
+.indexSwiper .swiper-slide:focus-visible{
+    outline: none;
+    filter: opacity(.7);
+}

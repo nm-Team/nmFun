@@ -11,7 +11,7 @@ $.ajax({
         try {
             // 首页轮播图
             eval(response['info']['header_swiper']).forEach(element => {
-                indexSwiperBox.innerHTML += `<div class="swiper-slide" onclick="` + element[1] + `" title="` + element[2] + `" style="background-image: url('` + element[0] + `'); background-position: 50% 50%;">` + element[3] + `</div>`;
+                indexSwiperBox.innerHTML += `<div class="swiper-slide" onkeydown="divClick(this, event)" tabindex="0" onclick="` + element[1] + `" title="` + element[2] + `" style="background-image: url('` + element[0] + `'); background-position: 50% 50%;">` + element[3] + `</div>`;
             });
             // 首页分类
             moreCategoryList = eval(response['info']['category']);
@@ -124,7 +124,7 @@ try {
         speed: 300,
         resizeObserver: true,
         autoplay: {
-            delay: 4000,
+            delay: 10000,
             stopOnLastSlide: false,
             disableOnInteraction: true,
         },
@@ -145,7 +145,7 @@ try {
         scrollbar: {
             el: '.swiper-scrollbar',
         },
-    })
+    });
 }
 catch (err) {
     writeLog("e", "index swiper", err);
