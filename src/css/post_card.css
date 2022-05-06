@@ -506,6 +506,11 @@ body[theme=dark]{
 .card.interactionBar button[on]{
     font-size: bold;
 }
+.comments h2{
+    font-size: 18rem;
+    font-weight: bold;
+    margin: 1rem 0 7rem 0;
+}
 .inCardComments .comment .header{
     margin-bottom: 2rem;
     align-items: center;

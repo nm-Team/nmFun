@@ -309,7 +309,7 @@ function loadPostsList(box) {
             }
             $.ajax({
                 type: "POST",
-                url: backEndURL + "/comment/listcomment.php?CodySESSION=" + localStorage.sessionid + ("&pid=" + attr.post_id) + ("&rid=" + attr.rid) + (attr.rank_type == "hot" ? "&order_by=like&order_time=DESC&from=" + startFrom : "&order_by=cid&order_time=" + attr.rank_type.toUpperCase() + "&cid=" + lastCid),
+                url: backEndURL + "/comment/listcomment.php?CodySESSION=" + localStorage.sessionid + (attr.post_id ? "&pid=" + attr.post_id : "") + ("&rid=" + attr.rid) + (attr.rank_type == "hot" ? "&order_by=like&order_time=DESC&from=" + startFrom : "&order_by=cid&order_time=" + attr.rank_type.toUpperCase() + "&cid=" + lastCid),
                 async: true,
                 data: {},
                 dataType: "json",
