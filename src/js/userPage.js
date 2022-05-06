@@ -74,6 +74,9 @@ function refreshUserInfoArea(uid) {
             if (uid == myUid) {
                 $("[data-mypoint]").html(pData['point']);
             }
+            $(`#userInfoFrame_${uid} .postsListBar .refresh`).click(function () {
+                refreshUserInfoArea(uid);
+            });
         }
         else {
             newMsgBox("用户信息加载失败");
