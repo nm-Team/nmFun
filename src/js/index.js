@@ -3,7 +3,7 @@ writeLog("i", "Page", "found page loading...");
 // 初始化
 $.ajax({
     type: "GET",
-    url: backEndURL + "/info.php?CodySESSION=" + localStorage.sessionid,
+    url: backEndURL + "/info.php?CodySESSION=" + localStorage.sessionid + "&t=" + gTime(),
     async: true,
     dataType: "json",
     success: function (response, status, request) {
