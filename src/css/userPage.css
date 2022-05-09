@@ -206,6 +206,10 @@ body[theme=dark]{
     border-radius: 0;
     text-align: left;
     font-size: 14rem;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    color: var(--card);
 }
 .recentLikeArea button:not(:first-child){
     border-top: 1rem solid var(--page-bgcolor);
