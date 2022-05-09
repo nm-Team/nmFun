@@ -22,7 +22,8 @@
         <p class="tip" id="tipWord"><b>例如：</b>我的名字叫吉良吉影，33岁。住在杜王町东北部的别墅区一带，未婚。</p>
     </div>
     <div class="lists">
-        <div class="but" tabindex="0" onkeydown="divClick(this, event)" onclick="parent.closeBrowser(parent.document.getElementsByClassName('browserFrame')[parent.document.getElementsByClassName('browserFrame').length - 1].getAttribute('data-browser-id'));parent.newBrowser('/settings/account_editprofilephoto.html','',false,false)">
+        <div class="but" tabindex="0" onkeydown="divClick(this, event)"
+            onclick="parent.closeBrowser(parent.document.getElementsByClassName('browserFrame')[parent.document.getElementsByClassName('browserFrame').length - 1].getAttribute('data-browser-id'));parent.newBrowser('/settings/account_editprofilephoto.html','',false,false)">
             <t>设置个人资料页背景图片</t>
         </div>
         <p class="tip">自定义您的个人资料页背景图片。</p>
@@ -89,7 +90,7 @@
     <script src="../src/js/settings.js"></script>
     <script>
         try {
-            newAjax("GET", backEndURL + "/user/myinfo.php", true, "", {}, function (data) {
+            newAjax("GET", backEndURL + "/user/myinfo.php", true, "time=" + gTime(), {}, function (data) {
                 ;
                 writeLog("i", "account_editinfo.get", data);
                 $("#bioBox").val(data.bio);

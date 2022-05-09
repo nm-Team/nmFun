@@ -155,6 +155,9 @@ uPageTemp = `
                         您已屏蔽该用户。
                     </div>
                 </div>
+                <div class="card">
+                <div class="header"><div class="name" onclick="showUserRecentLikePage('{{uid}}','{{nick}}')">Debug 按钮</div></div> 
+             </div>
             </div>
             <div id="userPage_{{uid}}_postsList_posts"></div>
             <div id="userPage_{{uid}}_postsList_comments"></div>
@@ -427,6 +430,60 @@ starListTemplate = `
     <div class="equalPages floatFrame-content postsListScrollMonitor" style="height: 100%" id="starListFrame_scrollMonitor">
         <div id="starListFrame_lContainer"class="cardsListsContainer">
                 <div id="starListFrame_l"></div>
+        </div>
+    </div>
+</div>`;
+
+// 收藏
+function showUserRecentLikePage(uid, unick) {
+    if (logRequire()) {
+        try {
+            //如果有则定位
+            try {
+                focusBox("pageRight", 'userRecentLikePage_' + uid, false);
+            }
+            catch (error) { // 没有则创建
+                new_element = document.createElement('div');
+                new_element.setAttribute('id', "userRecentLikePage_" + uid);
+                new_element.setAttribute('class', 'userRecentLikePage box rightBox');
+                new_element.setAttribute('con', 'none');
+                new_element.setAttribute('totallyclose', 'true');
+                new_element.setAttribute('name', unick + "最近点赞的帖子");
+                new_element.setAttribute('data-url', "recent_like_" + uid + "_" + unick);
+                new_element.setAttribute('noother', 'false');
+                new_element.innerHTML = userRecentLikePageTemplate.replace(/{{uid}}/g, uid).replace(/{{nick}}/g, unick);
+                pageRight.appendChild(new_element);
+                focusBox("pageRight", "userRecentLikePage_" + uid, false);
+                initPostsListMonitor($(`#userRecentLikePage_${uid}_scrollMonitor`));
+                initPostsList($(`#userRecentLikePage_${uid}_l`), { "type": "post", "search": { "recent_like": true, "uid": uid }, "noOther": false });
+                focusInPostsList($(`#userRecentLikePage_${uid}_scrollMonitor`), $(`#userRecentLikePage_${uid}_l`));
+            };
+        }
+        catch (err) {
+            console.error(err);
+        }
+    }
+}
+
+userRecentLikePageTemplate = `
+<header>
+    <div class="left">
+        <button class="backButton" title="返回" onclick="closeBox('pageRight','userRecentLikePage_{{uid}}',false);"
+            oncontextmenu="quickBack('pageRight',this)"
+            ontouchstart="longPressToDo(function(){quickBack('pageRight')})"
+            ontouchend="longPressStop()"><i class="material-icons"></i></button>
+        <div class="nameDiv">
+            <p class="title">{{nick}}最近点赞的帖子</p>
+            <p class="little">最多展现 50 条他最近点赞的帖子</p>
+        </div>
+    </div>
+    <div class="right">
+    </div>
+</header>
+<div class="cardBox postCardBox main" style="overflow: hidden;">
+    <div class="equalPages floatFrame-content postsListScrollMonitor" style="height: 100%" id="userRecentLikePage_{{uid}}_scrollMonitor">
+        <div id="userRecentLikePage_{{uid}}_lContainer"class="cardsListsContainer">
+                <div id="userRecentLikePage_{{uid}}_l"></div>
         </div>
     </div>
 </div>`;

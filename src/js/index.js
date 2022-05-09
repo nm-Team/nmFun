@@ -117,38 +117,48 @@ window.onkeydown = function (event) {
 }
 
 // 首页的滚动屏
-try {
-    var mySwiper = new Swiper('.swiper-container', {
-        direction: 'horizontal', // 垂直切换选项
-        loop: true, // 循环模式选项
-        speed: 300,
-        resizeObserver: true,
-        autoplay: {
-            delay: 10000,
-            stopOnLastSlide: false,
-            disableOnInteraction: true,
-        },
-        effect: '',
-        // 如果需要分页器
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
 
-        // 如果需要前进后退按钮
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
+mySwiper = createSwiper();
 
-        // 如果需要滚动条
-        scrollbar: {
-            el: '.swiper-scrollbar',
-        },
-    });
-}
-catch (err) {
-    writeLog("e", "index swiper", err);
+$(window).on("load", function () {
+    mySwiper = createSwiper();
+});
+
+function createSwiper() {
+    try {
+        var mySwiper = new Swiper('.swiper-container', {
+            direction: 'horizontal', // 垂直切换选项
+            loop: true, // 循环模式选项
+            speed: 300,
+            resizeObserver: true,
+            autoplay: {
+                delay: 10000,
+                stopOnLastSlide: false,
+                disableOnInteraction: true,
+            },
+            effect: '',
+            // 如果需要分页器
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+
+            // 如果需要前进后退按钮
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+
+            // 如果需要滚动条
+            scrollbar: {
+                el: '.swiper-scrollbar',
+            },
+        });
+    }
+    catch (err) {
+        writeLog("e", "index swiper", err);
+    }
+    return mySwiper;
 }
 
 // thinmode

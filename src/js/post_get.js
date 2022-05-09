@@ -97,9 +97,12 @@ function loadPostsList(box) {
             if (box.attr("data-status") != "undefined") return -1;
             writeLog("i", "loadPostsList", "start, attr " + JSON.stringify(attr) + ",detected last pid is " + lastPid + "");
             box.attr("data-status", "loading");
+            pListRequireLink = "/post/listpost.php?";
+            if (attr.search && attr.search.star) pListRequireLink = "/post/star.php?action=get&";
+            else if (attr.search && attr.search.recent_like) pListRequireLink = "/post/recent_like.php?action=get&";
             $.ajax({
                 type: "POST",
-                url: backEndURL + "/post" + (attr.search.star == true ? "/star.php?action=get&" : "/listpost.php?") + "pid=" + (lastPid ? lastPid : "") + "&from=" + (startFrom ? startFrom : "") + "&category=" + (attr.search.category ? attr.search.category : "") + "&user=" + (attr.search.uid ? attr.search.uid : "") + "&order_by=" + (attr.order && attr.order.type ? attr.order.type : "") + "&order_time=" + (attr.order && attr.order.time ? attr.order.time : "") + "&CodySESSION=" + localStorage.sessionid,
+                url: backEndURL + pListRequireLink + "pid=" + (lastPid ? lastPid : "") + "&from=" + (startFrom ? startFrom : "") + "&category=" + (attr.search.category ? attr.search.category : "") + "&user=" + (attr.search.uid ? attr.search.uid : "") + "&order_by=" + (attr.order && attr.order.type ? attr.order.type : "") + "&order_time=" + (attr.order && attr.order.time ? attr.order.time : "") + "&CodySESSION=" + localStorage.sessionid,
                 async: true,
                 data: { keyword: (attr.search.keyword ? attr.search.keyword : "") },
                 dataType: "json",
@@ -107,8 +110,11 @@ function loadPostsList(box) {
                     writeLog("i", "loadPostsList get backend response", JSON.stringify(response));
                     if (response['status'] == "error") {
                         if (response['error_hidden']) return box.html(`<div class="card" noselect><div class="content"><center>根据用户的隐私设置，你无法查看他的帖子。</center></div></div>`);
-                        else
+                        else if (response['error_hidden_like']) return box.html(`<div class="card" noselect><div class="content"><center>根据用户的隐私设置，你无法查看他最近点赞的帖子。</center></div></div>`);
+                        else {
+                            box.attr("data-status", "error");
                             return newMsgBox("抱歉，加载帖子时出现问题。<br />" + response['info']);
+                        }
                     }
                     try {
                         response['data'].forEach(info => {
@@ -127,7 +133,7 @@ function loadPostsList(box) {
             </div>
         </a>
         <div class="buttons">
-            <button onclick="postContextMenu('post', '${info.pid}', '${info.title}', ${info.user.uid}, this);" title="选项"><i
+            <button onclick="postContextMenu('post', '${info.pid}', '${info.title}', ${info.user.uid}, this,${attr.search && attr.search.star ? "'star'" : (attr.search && attr.search.recent_like && attr.search.uid == myUid ? "'myRecentLike'" : "''")});" title="选项"><i
                     class="material-icons">more_vert</i></button>
         </div>
     </div>
@@ -1203,7 +1209,7 @@ function contentFormat(msg) {
 
 biliVideoTemplate = `<div class="biliVideoCon" noselect><iframe class="biliVideo" frameborder="no" scrolling="no" src="https://player.bilibili.com/player.html?bvid={{bvid}}&page={{page}}&as_wide=1&high_quality=1" allowfullscreen=""></iframe><div class="biliVideoNote"><span>视频来自 Bilibili</span><button onclick="window.open('https://www.bilibili.com/video/{{bvid}}?p={{page}}&ref=nmfun')" title="在 bilibili.com 查看视频">转到</button></div></div>`;
 
-function postContextMenu(type, id, poName, uid, ele) {
+function postContextMenu(type, id, poName, uid, ele, ref = null) {
     contextMenuContent = [["拷贝分享链接", "copyToClipboard('" + siteURL + "#" + type + "_" + id + "')", "content_copy"], ["line"]];
     if (gRole("ban_user")) {
         contextMenuContent.push(["封禁 (管理员)", "banUser(" + uid + ")", "remove_circle"], ["line"]);
@@ -1220,6 +1226,10 @@ function postContextMenu(type, id, poName, uid, ele) {
     else {
         contextMenuContent.push(["举报", "report('" + type + "','" + uid + "','" + id + "','" + poName + "')", "warning"], ["屏蔽此用户", "blockUser(`" + uid + "`)", "block"]);
     }
+    if (ref == "star")
+        contextMenuContent.push(["line"], ["移出收藏", "starPost('" + id + "', $(this))", "star"]);
+    if (ref == "myRecentLike")
+        contextMenuContent.push(["line"], ["不显示在最近点赞的帖子中", "removeFromRecentLike('" + id + "')", ""]);
     createContextMenu(contextMenuContent, true, undefined, ele);
 }
 
@@ -1324,7 +1334,7 @@ function starPost(pid, ele) {
             newMsgBox("收藏冷却中，请稍后再试");
             return;
         }
-        if (ele.attr("starred") == "true") {
+        if (ele.attr("starred") == "true" || ele.parent().hasClass("contextMenu")) {
             starOpe = "unstar";
         }
         else {
@@ -1360,7 +1370,42 @@ function starPost(pid, ele) {
         }
         $("[data-star-post-id=" + pid + "]").attr("data-ignore", "true");
         $("[data-star-post-id=" + pid + "]").attr("starred", (starOpe == "star" ? "true" : "false"));
-        newAjax("POST", backEndURL + "/post/star.php", true, "pid=" + pid + "&action=" + (starOpe == "unstar" ? "del" : "add"), "", function (d) { writeLog("i", "starPost", "star post " + pid + " success"); $("[data-star-post-id=" + pid + "]").attr("starred", (starOpe == "star" ? "true" : "false")); $("[data-star-post-id=" + pid + "]").attr("data-ignore", "false"); }, function (d) { $("[data-star-post-id=" + pid + "]").attr("starred", (starOpe != "star" ? "true" : "false")); writeLog("i", "starPost", "star post " + pid + " error"); $("[data-star-post-id=" + pid + "]").attr("data-ignore", "false"); newMsgBox((starOpe == "unstar" ? "取消" : "") + "收藏失败，因为" + d['info']); });
+        newAjax("POST", backEndURL + "/post/star.php", true, "pid=" + pid + "&action=" + (starOpe == "unstar" ? "del" : "add"), "",
+            function (d) {
+                writeLog("i", "starPost", "star post " + pid + " success");
+                $("[data-star-post-id=" + pid + "]").attr("starred", (starOpe == "star" ? "true" : "false"));
+                $("[data-star-post-id=" + pid + "]").attr("data-ignore", "false");
+                try {
+                    if (starOpe == "star")
+                        ;
+                    //  $("#starListFrame_l .main").prepend($("[data-type=post][data-postid=" + pid + "]"));
+                    else
+                        $("#starListFrame_l .main").find($("[data-type=post][data-postid=" + pid + "]")).remove();
+                }
+                catch (e) { }
+                newMsgBox((starOpe == "unstar" ? "取消" : "") + "收藏成功");
+            }, function (d) {
+                $("[data-star-post-id=" + pid + "]").attr("starred", (starOpe != "star" ? "true" : "false"));
+                writeLog("i", "starPost", "star post " + pid + " error");
+                $("[data-star-post-id=" + pid + "]").attr("data-ignore", "false");
+                newMsgBox((starOpe == "unstar" ? "取消" : "") + "收藏失败，因为" + d['info']);
+
+            });
+    }
+}
+
+// 隐藏显示点赞的帖子
+function removeFromRecentLike(pid) {
+    if (logRequire()) {
+        newAjax("POST", backEndURL + "/post/recent_like.php", true, "pid=" + pid + "&action=del", "",
+            function (d) {
+                $(`#userRecentLikePage_${myUid}_l`).find($("[data-type=post][data-postid=" + pid + "]")).remove();
+                newMsgBox("隐藏显示成功");
+            }, function (d) {
+                writeLog("i", "removeFromRecentLike", " post " + pid + " error");
+                newMsgBox("隐藏显示失败，因为" + d['info']);
+            }
+        );
     }
 }
 
