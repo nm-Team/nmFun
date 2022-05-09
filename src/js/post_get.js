@@ -39,9 +39,12 @@ function initPostsListMonitor(box, realBox = undefined) {
 }
 
 function refreshPostsList(box, config = {}) {
-    box.find(".main").empty();
-    box.attr("data-status", "undefined");
-    loadPostsList(box);
+    if (box.attr("data-status") != "loading") {
+        box.find(".main").empty();
+        box.attr("data-status", "undefined");
+        loadPostsList(box);
+    }
+    else newMsgBox("正在加载中，请稍后再试");
 }
 
 function getActivePostsList(d) {
@@ -1229,7 +1232,7 @@ function postContextMenu(type, id, poName, uid, ele, ref = null) {
     if (ref == "star")
         contextMenuContent.push(["line"], ["移出收藏", "starPost('" + id + "', $(this))", "star"]);
     if (ref == "myRecentLike")
-        contextMenuContent.push(["line"], ["不显示在最近点赞的帖子中", "removeFromRecentLike('" + id + "')", ""]);
+        contextMenuContent.push(["line"], ["在此列表隐藏", "removeFromRecentLike('" + id + "')", ""]);
     createContextMenu(contextMenuContent, true, undefined, ele);
 }
 
@@ -1389,23 +1392,7 @@ function starPost(pid, ele) {
                 writeLog("i", "starPost", "star post " + pid + " error");
                 $("[data-star-post-id=" + pid + "]").attr("data-ignore", "false");
                 newMsgBox((starOpe == "unstar" ? "取消" : "") + "收藏失败，因为" + d['info']);
-
             });
-    }
-}
-
-// 隐藏显示点赞的帖子
-function removeFromRecentLike(pid) {
-    if (logRequire()) {
-        newAjax("POST", backEndURL + "/post/recent_like.php", true, "pid=" + pid + "&action=del", "",
-            function (d) {
-                $(`#userRecentLikePage_${myUid}_l`).find($("[data-type=post][data-postid=" + pid + "]")).remove();
-                newMsgBox("隐藏显示成功");
-            }, function (d) {
-                writeLog("i", "removeFromRecentLike", " post " + pid + " error");
-                newMsgBox("隐藏显示失败，因为" + d['info']);
-            }
-        );
     }
 }
 

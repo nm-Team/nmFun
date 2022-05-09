@@ -25,6 +25,9 @@ function checkURLParam() {
             case "starlist":
                 showUserStarListPage();
                 break;
+            case "recentlike":
+                if (hash[1]) showUserRecentLikePage(hash[1], unescape(hash[2]));
+                break;
             case "search":
                 showBarPage('search');
                 searchFrame_input.value = unescape(hash[1]);

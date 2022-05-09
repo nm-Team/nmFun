@@ -71,6 +71,17 @@ function refreshUserInfoArea(uid) {
             else {
                 loadPostsList($(`#userPage_${uid}_postsList_comments`));
             }
+            if ((pData['hide_like'] != 1 || pdata['is_myself']) && pData['recent_like'].length != 0) {
+                uRecentLikePreview = "";
+                pData['recent_like'].forEach(element => {
+                    uRecentLikePreview += `<button onclick="newPostDetailPage('${element['pid']}')">${element['title'] ? "<div><p class='t'>" + element['title'] + "</p>" : ""}<p class='s'>${contentFormat(element['content'])}</p></div>${element['attachment'] ? "<i style='background-image: url(" + attachURL + element['attachment']['src'] + ")'></i>" : ""}</button>`;
+                });
+                $(`#userInfoFrame_${uid} .recentLikeBox`).css("display", "block");
+                $(`#userInfoFrame_${uid} .recentLikeArea`).html(uRecentLikePreview);
+            }
+            else {
+                $(`#userInfoFrame_${uid} .recentLikeBox`).css("display", "none");
+            }
             if (uid == myUid) {
                 $("[data-mypoint]").html(pData['point']);
             }
@@ -155,9 +166,19 @@ uPageTemp = `
                         您已屏蔽该用户。
                     </div>
                 </div>
-                <div class="card">
-                <div class="header"><div class="name" onclick="showUserRecentLikePage('{{uid}}','{{nick}}')">Debug 按钮</div></div> 
-             </div>
+                <div class="card recentLikeBox">
+                    <div class="header" style="cursor: pointer" onclick="showUserRecentLikePage('{{uid}}','{{nick}}')">
+                        <div class="name">最近点赞的帖子</div>
+                        <div class="buttons">
+                            <button title="查看更多"><i class="material-icons">chevron_right</i></button>
+                        </div>
+                    </div>
+                    <div class="main recentLikeArea">
+                        <button disabled class="skeleton"></button>
+                        <button disabled class="skeleton"></button>
+                        <button disabled class="skeleton"></button>
+                    </div>
+                </div>
             </div>
             <div id="userPage_{{uid}}_postsList_posts"></div>
             <div id="userPage_{{uid}}_postsList_comments"></div>
@@ -449,9 +470,9 @@ function showUserRecentLikePage(uid, unick) {
                 new_element.setAttribute('con', 'none');
                 new_element.setAttribute('totallyclose', 'true');
                 new_element.setAttribute('name', unick + "最近点赞的帖子");
-                new_element.setAttribute('data-url', "recent_like_" + uid + "_" + unick);
+                new_element.setAttribute('data-url', "recentlike_" + uid + "_" + escape(unick));
                 new_element.setAttribute('noother', 'false');
-                new_element.innerHTML = userRecentLikePageTemplate.replace(/{{uid}}/g, uid).replace(/{{nick}}/g, unick);
+                new_element.innerHTML = userRecentLikePageTemplate.replace(/{{uid}}/g, uid).replace(/{{nick}}/g, unick).replace(/{{buttonhidden}}/g, uid != myUid ? "hidden" : "");
                 pageRight.appendChild(new_element);
                 focusBox("pageRight", "userRecentLikePage_" + uid, false);
                 initPostsListMonitor($(`#userRecentLikePage_${uid}_scrollMonitor`));
@@ -474,10 +495,12 @@ userRecentLikePageTemplate = `
             ontouchend="longPressStop()"><i class="material-icons"></i></button>
         <div class="nameDiv">
             <p class="title">{{nick}}最近点赞的帖子</p>
-            <p class="little">最多展现 50 条他最近点赞的帖子</p>
+            <!-- <p class="little">最多展现 50 条他最近点赞的帖子</p> -->
         </div>
     </div>
     <div class="right">
+        <button {{buttonhidden}} onclick="deleteAllRecentLikes()" title="清空最近点赞记录"><i class="material-icons">remove_circle_outline</i></button>
+        <button onclick="alert('“最近点赞的帖子”将记录用户最多 50 个最近点赞的帖子。<br><br>要向其他人隐藏显示最近点赞的帖子，可以前往账号设置关闭相应权限。<br><br>可以在自己的“最近点赞的帖子”页面隐藏某一条最近点赞的帖子或所有最近点赞的帖子。','最近点赞的帖子')" title="帮助"><i class="material-icons">info_outline</i></button>
     </div>
 </header>
 <div class="cardBox postCardBox main" style="overflow: hidden;">
@@ -487,6 +510,39 @@ userRecentLikePageTemplate = `
         </div>
     </div>
 </div>`;
+
+// 隐藏显示点赞的帖子
+function removeFromRecentLike(pid) {
+    if (logRequire()) {
+        newAjax("POST", backEndURL + "/post/recent_like.php", true, "pid=" + pid + "&action=del", "",
+            function (d) {
+                $(`#userRecentLikePage_${myUid}_l`).find("[data-type=post][data-postid=" + pid + "]").remove();
+                newMsgBox("隐藏显示成功");
+            }, function (d) {
+                writeLog("i", "removeFromRecentLike", " post " + pid + " error");
+                newMsgBox("隐藏显示失败，因为" + d['info']);
+            }
+        );
+    }
+}
+
+function deleteAllRecentLikes() {
+    if (logRequire()) {
+        alert("确定要删除所有的最近点赞记录吗？", "清空最近点赞记录", "确定", "confirmDeleteAllRecentLikes()", "取消");
+    }
+}
+
+function confirmDeleteAllRecentLikes() {
+    newAjax("GET", backEndURL + "/post/recent_like.php", true, "action=delall", {},
+        function (d) {
+            $(`#userRecentLikePage_${myUid}_l`).attr("data-status", "nomore");
+            $(`#userRecentLikePage_${myUid}_l`).find(".main").html("");
+            newMsgBox("隐藏显示成功");
+        }, function (d) {
+            writeLog("i", "deleteAllRecentLikes", "error");
+            newMsgBox("隐藏显示失败，因为" + d['info']);
+        });
+}
 
 // 用户权限
 function gRole(r) {

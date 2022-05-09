@@ -1,8 +1,3 @@
-logScript = document.createElement("script");
-logScript.setAttribute("src", accountClient + "/src/js/getinfo.js");
-logScript.setAttribute("onerror", "newMsgBox('无法连接到账号服务器。');writeLog('e', 'accounts.js', 'log js load fail');");
-document.body.appendChild(logScript);
-
 // 登录账户
 myUid = NaN;
 function setLog() {

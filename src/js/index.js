@@ -26,7 +26,11 @@ $.ajax({
             if (!document.getElementById(localStorage.typeSelected))
                 localStorage.typeSelected = "indexType_";
             document.getElementById(localStorage.typeSelected).click();
-            closeHover();
+
+            cHInt = setInterval(() => {
+                if (returnWord) { closeHover(); clearInterval(cHInt); }
+            }, 100);
+
             // 保存身份组和名单
             roleList = response['info']['role'];
             blockList = response['info']['blocklist'];
