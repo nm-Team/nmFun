@@ -1021,3 +1021,55 @@ body[theme=dark]{
     font-size: 14rem;
     padding-bottom: 4rem;
 }
+.lightPostsList{
+    margin: 0 0;
+}
+.lightPostsList button{
+    background: none;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0rem 0 5rem 0;
+    border-radius: 0;
+    text-align: left;
+    font-size: 14rem;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    color: var(--card);
+}
+.lightPostsList button:not(:first-child){
+    border-top: 1rem solid var(--page-bgcolor);
+    padding-top: 6rem;
+}
+.lightPostsList button p{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    line-height: 1.4;
+}
+.lightPostsList button .t{
+    font-weight: bold;
+    -webkit-line-clamp: 1;
+}
+.lightPostsList button .s{
+    -webkit-line-clamp: 2;
+}
+.lightPostsList button i{
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: 4em;
+    height: 4em;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-right: 1rem;
+    background-color: var(--card-button-bgcolor);
+    border-radius: 4rem;
+}
+.lightPostsList button.skeleton{
+    height: 4em;
+    margin: -10rem 0 -12rem 0!important;
+    border: none;
+}

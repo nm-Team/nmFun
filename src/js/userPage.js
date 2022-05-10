@@ -71,7 +71,7 @@ function refreshUserInfoArea(uid) {
             else {
                 loadPostsList($(`#userPage_${uid}_postsList_comments`));
             }
-            if ((pData['hide_like'] != 1 || pdata['is_myself']) && pData['recent_like'].length != 0) {
+            if ((pData['hide_like'] != 1 || pData['is_myself']) && pData['recent_like'].length != 0) {
                 uRecentLikePreview = "";
                 pData['recent_like'].forEach(element => {
                     uRecentLikePreview += `<button onclick="newPostDetailPage('${element['pid']}')">${element['title'] ? "<div><p class='t'>" + element['title'] + "</p>" : ""}<p class='s'>${contentFormat(element['content'])}</p></div>${element['attachment'] ? "<i style='background-image: url(" + attachURL + element['attachment']['src'] + ")'></i>" : ""}</button>`;
@@ -173,7 +173,7 @@ uPageTemp = `
                             <button title="查看更多"><i class="material-icons">chevron_right</i></button>
                         </div>
                     </div>
-                    <div class="main recentLikeArea">
+                    <div class="main recentLikeArea lightPostsList">
                         <button disabled class="skeleton"></button>
                         <button disabled class="skeleton"></button>
                         <button disabled class="skeleton"></button>
