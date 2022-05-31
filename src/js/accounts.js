@@ -100,9 +100,9 @@ function closeLogFrame() {
 
 function logOut() {
     localStorage.sessionid = "";
-    document.cookie = "PHPSESSID=;expires=01-Dec-2006 01:14:26 GMT;domain=" + siteURL.split("/")[2];
+    document.cookie = "PHPSESSID=;expires=01-Dec-2006 01:14:26 GMT;domain=" + siteURL.split("/")[2].split(":")[0];
     document.cookie = "PHPSESSID=;expires=01-Dec-2006 01:14:26 GMT;domain=" + accountClient.split("/")[2];
-    document.cookie = "sessionid=;expires=01-Dec-2006 01:14:26 GMT;domain=" + siteURL.split("/")[2];
+    document.cookie = "sessionid=;expires=01-Dec-2006 01:14:26 GMT;domain=" + siteURL.split("/")[2].split(":")[0];
     document.cookie = "sessionid=;expires=01-Dec-2006 01:14:26 GMT;domain=" + accountClient.split("/")[2];
     writeLog("i", "logOut", "success");
 }

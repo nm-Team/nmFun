@@ -24,8 +24,7 @@
     </div>
     <p class="listName">管理账号</p>
     <div class="lists">
-        <div class="but"
-            onclick="parent.alert('确定要注销账号吗？','注销','是','localStorage.sessionid=``;window.location.href=``;','取消')">
+        <div class="but" onclick="parent.alert('确定要注销账号吗？','注销','是','logOut();window.location.href=``;','取消')">
             <t>注销账号</t>
         </div>
         <div class="but"
@@ -50,6 +49,8 @@
     <script src="../src/js/jquery.min.js"></script>
     <script src="../src/js/functions.js"></script>
     <script src="../src/js/settings.js"></script>
+    <script src="../src/js/accounts.js"></script>
+    <script src="../src/js/getinfo.js"></script>
     <script>
         myInfos = parent.myInfos;
         settingNick.innerHTML = myInfos.nick;
