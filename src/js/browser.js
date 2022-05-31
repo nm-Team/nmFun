@@ -41,8 +41,8 @@ function closeBrowser(id) {
 }
 
 function showBrowserContextMenu(URL, ele = this) {
-    msgContextMenuItems = [["在浏览器中打开", "window.open('" + URL + "')"]];
-    createContextMenu(msgContextMenuItems, true, undefined, ele);
+    msgContextMenuItems = [{ "name": "在浏览器中打开", "onclick": "window.open('" + URL + "')" }];
+    createContextMenu({ "items": msgContextMenuItems, "position": { "element": ele, "alignWidth": "right", "alignHeight": "bottom", "atLeft": true, "atBottom": true } });
 }
 
 function updateTitle(browserId) {
@@ -102,8 +102,8 @@ function newLegacyBrowser(URL, withTip = true, showOpenInLegacyBrowser = true, s
 }
 
 function showLegacyBrowserContextMenu(URL, ele = this) {
-    msgContextMenuItems = [["在浏览器中打开", "window.open('" + URL + "')"]];
-    createContextMenu(msgContextMenuItems, undefined, undefined, ele);
+    msgContextMenuItems = [{ "name": "在浏览器中打开", "onclick": "window.open('" + URL + "')" }];
+    createContextMenu({ "items": msgContextMenuItems, "position": { "element": ele, "alignWidth": "right", "alignHeight": "bottom", "atLeft": true, "atBottom": true } });
 }
 
 function updateLegacyTitle(legacyBrowserId) {

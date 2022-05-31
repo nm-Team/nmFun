@@ -241,17 +241,17 @@ function followUser(uid, unfollow = false, ele) {
 
 // 菜单
 function showUserPageContextMenu(uid, unick, ele) {
-    cMenuItems = [["拷贝分享链接", "copyToClipboard('" + siteURL + "#" + "user" + "_" + uid + "_" + escape(unick) + "')", "content_copy"], ["line"]];
+    cMenuItems = [{ "name": "拷贝分享链接", "onclick": "copyToClipboard('" + siteURL + "#" + "user" + "_" + uid + "_" + escape(unick) + "')", "icon": "content_copy" }, { "name": "line" }];
     if (gRole("ban_user")) {
-        cMenuItems.push(["封禁 (管理员)", "banUser(" + uid + ")", "remove_circle"], ["line"]);
+        cMenuItems.push({ "name": "封禁 (管理员)", "onclick": "banUser(" + uid + ")", "icon": "remove_circle" }, { "name": "line" });
     }
     if (uid == myUid) {
-        cMenuItems.push(["编辑资料", "newLegacyBrowser('/settings/account.html', false, false)", "edit"]);
+        cMenuItems.push({ "name": "编辑资料", "onclick": "newLegacyBrowser('/settings/account.html', false, false)", "icon": "edit" });
     }
     else {
-        cMenuItems.push(["举报", "report('user','" + uid + "','','')", "warning"], ["屏蔽", "blockUser(" + uid + ")", "block"]);
+        cMenuItems.push({ "name": "举报", "onclick": "report('user','" + uid + "','','')", "icon": "warning" }, { "name": "屏蔽", "onclick": "blockUser(" + uid + ")", "icon": "block" });
     }
-    createContextMenu(cMenuItems, undefined, undefined, ele);
+    createContextMenu({ "items": cMenuItems, "position": { "element": ele, "atLeft": true, alignWidth: "right", alignHeight: "bottom" } });
 }
 
 // 关注列表/粉丝列表

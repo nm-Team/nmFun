@@ -868,17 +868,18 @@ function switchCommentDetailRankType(cid, typeId) {
 function showCommentTypeSwitch(pid, ele) {
     commentRankMenuJSON = [];
     for (var i in commentRankTypeJSON) {
-        commentRankMenuJSON.push([commentRankTypeJSON[i]['name'], "switchCommentRankType('" + pid + "','" + i + "')", (i == commentRankType[pid] ? "checked" : commentRankTypeJSON[i]['icon'])]);
+        commentRankMenuJSON.push({ "name": commentRankTypeJSON[i]['name'], "onclick": "switchCommentRankType('" + pid + "','" + i + "')", "icon": (i == commentRankType[pid] ? "checked" : commentRankTypeJSON[i]['icon']) });
     }
-    createContextMenu(commentRankMenuJSON, true, true, ele);
+    createContextMenu({ "items": commentRankMenuJSON, "position": { "element": ele } });
+
 }
 
 function showCommentDetailTypeSwitch(cid, ele) {
     commentRankMenuJSON = [];
     for (var i in commentRankTypeJSON) {
-        commentRankMenuJSON.push([commentRankTypeJSON[i]['name'], "switchCommentDetailRankType('" + cid + "','" + i + "')", (i == commentDetailRankType[cid] ? "checked" : commentRankTypeJSON[i]['icon'])]);
+        commentRankMenuJSON.push({ "name": commentRankTypeJSON[i]['name'], "onclick": "switchCommentDetailRankType('" + cid + "','" + i + "')", "icon": (i == commentDetailRankType[cid] ? "checked" : commentRankTypeJSON[i]['icon']) });
     }
-    createContextMenu(commentRankMenuJSON, true, true, ele);
+    createContextMenu({ "items": commentRankMenuJSON, "position": { "element": ele } });
 }
 
 postTemplate = `
@@ -1213,27 +1214,27 @@ function contentFormat(msg) {
 biliVideoTemplate = `<div class="biliVideoCon" noselect><iframe class="biliVideo" frameborder="no" scrolling="no" src="https://player.bilibili.com/player.html?bvid={{bvid}}&page={{page}}&as_wide=1&high_quality=1" allowfullscreen=""></iframe><div class="biliVideoNote"><span>视频来自 Bilibili</span><button onclick="window.open('https://www.bilibili.com/video/{{bvid}}?p={{page}}&ref=nmfun')" title="在 bilibili.com 查看视频">转到</button></div></div>`;
 
 function postContextMenu(type, id, poName, uid, ele, ref = null) {
-    contextMenuContent = [["拷贝分享链接", "copyToClipboard('" + siteURL + "#" + type + "_" + id + "')", "content_copy"], ["line"]];
+    contextMenuContent = [{ "name": "拷贝分享链接", "onclick": "copyToClipboard('" + siteURL + "#" + type + "_" + id + "')", "icon": "content_copy" }, { "name": "line" }];
     if (gRole("ban_user")) {
-        contextMenuContent.push(["封禁 (管理员)", "banUser(" + uid + ")", "remove_circle"], ["line"]);
+        contextMenuContent.push([{ "name": "封禁 (管理员)", "onclick": "banUser(" + uid + ")", "icon": "remove_circle" }, { "name": "line" }]);
     }
     if (gRole("manage_posts")) {
-        contextMenuContent.push(["删除 (管理员)", "adminDelPost('" + type + "','" + id + "')", "delete"], ["line"]);
+        contextMenuContent.push({ "name": "删除 (管理员)", "onclick": "adminDelPost('" + type + "','" + id + "')", "icon": "delete" }, { "name": "line" });
     }
     if (isNaN(myUid)) {
-        contextMenuContent.push(["登录后执行更多操作", "showLogFrame()", ""]);
+        contextMenuContent.push({ "name": "登录后执行更多操作", "onclick": "showLogFrame()" });
     }
     else if (uid == myUid) {
-        contextMenuContent.push(["删除", "deleteMyPostAlert('" + type + "',`" + id + "`, `" + poName + "`)", "delete"]);
+        contextMenuContent.push({ "name": "删除", "onclick": "deleteMyPostAlert('" + type + "',`" + id + "`, `" + poName + "`)", "icon": "delete" });
     }
     else {
-        contextMenuContent.push(["举报", "report('" + type + "','" + uid + "','" + id + "','" + poName + "')", "warning"], ["屏蔽此用户", "blockUser(`" + uid + "`)", "block"]);
+        contextMenuContent.push({ "name": "举报", "onclick": "report('" + type + "','" + uid + "','" + id + "','" + poName + "')", "icon": "warning" }, { "name": "屏蔽此用户", "onclick": "blockUser(`" + uid + "`)", "icon": "block" });
     }
     if (ref == "star")
-        contextMenuContent.push(["line"], ["移出收藏", "starPost('" + id + "', $(this))", "star"]);
+        contextMenuContent.push([{ "name": "line" }, { "name": "移出收藏", "onclick": "starPost('" + id + "', $(this))", "icon": "star" }]);
     if (ref == "myRecentLike")
-        contextMenuContent.push(["line"], ["在此列表隐藏", "removeFromRecentLike('" + id + "')", ""]);
-    createContextMenu(contextMenuContent, true, undefined, ele);
+        contextMenuContent.push([{ "name": "line" }, { "name": "在此列表隐藏", "onclick": "removeFromRecentLike('" + id + "')" }]);
+    createContextMenu({ "items": contextMenuContent, "position": { "element": ele, "atLeft": true, alignWidth: "right", alignHeight: "bottom" } });
 }
 
 function editMyPost(pid) {

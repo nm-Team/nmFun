@@ -1,4 +1,3 @@
-hasCreatedContextMenu = false;
 themeList = ["default", "dark",];
 languageList = ["zh_CN",];
 
@@ -9,87 +8,115 @@ $("body").bind("DOMNodeInserted", function () {
     })
 });
 
-// 展示右键菜单
-function createContextMenu(items, customX = false, customY = false, element = undefined) {
+hasCreatedContextMenu = false;
+contextMenuData = [];
+
+function createContextMenu(config) {
     if (!hasCreatedContextMenu) {
         var time = gTime();
         new_element = document.createElement('div');
         new_element.setAttribute('id', 'contextMenu' + time);
-        new_element.setAttribute('class', 'contextMenu');
-        new_element.setAttribute('onclick', 'closeContextMenu(' + time + ')');
+        new_element.setAttribute('class', 'contextMenu ' + (config.const ? "" : "closable") + " " + config.class);
+        // new_element.setAttribute('onclick', 'closeContextMenu(' + time + ')');
+        new_element.setAttribute('data-id', time);
+        items = config.items;
         for (createContextMenuItemsId = 0; createContextMenuItemsId < items.length; createContextMenuItemsId++) {
-            if (items[createContextMenuItemsId][0] == "line") {
+            if (items[createContextMenuItemsId]['name'] == "line") {
                 new_element.innerHTML += `<div class="line"></div>`;
-            } else new_element.innerHTML += `<button onclick="` + items[createContextMenuItemsId][1] + `;"><i class="material-icons">` + items[createContextMenuItemsId][2] + `</i>` + items[createContextMenuItemsId][0] + `</button>`;
-            if (items[createContextMenuItemsId][2]) {
+            } else new_element.innerHTML += `<button data-item-num="${createContextMenuItemsId}" onclick="` + (items[createContextMenuItemsId]['keepMenuOpen'] ? "" : `closeContextMenu('` + time + `');`) + items[createContextMenuItemsId]['onclick'].replace(/{menuId}/g, time).replace(/{itemId}/, createContextMenuItemsId) + `;" ${items[createContextMenuItemsId]['title'] ? `title="${items[createContextMenuItemsId]['title']}"` : ""}><i class="material-icons">` + items[createContextMenuItemsId]['icon'] + `</i>` + items[createContextMenuItemsId]['name'] + (items[createContextMenuItemsId]['isChild'] ? `<span class="childArrow material-icons">keyboard_arrow_right</div>` : "") + `</button>`;
+            if (items[createContextMenuItemsId]['icon']) {
                 new_element.setAttribute('icon', 'true');
             }
         }
-        document.getElementById("hoverArea").appendChild(new_element);
+        element = config.position.element;
+        $("#hoverArea").append(new_element);
+        menu = document.getElementById('contextMenu' + time);
+        // if has anothor contextMenu
+        if ($(".contextMenu:not(#contextMenu" + time + ")").length > 0) {
+            menu.style.zIndex = Number($(".contextMenu:not(#contextMenu" + time + ")").last().css("z-index")) + 2;
+        }
+        if (config.position.matchElementWidth) {
+            $(menu).css({
+                'width': $(element).outerWidth()
+            });
+        }
         // 判断位置
         // 获取div宽高
-        menuWidth = document.getElementById('contextMenu' + time).clientWidth;
-        menuHeight = document.getElementById('contextMenu' + time).clientHeight - 2 * Number(getComputedStyle(document.getElementById('contextMenu' + time), false)["paddingTop"].replace(/px/g, ""));
+        menuWidth = menu.clientWidth;
+        menuHeight = menu.clientHeight - 2 * Number(getComputedStyle(menu, false)["paddingTop"].replace(/px/g, ""));
         // alert(menuWidth+" "+menuHeight);
         // 获取页面宽高
         pageWidth = document.body.clientWidth;
         pageHeight = window.innerHeight;
         // alert(pageWidth+" "+pageHeight);
-        if (!element) {
+        if (config.position.type == "mouse") {
             positionX = mouseX;
             positionY = mouseY;
         }
         else {
             eleinfo = element.getBoundingClientRect();
             // console.log(eleinfo);
-            positionX = eleinfo.x + eleinfo.width / 2;
-            positionY = eleinfo.y + eleinfo.height;
+            if (config.position.matchElementWidth || config.position.alignWidth == "left") widthCal = 0;
+            else if (config.position.alignWidth == "right") widthCal = 1;
+            else widthCal = 0.5;
+            if (config.position.alignHeight == "top") heightCal = 0;
+            else if (config.position.alignHeight == "bottom") heightCal = 1;
+            else heightCal = 0.5;
+            positionX = eleinfo.x + eleinfo.width * widthCal;
+            positionY = eleinfo.y + eleinfo.height * heightCal;
         }
-        console.log("Now mouse at " + positionX + " " + positionY);
-        console.log("Now menu as " + menuWidth + " " + menuHeight);
         //对比宽度
-        if (customX == false && menuWidth + positionX < pageWidth)
+        if (config.position.atRight || (!config.position.atLeft && menuWidth + positionX < pageWidth))
             menuX = "r";
         else if (menuWidth - positionX < 0) menuX = "l";
         else { // 左右都不够，委屈一下菜单
             if (positionX * 2 > pageWidth) { // 即左边空间多
                 menuX = "l";
-                document.getElementById('contextMenu' + time).style.width = positionX + "px";
+                menu.style.width = positionX + "px";
             }
             else {
                 menuX = "r";
-                document.getElementById('contextMenu' + time).style.width = (pageWidth - positionX) + "px";
+                menu.style.width = (pageWidth - positionX) + "px";
             }
             // 重新获取页面宽高
             pageWidth = document.body.clientWidth;
             pageHeight = window.innerHeight;
         }
-        if (customY == false && menuHeight + positionY > pageHeight)
+        menuY = "b";
+        if (!config.position.atBottom && (config.position.atTop || menuHeight + positionY > pageHeight))
             menuY = "t";
-        else menuY = "b";
         if (menuX == "r") {
-            document.getElementById('contextMenu' + time).style.left = positionX + "px";
+            menu.style.left = positionX + "px";
         } else if (menuX == "l") {
-            document.getElementById('contextMenu' + time).style.right = (pageWidth - positionX) + "px";
+            menu.style.right = (pageWidth - positionX) + "px";
         }
         if (menuY == "b") {
-            document.getElementById('contextMenu' + time).style.top = positionY + "px";
+            menu.style.top = positionY + "px";
         } else if (menuY == "t") {
-            document.getElementById('contextMenu' + time).style.bottom = (pageHeight - positionY) + "px";
+            menu.style.bottom = (pageHeight - positionY) + "px";
         }
         console.log(menuX + menuY);
-        // 根据高度制作动画
+        // fix overflow
+        if (menu.getBoundingClientRect().top < 0) {
+            menu.style.height = menu.clientHeight + menu.getBoundingClientRect().top - 20 + "px";
+        }
+        if (menu.getBoundingClientRect().bottom > window.innerHeight) {
+            menu.style.height = menu.clientHeight + window.innerHeight - menu.getBoundingClientRect().bottom - 20 + "px";
+        }
+        // make animate
         new_element = document.createElement('style');
         new_element.innerHTML = `
-        @keyframes contextMenu{
+        @keyframes contextMenu${time}{
             0%{
                 opacity: 0;
                 width: 0;
-                max-height: 0vh;
+                max-height: 24rem;
                 overflow: hidden;
+                box-shadow: none;
             }
-            6%{
+            40%{
                 opacity: 1;
+                box-shadow: none;
             }
             99%{
                 overflow: hidden;
@@ -101,30 +128,100 @@ function createContextMenu(items, customX = false, customY = false, element = un
             }
         }`;
         document.getElementById("hoverArea").appendChild(new_element);
-        document.getElementById('contextMenu' + time).style.animation = "contextMenu 0.35s";
+        menu.style.animation = "contextMenu" + time + " 0.25s cubic-bezier(0.05, 0.07, 0.08, 1) ";
         new_element = document.createElement('div');
         new_element.setAttribute('id', 'commonCover' + time);
         new_element.setAttribute('class', 'commonCover');
         new_element.setAttribute('onclick', 'closeContextMenu(' + time + ')');
         new_element.setAttribute('oncontextmenu', 'closeContextMenu(' + time + ')');
+        // if has anothor contextMenu
+        if ($(".contextMenu:not(#contextMenu" + time + ")").length > 0) {
+            new_element.style.zIndex = Number($(".contextMenu:not(#contextMenu" + time + ")").last().css("z-index")) + 1;
+        }
         document.getElementById("hoverArea").appendChild(new_element);
-        document.getElementById('contextMenu' + time).getElementsByTagName("button")[0].focus();
         hasCreatedContextMenu = true;
-        writeLog("i", "createContextMenu", "time: " + time + ", content: " + items + ", x: " + menuX + " " + positionX + " " + menuWidth + ", y: " + menuY + " " + positionY + " " + menuHeight);
         setTimeout(() => {
+            if (config.startFromBottom) {
+                $(menu).find("button").last().focus();
+            }
+            else {
+                $(menu).find("button").first().focus();
+            }
+            if (menuY == "b") {
+                // menu.scrollTop = menu.scrollHeight;
+            }
             hasCreatedContextMenu = false;
         }, 10);
+        contextMenuData[time] = config;
     }
 }
 
 function closeContextMenu(time) {
     document.getElementById('commonCover' + time).outerHTML = "";
     document.getElementById('contextMenu' + time).setAttribute("die", "true");
-    // setTimeout(() => {
     document.getElementById('contextMenu' + time).outerHTML = "";
-    // }, 500);
-    writeLog("i", "closeContextMenu", "time: " + time);
+    $(contextMenuData[time].position.element).focus();
 }
+
+$("body").keydown(function (e) {
+    var e = window.event ? window.event : e;
+    if ($(document.activeElement).parent().hasClass("contextMenu")) {
+        // tab
+        if (e.keyCode == 9) {
+            e.preventDefault();
+        }
+        // up key
+        if (e.keyCode == 38) {
+            if ($(document.activeElement).prev("button").length) {
+                $(document.activeElement).prev().focus();
+            }
+            // cross line
+            else if ($(document.activeElement).prev().prev("button").length) {
+                $(document.activeElement).prev().prev().focus();
+            }
+            else {
+                $(document.activeElement).parent().find("button:last-of-type").focus();
+            }
+            e.preventDefault();
+        }
+        // down key
+        if (e.keyCode == 40) {
+            if ($(document.activeElement).next("button").length) {
+                $(document.activeElement).next().focus();
+            }
+            else if ($(document.activeElement).next().next("button").length) {
+                $(document.activeElement).next().next().focus();
+            }
+            else {
+                $(document.activeElement).parent().find("button:first-of-type").focus();
+            }
+            e.preventDefault();
+
+        }
+        // close on esc
+        if (e.keyCode == 27) {
+            if ($('.contextMenu.closable').length > 0) {
+                closeContextMenu($('.contextMenu.closable').last().attr('data-id'), true);
+                e.preventDefault();
+            }
+            else {
+                if ($('.msgBox').length > 0) {
+                    $('.msgBox').last().remove();
+                    e.preventDefault();
+                }
+            }
+        }
+    }
+    // Enter 关闭 alert
+    if (event.keyCode == 13 && document.getElementsByClassName("alertBox").length > 0 && document.activeElement.className.indexOf("negative") == -1) {
+        document.getElementsByClassName("alertBox")[document.getElementsByClassName("alertBox").length - 1].getElementsByClassName("positive")[0].click();
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    if (event.keyCode == 9 && (($(document.activeElement).hasClass("positive") && event.shiftKey) || ($(document.activeElement).hasClass("negative") && !event.shiftKey))) {
+        event.preventDefault();
+    }
+});
 
 // alert
 function alert(msg, title = "提示", positive = "好", positiveEvent, negative = undefined, negativeEvent, clicker = undefined) {
@@ -138,7 +235,7 @@ function alert(msg, title = "提示", positive = "好", positiveEvent, negative 
     <!--<div class="checker"><label for=""><input type="checkbox" hidden></label></div>-->
     <div class="buttons">
         <button class="positive" onclick="closeAlert(`+ time + `);` + positiveEvent + `;">` + positive + `</button>
-        `+ (negative ? '<button onclick="closeAlert(' + time + ');' + negativeEvent + ';">' + negative + '</button>' : '') + `
+        `+ (negative ? '<button class="negative" onclick="closeAlert(' + time + ');' + negativeEvent + ';">' + negative + '</button>' : '') + `
     </div> `;
     document.getElementById("hoverArea").appendChild(new_element);
     new_element = document.createElement('div');
@@ -240,11 +337,6 @@ document.documentElement.addEventListener('touchend', function (event) {
 window.onmousemove = function (event) {
     mouseX = event.pageX;
     mouseY = event.pageY;
-    try {
-        if (mouseY > window.outerHeight - 200) debugInfo.setAttribute("data-align", "top");
-        else debugInfo.setAttribute("data-align", "bottom");
-    }
-    catch (err) { }
 };
 
 // 禁用F12

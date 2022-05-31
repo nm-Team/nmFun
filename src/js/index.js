@@ -86,6 +86,12 @@ function indexSwitchType(typeName) {
 
 // 键盘事件
 window.onkeydown = function (event) {
+}
+
+
+// avaid  lost focus
+$("body").keydown(function (e) {
+    var e = window.event ? window.event : e;
     // 定义按键
     esc = event.keyCode == 27;
     ctrl = event.ctrlKey;
@@ -114,12 +120,7 @@ window.onkeydown = function (event) {
         else pageHeader.removeAttribute("open");
         return false;
     }
-    // Enter 关闭 alert
-    if (enter && document.getElementsByClassName("alertBox").length > 0 && document.activeElement.className.indexOf("negative") == -1) {
-        document.getElementsByClassName("alertBox")[document.getElementsByClassName("alertBox").length - 1].getElementsByClassName("positive")[0].click();
-    }
-}
-
+});
 // 首页的滚动屏
 
 mySwiper = createSwiper();
@@ -359,9 +360,9 @@ function switchSearchRankType(typeId) {
 function showSwitchSearchRankTypeContextMenu() {
     sSRTCMI = [];
     for (var i in sRankTypeJSON) {
-        sSRTCMI.push([sRankTypeJSON[i]['name'], "switchSearchRankType('" + i + "')", (i == sRankType ? "checked" : sRankTypeJSON[i]['icon'])]);
+        sSRTCMI.push({ "name": sRankTypeJSON[i]['name'], "onclick": "switchSearchRankType('" + i + "')", "icon": (i == sRankType ? "checked" : sRankTypeJSON[i]['icon']) });
     }
-    createContextMenu(sSRTCMI, true, true, sRankTimeR);
+    createContextMenu({ "items": sSRTCMI, "position": { "element": sRankTimeR, "alignWidth": "right", "alignHeight": "top", "atLeft": true, "atBottom": true } });
 }
 
 sCommentRankType = "hot";
@@ -375,9 +376,9 @@ function switchSearchCommentRankType(typeId) {
 function showSwitchSearchCommentRankTypeContextMenu() {
     sSRTCMI = [];
     for (var i in commentRankTypeJSON) {
-        sSRTCMI.push([commentRankTypeJSON[i]['name'], "switchSearchCommentRankType('" + i + "')", (i == sCommentRankType ? "checked" : commentRankTypeJSON[i]['icon'])]);
+        sSRTCMI.push({ "name": commentRankTypeJSON[i]['name'], "onclick": "switchSearchCommentRankType('" + i + "')", "icon": (i == sCommentRankType ? "checked" : commentRankTypeJSON[i]['icon']) });
     }
-    createContextMenu(sSRTCMI, true, true, sCommentHiddenR);
+    createContextMenu({ "items": sSRTCMI, "position": { "element": sCommentHiddenR, "alignWidth": "right", "alignHeight": "top", "atLeft": true, "atBottom": true } });
 }
 
 clickTestField = 0;

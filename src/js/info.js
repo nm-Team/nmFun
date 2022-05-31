@@ -1,4 +1,4 @@
-siteURL = "https://" + window.location.hostname;
+siteURL = "https://" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
 accountClient = "https://accounts.nmteam.xyz";
 backEndURL = "https://funapi.nmteam.xyz";
 avatarURL = "https://api.nmteam.xyz/avatar/?id={id}";
@@ -8,7 +8,7 @@ debugMode = true;
 systemCategoryList = [{ "id": "following", "name": "关注" }, { "id": "", "name": "全部" }, { "id": "selected", "name": "精选" }, { "id": "hot", "name": "热榜" }]
 version = {
     version: "0.3_dev",
-    versionNum: "99.72.2",
+    versionNum: "99.72.3",
     branch: "co_refresh",
     betaVersion: true
 }

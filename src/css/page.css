@@ -387,7 +387,9 @@ header .nameDiv .little{
     visibility: hidden;
     border-radius: 4rem;
     box-shadow: var(--msgBox-shadow);
-    animation: msgBox 7s;
+    pointer-events: none;
+    animation: msgBox 5s;
+    opacity: .97;
     overflow: overlay;
     -webkit-user-select: none;
     -moz-user-select: none;

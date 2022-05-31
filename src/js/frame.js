@@ -288,18 +288,18 @@ function quickBack(div, ele) {
     msgContextMenuItems = [];
     for (quickMenuNum = 0; quickMenuNum < divList.length + 1; quickMenuNum++) {
         if (quickMenuNum == divList.length) {
-            msgContextMenuItems[quickMenuNum] = ["line"];
-            msgContextMenuItems[quickMenuNum + 1] = ["主页", "", "&#xe88a;"];
+            msgContextMenuItems[quickMenuNum] = { "name": "line" };
+            msgContextMenuItems[quickMenuNum + 1] = { "name": "主页", "onclick": "", "icon": "&#xe88a;" };
             for (quickMenuClickToDoNum = 0; quickMenuClickToDoNum < quickMenuNum; quickMenuClickToDoNum++)
-                msgContextMenuItems[quickMenuNum + 1][1] += "closeBox('" + div + "','" + divList[quickMenuClickToDoNum][1] + "');";
+                msgContextMenuItems[quickMenuNum + 1]['onclick'] += "closeBox('" + div + "','" + divList[quickMenuClickToDoNum][1] + "');";
         }
         else {
-            msgContextMenuItems[quickMenuNum] = [divList[quickMenuNum][2], ""];
+            msgContextMenuItems[quickMenuNum] = { "name": divList[quickMenuNum][2], "onclick": "" };
             for (quickMenuClickToDoNum = 0; quickMenuClickToDoNum < quickMenuNum; quickMenuClickToDoNum++)
-                msgContextMenuItems[quickMenuNum][1] += "closeBox('" + div + "','" + divList[quickMenuClickToDoNum][1] + "');";
+                msgContextMenuItems[quickMenuNum]['onclick'] += "closeBox('" + div + "','" + divList[quickMenuClickToDoNum]['onclick'] + "');";
         }
     }
-    createContextMenu(msgContextMenuItems, undefined, undefined, ele);
+    createContextMenu({ "items": msgContextMenuItems, "position": { "element": ele, "alignWidth": "left", "alignHeight": "top", "atRight": true, "atBottom": true } });
     writeLog("i", "quickBack", "div: " + div + ", contextMenuItems: " + msgContextMenuItems);
 
 }
