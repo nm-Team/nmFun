@@ -1216,7 +1216,7 @@ biliVideoTemplate = `<div class="biliVideoCon" noselect><iframe class="biliVideo
 function postContextMenu(type, id, poName, uid, ele, ref = null) {
     contextMenuContent = [{ "name": "拷贝分享链接", "onclick": "copyToClipboard('" + siteURL + "#" + type + "_" + id + "')", "icon": "content_copy" }, { "name": "line" }];
     if (gRole("ban_user")) {
-        contextMenuContent.push([{ "name": "封禁 (管理员)", "onclick": "banUser(" + uid + ")", "icon": "remove_circle" }, { "name": "line" }]);
+        contextMenuContent.push({ "name": "封禁 (管理员)", "onclick": "banUser(" + uid + ")", "icon": "remove_circle" }, { "name": "line" });
     }
     if (gRole("manage_posts")) {
         contextMenuContent.push({ "name": "删除 (管理员)", "onclick": "adminDelPost('" + type + "','" + id + "')", "icon": "delete" }, { "name": "line" });
@@ -1231,9 +1231,9 @@ function postContextMenu(type, id, poName, uid, ele, ref = null) {
         contextMenuContent.push({ "name": "举报", "onclick": "report('" + type + "','" + uid + "','" + id + "','" + poName + "')", "icon": "warning" }, { "name": "屏蔽此用户", "onclick": "blockUser(`" + uid + "`)", "icon": "block" });
     }
     if (ref == "star")
-        contextMenuContent.push([{ "name": "line" }, { "name": "移出收藏", "onclick": "starPost('" + id + "', $(this))", "icon": "star" }]);
+        contextMenuContent.push({ "name": "line" }, { "name": "移出收藏", "onclick": "starPost('" + id + "', $(this))", "icon": "star" });
     if (ref == "myRecentLike")
-        contextMenuContent.push([{ "name": "line" }, { "name": "在此列表隐藏", "onclick": "removeFromRecentLike('" + id + "')" }]);
+        contextMenuContent.push({ "name": "line" }, { "name": "在此列表隐藏", "onclick": "removeFromRecentLike('" + id + "')" });
     createContextMenu({ "items": contextMenuContent, "position": { "element": ele, "atLeft": true, alignWidth: "right", alignHeight: "bottom" } });
 }
 
