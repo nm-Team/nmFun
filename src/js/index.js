@@ -316,7 +316,7 @@ function search() {
     initSearch();
     sWord = searchFrame_input.value;
     if (sWord == "") return;
-    if (sWord.replace(/ /g, "").length < 3) return newMsgBox("请至少搜索 3 个字符");
+    if (sWord.replace(/ /g, "").length < 2) return newMsgBox("请至少搜索 2 个字符");
     initPostsList($(`#sRes_all`), { "type": "post", "search": { "type": "all", "keyword": sWord }, "order": { "time": sRankTime, "type": sRankType }, "noOther": true });
     initPostsList($(`#sRes_post`), { "type": "post", "search": { "type": "post", "keyword": sWord }, "order": { "time": sRankTime, "type": sRankType }, "noOther": true });
     initPostsList($(`#sRes_comment`), { "type": "user_comment", "search": { "keyword": sWord }, "rank_type": sCommentRankType, "noOther": true });
