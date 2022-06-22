@@ -16,7 +16,7 @@ function createContextMenu(config) {
         var time = gTime();
         new_element = document.createElement('div');
         new_element.setAttribute('id', 'contextMenu' + time);
-        writeLog("i", "createContextMenu", "time: " + time + ", config: " + JSON.stringify(config));
+        writeLog("i", "createContextMenu", "time: " + time + ", config: " );
         new_element.setAttribute('class', 'contextMenu ' + (config.const ? "" : "closable") + " " + config.class);
         new_element.setAttribute('data-id', time);
         items = config.items;

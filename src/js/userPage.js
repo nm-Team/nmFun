@@ -102,7 +102,7 @@ function refreshUserInfoArea(uid) {
 uPageTemp = `
 <header>
     <div class="left">
-        <button class="backButton" title="返回" onclick="closeBox('pageRight','userInfoFrame_{{uid}}')" oncontextmenu="quickBack('pageRight',this)" ontouchstart="longPressToDo(function(){quickBack('pageRight')})" ontouchend="longPressStop()"><i class="material-icons"></i></button>
+        <button class="backButton" title="返回" onclick="closeBox('pageRight','userInfoFrame_{{uid}}')" oncontextmenu="quickBack('pageRight',this)" ontouchstart="longPressToDo(function(){quickBack('pageRight', $('#userInfoFrame_{{uid}} .backButton')[0])})" ontouchend="longPressStop()"><i class="material-icons"></i></button>
         <div class="nameDiv">
             <p class="title">{{nick}}</p>
             <p class="little"></p>
@@ -292,7 +292,7 @@ followListTemplate = `
     <div class="left">
         <button class="backButton" title="返回" onclick="closeBox('pageRight','followListFrame_{{uid}}',false);"
             oncontextmenu="quickBack('pageRight',this)"
-            ontouchstart="longPressToDo(function(){quickBack('pageRight')})"
+            ontouchstart="longPressToDo(function(){quickBack('pageRight', $('#followListFrame_{{uid}} .backButton')[0])})"
             ontouchend="longPressStop()"><i class="material-icons"></i></button>
         <div class="nameDiv">
             <p class="title">{{nick}}</p>
@@ -383,7 +383,7 @@ blockListTemplate = `
     <div class="left">
         <button class="backButton" title="返回" onclick="closeBox('pageRight','blockListFrame',false);"
             oncontextmenu="quickBack('pageRight',this)"
-            ontouchstart="longPressToDo(function(){quickBack('pageRight')})"
+            ontouchstart="longPressToDo(function(){quickBack('pageRight', $('#blockListFrame .backButton')[0])})"
             ontouchend="longPressStop()"><i class="material-icons"></i></button>
         <div class="nameDiv">
             <p class="title">黑名单</p>
@@ -438,7 +438,7 @@ starListTemplate = `
     <div class="left">
         <button class="backButton" title="返回" onclick="closeBox('pageRight','starListFrame',false);"
             oncontextmenu="quickBack('pageRight',this)"
-            ontouchstart="longPressToDo(function(){quickBack('pageRight')})"
+            ontouchstart="longPressToDo(function(){quickBack('pageRight', $('#starListFrame .backButton')[0])})"
             ontouchend="longPressStop()"><i class="material-icons"></i></button>
         <div class="nameDiv">
             <p class="title">收藏</p>
@@ -491,7 +491,7 @@ userRecentLikePageTemplate = `
     <div class="left">
         <button class="backButton" title="返回" onclick="closeBox('pageRight','userRecentLikePage_{{uid}}',false);"
             oncontextmenu="quickBack('pageRight',this)"
-            ontouchstart="longPressToDo(function(){quickBack('pageRight')})"
+            ontouchstart="longPressToDo(function(){quickBack('pageRight', $('#userRecentLikePage_{{uid}} .backButton')[0])})"
             ontouchend="longPressStop()"><i class="material-icons"></i></button>
         <div class="nameDiv">
             <p class="title">{{nick}}最近点赞的帖子</p>

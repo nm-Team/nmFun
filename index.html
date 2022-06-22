@@ -93,7 +93,7 @@
                         <div class="left">
                             <button class="backButton" title="返回" onclick="closeBox('pageLeft','searchFrame',false);"
                                 oncontextmenu="quickBack('pageLeft',this)"
-                                ontouchstart="longPressToDo(function(){quickBack('pageLeft')})"
+                                ontouchstart="longPressToDo(function(){quickBack('pageLeft',$('#searchFrame .backButton')[0])})"
                                 ontouchend="longPressStop()"><i class="material-icons"></i></button>
                             <input id="searchFrame_input" placeholder="搜索..." title="搜索"
                                 onkeydown="if(event.keyCode == 13) search();">
@@ -150,7 +150,7 @@
                         <div class="left">
                             <button class="backButton" title="返回" onclick="closeBox('pageLeft','messageFrame',false);"
                                 oncontextmenu="quickBack('pageLeft',this)"
-                                ontouchstart="longPressToDo(function(){quickBack('pageLeft',this)})"
+                                ontouchstart="longPressToDo(function(){quickBack('pageLeft',$('#messageFrame .backButton')[0])})"
                                 ontouchend="longPressStop()"><i class="material-icons"></i></button>
                             <div class="nameDiv">
                                 <p class="title">消息</p>
@@ -170,7 +170,7 @@
                         <div class="left">
                             <button class="backButton" title="返回" onclick="closeBox('pageLeft','meFrame',false);"
                                 oncontextmenu="quickBack('pageLeft',this)"
-                                ontouchstart="longPressToDo(function(){quickBack('pageLeft',this)})"
+                                ontouchstart="longPressToDo(function(){quickBack('pageLeft',$('#meFrame .backButton')[0])})"
                                 ontouchend="longPressStop()"><i class="material-icons"></i></button>
                             <div class="nameDiv">
                                 <p class="title">我的</p>
@@ -266,7 +266,7 @@
                         <div class="left">
                             <button class="backButton" title="返回" onclick="closeBox('pageLeft','adminFrame',false);"
                                 oncontextmenu="quickBack('pageLeft',this)"
-                                ontouchstart="longPressToDo(function(){quickBack('pageLeft',this)})"
+                                ontouchstart="longPressToDo(function(){quickBack('pageLeft',$('#adminFrame .backButton')[0])})"
                                 ontouchend="longPressStop()"><i class="material-icons"></i></button>
                             <div class="nameDiv">
                                 <p class="title">管理面板</p>

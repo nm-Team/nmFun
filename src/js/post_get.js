@@ -885,7 +885,7 @@ function showCommentDetailTypeSwitch(cid, ele) {
 postTemplate = `
 <header>
 <div class="left">
-    <button class="backButton" onclick="closeBox('pageRight','postFrame{{pid}}')" oncontextmenu="quickBack('pageRight',this)" ontouchstart="longPressToDo(function(){quickBack('pageRight')})" ontouchend="longPressStop()"><i class="material-icons">&#xe5c4;</i></button>
+    <button class="backButton" onclick="closeBox('pageRight','postFrame{{pid}}')" oncontextmenu="quickBack('pageRight',this)" ontouchstart="longPressToDo(function(){quickBack('pageRight', $('#postFrame{{pid}} .backButton')[0])})" ontouchend="longPressStop()"><i class="material-icons">&#xe5c4;</i></button>
     <div class="nameDiv">
         <p class="title">详情</p>
         <p class="little"></p>
@@ -947,7 +947,7 @@ postTemplate = `
 commentDetailFrameTemplate = `
 <header>
 <div class="left">
-    <button class="backButton" onclick="closeBox('pageRight','commentDetailFrame{{cid}}')" oncontextmenu="quickBack('pageRight',this)" ontouchstart="longPressToDo(function(){quickBack('pageRight')})" ontouchend="longPressStop()"><i class="material-icons">&#xe5c4;</i></button>
+    <button class="backButton" onclick="closeBox('pageRight','commentDetailFrame{{cid}}')" oncontextmenu="quickBack('pageRight',this)" ontouchstart="longPressToDo(function(){quickBack('pageRight', $('#commentDetailFrame{{cid}} .backButton')[0])})" ontouchend="longPressStop()"><i class="material-icons">&#xe5c4;</i></button>
     <div class="nameDiv">
         <p class="title">详情</p>
         <p class="little"></p>
