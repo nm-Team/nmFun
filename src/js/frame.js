@@ -296,7 +296,7 @@ function quickBack(div, ele) {
         else {
             msgContextMenuItems[quickMenuNum] = { "name": divList[quickMenuNum][2], "onclick": "" };
             for (quickMenuClickToDoNum = 0; quickMenuClickToDoNum < quickMenuNum; quickMenuClickToDoNum++)
-                msgContextMenuItems[quickMenuNum]['onclick'] += "closeBox('" + div + "','" + divList[quickMenuClickToDoNum]['onclick'] + "');";
+                msgContextMenuItems[quickMenuNum]['onclick'] += "closeBox('" + div + "','" + divList[quickMenuClickToDoNum][1] + "');";
         }
     }
     createContextMenu({ "items": msgContextMenuItems, "position": { "element": ele, "alignWidth": "left", "alignHeight": "top", "atRight": true, "atBottom": true } });
